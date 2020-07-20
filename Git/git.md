@@ -10,16 +10,20 @@ git config user.email #查看邮箱
 #### 生成SSH KEY
 
 ```shell
-ssh-keygen -t rsa -C "xxx@git.com" #生成密匙
-cd ~/.ssh #进入到.ssh目录
-cat id_rsa.pub #查看ssh key
+ssh-keygen -t rsa -C "xxx@git.com" # 生成密匙
+cd ~/.ssh # 进入到.ssh目录
+cat id_rsa.pub # 查看ssh key
 # 在git设置中添加 ssh key
 ```
 
 #### 切换协议（http-ssh）
 
 ```shell
+git remote -v # 查看信息
 git remote set-url origin git@xxx.git
+# 或者
+git remote rm origin
+git remote add origin git@xxx.git
 ```
 
 #### 关联远程仓库
@@ -37,11 +41,11 @@ git remote set-url origin git@xxx.git
    - 远程仓库有文件的
 
      ```shell
-     git init #初始化
-     git remote add origin 仓库地址 #设置remote地址
-     git branch --set-upstream-to=origin/master master #将当前分支设置为远程仓库的master分支
+     git init # 初始化
+     git remote add origin 仓库地址 # 设置remote地址
+     git branch --set-upstream-to=origin/master master # 将当前分支设置为远程仓库的master分支
      git fetch
-     git pull #如果不设置master分支，则需要git pull origin master
+     git pull # 如果不设置master分支，则需要git pull origin master
      git add .
      git commit -m'message'
      git push origin master
@@ -50,10 +54,10 @@ git remote set-url origin git@xxx.git
    - 空白项目的关联
 
      ```shell
-     git init #初始化
-     git remote add 地址 #设置remote地址
-     git add . #将全部文件加入git版本管理
-     git commit -m'message'
+     git init # 初始化
+     git remote add 地址 # 设置remote地址
+     git add . # 将全部文件加入git版本管理
+     git commit -m 'message'
      git push
      ```
 
@@ -83,10 +87,54 @@ git remote set-url origin git@xxx.git
 #### 修改已经push的commit信息
 
 ```shell
-git log #查看需要修改的提交
+git log # 查看需要修改的提交
+git log --oneline # 日志一行显示
 git rebase -i HEAD~1
 git commit --amend
 git rebase --continue
 git push -f origin dev
+```
+
+#### 合并分支
+
+```shell
+git branch
+git checkout -b fenzhi # 创建一个分支
+git checkout dev
+git merge fenzhi
+git push origin dev # 将fenzhi合并到dev
+```
+
+#### hitk乱码问题
+
+```shell
+git config --global gui.encoding utf-8
+```
+
+#### 删除远程分支
+
+```shell
+git push origin --delete ding
+git remote prune origin # 删除不存在的远程分支
+```
+
+#### 删除本地分支
+
+```shell
+git branch -D ding
+```
+
+#### 创建&切换分支
+
+```shell
+git branch -b test
+```
+
+#### 本地&远程分支
+
+```shell
+git branch -vv
+git branch -u origin/branch-name # 本地分支追踪远程分支
+git branch --track remotes/origin/ding # 切换远程分支
 ```
 
