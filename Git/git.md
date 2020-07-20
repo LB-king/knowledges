@@ -111,30 +111,36 @@ git push origin dev # 将fenzhi合并到dev
 git config --global gui.encoding utf-8
 ```
 
-#### 删除远程分支
+#### 删除分支
 
 ```shell
 git push origin --delete ding
 git remote prune origin # 删除不存在的远程分支
-```
-
-#### 删除本地分支
-
-```shell
-git branch -D ding
-```
-
-#### 创建&切换分支
-
-```shell
-git branch -b test
+git branch -D ding # 删除本地分支
 ```
 
 #### 本地&远程分支
 
 ```shell
+git remote set-head origin my-test # 设置origin/HEAD
+git remote show origin # 查看remote分支
+git branch -b test # 创建、切换分支
 git branch -vv
 git branch -u origin/branch-name # 本地分支追踪远程分支
 git branch --track remotes/origin/ding # 切换远程分支
 ```
+
+#### gitbash快捷键
+
+- `ctrl + L`  = 清屏
+- `ctrl + R` = 查找历史记录，输入keyword多次`ctrl + R`可返回下一匹配项
+- `ctrl + A` = 跳转至行首
+- `ctrl + E` = 跳转至行尾
+- `touch` = 新建文件
+- `rm` = 删除文件
+- `mkdir` = 新建文件夹
+- `rmdir` = 删除文件夹
+- `rm -r` = 删除文件夹(recusive)
+- `mv` = 移动文件
+- `pwd` = 展示工作目录
 
