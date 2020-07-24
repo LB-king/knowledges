@@ -33,7 +33,7 @@ Vue.use(ElementUI, { size: 'small', zIndex: 3000 })
   npm i babel-plugin-component -S
   ```
 
-  2.配置`.babelrc`
+  2.配置`.babelrc`或者直接在``babel.config.js`中添加配置项
 
   ```json
   {
@@ -74,5 +74,7 @@ Vue.use(ElementUI, { size: 'small', zIndex: 3000 })
   }
   // 注册之后就可以在template标签使用组件了
   ```
+  
+  PS:按需引入的体积比全部引入引入的打包体积小1-2MB
 
 ### transition

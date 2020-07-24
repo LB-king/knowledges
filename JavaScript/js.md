@@ -5,6 +5,8 @@
   import * as obj from 'xxx' // 这种写法表示把所有的输出包裹到obj对象里
   ```
 
+### JavaScript方法积累
+
 - 上传读取txt文件内容
 
   ```javascript
@@ -20,4 +22,3 @@
   ```
 
   
-

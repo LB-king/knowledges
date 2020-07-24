@@ -3,7 +3,8 @@ import App from './App.vue'
 import './registerServiceWorker'
 import router from './router'
 import store from './store'
-
+import { Button } from 'element-ui'
+Vue.use(Button)
 Vue.config.productionTip = false
 
 new Vue({
