@@ -77,4 +77,8 @@ Vue.use(ElementUI, { size: 'small', zIndex: 3000 })
   
   PS:按需引入的体积比全部引入引入的打包体积小1-2MB
 
-### transition
+### @antv/g6
+
+G来自于`Graphic`,`graph`
+
+G6来自《六度分隔理论》
