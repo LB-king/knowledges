@@ -103,6 +103,7 @@ git checkout -b fenzhi # 创建一个分支
 git checkout dev
 git merge fenzhi
 git push origin dev # 将fenzhi合并到dev
+git checkout -b dev1 origin dev1 #创建dev分支与远程dev分支关联，内容也会切换
 ```
 
 #### hitk乱码问题
@@ -124,7 +125,8 @@ git branch -D ding # 删除本地分支
 ```shell
 git remote set-head origin my-test # 设置origin/HEAD
 git remote show origin # 查看remote分支
-git branch -b test # 创建、切换分支
+git checkout -b test # 创建、切换分支
+git checkout -b test origin/test # 创建test分支并与远程test分支同步
 git branch -vv
 git branch -u origin/branch-name # 本地分支追踪远程分支
 git branch --track remotes/origin/ding # 切换远程分支

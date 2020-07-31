@@ -18,7 +18,6 @@ export default {
           {
             id: '001-1',
             label: '贴源层',
-            collapse: false,
             children: [
               {
                 id: '001-1-1',
@@ -83,6 +82,7 @@ export default {
         },
         draw(cfg, group) {
           const styles = this.getShapeStyle(cfg)
+          console.log(styles)
           const { labelCfg = {} } = cfg
 
           const keyShape = group.addShape('rect', {
@@ -93,7 +93,7 @@ export default {
               y: 0
             }
           })
-          // 如果不需要动态增加或删除元素，则不需要 add 这两个 marker
+          // 展开和收起树图
           group.addShape('marker', {
             attrs: {
               x: 60,
@@ -105,20 +105,8 @@ export default {
               // symbol: EXPAND_ICON
               symbol: cfg.children.length > 0 ? COLLAPSE_ICON : ""
             },
-            name: 'add-item'
+            className: 'collapsed-icon'
           })
-
-          // group.addShape('marker', {
-          //   attrs: {
-          //     x: 80,
-          //     y: 52,
-          //     r: 6,
-          //     stroke: '#ff4d4f',
-          //     cursor: 'pointer',
-          //     symbol: COLLAPSE_ICON
-          //   },
-          //   name: 'remove-item'
-          // })
 
           if (cfg.label) {
             group.addShape('text', {
@@ -132,6 +120,9 @@ export default {
           }
 
           return keyShape
+        },
+        afterDraw() {
+
         }
       },
       'rect'
@@ -211,7 +202,6 @@ export default {
 
     const width = this.$refs.g6main.clientWidth
     const height = this.$refs.g6main.clientHeight
-    let selectedItem = void 0;
 
     const graph = new G6.TreeGraph({
       container: 'g6main',
@@ -219,7 +209,19 @@ export default {
       height,
       linkCenter: true,
       modes: {
-        default: ['drag-canvas', 'zoom-canvas']
+        default: [{
+          type: 'collapse-expand',
+          onChange(item, collapsed) {
+            let icon = item.get('group').findByClassName('collapsed-icon');
+            if(collapsed) {
+              icon.attr('symbol', EXPAND_ICON)
+            } else {
+              icon.attr('symbol', COLLAPSE_ICON)
+            }
+            // data.collapsed = collapsed;
+            // return true;
+          },
+        },'drag-canvas', 'zoom-canvas']
       },
       defaultNode: {
         type: 'tree-node',
@@ -254,6 +256,7 @@ export default {
       const { item, target } = evt
       const targetType = target.get('type')
       const name = target.get('name')
+      console.log(target)
 
     })
   }
