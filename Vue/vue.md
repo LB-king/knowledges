@@ -76,6 +76,15 @@ Vue.use(ElementUI, { size: 'small', zIndex: 3000 })
   ```
   
   PS:按需引入的体积比全部引入引入的打包体积小1-2MB
+  
+  `el-autocomplete`空值也会弹出上次结果的下拉框
+  
+  ```javascript
+  // 解决方法
+  this.$refs.target.suggestion = []
+  ```
+  
+  
 
 ### @antv/g6
 

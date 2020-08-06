@@ -22,3 +22,12 @@
   ```
 
   
+
+- 判断类型
+
+  ```javascript
+  Object.prototype.toString.call([]) // [object Array]
+  Object.prototype.toString.call({}) // [object Object]
+  ```
+
+  
