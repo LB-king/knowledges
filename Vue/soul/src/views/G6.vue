@@ -1,5 +1,8 @@
 <template>
-  <div class="main" ref="g6main" id="g6main"></div>
+  <div>
+    <div class="main" ref="g6main" id="g6main"></div>
+    <el-button>hello</el-button>
+  </div>
 </template>
 
 <script>
@@ -75,14 +78,8 @@ export default {
     G6.registerNode(
       'tree-node',
       {
-        options: {
-          size: [60, 20],
-          stroke: '#91d5ff',
-          fill: '#91d5ff'
-        },
-        draw(cfg, group) {
+        drawShape(cfg, group) {
           const styles = this.getShapeStyle(cfg)
-          console.log(styles)
           const { labelCfg = {} } = cfg
 
           const keyShape = group.addShape('rect', {
@@ -103,7 +100,7 @@ export default {
               stroke: '#73d13d',
               cursor: 'pointer',
               // symbol: EXPAND_ICON
-              symbol: cfg.children.length > 0 ? COLLAPSE_ICON : ""
+              symbol: cfg.children.length > 0 ? COLLAPSE_ICON : ''
             },
             className: 'collapsed-icon'
           })
@@ -121,9 +118,7 @@ export default {
 
           return keyShape
         },
-        afterDraw() {
-
-        }
+        afterDraw() {}
       },
       'rect'
     )
@@ -209,19 +204,23 @@ export default {
       height,
       linkCenter: true,
       modes: {
-        default: [{
-          type: 'collapse-expand',
-          onChange(item, collapsed) {
-            let icon = item.get('group').findByClassName('collapsed-icon');
-            if(collapsed) {
-              icon.attr('symbol', EXPAND_ICON)
-            } else {
-              icon.attr('symbol', COLLAPSE_ICON)
+        default: [
+          {
+            type: 'collapse-expand',
+            onChange(item, collapsed) {
+              let icon = item.get('group').findByClassName('collapsed-icon')
+              if (collapsed) {
+                icon.attr('symbol', EXPAND_ICON)
+              } else {
+                icon.attr('symbol', COLLAPSE_ICON)
+              }
+              // data.collapsed = collapsed;
+              // return true;
             }
-            // data.collapsed = collapsed;
-            // return true;
           },
-        },'drag-canvas', 'zoom-canvas']
+          'drag-canvas',
+          'zoom-canvas'
+        ]
       },
       defaultNode: {
         type: 'tree-node',
@@ -257,7 +256,6 @@ export default {
       const targetType = target.get('type')
       const name = target.get('name')
       console.log(target)
-
     })
   }
 }

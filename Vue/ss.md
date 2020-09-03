@@ -1,4 +1,4 @@
-### 1.postman
+### 1.postman配置
 
 - 打开manage enviroments
 
@@ -6,14 +6,14 @@
   | -------- | ----------------------- | -------------------------------- |
   | base_url | http://192.168.1.1:2000 | http://192.168.1.1:2000          |
   | token    | 121212                  | 0c5862de82275e1c575fb4ea7f92eaba |
-  
+
 - 在登陆的接口中设置
 
-  ```shell
+  ```http
   {{base_url}}/sso-auth/api/auth/doLogin
   ```
 
-- 在Tests中设置
+- Tests中设置
 
   ```javascript
   // 把json字符串转化为对象
@@ -24,11 +24,11 @@
   ```
 
 - 在其他接口中 **Hearder**中加入token即可
+
   | KEY          | VALUE            |
   | :----------- | :--------------- |
   | token        | {{token}}        |
   | Content-Type | application/json |
-  
 
 ### 2.vue.config.js
 
@@ -38,18 +38,12 @@ module.exports = {
     overlay: {
       warning: true // eslint编译时会有警告，但是不影响结果
     }
-  },
-  css: { // 引入全局的scss
-    loaderOptions: {
-      sass: {
-        prependData: `@import '~@/styles/common.scss';`
-      }
-    }
   }
 }
 ```
 
 ### 3.引入element-ui
+
 ```shell
 npm i element-ui -S
 ```
@@ -129,32 +123,11 @@ Vue.use(ElementUI, { size: 'small', zIndex: 3000 })
   this.$refs.target.suggestion = []
   ```
 
-### 4.pug
+- #### pug
 
-```powershell
-npm install pug pug-loader pug-plain-loader -S
-```
+  ```powershell
+  npm install pug pug-loader pug-plain-loader -S
+  ```
 
-在`.vue`文件中使用
+  
 
-```vue
-<template lang="pug">
-  #app.main-app
-    router-view
-    p joke
-</template>
-```
-
-### 5.全局scss
-
-1. 在`vue.config.js`中配置(见标题2)
-
-2. 在App.vue中引入scss文件
-
-   ```scss
-   @import "~@/styles/common.scss";
-   ```
-
-   
-
-   
