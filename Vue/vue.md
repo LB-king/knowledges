@@ -155,6 +155,19 @@ npm install pug pug-loader pug-plain-loader -S
    @import "~@/styles/common.scss";
    ```
 
-   
+### 6.常用utils
 
-   
+```javascript
+'123456'.replace(/(?=(?!\b)(\d{3})+$)/g,',') // '123,456'
+```
+
+预渲染(prerender-spa-plugin)
+
+vue的依赖注入
+
+SEO
+
+SSR(服务端渲染) vue-server-render - renderToString方法
+
+
+
