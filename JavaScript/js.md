@@ -30,4 +30,17 @@
   Object.prototype.toString.call({}) // [object Object]
   ```
 
+- 数组的深拷贝
+
+  ```javascript
+  // 1.使用扩展运算符
+  let a = [11, 22, 33]
+  let b = [...a]
+  a.push(888)
+  a // [11, 22, 33, 888]
+  b // [11, 22, 33]
+  // 2.对象数组
+  b = a.map(i => {...a})
+  ```
+
   
