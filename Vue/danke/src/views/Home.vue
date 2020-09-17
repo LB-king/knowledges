@@ -1,16 +1,14 @@
 <template lang="pug">
   .home
-    HelloWorld
+    | 首页
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
 
 export default {
   name: 'Home',
   components: {
-    HelloWorld
   },
   mounted() {
   }

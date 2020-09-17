@@ -5,9 +5,8 @@
     text-color="#fff",
     active-text-color="#ffd04b")
     el-menu-item(index="1") 首页
-    el-submenu(index ="2")
-      template(slot="title") 关于
-      el-menu-item(index="2-1") 子菜单
+    el-menu-item(index="2") 字典
+    el-menu-item(index="3") 查询
 </template>
 <script>
 export default {
