@@ -16,7 +16,7 @@
 
 ### 核心模块
 
-file-system(文件系统)
+#### file-system(文件系统)
 
 - readFile-读取文件(**异步**)
 
@@ -85,23 +85,166 @@ file-system(文件系统)
   let res = fs.readdirSync(__dirname)
   ```
 
+#### http
+
 - http-服务
 
   ```javascript
   const http = require('http')
   http.createServer(function(req, res) {
-    res.setHeader('Content-type', 'text/plain;charset=utf-8')
+    // res.setHeader('Content-type', 'text/plain;charset=utf-8')
+    // res.setHeader('Content-length', Buffer.byteLength(json))
+    res.write.writeHeader(200, {'content-type': 'application/json', 'content-length': Buffer.byteLength(json)})
     res.end('success!')
   }).listen(3000, function() {
     console.log('server running at 3000...')
   })
+  // PS:setHeader&writeHeade 添加多个响应头写法区别如上述代码
+  // writeHeader可定义响应头,可配置多个响应头
+  // setHeader-allows you only to set a singular header
+  ```
+
+#### events-事件
+
+```javascript
+const events = require('events')
+const eventEmitter = new events.EventEmitter()
+// 创建事件处理程序
+const connectHandler = function() {
+  console.log('连接成功')
+  eventEmitter.emit('data_received')
+}
+// 绑定 connection 事件处理程序
+eventEmitter.on('connection', connectHandler)
+eventEmitter.on('data_received', function() {
+  console.log('数据接收成功')
+})
+eventEmitter.emit('connection')
+console.log('执行完毕!')
+
+eventEmitter.on('test',function() {
+  console.log('测试事件触发了')
+})
+
+setTimeout(() => {
+  eventEmitter.emit('test')
+}, 2000)
+
+```
+
+方法：
+
+- addListener(event, listener) // 为指定事件添加一个监听器数组的尾部
+- on(event, listener) 为指定事件注册一个监听器
+- once(event, listener) 注册一个单次监听器
+- removeListener(event, listener) 移除指定事件的某个监听器
+- removeAllListeners([]) 移除所有事件的的所有监听器，如果指定事件，则移除指定事件的所有监听器
+- setMaxListeners(n) 默认情况，如果添加的监听器超过10个就会出现警告信息
+- listeners(event) 返回指定事件的监听器数组
+- emit(event,[ar1],[arg2],[...]) 按监听器的顺序执行每隔监听器，如果事件有注册监听返回true,否则返回false
+
+### npm
+
+- `npm`安装-(淘宝镜像)
+
+  ```javascript
+  npm install -g cnpm --registry=https://registry.npm.taobao.org
+  npm err! Error: connect ECONNREFUSED 127.0.0.1:8087 // 出现此情况的解决办法
+  npm config set proxy null
+  npm ls // 查看包安装目录列表
+  ```
+
+  版本号：语义版本号分为X,Y,Z三位，分别代表主版本号，次版本号，补丁版本号。
+
+  - 如果只是修复bug，需要修改Z位
+  - 如果是新增了功能，但是向下兼容，需要更新Y位
+  - 如果有大变动，向下不兼容，需要更新X位
+
+  常用的一些命令：
+
+  ```powershell
+  # npm help <command> 可以查看某条命令的详细帮助
+  # npm update <package> 可以把当前目录下`node_modules`子目录里对应的模块更新至最新版本
+  # npm update <package> -g 全局更新
+  # npm cache clear 可以清空npm本地缓存
+  npm publish # 发布？(未曾使用)
   ```
 
   
 
-### 安装`mysql`
+### REPL(交互式解释器)
 
-```powershell
-cnpm install mysql -g
+- **Read**-**读取**
+
+- **Eval****-**执行**
+
+- **Print****-**打印**
+
+- **Loop****-**循环**
+
+  ```shell
+  $node
+  >var x = 10
+  >var y = 20
+  >x + y
+  # 可用_接收上面的计算结果
+  var s = _
+  s # 30
+  ```
+
+  命令：
+
+  - `ctrl+c` 退出当前终端
+  - `ctrl+c按2次`退出Node REPL
+  - `ctrl+d`退出NodeREPL
+  - `.help`
+  - `.break`
+  - `.clear`
+  - `.save filename` - 保存当前的Node REPL会话到指定文件
+  - `.load filename`- 载入当前Node REPL会话的文件内容
+
+阻塞是按顺序执行的，非阻塞是不需要按顺序的
+
+### Node.js事件循环
+
+- nodejs是单进程单线程应用程序，但是因为V8引擎提供的异步执行回调接口，通过这些接口可以处理大量的并发，所以性能非常高。
+- nodejs几乎每一个API都是支持回调函数的
+- nodejs基本上所有的事件机制都是用设计模式中观察者模式实现
+- nodejs单线程类似进入一个while(true)的事件循环，直到没有事件观察者退出，每个异步事件都生成一个事件观察者，如果有事件发生就调用该回调函数
+
+### 事件驱动程序
+
+### Buffer与字符编码
+
+js语言自身只有字符串数据类型，没有二进制数据类型。但是有用到的场景，定义了一个Buffer类，该类用来创建一个专门存放二进制数据的缓存区
+
+Buffer示例一般用于表示编码字符的序列，比如UTF-8、UCS2、Base64、或十六进制编码的数据。通过使用显示的字符编码，就可以在Buffer示例与普通的JS字符串之间进行相互转换。
+
+```javascript
+const buf = Buffer.from('hello', 'ascii')
+console.log(buf.toString('ascii')) // helloH=
+console.log(buf.toString('base64')) // aGVsbG/IvQ==
+```
+
+Node.js目前支持的字符编码包括：
+
+- ascii - 仅支持7位ASCII数据。如果设置去掉高位的话，这种编码是非常快的。
+- utf8 - 多字节编码Unicode字符。许多网页和其他文档格式都使用UTF-8。
+- utf16le - 2 或 4 个字节，小字节序编码的 Unicode 字符。支持代理对（U+10000 至 U+10FFFF）
+- ucs2 - utf16le的别名
+- base64 - Base64编码
+- Latin1 - 一种把Buffer编码成一字节编码的字符串的方式
+- binary - latin1的别名
+- hex - 将每个字节编码为两个十六进制字符
+
+创建Buffer类
+
+```javascript
+const buf1 = Buffer.alloc(10) // <Buffer 00 00 00 00 00 00 00 00 00 00>
+const buf2 = Buffer.alloc(10, 1) // <Buffer 01 01 01 01 01 01 01 01 01 01>
+const buf3 = Buffer.allocUnsafe(10) // <Buffer 00 e9 91 46 ff ff ff ff 00 00>
+const buf4 = Buffer.from([1,2,3]) // <Buffer 01 02 03>
+const buf5 = Buffer.from('test') // <Buffer 74 65 73 74>
+const buf6 = Buffer.from('test', 'latin1') // <Buffer 74 65 73 74>
 ```
 
