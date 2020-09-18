@@ -85,6 +85,121 @@
   let res = fs.readdirSync(__dirname)
   ```
 
+-  Stream(流) 
+
+  Stream是一个抽象接口，Node中有很多对象实现了这个接口
+
+  4种类型:
+
+  - `Readable` - 可读操作
+  - `Writable` - 可写操作
+  - `Duplex` - 可读可写操作
+  - Transform - 操作被写入数据，然后读出结果
+
+  所有的Stream对象都是EventEmitter的示例。常用的事件有:
+
+  - `data` - 当有数据可读时触发
+  - `end` - 没有更多的数据可读时触发
+  - `error` - 在接收和写入过程中发生错误时触发
+  - `finish` - 所有数据已被写入到底层系统时触发
+
+- fs.createReadStream-从流中读取数据
+
+  ```javascript
+  const fs = require('fs')
+  const path = require('path')
+  let readData = ''
+  let filePath = path.resolve(__dirname, 'package.json')
+  console.log(filePath)
+  // 创建可读流
+  let readerStream = fs.createReadStream(filePath)
+  // 设置编码为utf8
+  readerStream.setEncoding('UTF8')
+  // 处理流事件-->data,end,error,end
+  readerStream.on('data', function (data) {
+    readData += data
+  })
+  readerStream.on('end', function(d) {
+    console.log(readData)
+  })
+  readerStream.on('error', function(err) {
+    console.log(err.stack)
+  })
+  ```
+
+- 写入流
+
+  ```javascript
+  const fs = require('fs')
+  const path = require('path')
+  let res = 'Bayern Munich拜仁慕尼黑'
+  // 创建一个可以写入的流，写到文件 output.txt中,如果test文件夹不存在则抛出错误
+  let writeStream = fs.createWriteStream(path.resolve(__dirname, 'test/output.txt'))
+  //使用utf8编码写入数据
+  writeStream.write(res, 'UTF8')
+  // 标记文件末尾
+  writeStream.end()
+  // 处理流事件 -->data, end, error
+  writeStream.on('finish', () => {
+    console.log('写入完成')
+  })
+  writeStream.on('error', (err) => {
+    console.log(err.stack)
+  })
+  ```
+
+- 管道流pipe
+
+  管道流提供了一个输出流到输入流的机制，通常我们用于从一个流中获取数据传递到另一个流中
+
+  ```javascript
+  const fs = require('fs')
+  const path = require('path')
+  // 创建一个可读流
+  let readerStream = fs.createReadStream(path.resolve(__dirname, 'package.json'))
+  // 创建一个可写流
+  let writeStream = fs.createWriteStream(path.resolve(__dirname, 'testFiles/output.txt'))
+  //
+  readerStream.pipe(writeStream)
+  // 处理流事件 -->data, end, error
+  writeStream.on('finish', () => {
+    console.log('写入完成')
+  })
+  writeStream.on('error', (err) => {
+    console.log(err.stack)
+  })
+  ```
+
+- 链式流
+
+  链式是通过连接输出流到另一个流并创建多个流操作链的机制，链式流一般用于管道操作。接下来我们就是用管道和链式来压缩和压缩文件。
+
+  - 压缩
+
+    ```javascript
+    const fs = require('fs')
+    const zlib = require('zlib')
+    // 压缩
+    fs.createReadStream('output.txt')
+      .pipe(zlib.createGzip())
+      .pipe(fs.createWriteStream('output.txt.gz'))
+    console.log('压缩完成')
+    ```
+
+  - 解压
+
+    ```javascript
+    const fs = require('fs')
+    const zlib = require('zlib')
+    // 解压
+    fs.createReadStream('output.txt.gz')
+      .pipe(zlib.createGunzip())
+      .pipe(fs.createWriteStream('output11.txt'))
+    console.log('文件解压完成')
+    ```
+
+    
+
 #### http
 
 - http-服务
@@ -237,7 +352,7 @@ Node.js目前支持的字符编码包括：
 - binary - latin1的别名
 - hex - 将每个字节编码为两个十六进制字符
 
-创建Buffer类
+#### 创建Buffer类
 
 ```javascript
 const buf1 = Buffer.alloc(10) // <Buffer 00 00 00 00 00 00 00 00 00 00>
@@ -248,3 +363,12 @@ const buf5 = Buffer.from('test') // <Buffer 74 65 73 74>
 const buf6 = Buffer.from('test', 'latin1') // <Buffer 74 65 73 74>
 ```
 
+#### 将buff转化为json对象
+
+```javascript
+buf.toJSON()
+```
+
+### 模块系统
+
+为了让Node.js的文件可以相互调用，Node.js提供了一个简单的模块系统
