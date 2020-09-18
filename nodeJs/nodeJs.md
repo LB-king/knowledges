@@ -258,6 +258,12 @@ setTimeout(() => {
 - listeners(event) 返回指定事件的监听器数组
 - emit(event,[ar1],[arg2],[...]) 按监听器的顺序执行每隔监听器，如果事件有注册监听返回true,否则返回false
 
+### supervisor
+
+```powershell
+npm install supervisor -g
+```
+
 ### npm
 
 - `npm`安装-(淘宝镜像)
@@ -372,3 +378,95 @@ buf.toJSON()
 ### 模块系统
 
 为了让Node.js的文件可以相互调用，Node.js提供了一个简单的模块系统
+
+main.js
+
+```javascript
+let {say} = require('./hello')
+say()
+```
+
+hello.js
+
+```javascript
+exports.say = () => {
+  console.log('say someThing')
+}
+console.log(exports === module.exports) // true
+```
+
+其中： **exports === module.exports** 结果为true
+
+js通过`exports`对象作为模块的接口
+
+require的过程
+
+![](E:\knowledges\nodeJs\codes\img\nodejs-require.jpg)
+
+### 函数
+
+我们可以把函数当做变量传递
+
+#### 匿名函数
+
+```javascript
+function say(fn, value) {
+  fn(value)
+}
+say(function(){console.log('匿名函数')}, 'param')
+```
+
+例如http
+
+```javascript
+// charset=utf8 && charset=utf-8 都可以
+const htpp = require('http')
+function onRequest(req, res) {
+  res.writeHead(200, {'Content-Type': 'text/palin;charset=utf-8'})
+  res.write('new text!')
+  res.end()
+}
+http.createServer(onRequest).listen(8888)
+```
+
+### Node.js路由
+
+```javascript
+ function onRequest(request, response) {
+    console.log(request.url) // 根据这个url可以映射到不同的程序
+    response.writeHead(200, { 'Content-Type': 'text/plain;charset=utf8' });
+    response.write('Hello World你好世界');
+    response.end();
+  }
+```
+
+### Node.js全局对象
+
+Global Object
+
+在浏览器JavaScript中，通常window是全局对象，而Node.js中的全局对象是global，所有全局变量(除了global本身以外)都是global对象的属性
+
+#### 全局对象与全局变量
+
+- `__filename`表示当前正在执行的脚本的文件名。它将输出文件所在位置的绝对路径`
+
+  ```javascript
+  console.log(__filename) // E:\knowledges\nodeJs\codes\module\main.js
+  ```
+
+- `setTimeout(cb, ms)` 全局函数在指定的毫秒(ms)数后执行指定函数(cb)
+
+  ```javascript
+  function say() {
+    console.log('hi')
+  }
+  let t = setTimeout(say, 5000)
+  clearTimeout(t) // 不会执行
+  ```
+
+- `clearTimeout(t)` 全局函数用于停止一个之前通过 setTimeout() 创建的定时器
+
+- `setInterval(cb,ms)` 全局函数在指定的毫秒(ms)数后执行指定函数(cb)
+
+- `clearIntelval`
+
