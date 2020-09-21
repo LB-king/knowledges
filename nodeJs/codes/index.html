@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    console.log('log')
+    console.error('err')
+    console.info('info')
+    console.warn('warning')
+    console.dir([{a:11,b:22}])
+    console.time('获取数据')
+    let s = 0
+    for(let i = 0;i < 10000000; i++) {
+      s += i
+    }
+    console.timeEnd('获取数据')
+  </script>
+</body>
+
+</html>

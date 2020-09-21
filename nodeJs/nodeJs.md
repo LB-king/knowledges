@@ -36,6 +36,102 @@
   res.toString()
   ```
 
+- open(path, flags[, mode], callback)
+
+  - `path` - 文件的路径
+
+  - `flags` - 文件打开的行为
+
+    - `r` 以读取模式打开文件，如果文件不存在，抛出异常
+    - `r+` 读写
+    - `rs` 同步读取文件
+    - `w` 以写入模式打开文件，文件不存在则创建
+    - `wx` 同w,但是如果文件路径存在，则文件写入失败
+    - `w+` 以读写模式打开文件，如果文件不存在则创建
+    - `wx+` 类似'`w+`,但是如果文件路径存在，则文件读写失败
+    - `a` 以追加模式打开文件，如果文件不存在则创建
+    - `ax` 类似a，----会报错
+    - `a+` 
+    - `ax+` 
+
+  - `mode` - 设置文件模式(权限),文件创建默认权限为0666
+
+  - `callback(err, fd)` - 回调 
+
+    ```javascript
+    fs.open(path.resolve(__dirname, 'output.txt'), 'r+', function (err, fd) {
+      if (err) throw err
+      console.log('文件打开成功')
+    })
+    ```
+
+- read
+
+- close
+
+- ftruncate 截取文件
+
+  ```javascript
+  let buf = new Buffer.alloc(1024)
+  fs.open(path.resolve(__dirname, 'test.txt'),'r+',function(err,fd){
+    if(err) throw err
+    console.log('截取5个字节')
+    fs.ftruncate(fd, 5, function(err) {
+      console.log('文件截取成功')
+      fs.read(fd, buf, 0, buf.length, 0, function(err, bytes) {
+        if(err) throw err
+        if(bytes.length > 0) {
+          console.log(buf.slice(0, bytes).toString())
+        }
+        fs.close(fd, function(err) {
+          console.log('关闭文件')
+        })
+      })
+    })
+  })
+  ```
+
+- ftruncateSync 同步
+
+- unlink(path, callback) 删除文件
+
+- mkdir(path[, options], callback) 创建目录
+
+  option的参数可以是:
+
+  - recursive 是否以递归的方式创建目录，默认为false
+  - mode 设置目录权限，默认为0777
+
+  callback-回调函数，没有参数
+
+- readdir(path, callback(err, files))
+
+- rmdir(path,callback) 删除目录
+
+- rename(oldPath, newPath, callback) 重命名
+
+- chrown(path, uid, gid, callback)
+
+- chrownSync 同步
+
+  ...
+
+- writeFile()
+
+  ```javascript
+  // callback 只包含一个参数err
+  fs.writeFile('test.txt', 'hahaha酷玩1','utf-8', function(err) {
+    if (err) throw err
+    console.log('写入文件成功')
+    fs.readFile(path.resolve(__dirname, 'test.txt'), function(err, data){
+      if(err) throw err
+      console.log(data.toString())
+    })
+  })
+  ```
+
+  
+
 - lstat-fs.stats示例(**异步**)
 
   ```javascript
@@ -68,6 +164,7 @@
 
   ```javascript
   fs.lstatSync(path)
+  // 同步获取更详细的stats
   ```
 
 - readdir- 读取文件夹内容-(**异步**)
@@ -257,6 +354,90 @@ setTimeout(() => {
 - setMaxListeners(n) 默认情况，如果添加的监听器超过10个就会出现警告信息
 - listeners(event) 返回指定事件的监听器数组
 - emit(event,[ar1],[arg2],[...]) 按监听器的顺序执行每隔监听器，如果事件有注册监听返回true,否则返回false
+
+#### util
+
+util是Node.js核心模块，提供常用函数的集合，用于弥补核心JavaScript的功能过于精简的不足
+
+- `util.callbackify(original)` 将aync异步函数(或者一个返回值为Promise的函数)
+
+示例：
+
+```javascript
+const util = require('util')
+async function fn() {
+  return 'hi'
+}
+const callbackFunction = util.callbackify(fn)
+callbackFunction((err, res) => {
+  if(err) throw err
+  console.log(res)
+})
+
+// 输出结果 ： hi
+```
+
+- `util.inherits(constructor, superConstructor)`是一个实现对象间原型继承的函数
+
+- `util.inspect(object,[showHidden],[deepth],[colors])`是一个将任意对象转化为字符串的方法，通常用于调试和错误输出
+
+  ```javascript
+  const util = require('util')
+  function Person() {
+    this.name = 'kobe'
+    this.toString = function() {
+      return this.name
+    }
+  }
+  let obj = new Person()
+  console.log(util.inspect(obj))
+  // Person { name: 'kobe', toString: [Function] }
+  console.log(util.inspect(obj, true))
+  /*
+  Person {
+    name: 'kobe',
+    toString:
+     { [Function]
+       [length]: 0,
+       [name]: '',
+       [arguments]: null,
+       [caller]: null,
+       [prototype]: { [constructor]: [Circular] } } }
+  */ 
+  ```
+
+  - `object` 要转化的对象
+  - `showHidden` 是一个可选参数，如果值为true,将会输出更多隐藏信息
+  - `deepth`表示最大递归层数，不指定deepth，默认递归2层，指定为null表示不限递归层数完整遍历对象。
+  - `colors` 如其值为true，输出格式将会以ANSI颜色编码，通常用于在终端显示更漂亮的效果
+
+- `util.isArray(object)` 如果给定的参数是一个数组返回true,否则返回false
+
+  ```javascript
+  const util = require('util')
+  console.log(util.isArray([])) // true
+  console.log(util.isArray({})) // false
+  console.log(util.isArray('ko')) // false
+  ```
+
+- `util.isRegExp(object)` 如果给定的参数object是一个正则表达式返回true，否则返回false
+
+  ```javascript
+  const util = require('util')
+  console.log(util.isRegExp(/some/)) // true
+  console.log(util.isRegExp(new RegExp('another pppp'))) // true
+  console.log(util.isRegExp([])) // false
+  ```
+
+- `util.isDate(object)`
+
+  ```javascript
+  const util = require('util')
+  console.log(util.isDate(new Date())) // true
+  console.log(util.isDate(Date())) // false
+  console.log(util.isDate({})) // false
+  console.log(util.isDate(Date.now())) // 1600671078057 false
+  ```
 
 ### supervisor
 
@@ -454,6 +635,13 @@ Global Object
   console.log(__filename) // E:\knowledges\nodeJs\codes\module\main.js
   ```
 
+- `__dirname_` 表示当前正在执行的脚本所在的目录
+
+  ```javascript
+  console.log(__dirname)
+  E:\knowledges\nodeJs\codes
+  ```
+
 - `setTimeout(cb, ms)` 全局函数在指定的毫秒(ms)数后执行指定函数(cb)
 
   ```javascript
@@ -461,7 +649,7 @@ Global Object
     console.log('hi')
   }
   let t = setTimeout(say, 5000)
-  clearTimeout(t) // 不会执行
+  clearTimeout(t) // 不会执行	
   ```
 
 - `clearTimeout(t)` 全局函数用于停止一个之前通过 setTimeout() 创建的定时器
@@ -469,4 +657,85 @@ Global Object
 - `setInterval(cb,ms)` 全局函数在指定的毫秒(ms)数后执行指定函数(cb)
 
 - `clearIntelval`
+
+- `console.log(),info,error,warn,dir,time,timeEnd,trace`
+
+  ```javascript
+  console.time('获取数据')
+  let s = 0
+  for(let i = 0;i < 100000000; i++) {
+    s += i
+  }
+  console.timeEnd('获取数据')
+  // 能够打印出程序执行的时间
+  ```
+
+- `process` 是一个全局变量，即global对象的属性
+
+  1. `exit` 当进程准备退出时触发
+
+  2. `beforeExit` 当node清空事件循环，并且没有其他安排时触发这个事件。
+
+  3. `uncaughtException` 当一个异常冒泡回到事件循环，触发这个事件
+
+  4. `Signal` 当进程接收到信号时就触发
+
+     ```javascript
+     process.on('exit', function(code) {
+     	// 执行操作
+       console.log(code) // 0
+     })
+     ```
+
+     - `stdout` 标准输出流
+
+     - `stderr` 标准错误流
+
+     - `stdin` 标准输入流
+
+     - `argv` 返回一个数组
+
+       ```javascript
+       console.log(process.argv)
+       /*
+       [ 
+         'C:\\Program Files\\nodejs\\node.exe',
+         'E:\\knowledges\\nodeJs\\codes\\global.js' 
+       ]
+       */
+       ```
+
+     - `execPath` 返回执行当前脚本的Node二进制文件的绝对路径
+
+     - `env` 返回一个对象，成员为当前shell的环境变量
+
+     - `exitCode` 进程退出时的代码，如果进程通过`process.exit()`退出，不需要指定退出码
+
+     - `version` Node的版本
+
+     - `config` 一个包含用来编译当前node执行文件的javascript配置选项的对象
+
+     - `pid` 当前进程的进程号
+
+     - `title` 进程名,默认值是node
+
+     - `arch` 当前 CPU 的架构：'arm'、'ia32' 或者 'x64'
+
+     - `platform` 运行程序所在的平台系统 'darwin', 'freebsd', 'linux', 'sunos' 或 'win32'
+
+     - `mainModule` require.main的备选方法
+
+       方法
+
+     - `abort()` 导致node触发abort事件，会让node退出并生成一个核心文件
+
+     - `chdir(directory)` 改变当前工作进程的目录，如果操作失败抛出异常
+
+     - `cwd()` 返回当前进程的工作目录
+
+     - `exit([code])` 使用指定的code结束进程，如果忽略，将会使用code 0
+
+       ...
+
+  
 
