@@ -776,3 +776,102 @@ Global Object
 
 5. Domain模块
 
+### Express框架
+
+express是一个简介而灵活的node.jsWeb应用框架
+
+该框架的核心特性：
+
+- 可以设置中间件来响应HTTP请求
+- 定义了路由表用于执行不同的HTTP请求动作
+- 可以通过向模板传递参数来动态渲染HTML页面
+
+安装Express
+
+```powershell
+cnpm install express --save
+```
+
+与该框架一起安装的插件：
+
+- **body-parser**
+
+- **cookie-parse**
+
+- **multer**
+
+  ```powershell
+  cnpm install body-parse cookie-parse multer --save
+  ```
+
+  请求和响应：
+
+  ```javascript
+  const app = require('express')()
+  app.get('/', function(request, response){
+    
+  })
+  ```
+
+  request对象：
+
+  - req.app
+
+  - req.baseUrl
+
+  - req.body 获得请求主体
+
+    ...
+
+    详见：https://www.runoob.com/nodejs/nodejs-express-framework.html
+
+  response对象：
+
+  - res.append() 追加指定HTTP头
+
+  - res.set()在res.append()后将重置之前设置的头
+
+  - res.redirect():设置响应的Location HTTP头，并且设置状态码为302
+
+  - res.send() 传送http响应
+
+    ...
+
+    详见：https://www.runoob.com/nodejs/nodejs-express-framework.html
+
+  路由
+
+  ```javascript
+  const app = require('express')()
+  app.get('/', function (req, res) {
+    res.send('hi express 首页面')
+  })
+  app.get('/del', function (req, res) {
+    res.send('删除页面')
+  })
+  app.get('*', function (req, res) {
+    res.send('404 not found')
+  })
+  app.listen(3000, function () {
+    console.log('3000端口已被监听')
+  })
+  ```
+
+  静态文件
+
+  express提供了内置的中间件express.static来设置静态文件如：图片、css。javascript。
+
+  可使用express.static中间件来设置静态文件路径。如，如果你将图片放在public目录下，可以这么写
+
+  ```javascript
+  app.use('/ding', express.static('public'))
+  
+http://localhost:3000/ding/bg.png // 可直接访问图片
+  // 备注：静态文件的路径是相对于被标记的文件夹的，因此，在引用静态文件的路径中不能包含被标记的文件夹名称
+  app.set('title', 'myTitle')
+  app.get('title')
+  console.log(app.get('title')) // myTitle
+  ```
+  
+  更多详见: http://expressjs.jser.us/3x_zh-cn/api.html
+
