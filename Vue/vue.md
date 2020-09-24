@@ -169,5 +169,72 @@ SEO
 
 SSR(服务端渲染) vue-server-render - renderToString方法
 
+### 7.d3.js
 
+(Data-Driven Document) Document Object Model
 
+svg是他的画布SVG (Scalable Vector Graphics)可缩放矢量图形
+
+svg是d3的主要操作对象 , g:
+
+- Axis可封装成一个group
+- Legend(图例)可封装成一个group
+
+文档地址: https://www.it1352.com/OnLineTutorial/d3js/d3js_selections.html
+
+#### 选择
+
+- select()
+
+- selectAll() 用于选择HTML文档中的多个元素
+
+  ```javascript
+  d3.selectAll(".myclass").attr("style", "color: red")
+  ```
+
+- append()
+
+- text()
+
+- html()
+
+- attr() 用于添加或更新所选元素的属性。
+
+- style() 用于设置所选元素的样式属性
+
+- classed() 专门用于设置HTML元素的'class'属性。
+
+  ```javascript
+  d3.select('.myClass').text()
+  d3.select('#hello').text()
+  d3.select('div.myClass').append('span')
+  d3.select('.myClass').html('hi!<span>from d3</span>')
+  d3.select('.myClass').attr('style', 'color: red')
+  d3.select('.myClass').style('color', 'green')
+  d3.select('.myClass').classed('aname', true) // 添加类，必须将分类方法的第二个参数设置为true
+  d3.select('.myClass').classed('bname', false) // 删除类，必须将第二个参数设置为false
+  d3.select(".myclass").classed("myanotherclass") // 检查类，检查是否存在类，只需省略第二个参数并传递要查询的类型
+  var element = d3.select(".myclass") // 切换类
+  element.classed("myanotherclass", !oneBar.classed("myanotherclass"))
+  ```
+
+#### 数据加入
+
+数据连接使我们能够注入，修改和删除元素
+
+```javascript
+d3.select('#list').selectAll('li')
+  .data([10,20,30,25,15])
+	.text(function(d){
+      return d + 'hi'
+    })
+	.enter()
+	.append('li')
+	.text(function(d){
+		return d + 22
+    })
+```
+
+### 8.lodash
+
+https://www.lodashjs.com/docs/lodash

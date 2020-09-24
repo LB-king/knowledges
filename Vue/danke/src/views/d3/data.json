@@ -1,0 +1,795 @@
+{
+  "code": 0,
+  "data": {
+    "id": "629caaa9-2b0d-4181-b23a-f1c9ffbefbf0",
+    "name": "北京百度网讯科技有限公司",
+    "properties": {
+      "entid": "6F274BC761957C57E0539601A8C0ACD65",
+      "entname": "北京百度网讯科技有限公司",
+      "type": "Company"
+    },
+    "children": [
+      {
+        "id": "c88d16d4-f74c-4c13-ba10-64570d07643f",
+        "name": "法定代表人",
+        "properties": {
+          "tag": "lerepname",
+          "type": "Label"
+        },
+        "children": [
+          {
+            "id": "1c5d9986-331a-427f-8f45-794c83a0c93e",
+            "name": "梁志祥",
+            "properties": {
+              "entid": null,
+              "entname": null,
+              "type": "Nature"
+            },
+            "children": null
+          }
+        ]
+      },
+      {
+        "id": "b177f84b-8972-4300-82e3-ba91b42dfa3a",
+        "name": "实际控制人",
+        "properties": {
+          "tag": "controller",
+          "type": "Label"
+        },
+        "children": [
+          {
+            "id": "ce7ad840-c026-4b9c-aacf-700d5b6340ae",
+            "name": "李彦宏",
+            "properties": {
+              "entid": null,
+              "entname": "李彦宏",
+              "type": "Nature"
+            },
+            "children": null
+          }
+        ]
+      },
+      {
+        "id": "93699bcb-66ee-41a2-bd27-64911e3f2960",
+        "name": "股东",
+        "properties": {
+          "tag": "shareholder",
+          "type": "Label"
+        },
+        "children": [
+          {
+            "id": "d2828afa-b653-4a7d-949e-23aa0287735a",
+            "name": "李彦宏",
+            "properties": {
+              "entid": null,
+              "rate": "99.50%",
+              "entname": "李彦宏",
+              "type": "Nature"
+            },
+            "children": null
+          },
+          {
+            "id": "10b94053-75cb-4553-a263-3ee845e88199",
+            "name": "李彦宏",
+            "properties": {
+              "entid": null,
+              "rate": "99.50%",
+              "entname": "李彦宏",
+              "type": "Nature"
+            },
+            "children": null
+          },
+          {
+            "id": "570a28d9-e677-4627-9bba-f077612cdfbd",
+            "name": "崔珊珊",
+            "properties": {
+              "entid": null,
+              "rate": "0.50%",
+              "entname": "崔珊珊",
+              "type": "Nature"
+            },
+            "children": null
+          },
+          {
+            "id": "9cfe8a1e-4ea9-42f5-8d63-ec75c841f55b",
+            "name": "崔珊珊",
+            "properties": {
+              "entid": null,
+              "rate": "0.50%",
+              "entname": "崔珊珊",
+              "type": "Nature"
+            },
+            "children": null
+          }
+        ]
+      },
+      {
+        "id": "c937bd30-35d2-4140-bc48-d72ac518a57f",
+        "name": "主要人员",
+        "properties": {
+          "tag": "keyPerson",
+          "type": "Label"
+        },
+        "children": [
+          {
+            "id": "4b6a5bd5-2467-4fe4-9c44-2f915bded2ca",
+            "name": "韦方",
+            "properties": {
+              "entid": null,
+              "entname": "韦方",
+              "type": "Nature"
+            },
+            "children": null
+          },
+          {
+            "id": "f3d6e620-cffb-4ad4-8a1f-9fd9dd2f01f5",
+            "name": "李彦宏",
+            "properties": {
+              "entid": null,
+              "entname": "李彦宏",
+              "type": "Nature"
+            },
+            "children": null
+          },
+          {
+            "id": "03457b90-ce0d-4673-8046-dd243e35a18a",
+            "name": "梁志祥",
+            "properties": {
+              "entid": null,
+              "entname": "梁志祥",
+              "type": "Nature"
+            },
+            "children": null
+          }
+        ]
+      },
+      {
+        "id": "dcbc6a82-5640-42aa-b2fa-d3fd74a70f90",
+        "name": "控股企业",
+        "properties": {
+          "tag": "holding",
+          "type": "Label"
+        },
+        "children": [
+          {
+            "id": "78255d22-fb5e-4055-b1dc-b325a7faec52",
+            "name": "上海百度人才咨询有限公司",
+            "properties": {
+              "entid": "6F274C4B36257C57E0539601A8C0ACD65",
+              "rate": "100.00%",
+              "entname": "上海百度人才咨询有限公司",
+              "type": "Company"
+            },
+            "children": null
+          },
+          {
+            "id": "2329d701-4dac-4b01-ae14-9eee055724c5",
+            "name": "百度雄安科技有限公司",
+            "properties": {
+              "entid": "6F274BF265237C57E0539601A8C0ACD65",
+              "rate": "100.00%",
+              "entname": "百度雄安科技有限公司",
+              "type": "Company"
+            },
+            "children": null
+          },
+          {
+            "id": "f6d9db86-7b82-45d9-bc23-a926945d234a",
+            "name": "北京康夫子健康技术有限公司",
+            "properties": {
+              "entid": "7D24AA76BAEAB147E0539601A8C07EFD0",
+              "rate": "100.00%",
+              "entname": "北京康夫子健康技术有限公司",
+              "type": "Company"
+            },
+            "children": null
+          },
+          {
+            "id": "8d83ccee-df0e-4722-8300-8f215420aaa1",
+            "name": "北京百度智行科技有限公司",
+            "properties": {
+              "entid": "6F274BC5CB107C57E0539601A8C0ACD65",
+              "rate": "100.00%",
+              "entname": "北京百度智行科技有限公司",
+              "type": "Company"
+            },
+            "children": null
+          },
+          {
+            "id": "920e4670-1970-4706-a490-64139254bf66",
+            "name": "北京长地万方科技有限公司",
+            "properties": {
+              "entid": "6F274BBEE1FF7C57E0539601A8C0ACD65",
+              "rate": "100.00%",
+              "entname": "北京长地万方科技有限公司",
+              "type": "Company"
+            },
+            "children": null
+          },
+          {
+            "id": "a5c3c87b-1ad2-4122-bd33-ad3cd99a4c05",
+            "name": "北京康夫子健康技术有限公司",
+            "properties": {
+              "entid": "7D24AA76BAEAB147E0539601A8C07EFD0",
+              "rate": "100.00%",
+              "entname": "北京康夫子健康技术有限公司",
+              "type": "Company"
+            },
+            "children": null
+          },
+          {
+            "id": "b5ed648f-9f2a-45b3-ad4b-c0fa0600f4bd",
+            "name": "达孜县百瑞翔创业投资管理有限责任公司",
+            "properties": {
+              "entid": "6F274E99EB4A7C57E0539601A8C0ACD65",
+              "rate": "100.00%",
+              "entname": "达孜县百瑞翔创业投资管理有限责任公司",
+              "type": "Company"
+            },
+            "children": null
+          },
+          {
+            "id": "8ed82dad-84f7-49b1-b732-aa8bb2d32e3c",
+            "name": "北京受教信息科技有限公司",
+            "properties": {
+              "entid": "94249225f269d6f2328963cb5fe4980d",
+              "rate": "100.00%",
+              "entname": "北京受教信息科技有限公司",
+              "type": "Company"
+            },
+            "children": null
+          },
+          {
+            "id": "c5db3bf4-ab5f-465d-80ad-bbb557297512",
+            "name": "湖南微算互联信息技术有限公司",
+            "properties": {
+              "entid": "6F274DD258547C57E0539601A8C0ACD65",
+              "rate": "100.00%",
+              "entname": "湖南微算互联信息技术有限公司",
+              "type": "Company"
+            },
+            "children": null
+          },
+          {
+            "id": "05374a15-4db0-4e66-bce5-afaa3bb9c8c7",
+            "name": "北京百度智行科技有限公司",
+            "properties": {
+              "entid": "6F274BC5CB107C57E0539601A8C0ACD65",
+              "rate": "100.00%",
+              "entname": "北京百度智行科技有限公司",
+              "type": "Company"
+            },
+            "children": null
+          },
+          {
+            "id": "e52b7cc8-4739-43f4-9c6f-cb4e8f4dcc8a",
+            "name": "更多（36）",
+            "properties": {
+              "type": "More"
+            },
+            "children": null
+          }
+        ]
+      },
+      {
+        "id": "235daf42-13bf-461f-a670-b9a75940180c",
+        "name": "参股企业",
+        "properties": {
+          "tag": "participation",
+          "type": "Label"
+        },
+        "children": [
+          {
+            "id": "ec07a49e-3567-4ce2-b75c-a0444f036635",
+            "name": "上海叶萌广告传媒有限公司",
+            "properties": {
+              "entid": "6F274C76E4DA7C57E0539601A8C0ACD65",
+              "rate": "49.00%",
+              "entname": "上海叶萌广告传媒有限公司",
+              "type": "Company"
+            },
+            "children": null
+          },
+          {
+            "id": "962fc98c-5d32-4cdf-8479-0de94354829b",
+            "name": "上海叶萌广告传媒有限公司",
+            "properties": {
+              "entid": "6F274C76E4DA7C57E0539601A8C0ACD65",
+              "rate": "49.00%",
+              "entname": "上海叶萌广告传媒有限公司",
+              "type": "Company"
+            },
+            "children": null
+          },
+          {
+            "id": "8d643048-edc6-46ac-8907-5b0fd687566d",
+            "name": "北京亦水方舟科技有限公司",
+            "properties": {
+              "entid": "5011307ced3c7adc39fe9547b2befe8f",
+              "rate": "40.87%",
+              "entname": "北京亦水方舟科技有限公司",
+              "type": "Company"
+            },
+            "children": null
+          },
+          {
+            "id": "f3a721f6-6507-456a-bcb4-b7f9ddf7cb80",
+            "name": "北京亦水方舟科技有限公司",
+            "properties": {
+              "entid": "5011307ced3c7adc39fe9547b2befe8f",
+              "rate": "40.87%",
+              "entname": "北京亦水方舟科技有限公司",
+              "type": "Company"
+            },
+            "children": null
+          },
+          {
+            "id": "05de36f0-9579-4314-84e9-75bf8ce22adb",
+            "name": "北京度小满支付科技有限公司",
+            "properties": {
+              "entid": "6F274BD119EB7C57E0539601A8C0ACD65",
+              "rate": "40.00%",
+              "entname": "北京度小满支付科技有限公司",
+              "type": "Company"
+            },
+            "children": null
+          },
+          {
+            "id": "07a4104d-33cd-4661-b31a-d7b247f36d42",
+            "name": "北京度小满支付科技有限公司",
+            "properties": {
+              "entid": "6F274BD119EB7C57E0539601A8C0ACD65",
+              "rate": "40.00%",
+              "entname": "北京度小满支付科技有限公司",
+              "type": "Company"
+            },
+            "children": null
+          },
+          {
+            "id": "fc9bc8ae-b85b-4b6b-b1e9-27ef0994fcb9",
+            "name": "湖南阿波罗智行科技有限公司",
+            "properties": {
+              "entid": "8B35234A68919707E0539601A8C0F6B76",
+              "rate": "30.00%",
+              "entname": "湖南阿波罗智行科技有限公司",
+              "type": "Company"
+            },
+            "children": null
+          },
+          {
+            "id": "5afdfe80-3e1a-4a20-8a76-549620dfe7f0",
+            "name": "湖南阿波罗智行科技有限公司",
+            "properties": {
+              "entid": "8B35234A68919707E0539601A8C0F6B76",
+              "rate": "30.00%",
+              "entname": "湖南阿波罗智行科技有限公司",
+              "type": "Company"
+            },
+            "children": null
+          },
+          {
+            "id": "5df4fe92-cd6d-4a36-8884-0cda67137a83",
+            "name": "河南沸点网络科技有限公司",
+            "properties": {
+              "entid": "6F274D99B8EE7C57E0539601A8C0ACD65",
+              "rate": "26.67%",
+              "entname": "河南沸点网络科技有限公司",
+              "type": "Company"
+            },
+            "children": null
+          },
+          {
+            "id": "c9f8fd58-c4b1-4aab-a94a-3e392bd42a99",
+            "name": "河南沸点网络科技有限公司",
+            "properties": {
+              "entid": "6F274D99B8EE7C57E0539601A8C0ACD65",
+              "rate": "26.67%",
+              "entname": "河南沸点网络科技有限公司",
+              "type": "Company"
+            },
+            "children": null
+          },
+          {
+            "id": "cc98b5ce-b5de-49be-abd4-6774b8eb82b9",
+            "name": "更多（39）",
+            "properties": {
+              "type": "More"
+            },
+            "children": null
+          }
+        ]
+      },
+      {
+        "id": "6e9a68e5-fd4f-4ab2-a704-168fcbefdb3a",
+        "name": "分支机构",
+        "properties": {
+          "tag": "branch",
+          "type": "Label"
+        },
+        "children": [
+          {
+            "id": "face65f5-0eb2-4152-9670-7b58174b2bfc",
+            "name": "北京百度网讯科技有限公司哈尔滨分公司",
+            "properties": {
+              "entid": "4484f6cf817162072ea7ca19e1d29401",
+              "entname": "北京百度网讯科技有限公司哈尔滨分公司",
+              "type": "Company"
+            },
+            "children": null
+          },
+          {
+            "id": "9a72487f-473d-42f6-afd1-703552d24411",
+            "name": "北京百度网讯科技有限公司哈尔滨分公司",
+            "properties": {
+              "entid": "4484f6cf817162072ea7ca19e1d29401",
+              "entname": "北京百度网讯科技有限公司哈尔滨分公司",
+              "type": "Company"
+            },
+            "children": null
+          },
+          {
+            "id": "39d6cf04-5099-442a-bd3c-72b982d7acc0",
+            "name": "北京百度网讯科技有限公司南京分公司",
+            "properties": {
+              "entid": "6F274CA30DB07C57E0539601A8C0ACD65",
+              "entname": "北京百度网讯科技有限公司南京分公司",
+              "type": "Company"
+            },
+            "children": null
+          },
+          {
+            "id": "0b349797-083b-4987-a00f-8e0bbd5135a0",
+            "name": "北京百度网讯科技有限公司西安分公司",
+            "properties": {
+              "entid": "6F274EA0DDED7C57E0539601A8C0ACD65",
+              "entname": "北京百度网讯科技有限公司西安分公司",
+              "type": "Company"
+            },
+            "children": null
+          },
+          {
+            "id": "5e8f5504-6fcd-4456-9fcf-d03dc4b626da",
+            "name": "北京百度网讯科技有限公司佛山分公司",
+            "properties": {
+              "entid": "6F274DFE81BF7C57E0539601A8C0ACD65",
+              "entname": "北京百度网讯科技有限公司佛山分公司",
+              "type": "Company"
+            },
+            "children": null
+          },
+          {
+            "id": "21fa7551-948a-487f-976d-b45cb5ca4d51",
+            "name": "北京百度网讯科技有限公司广州分公司",
+            "properties": {
+              "entid": "6F274DD31B1B7C57E0539601A8C0ACD65",
+              "entname": "北京百度网讯科技有限公司广州分公司",
+              "type": "Company"
+            },
+            "children": null
+          },
+          {
+            "id": "538ac2dc-a709-41db-9418-aadd6d2d8942",
+            "name": "北京百度网讯科技有限公司佛山分公司",
+            "properties": {
+              "entid": "6F274DFE81BF7C57E0539601A8C0ACD65",
+              "entname": "北京百度网讯科技有限公司佛山分公司",
+              "type": "Company"
+            },
+            "children": null
+          },
+          {
+            "id": "f90de870-4c8b-4a90-a460-c037a8b39bb1",
+            "name": "北京百度网讯科技有限公司西安分公司",
+            "properties": {
+              "entid": "6F274EA0DDED7C57E0539601A8C0ACD65",
+              "entname": "北京百度网讯科技有限公司西安分公司",
+              "type": "Company"
+            },
+            "children": null
+          },
+          {
+            "id": "8cdd4fb3-8b70-4c70-90af-4236d75192f8",
+            "name": "北京百度网讯科技有限公司南京分公司",
+            "properties": {
+              "entid": "6F274CA30DB07C57E0539601A8C0ACD65",
+              "entname": "北京百度网讯科技有限公司南京分公司",
+              "type": "Company"
+            },
+            "children": null
+          },
+          {
+            "id": "db87fbcc-cbc2-4c3f-b27d-4b973d7bbefa",
+            "name": "北京百度网讯科技有限公司广州分公司",
+            "properties": {
+              "entid": "6F274DD31B1B7C57E0539601A8C0ACD65",
+              "entname": "北京百度网讯科技有限公司广州分公司",
+              "type": "Company"
+            },
+            "children": null
+          },
+          {
+            "id": "f70ed9cc-fe85-47f8-8bdd-dc7c3c99ea7b",
+            "name": "更多（8）",
+            "properties": {
+              "type": "More"
+            },
+            "children": null
+          }
+        ]
+      },
+      {
+        "id": "b9589ca6-b490-4d61-8b75-12875aa4b045",
+        "name": "所属集团",
+        "properties": {
+          "tag": "group",
+          "type": "Label"
+        },
+        "children": [
+          {
+            "id": "4800c469-0b41-4aa5-9790-7b1d7f9862af",
+            "name": "北京百度网讯科技有限公司",
+            "properties": {
+              "companyNum": 47,
+              "entid": "g_6F274BC761957C57E0539601A8C0ACD65",
+              "entname": "北京百度网讯科技有限公司",
+              "type": "Group"
+            },
+            "children": [
+              {
+                "id": "c86b6c14-56ea-4306-8da4-c67b814e3710",
+                "name": "集团母公司",
+                "properties": {
+                  "tag": "company",
+                  "type": "Label"
+                },
+                "children": [
+                  {
+                    "id": "104497a1-ffdc-44fe-9e9d-614257b0d975",
+                    "name": "北京百度网讯科技有限公司",
+                    "properties": {
+                      "entid": "6F274BC761957C57E0539601A8C0ACD65",
+                      "entname": "北京百度网讯科技有限公司",
+                      "tag": "Company",
+                      "type": "Company"
+                    },
+                    "children": null
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "cfab3e2d-b053-4869-a275-8fbb91c79693",
+        "name": "多次共投",
+        "properties": {
+          "tag": "SameInvest",
+          "type": "Label"
+        },
+        "children": [
+          {
+            "id": "347080fc-7ea1-4a8f-901a-d98f4a4aaf79",
+            "name": "何宏辉",
+            "properties": {
+              "nodes": [
+                {
+                  "id": "6F274BD4504A7C57E0539601A8C0ACD65",
+                  "name": "天津龙渊云腾投资管理合伙企业(有限合伙)",
+                  "lab": null,
+                  "tag": null,
+                  "type": null,
+                  "promise": null,
+                  "innode": null
+                },
+                {
+                  "id": "6F274BBA60B37C57E0539601A8C0ACD65",
+                  "name": "北京龙渊天启投资管理中心(有限合伙)",
+                  "lab": null,
+                  "tag": null,
+                  "type": null,
+                  "promise": null,
+                  "innode": null
+                }
+              ],
+              "entid": null,
+              "num": 2,
+              "type": "Nature"
+            },
+            "children": null
+          },
+          {
+            "id": "acb516a2-ca10-4872-8bbb-42aab3ef7f6a",
+            "name": "深圳市创新投资集团有限公司",
+            "properties": {
+              "nodes": [
+                {
+                  "id": "6F274D2B6E497C57E0539601A8C0ACD65",
+                  "name": "厦门千时科技有限公司",
+                  "lab": null,
+                  "tag": null,
+                  "type": null,
+                  "promise": null,
+                  "innode": null
+                },
+                {
+                  "id": "6F274DDC956A7C57E0539601A8C0ACD65",
+                  "name": "深圳市百分之百数码科技有限公司",
+                  "lab": null,
+                  "tag": null,
+                  "type": null,
+                  "promise": null,
+                  "innode": null
+                },
+                {
+                  "id": "6F274BAFBBB57C57E0539601A8C0ACD65",
+                  "name": "北京捷通华声科技股份有限公司",
+                  "lab": null,
+                  "tag": null,
+                  "type": null,
+                  "promise": null,
+                  "innode": null
+                }
+              ],
+              "entid": "6F274E1A73477C57E0539601A8C0ACD65",
+              "num": 3,
+              "type": "Company"
+            },
+            "children": null
+          },
+          {
+            "id": "e1217e5a-2ce6-42fd-b911-fa0e832af5f6",
+            "name": "北京百度毕威企业管理中心(有限合伙)",
+            "properties": {
+              "nodes": [
+                {
+                  "id": "6F274BC82BF57C57E0539601A8C0ACD65",
+                  "name": "云丁网络技术(北京)有限公司",
+                  "lab": null,
+                  "tag": null,
+                  "type": null,
+                  "promise": null,
+                  "innode": null
+                },
+                {
+                  "id": "6F274E7E482B7C57E0539601A8C0ACD65",
+                  "name": "成都极米科技股份有限公司",
+                  "lab": null,
+                  "tag": null,
+                  "type": null,
+                  "promise": null,
+                  "innode": null
+                }
+              ],
+              "entid": "6F274BCEC0F37C57E0539601A8C0ACD65",
+              "num": 2,
+              "type": "Company"
+            },
+            "children": null
+          },
+          {
+            "id": "f81848d7-ab9b-4d83-87b4-51d79e043d0e",
+            "name": "金卓恒邦科技(北京)有限公司",
+            "properties": {
+              "nodes": [
+                {
+                  "id": "6F274BC912367C57E0539601A8C0ACD65",
+                  "name": "华扬联众数字技术股份有限公司",
+                  "lab": null,
+                  "tag": null,
+                  "type": null,
+                  "promise": null,
+                  "innode": null
+                },
+                {
+                  "id": "6F274BCF13147C57E0539601A8C0ACD65",
+                  "name": "首约科技(北京)有限公司",
+                  "lab": null,
+                  "tag": null,
+                  "type": null,
+                  "promise": null,
+                  "innode": null
+                }
+              ],
+              "entid": "6F274BBBD6677C57E0539601A8C0ACD65",
+              "num": 2,
+              "type": "Company"
+            },
+            "children": null
+          },
+          {
+            "id": "136f5c27-4a2e-4e18-99fe-9332b0a3c245",
+            "name": "刘成敏",
+            "properties": {
+              "nodes": [
+                {
+                  "id": "6F274BD4504A7C57E0539601A8C0ACD65",
+                  "name": "天津龙渊云腾投资管理合伙企业(有限合伙)",
+                  "lab": null,
+                  "tag": null,
+                  "type": null,
+                  "promise": null,
+                  "innode": null
+                },
+                {
+                  "id": "6F274BBA60B37C57E0539601A8C0ACD65",
+                  "name": "北京龙渊天启投资管理中心(有限合伙)",
+                  "lab": null,
+                  "tag": null,
+                  "type": null,
+                  "promise": null,
+                  "innode": null
+                }
+              ],
+              "entid": null,
+              "num": 2,
+              "type": "Nature"
+            },
+            "children": null
+          },
+          {
+            "id": "836c9ccc-3881-4da2-9ea8-c709be03966f",
+            "name": "上海文化产业股权投资基金合伙企业(有限合伙)",
+            "properties": {
+              "nodes": [
+                {
+                  "id": "6F274BCFF61B7C57E0539601A8C0ACD65",
+                  "name": "北京创新伙伴教育科技有限公司",
+                  "lab": null,
+                  "tag": null,
+                  "type": null,
+                  "promise": null,
+                  "innode": null
+                },
+                {
+                  "id": "6F274C70C9F67C57E0539601A8C0ACD65",
+                  "name": "沪江教育科技(上海)股份有限公司",
+                  "lab": null,
+                  "tag": null,
+                  "type": null,
+                  "promise": null,
+                  "innode": null
+                }
+              ],
+              "entid": "6F274C766B637C57E0539601A8C0ACD65",
+              "num": 2,
+              "type": "Company"
+            },
+            "children": null
+          },
+          {
+            "id": "a05c20c8-3e82-4669-b69e-8238de6b388e",
+            "name": "上海赛领紫麓创业投资中心(有限合伙)",
+            "properties": {
+              "nodes": [
+                {
+                  "id": "6F274BC63B5C7C57E0539601A8C0ACD65",
+                  "name": "北京小度互娱科技有限公司",
+                  "lab": null,
+                  "tag": null,
+                  "type": null,
+                  "promise": null,
+                  "innode": null
+                },
+                {
+                  "id": "6F274E7E482B7C57E0539601A8C0ACD65",
+                  "name": "成都极米科技股份有限公司",
+                  "lab": null,
+                  "tag": null,
+                  "type": null,
+                  "promise": null,
+                  "innode": null
+                }
+              ],
+              "entid": "6F274C67C8ED7C57E0539601A8C0ACD65",
+              "num": 2,
+              "type": "Company"
+            },
+            "children": null
+          }
+        ]
+      }
+    ]
+  },
+  "message": "success"
+}

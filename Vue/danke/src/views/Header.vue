@@ -1,12 +1,13 @@
 <template lang="pug">
-  el-menu(default-active="1",
+  el-menu(:default-active="activeIndex",
+    router
     mode="horizontal",
     background-color="#545c64",
     text-color="#fff",
     active-text-color="#ffd04b")
-    el-menu-item(index="1") 首页
-    el-menu-item(index="2") 字典
-    el-menu-item(index="3") 查询
+    el-menu-item(index="/") 首页
+    el-menu-item(index="/dict") 字典
+    el-menu-item(index="/d3") d3
 </template>
 <script>
 export default {
@@ -14,6 +15,11 @@ export default {
   data() {
     return {
       msg: 'menu'
+    }
+  },
+  computed: {
+    activeIndex() {
+      return this.$route.path
     }
   }
 }
