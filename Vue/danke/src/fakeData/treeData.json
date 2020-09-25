@@ -1,0 +1,159 @@
+{
+  "code": 0,
+  "data": {
+    "id": "2df8e2cc-9879-498d-bf48-ca0a749947d1",
+    "name": "苏州沃芽科技有限公司",
+    "properties": {
+      "entid": "6F274C9DEFA37C57E0539601A8C0ACD65",
+      "entname": "苏州沃芽科技有限公司",
+      "type": "Company"
+    },
+    "children": [
+      {
+        "id": "6cb70c63-492b-49f8-90a2-c0d8384bedec",
+        "name": "法定代表人",
+        "properties": {
+          "tag": "lerepname",
+          "type": "Label"
+        },
+        "children": [
+          {
+            "id": "e4507948-c19e-4c27-a5e2-173782bc765e",
+            "name": "张博",
+            "properties": {
+              "entid": null,
+              "entname": null,
+              "type": "Nature"
+            },
+            "children": null
+          }
+        ]
+      },
+      {
+        "id": "f45a44f1-da51-4190-b605-b0793f41690d",
+        "name": "实际控制人",
+        "properties": {
+          "tag": "controller",
+          "type": "Label"
+        },
+        "children": [
+          {
+            "id": "df89a366-515f-4973-b757-26488094c236",
+            "name": "程维",
+            "properties": {
+              "entid": null,
+              "entname": "程维",
+              "type": "Nature"
+            },
+            "children": null
+          },
+          {
+            "id": "a2041621-ff92-4177-b109-245e34542018",
+            "name": "陈汀",
+            "properties": {
+              "entid": null,
+              "entname": "陈汀",
+              "type": "Nature"
+            },
+            "children": null
+          }
+        ]
+      },
+      {
+        "id": "e9bcd50e-38b7-476b-b6c3-d03ea22364a0",
+        "name": "股东",
+        "properties": {
+          "tag": "shareholder",
+          "type": "Label"
+        },
+        "children": [
+          {
+            "id": "42a4babd-5c83-4112-abab-211a67831ce8",
+            "name": "北京小桔科技有限公司",
+            "properties": {
+              "entid": "6F274BCB89557C57E0539601A8C0ACD65",
+              "rate": "100.00%",
+              "entname": "北京小桔科技有限公司",
+              "type": "Company"
+            },
+            "children": null
+          }
+        ]
+      },
+      {
+        "id": "e9249a79-c02d-4c4b-bc5e-3ad668bed9ae",
+        "name": "主要人员",
+        "properties": {
+          "tag": "keyPerson",
+          "type": "Label"
+        },
+        "children": [
+          {
+            "id": "40d3b2d0-2d8c-4004-9b68-a3ad9eeb3da5",
+            "name": "求非曲",
+            "properties": {
+              "entid": null,
+              "entname": "求非曲",
+              "type": "Nature"
+            },
+            "children": null
+          },
+          {
+            "id": "802a13e7-7d31-4f5a-809b-6a9700b28c2c",
+            "name": "张博",
+            "properties": {
+              "entid": null,
+              "entname": "张博",
+              "type": "Nature"
+            },
+            "children": null
+          }
+        ]
+      },
+      {
+        "id": "241fffb9-8136-443b-89cc-6ebc1a774b59",
+        "name": "所属集团",
+        "properties": {
+          "tag": "group",
+          "type": "Label"
+        },
+        "children": [
+          {
+            "id": "0cec8724-4e56-4a33-b662-d54c72f28176",
+            "name": "上海滴滴沃芽科技有限公司",
+            "properties": {
+              "companyNum": 3,
+              "entid": "g_8B35234805429707E0539601A8C0F6B76",
+              "entname": "上海滴滴沃芽科技有限公司",
+              "type": "Group"
+            },
+            "children": [
+              {
+                "id": "00cf8dfb-95cc-441f-9b50-ddd6455b8b9c",
+                "name": "集团母公司",
+                "properties": {
+                  "tag": "company",
+                  "type": "Label"
+                },
+                "children": [
+                  {
+                    "id": "4e64e456-912d-4937-a93a-30602eea23d0",
+                    "name": "上海滴滴沃芽科技有限公司",
+                    "properties": {
+                      "entid": "8B35234805429707E0539601A8C0F6B76",
+                      "entname": "上海滴滴沃芽科技有限公司",
+                      "tag": "Company",
+                      "type": "Company"
+                    },
+                    "children": null
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "message": "success"
+}

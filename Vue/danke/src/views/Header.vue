@@ -5,16 +5,16 @@
     background-color="#545c64",
     text-color="#fff",
     active-text-color="#ffd04b")
-    el-menu-item(index="/") 首页
-    el-menu-item(index="/dict") 字典
-    el-menu-item(index="/d3") d3
+    el-menu-item(v-for="(item, index) in headMenus" :key="index" :index="item.path") {{item.name}}
 </template>
 <script>
+import { headMenus } from '@/libs/headerMenu'
 export default {
   name: 'main-header',
   data() {
     return {
-      msg: 'menu'
+      msg: 'menu',
+      headMenus
     }
   },
   computed: {
