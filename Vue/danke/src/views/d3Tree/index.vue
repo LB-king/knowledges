@@ -1162,8 +1162,11 @@ export default {
 
 <style lang="scss">
 .entity-graph-tree {
-  height: 600px;
+  height: 480px;
+  width: 1080px;
   position: relative;
+  border: 1px solid #ccc;
+  margin: 20px auto;
   &.fullscreen {
     height: 100%;
   }

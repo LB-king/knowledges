@@ -21,8 +21,6 @@
   }
   ```
 
-  
-
 - 判断类型
 
   ```javascript
@@ -41,6 +39,17 @@
   b // [11, 22, 33]
   // 2.对象数组
   b = a.map(i => {...a})
+  ```
+
+### 正则表达式
+
+​	https://tool.oschina.net/uploads/apidocs/jquery/regexp.html
+
+- 正则实现千分位
+
+  ```javascript
+  let num = '123456'
+  num.replace(/(?=(?!\b)(\d{3})+$/g, ',')
   ```
 
   

@@ -115,7 +115,7 @@
         "name": "所属集团",
         "properties": {
           "tag": "group",
-          "type": "Label"
+          "type": "label"
         },
         "children": [
           {

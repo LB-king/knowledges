@@ -233,7 +233,19 @@ d3.select('#list').selectAll('li')
 	.text(function(d){
 		return d + 22
     })
+// enter()方法提供对剩余数据的访问(未映射到现有元素)
 ```
+
+数据连接提供以下四种方法来处理数据集：
+
+- datum()
+- data()
+- enter()
+- exit()
+
+
+
+
 
 ### 8.lodash
 

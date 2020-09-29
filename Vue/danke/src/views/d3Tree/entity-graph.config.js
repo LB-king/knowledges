@@ -340,6 +340,13 @@ const defaultNodeSettings = {
 
 export const nodeSettings = {
   Default: defaultNodeSettings,
+  label: {
+    ...defaultNodeSettings,
+    cursor: "default",
+    bgColor: "#ccc",
+    borderColor: "#ccc",
+    textColor: "#bfc"
+  },
   Label: {
     ...defaultNodeSettings,
     cursor: "default",

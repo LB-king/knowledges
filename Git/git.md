@@ -106,7 +106,7 @@ git push origin dev # 将fenzhi合并到dev
 git checkout -b dev1 origin dev1 #创建dev分支与远程dev分支关联，内容也会切换
 ```
 
-#### hitk乱码问题
+#### gitk乱码问题
 
 ```shell
 git config --global gui.encoding utf-8
