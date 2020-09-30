@@ -52,5 +52,17 @@
   num.replace(/(?=(?!\b)(\d{3})+$/g, ',')
   ```
 
-  
+### vscode的一些设置
+
+在项目的根目录新建`.prettierrc`.前提是要安装prettier插件
+
+```json
+{
+  "tabWidth": 2,
+  "singleQuote": true,
+  "semi": false
+}
+```
+
+
 

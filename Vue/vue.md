@@ -161,6 +161,13 @@ npm install pug pug-loader pug-plain-loader -S
 '123456'.replace(/(?=(?!\b)(\d{3})+$)/g,',') // '123,456'
 ```
 
+交换2个变量的值
+
+```javascript
+let [a, b] = [11, 222]
+a = [b, (b = a)][0]
+```
+
 预渲染(prerender-spa-plugin)
 
 vue的依赖注入
@@ -334,7 +341,31 @@ svg.append('line')
   - `SkewX` 倾斜角沿x轴与沿y轴
   - `SkewY`
 
+#### 动画
 
+```javascript
+d3.select('#trs')
+  .transition()
+// .style('background-color', 'lightblue')
+  .style('background-color', 'rgb(0,0,200)')
+// .style('background-color', 'gray')
+  .duration(2000)
+  .delay(3000)
+```
+
+转型生命周期
+
+1. 计划转换
+
+   转换在创建时计划。当我们调用`selection.transition`时，当调用`attr()`、`style()`和其他过渡方法来定义结束关键帧时。
+
+2. 转换开始
+
+3. 转换运行
+
+4. 过渡结束
+
+   直接文档：https://www.it1352.com/OnLineTutorial/d3js/d3js_animation.html
 
 ### 8.lodash
 

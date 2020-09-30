@@ -1,38 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>转换</title>
+    <script src="./static/d3.min.js"></script>
+    <script src="./static/d3-transform.min.js"></script>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>转换</title>
-  <script src="./static/d3.min.js"></script>
-</head>
+  <body>
+    <svg width="300" height="160">
+      <rect
+        x="0"
+        y="0"
+        width="60"
+        height="60"
+        fill="green"
+        transform="translate(60 60) rotate(0) skewX(45) skewY(-45)"
+      ></rect>
+    </svg>
+    <section id="box"></section>
+    <p>Transformation Using D3.js</p>
+    <section id="transform"></section>
+    <p>transition</p>
+    <div id="trs"></div>
+  </body>
+  <style>
+    svg {
+      border: 1px solid #eeeeee;
+    }
 
-<body>
-  <svg width="300" height="160">
-    <rect x="0" y="0" width="60" height="60" fill="green" transform="translate(60 60) rotate(0) skewX(45) skewY(-45)">
-    </rect>
-  </svg>
-  <section id="box"></section>
-</body>
-<style>
-  svg {
-    border: 1px solid #eeeeee;
-  }
-</style>
-<script>
-  let svg = d3.select('#box')
-    .append('svg')
-    .attr('width', 320)
-    .attr('height', 180)
-  svg.append('line')
-    .attr('x1', 0)
-    .attr('y1', 80)
-    .attr('x2', 80)
-    .attr('y2', 80)
-    .attr('transform', 'translate(80 0) rotate(30)')
-    .style('stroke', 'blue')
-</script>
+    #trs {
+      height: 300px;
+      width: 300px;
+      margin-top: 18px;
+    }
+  </style>
+  <script>
+    let svg = d3
+      .select('#box')
+      .append('svg')
+      .attr('width', 320)
+      .attr('height', 180)
+    svg
+      .append('line')
+      .attr('x1', 0)
+      .attr('y1', 80)
+      .attr('x2', 80)
+      .attr('y2', 80)
+      .attr('transform', 'translate(80 0) rotate(30)')
+      .style('stroke', 'blue')
 
+    let svg1 = d3
+      .select('#transform')
+      .append('svg')
+      .attr('width', 300)
+      .attr('height', 200)
+    /*  let group = svg1.append('g')
+     .attr('transform', 'translate(60 60) rotate(-30)') */
+    //  使用d3-transform实现转换如下
+    let my_transform = d3Transform()
+      .translate([60, 60])
+      .rotate(-30)
+
+    var group = svg1.append('g').attr('transform', my_transform)
+    let rect = group
+      .append('rect')
+      .attr('x', -20)
+      .attr('y', 20)
+      .attr('width', 40)
+      .attr('height', 100)
+      .attr('fill', 'green')
+    let circle = group
+      .append('circle')
+      .attr('cx', 0)
+      .attr('cy', 0)
+      .attr('r', 20)
+      .attr('fill', 'red')
+    // transition方法
+    d3.select('#trs')
+      .transition()
+      // .style('background-color', 'lightblue')
+      .style('background-color', 'rgb(0,0,200)')
+      // .style('background-color', 'gray')
+      .delay(200)
+      // .each(function() {
+      //   d3.select(this)
+      //     .style('background-color', 'lightblue')
+      // })
+      .duration(2000)
+  </script>
 </html>
