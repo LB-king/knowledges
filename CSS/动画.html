@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>CSS3动画</title>
+  <style>
+    .box {
+      height: 400px;
+      width: 400px;
+      border: 1px solid #eeeeee;
+      margin-top: 15px;
+    }
+
+    .line {
+      height: 60px;
+      width: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: royalblue;
+      margin-top: 15px;
+      color: #ffffff;
+      /* animation: move 5s infinite; */
+    }
+
+    .linear {
+      animation-timing-function: linear;
+    }
+
+    .ease {
+      animation-timing-function: ease;
+    }
+
+    .ease-in {
+      animation-timing-function: ease-in;
+    }
+
+    .ease-out {
+      animation-timing-function: ease-out;
+    }
+
+    .ease-in-out {
+      animation-timing-function: ease-in-out;
+    }
+
+    @keyframes move {
+      0% {
+        margin-left: 0;
+        transform: rotate(0);
+      }
+
+      50% {
+        margin-left: 340px;
+        transform: rotate(180deg);
+      }
+
+      100% {
+        margin-left: 0;
+        transform: rotate(360deg);
+      }
+    }
+    .transition {
+      width: 100px;
+      transition: all .3s linear;
+      cursor: pointer;
+    }
+    .transition:hover {
+      width: 150px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box">
+    <div class="line linear">linear</div>
+    <div class="line ease">ease</div>
+    <div class="line ease-in">ease-in</div>
+    <div class="line ease-out">ease-out</div>
+    <div class="line ease-in-out">ease-in-out</div>
+  </div>
+  <div class="box">
+    <div class="line transition">transition</div>
+  </div>
+</body>
+
+</html>

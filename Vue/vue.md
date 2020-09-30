@@ -243,7 +243,96 @@ d3.select('#list').selectAll('li')
 - enter()
 - exit()
 
+#### SVG简介
 
+```html
+/*一条线段*/
+<svg width="300" height="200">
+  <line x1="0" y1="0" x2="300" y2="200" style="stroke: rgb(255, 0, 0);stroke-width:2;"></line>
+</svg>
+```
+
+使用d3实现，代码如下：
+
+```javascript
+let width = 300
+let height = 200
+let svg = d3.select('#svgBox')
+.append('svg')
+.attr('width', width)
+.attr('height', height)
+svg.append('line')
+  .attr('x1', 0)
+  .attr('y1', 0)
+  .attr('x2', 300)
+  .attr('y2', 200)
+  .style('stroke', 'rgb(0,250,0)')
+  .style('stroke-width', 3)
+```
+
+- 矩形(Rectangle Element)
+
+  - `x` 这是矩形左上角的x坐标
+  - `y` 这是矩形左上角的y坐标
+  - `width` 矩形宽度
+  - `height` 矩形高度
+
+  ```html
+  <rect x="0" y="0" width="100" height="100" style="fill: rgb(123,33,44);"></rect>
+  ```
+
+- 圆圈(Circle Element)
+
+  - `cx` 圆心的x坐标
+  - `cy` 圆心的y坐标
+  - `r` 半径
+
+  ```html
+  <circle cx = "200" cy = "50" r = "20"/>
+  ```
+
+  ```javascript
+  svg.append('circle')
+    .attr('cx', 200)
+    .attr('cy', 90)
+    .attr('r', 50)
+    .style('fill', 'rgb(255, 0, 0)')
+  ```
+
+- 椭圆(Ellipse Element)
+
+  - `cx` 椭圆中心的x坐标
+  - `cy` 椭圆中心的y坐标
+  - `rx` 圆的x半径
+  - `ry` 圆的y半径
+
+  ```html
+  <ellipse cx = "200" cy = "50" rx = "100" ry = "50" fill = "green" />
+  ```
+
+- 图形转换
+
+  ```html
+  <svg width="300" height="160">
+    <rect 
+      x="0" 
+      y="0" 
+      width="60" 
+   		height="60" 
+      fill="green" 
+      transform="translate(60 60) rotate(0) skewX(45) skewY(-45)"
+    >
+    </rect>
+  </svg>
+  ```
+
+  转换:
+
+  - `translate(x ,y)` 平移
+  - `rotate(cx, cy)`  **cx** 和 **cy** 指的是x和y轴旋转的中心.如果未指定 **cx** 和 **cy** ，则默认为坐标系的当前原点.对于**示例** : 旋转(60)
+  - `scale(sx, sy)` **sx** 是指沿x轴的缩放因子， **sy** 是指沿y轴的缩放因子.这里， **sy** 是可选的，如果未指定，则它取 **sx** 的值.对于**示例** :  scale(10)
+  - `SkewX` 倾斜角沿x轴与沿y轴
+  - `SkewY`
 
 
 
