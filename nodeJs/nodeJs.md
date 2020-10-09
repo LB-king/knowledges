@@ -794,11 +794,11 @@ cnpm install express --save
 
 与该框架一起安装的插件：
 
-- **body-parser**
+- **body-parser**-nodejs中间件，用于处理JSON，Raw，Text，和URL编码的数据
 
-- **cookie-parse**
+- **cookie-parse**-一个解析Cookie的工具，通过req.cookies可以取到传过来的cookie，并把它们转换成对象
 
-- **multer**
+- **multer**-中间件，用于处理entype="mulipart/form-data"(设置表单的MIME编码)的编码数据
 
   ```powershell
   cnpm install body-parse cookie-parse multer --save
@@ -857,21 +857,121 @@ cnpm install express --save
   })
   ```
 
-  静态文件
+#### 静态文件
 
-  express提供了内置的中间件express.static来设置静态文件如：图片、css。javascript。
+express提供了内置的中间件express.static来设置静态文件如：图片、css。javascript。
 
-  可使用express.static中间件来设置静态文件路径。如，如果你将图片放在public目录下，可以这么写
+可使用express.static中间件来设置静态文件路径。如，如果你将图片放在public目录下，可以这么写
 
-  ```javascript
-  app.use('/ding', express.static('public'))
-  
+```javascript
+app.use('/ding', express.static('public'))
+```
+
 http://localhost:3000/ding/bg.png // 可直接访问图片
   // 备注：静态文件的路径是相对于被标记的文件夹的，因此，在引用静态文件的路径中不能包含被标记的文件夹名称
   app.set('title', 'myTitle')
   app.get('title')
   console.log(app.get('title')) // myTitle
-  ```
-  
-  更多详见: http://expressjs.jser.us/3x_zh-cn/api.html
+
+更多详见: http://expressjs.jser.us/3x_zh-cn/api.html
+
+#### 2种请求
+
+```javascript
+app.get('/process_get', function(req, res) {
+  let fullNmae = {
+    first_name: req.query.first_name,
+    last_name: req.query.last_name
+  }
+  res.writeHead(200, { 'Content-Type': 'text/plain;charset=utf-8' })
+  res.end(JSON.stringify(fullNmae))
+})
+app.post(
+  '/process_post',
+  bodyParser.urlencoded({ extended: false }),
+  (req, res) => {
+    let fullNmae = {
+      first_name: req.body.first_name,
+      last_name: req.body.last_name
+    }
+    res.writeHead(200, { 'Content-Type': 'text/plain;charset=utf-8' })
+    res.end(JSON.stringify(fullNmae))
+  }
+)
+```
+
+#### 文件上传
+
+```html
+<html>
+<head>
+<title>文件上传表单</title>
+</head>
+<body>
+<h3>文件上传：</h3>
+选择一个文件上传: <br />
+<form action="/file_upload" method="post" enctype="multipart/form-data">
+<input type="file" name="image" size="50" />
+<br />
+<input type="submit" value="上传文件" />
+</form>
+</body>
+</html>
+```
+
+```javascript
+const express = require('express')
+const bodyParser = require('body-parser')
+const multer = require('multer')
+const path = require('path')
+const fs = require('fs')
+const app = express()
+let dirName = 'tmp'
+// app.use('/public', express.static('public'))
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(multer({ dest: `/${dirName}/` }).array('image'))
+app.get('/index.html', (req, res) => {
+  res.sendFile(__dirname + '/index.html')
+})
+app.post('/file_upload', (req, res) => {
+  let exists = fs.existsSync(path.join(__dirname, dirName)) // 判断文件夹是否存在
+  if (exists) {
+    // 文件夹存在，则直接存入该文件夹
+    fs.readFile(req.files[0].path, function(err, data) {
+      if (err) throw err
+      copyFile(req, res, data)
+    })
+  } else {
+    // 文件夹不存在，则先创建
+    fs.mkdir(path.join(__dirname, dirName), function(err) {
+      if (err) throw err
+      copyFile(req, res, data)
+    })
+  }
+})
+function copyFile(req, res, data) {
+  let des_file = path.join(__dirname, dirName) + '/' + req.files[0].originalname
+  fs.writeFile(des_file, data, function(err) {
+    if (err) throw err
+    res.writeHead(200, { 'Content-Type': 'text/plain;charset=utf8' })
+    res.end(
+      JSON.stringify({
+        msg: 'success!',
+        filename: req.files[0].originalname
+      })
+    )
+  })
+}
+app.listen(3000, () => {
+  console.log('running at:' + 3000)
+})
+```
+
+#### RESTFUL API
+
+Representational State Transfer,rest(表述性状态传递)
+
+get put delete post
+
+具体参考：https://www.runoob.com/nodejs/nodejs-restful-api.html
 
