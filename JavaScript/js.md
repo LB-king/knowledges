@@ -7,39 +7,69 @@
 
 ### JavaScript方法积累
 
-- 上传读取txt文件内容
+#### 上传读取txt文件内容
 
-  ```javascript
-  let reader = new FileReader()
-  reader.readAsText(file)
-  // 这个方法是异步的，只有执行完成后才能查看到结果，直接查看是无结果的，并返回undefined
-  // 所以要挂载到实例的onload或onloadend的方法处理转化后的结果
-  reader.onload = e => {
-    let content = e.target.result
-    let arr = content.split('\r') //string到array时用'\r'
-    let res = arr.filter(item => item !== '\n') //内容过滤换行用'\n'
-  }
-  ```
+```javascript
+let reader = new FileReader()
+reader.readAsText(file)
+// 这个方法是异步的，只有执行完成后才能查看到结果，直接查看是无结果的，并返回undefined
+// 所以要挂载到实例的onload或onloadend的方法处理转化后的结果
+reader.onload = e => {
+  let content = e.target.result
+  let arr = content.split('\r') //string到array时用'\r'
+  let res = arr.filter(item => item !== '\n') //内容过滤换行用'\n'
+}
+```
 
-- 判断类型
+#### 判断类型
 
-  ```javascript
-  Object.prototype.toString.call([]) // [object Array]
-  Object.prototype.toString.call({}) // [object Object]
-  ```
+```javascript
+Object.prototype.toString.call([]) // [object Array]
+Object.prototype.toString.call({}) // [object Object]
+```
 
-- 数组的深拷贝
+#### 数组的深拷贝
 
-  ```javascript
-  // 1.使用扩展运算符
-  let a = [11, 22, 33]
-  let b = [...a]
-  a.push(888)
-  a // [11, 22, 33, 888]
-  b // [11, 22, 33]
-  // 2.对象数组
-  b = a.map(i => {...a})
-  ```
+```javascript
+// 1.使用扩展运算符
+let a = [11, 22, 33]
+let b = [...a]
+a.push(888)
+a // [11, 22, 33, 888]
+b // [11, 22, 33]
+// 2.对象数组
+b = a.map(i => {...a})
+```
+
+#### 函数柯里化
+
+#### call和apply的区别
+
+都是Function.prototype上的方法，用来改变函数this指向，区别是call接收的是参数列表，apply接收的是数组
+
+```javascript
+function fn(x, y, z) {
+  this.x = x
+}
+let obj = {}
+fn.call(obj, 11, 22, 33)
+fn.apply(obj, [11, 22, 33])
+
+let args = [1, 2, 3]
+fn.call(obj, ...args)
+fn.apply(bj, args)
+```
+
+bind(obj)预先改变this，并未立即执行
+
+call性能优于apply
+
+测试一段程序代码执行的时间
+
+```javascript
+console.time('tag')
+console.timeEnd('tag')
+```
 
 ### 正则表达式
 
@@ -64,5 +94,8 @@
 }
 ```
 
+### tweenmax
 
+官网地址： https://www.tweenmax.com.cn/
 
+### 函数柯里化

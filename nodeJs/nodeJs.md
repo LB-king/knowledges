@@ -792,6 +792,14 @@ express是一个简介而灵活的node.jsWeb应用框架
 cnpm install express --save
 ```
 
+全局安装：
+
+```powershell
+cnpm install express -g
+cnpm install express-generator -g
+#4.x版本把generator分离出来了，所以需要单独安装
+```
+
 与该框架一起安装的插件：
 
 - **body-parser**-nodejs中间件，用于处理JSON，Raw，Text，和URL编码的数据
@@ -974,4 +982,47 @@ Representational State Transfer,rest(表述性状态传递)
 get put delete post
 
 具体参考：https://www.runoob.com/nodejs/nodejs-restful-api.html
+
+#### 创建项目
+
+```powershell
+express appName # 创建项目
+cd appName # 进到项目目录
+cnpm install # 安装依赖
+npm start # 启动项目
+```
+
+宝塔管理软件：
+
+127.0.0.1:8888
+
+用户名: adminroot
+
+密码: admin
+
+### 多进程
+
+nodejs是以单线程的模式运动的，但它使用的是事件驱动来处理并发，这样有助于我们在多核cpu的系统上创建多个子进程，从而提高性能。
+
+每个子进程总是带有3个流对象：child.stdin,child.stdout,child.stderr。它们可能会共享父进程的stdio流，或者也可以是独立的被导流的流对象。
+
+Node提供了child_process模块来创建子进程，方法有：
+
+- **exec**-child_process.exec 使用子进程执行命令，缓存子进程的输出
+- **spawn**(产卵、酿成、造成) -child_process.spawn使用指定的命令行参数创建新进程
+- **fork**-child_process.fork 是 spawn()的特殊形式，用于在子进程中运行的模块，如 fork('./son.js') 相当于 spawn('node', ['./son.js']) 。与spawn方法不同的是，fork会在父进程与子进程之间，建立一个通信管道，用于进程之间的通信
+
+https://www.runoob.com/nodejs/nodejs-process.html
+
+### mysql
+
+安装`mysql` 本机安装密码：admin123456
+
+官网下载安装包，下载地址：https://dev.mysql.com/downloads/mysql/
+
+关系数据库管理系统RDBMS(Relational Database Management System)
+
+```web-idl
+Before I met you, I had really little life.
+```
 
