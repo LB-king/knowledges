@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>类数组的应用和方法</title>
+  </head>
+  <body>
+    <script>
+      function foo(a, b) {
+        console.log(arguments)
+        let nArray = Array.from(arguments)
+        console.log(nArray)
+        let nArray1 = [].slice.call(arguments)
+        console.log(nArray1)
+        return a + b
+      }
+      var res = foo(1, 5)
+    </script>
+  </body>
+</html>
