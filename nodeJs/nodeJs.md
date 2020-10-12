@@ -14,6 +14,10 @@
 2. non-blocking  I/O model 非阻塞I/O模型
 3. lightWeight and efficient 轻量级和高效
 
+### 配置环境变量
+
+我的电脑(右键属性)->属性面板->高级系统设置->环境变量 -> 添加,编辑 环境变量
+
 ### 核心模块
 
 #### file-system(文件系统)
