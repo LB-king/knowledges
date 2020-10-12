@@ -146,3 +146,9 @@ git branch --track remotes/origin/ding # 切换远程分支
 - `mv` = 移动文件
 - `pwd` = 展示工作目录
 
+#### 当前HEAD
+
+```powershell
+cat .git/HEAD
+```
+

@@ -8,12 +8,19 @@
   </head>
   <body>
     <script>
-      var cunrrying = function(fn) {
+      let cunrrying = function(fn) {
         var args = [].slice.call(arguments, 1)
-        console.log(arguments)
-        console.log(args)
+        return function() {
+          let newArgs = args.concat([].slice.call(arguments))
+          return fn.apply(null, newArgs)
+        }
       }
-      cunrrying()
+      let getWife = cunrrying(function() {
+        let allWife = [].slice.call(arguments)
+        console.log(allWife.join(';'))
+      }, '原配夫人')
+      getWife('111', '222')
+      getWife('新夫人')
     </script>
   </body>
 </html>
