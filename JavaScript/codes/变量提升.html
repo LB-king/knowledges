@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>变量提升</title>
+  </head>
+  <body>
+    <button title="按钮" style="cursor: pointer;">按钮</button>
+    <script>
+      var a = 888
+      function a() {
+        console.log(a)
+      }
+      console.log(a) // 888,函数的提升优先级高于变量
+
+      var x = 10
+      var y = 20
+      var z = x < y ? x++ : ++y
+      console.log(`x=${x};y=${y};z=${z}`)
+
+      // x=11;y=20;z=10
+    </script>
+  </body>
+</html>

@@ -71,6 +71,26 @@ console.time('tag')
 console.timeEnd('tag')
 ```
 
+#### 变量提升
+
+```javascript
+var a
+a()
+function a() {
+  console.log(a)
+}
+// 函数提升优先级 高于 变量提升,上面代码等价于：
+function a() {
+  console.log(a)
+}
+var a
+a()
+```
+
+#### 原型&原型链
+
+`instanceof`用于检测构造函数的`prototype` 属性是否出现在某个实例对象的原型链上。
+
 ### 正则表达式
 
 ​	https://tool.oschina.net/uploads/apidocs/jquery/regexp.html
@@ -97,5 +117,3 @@ console.timeEnd('tag')
 ### tweenmax
 
 官网地址： https://www.tweenmax.com.cn/
-
-### 函数柯里化

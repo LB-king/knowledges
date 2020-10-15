@@ -1,0 +1,29 @@
+{
+  "code": 0,
+  "message": "success",
+  "data": {
+    "id": "9f74243f-b017-4d81-86d9-46e5a19ed85b",
+    "name": "绍兴蓝海园艺有限公司",
+    "properties": {
+      "entid": "6F274CEF7DD97C57E0539601A8C0ACD65",
+      "entname": "绍兴蓝海园艺有限公司",
+      "type": "Company"
+    },
+    "children": [
+      {
+        "id": "6a91b053-b361-4cf4-b8eb-062b61dae869",
+        "name": "上海蓝海园艺有限责任公司",
+        "properties": {
+          "controller": false,
+          "rate": "100%",
+          "entid": "6F274C7C624A7C57E0539601A8C0ACD65",
+          "entname": "上海蓝海园艺有限责任公司",
+          "invHoldType": "控股",
+          "type": "Company",
+          "direction": "up"
+        },
+        "children": null
+      }
+    ]
+  }
+}
