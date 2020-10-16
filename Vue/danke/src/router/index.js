@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import Dict from '../views/Dict.vue'
 import D3 from '@/views/d3/index.vue'
 import D3Tree from '@/views/d3Tree/index.vue'
+import xigua from '@/views/xigua/index.vue'
 import Header from '../views/Header.vue'
 
 Vue.use(VueRouter)
@@ -39,6 +40,14 @@ const routes = [
     components: {
       header: Header,
       default: D3Tree
+    }
+  },
+  {
+    path: '/xigua',
+    name: 'xigua',
+    components: {
+      header: Header,
+      default: xigua
     }
   }
 ]
