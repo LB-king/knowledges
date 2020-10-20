@@ -89,7 +89,34 @@ a()
 
 #### 原型&原型链
 
-`instanceof`用于检测构造函数的`prototype` 属性是否出现在某个实例对象的原型链上。
+`object` 某个实例对象
+
+`constructor` 某个构造函数
+
+`instanceof`用于检测构造函数的`constructor.prototype` 属性是否出现在某个实例对象(`object`)的原型链上。
+
+#### js的内置对象
+
+- `Array`
+- `Boolean`
+- `Date`
+- `Error`
+- `Function`
+- `Math`
+- `Number`
+- `Object`
+- `RegExp`
+- `String`
+
+宿主对象就是执行JS脚本的环境提供的对象
+
+自定义对象
+
+#### reflow(回流)和repaint(重绘)
+
+reflow:
+
+repaint:
 
 ### 正则表达式
 
@@ -99,7 +126,7 @@ a()
 
   ```javascript
   let num = '123456'
-  num.replace(/(?=(?!\b)(\d{3})+$/g, ',')
+  num.replace(/(?=(?!\b)(\d{3})+$)/g, ',')
   ```
 
 ### vscode的一些设置
@@ -117,3 +144,7 @@ a()
 ### tweenmax
 
 官网地址： https://www.tweenmax.com.cn/
+
+### 西瓜播放器
+
+参考地址：http://h5player.bytedance.com/gettingStarted

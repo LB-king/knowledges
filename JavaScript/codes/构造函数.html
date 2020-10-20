@@ -16,6 +16,10 @@
       console.log(jack instanceof Person) // true
       // instanceof 用于检测构造函数的 prototype 属性是否出现在某个实例对象的原型链上
       console.log(Person.prototype === jack.__proto__) // true
+      console.log(jack instanceof Object) // true
+      console.log(Object instanceof Function) // true
+      console.log(Function instanceof Object) // true
+      console.log(null instanceof Object) // false
     </script>
   </body>
 </html>

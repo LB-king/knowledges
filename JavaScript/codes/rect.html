@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>rect</title>
+    <style>
+      .box {
+        height: 200px;
+        width: 400px;
+        background-color: #cccccc;
+        padding: 20px;
+        box-sizing: border-box;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box"></div>
+    <ul id="list"></ul>
+    <ol type="1">
+      <li>牛奶</li>
+      <li>咖啡</li>
+      <li>威士忌</li>
+    </ol>
+    <dl>
+      <dt>计算机</dt>
+      <dd>用来计算的仪器 ... ...</dd>
+      <dt>显示器</dt>
+      <dd>以视觉方式显示信息的装置 ... ...</dd>
+    </dl>
+    <table class="table-content">
+      <style>
+        .table-content {
+          width: 800px;
+          table-layout: fixed;
+          border-collapse: collapse;
+        }
+        .table-content th,
+        .table-content td {
+          padding: 0 12px;
+          height: 48px;
+          border: 1px solid #eeeeee;
+        }
+        .table-content th {
+          color: #2c2c2c;
+          background-color: #f8f8f8;
+        }
+      </style>
+      <tr align="center" valign="top">
+        <th>公司名称</th>
+        <td>OSchina</td>
+        <th>公司简介</th>
+        <td>吧啦啦啦啦啦</td>
+      </tr>
+      <tr>
+        <th>公司性质</th>
+        <td rowspan="2">国企</td>
+        <th>融资时间</th>
+        <td>2020-09-09</td>
+      </tr>
+      <tr>
+        <th>公司性质</th>
+        <th>融资时间</th>
+        <td>2020-09-09</td>
+      </tr>
+    </table>
+
+    <script>
+      let box = document.querySelector('.box')
+      function rect(dom) {
+        let targetStyles = window.getComputedStyle(dom)
+        let styleMap = [
+          'width',
+          'height',
+          'paddingTop',
+          'paddingRight',
+          'paddingBottom',
+          'paddingLeft',
+          'borderTopWidth',
+          'borderRightWidth',
+          'borderBottomWidth',
+          'borderLeftWidth'
+        ]
+          .map(key => {
+            return { [key]: parseInt(targetStyles[key]) || 0 }
+          })
+          .reduce((acc, cur) => {
+            return { ...acc, ...cur }
+          })
+        if (targetStyles.boxSizing === 'border-box') {
+          styleMap.innerWidth =
+            styleMap.width -
+            styleMap.paddingLeft -
+            styleMap.paddingRight -
+            styleMap.borderLeftWidth -
+            styleMap.borderRightWidth
+          styleMap.innerHeight =
+            styleMap.height -
+            styleMap.paddingTop -
+            styleMap.paddingBottom -
+            styleMap.borderTopWidth -
+            styleMap.borderBottomWidth
+        } else {
+          styleMap.innerWidth = styleMap.width
+          styleMap.innerHeight = styleMap.height
+        }
+        return styleMap
+      }
+
+      let res = rect(box)
+      console.log(res)
+
+      let num = '123456'
+      console.log(num.replace(/(?=(?!\b)(\d{3})+$)/g, ','))
+
+      for (let i = 0; i < 3; i++) {
+        console.log(i)
+      }
+
+      var test = new Boolean()
+      document.write(test)
+      document.write('<br />')
+
+      var test = new Boolean(0)
+      document.write(test)
+      document.write('<br />')
+
+      var test = new Boolean(null)
+      document.write(test)
+      document.write('<br />')
+
+      var test = new Boolean('')
+      document.write(test)
+      document.write('<br />')
+
+      var test = new Boolean(NaN)
+      document.write(test)
+      document.write('<br />')
+
+      var msg = 'hello'
+      for (var i = 0; i < 10; i++) {
+        var msg = 'hello' + i * 2 + i
+      }
+      console.log(msg)
+      // console.log(Array.from(document.body.childNodes))
+      console.log([].slice.call(document.body.childNodes))
+
+      const list = document.querySelector('#list')
+      const fruits = ['Apple', 'Orange', 'Banana', 'Melon']
+
+      const fragment = document.createDocumentFragment()
+
+      fruits.forEach(fruit => {
+        const li = document.createElement('li')
+        li.innerHTML = fruit
+        fragment.appendChild(li)
+      })
+
+      list.appendChild(fragment)
+    </script>
+  </body>
+</html>
