@@ -51,6 +51,14 @@
       .attr('y2', 80)
       .attr('transform', 'translate(80 0) rotate(30)')
       .style('stroke', 'blue')
+    svg
+      .append('text')
+      .text('文字')
+      .attr('id', 'myText')
+      .attr('x', '80')
+      .attr('y', '80')
+      .attr('dx', '180')
+      .attr('fill', 'blue')
 
     let svg1 = d3
       .select('#transform')

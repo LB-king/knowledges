@@ -1,0 +1,183 @@
+{
+  "code": 0,
+  "message": "success",
+  "data": {
+    "id": "c7440207-f40b-4b62-b40c-49c4d24844f4",
+    "name": "上海蓝海园艺有限责任公司",
+    "properties": {
+      "entid": "6F274C7C624A7C57E0539601A8C0ACD65",
+      "entname": "上海蓝海园艺有限责任公司",
+      "type": "Company"
+    },
+    "children": [
+      {
+        "id": "e483601c-9c65-4282-9848-394c286bb1dd",
+        "name": "李进南",
+        "properties": {
+          "controller": true,
+          "rate": "100%",
+          "entid": "cde37d1911eba81bc9515f4e85242b52",
+          "entname": "李进南",
+          "invHoldType": "控股",
+          "type": "Nature",
+          "direction": "up"
+        },
+        "children": null
+      },
+      {
+        "id": "7575516f-e1d9-4afc-95cc-89be6df25b18",
+        "name": "谷城蓝海园艺有限责任公司",
+        "properties": {
+          "controller": false,
+          "rate": "100%",
+          "entid": "6F274DB6431F7C57E0539601A8C0ACD65",
+          "entname": "谷城蓝海园艺有限责任公司",
+          "invHoldType": "控股",
+          "type": "Company",
+          "direction": "down"
+        },
+        "children": null
+      },
+      {
+        "id": "9d60a4c7-e234-4ecc-87ff-9712349c1197",
+        "name": "沅江市蓝海草业有限公司",
+        "properties": {
+          "controller": false,
+          "rate": "100%",
+          "entid": "6F274DCD5E047C57E0539601A8C0ACD65",
+          "entname": "沅江市蓝海草业有限公司",
+          "invHoldType": "控股",
+          "type": "Company",
+          "direction": "down"
+        },
+        "children": null
+      },
+      {
+        "id": "77547157-1f49-4114-b9b2-b27045756287",
+        "name": "浏阳蓝海园艺有限责任公司",
+        "properties": {
+          "controller": false,
+          "rate": "100%",
+          "entid": "6F274DCDE5817C57E0539601A8C0ACD65",
+          "entname": "浏阳蓝海园艺有限责任公司",
+          "invHoldType": "控股",
+          "type": "Company",
+          "direction": "down"
+        },
+        "children": null
+      },
+      {
+        "id": "7b6c0641-5c23-4365-966f-090fe014ad85",
+        "name": "宜春蓝海园艺有限公司",
+        "properties": {
+          "controller": false,
+          "rate": "100%",
+          "entid": "6F274D3455297C57E0539601A8C0ACD65",
+          "entname": "宜春蓝海园艺有限公司",
+          "invHoldType": "控股",
+          "type": "Company",
+          "direction": "down"
+        },
+        "children": null
+      },
+      {
+        "id": "88ac1792-0bea-4e8b-8b3f-5f4a8748cfe0",
+        "name": "宣威蓝海园艺有限责任公司",
+        "properties": {
+          "controller": false,
+          "rate": "100%",
+          "entid": "6F274E9730BD7C57E0539601A8C0ACD65",
+          "entname": "宣威蓝海园艺有限责任公司",
+          "invHoldType": "控股",
+          "type": "Company",
+          "direction": "down"
+        },
+        "children": null
+      },
+      {
+        "id": "02213829-7691-4b0e-96c0-c8666b2a903d",
+        "name": "濮阳蓝海园艺有限公司",
+        "properties": {
+          "controller": false,
+          "rate": "100%",
+          "entid": "6F274D9E54237C57E0539601A8C0ACD65",
+          "entname": "濮阳蓝海园艺有限公司",
+          "invHoldType": "控股",
+          "type": "Company",
+          "direction": "down"
+        },
+        "children": null
+      },
+      {
+        "id": "42d7471e-ce1a-46cb-8ac4-4cbf7de7f4d0",
+        "name": "桐乡山水青园艺有限责任公司",
+        "properties": {
+          "controller": false,
+          "rate": "100%",
+          "entid": "6F274CE8DD2B7C57E0539601A8C0ACD65",
+          "entname": "桐乡山水青园艺有限责任公司",
+          "invHoldType": "控股",
+          "type": "Company",
+          "direction": "down"
+        },
+        "children": null
+      },
+      {
+        "id": "ba9ec2eb-e1e8-45d5-a813-a4454d4dbe88",
+        "name": "平陆蓝海园艺有限公司",
+        "properties": {
+          "controller": false,
+          "rate": "100%",
+          "entid": "6F274C0953637C57E0539601A8C0ACD65",
+          "entname": "平陆蓝海园艺有限公司",
+          "invHoldType": "控股",
+          "type": "Company",
+          "direction": "down"
+        },
+        "children": null
+      },
+      {
+        "id": "b48c804d-55c9-4ff2-be50-20b967c79e08",
+        "name": "平潭蓝海园艺有限公司",
+        "properties": {
+          "controller": false,
+          "rate": "100%",
+          "entid": "6F274D2EF7087C57E0539601A8C0ACD65",
+          "entname": "平潭蓝海园艺有限公司",
+          "invHoldType": "控股",
+          "type": "Company",
+          "direction": "down"
+        },
+        "children": null
+      },
+      {
+        "id": "8e51339d-fa7e-4d2b-b5ad-0fb5e9fbaf0d",
+        "name": "孝昌蓝海园艺有限责任公司",
+        "properties": {
+          "controller": false,
+          "rate": "100%",
+          "entid": "6F274DA87CE77C57E0539601A8C0ACD65",
+          "entname": "孝昌蓝海园艺有限责任公司",
+          "invHoldType": "控股",
+          "type": "Company",
+          "direction": "down"
+        },
+        "children": null
+      },
+      {
+        "id": "0d727152-37f3-4b70-84ff-e4b17d11b0aa",
+        "name": "绍兴蓝海园艺有限公司",
+        "properties": {
+          "controller": false,
+          "rate": "100%",
+          "entid": "6F274CEF7DD97C57E0539601A8C0ACD65",
+          "entname": "绍兴蓝海园艺有限公司",
+          "invHoldType": "控股",
+          "type": "Company",
+          "direction": "down"
+        },
+        "children": null
+      }
+    ]
+  }
+}

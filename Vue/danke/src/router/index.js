@@ -6,6 +6,7 @@ import D3 from '@/views/d3/index1.vue'
 import D3Tree from '@/views/d3Tree/index.vue'
 import xigua from '@/views/xigua/index.vue'
 import Header from '../views/Header.vue'
+import Hierarchy from '../views/Hierarchy/index.vue'
 
 Vue.use(VueRouter)
 
@@ -48,6 +49,14 @@ const routes = [
     components: {
       header: Header,
       default: xigua
+    }
+  },
+  {
+    path: '/hierarchy',
+    name: 'Hierarchy',
+    components: {
+      header: Header,
+      default: Hierarchy
     }
   }
 ]

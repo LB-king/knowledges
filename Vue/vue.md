@@ -193,6 +193,13 @@ svg是d3的主要操作对象 , g:
 
 - select()
 
+  ```javascript
+  d3.select('#maingroup rect') // 基于层级的查询
+  d3.selectAll('.tick text') // 只会返回找到的第一个元素
+  ```
+
+  注意：这种形式的查询，要熟悉其用法
+
 - selectAll() 用于选择HTML文档中的多个元素
 
   ```javascript
@@ -260,6 +267,26 @@ d3.select('#list').selectAll('li')
 ```
 
 使用d3实现，代码如下：
+
+svg常见的属性：图元：图形元素，可以编辑的最小的图形单位。
+
+- id, class
+- x,y(cx,cy表示圆的圆心位置)
+- dx,dy(表示在x,y的位置上再平移dx,dy)
+- fill(填充),stroke(轮廓)
+- height,width,r(圆的半径)
+- transform-> translate.rotate,scale(表示某一个图元的变换)
+
+svg的属性非常多，且属性的取值范围和类型各不同：
+
+所以可能多的记住一些常用的属性，以提高编程速度
+
+可以查阅mdn上属性的解释 https://developer.mozilla.org/zh-CN/docs/Web/SVG/Attribute
+
+- DOM
+  - 父节点的属性会影响子节点
+  - 子节点的属性会相对于父节点
+- 活用<g>可以省掉很多冗余代码
 
 ```javascript
 let width = 300
@@ -340,6 +367,26 @@ svg.append('line')
   - `scale(sx, sy)` **sx** 是指沿x轴的缩放因子， **sy** 是指沿y轴的缩放因子.这里， **sy** 是可选的，如果未指定，则它取 **sx** 的值.对于**示例** :  scale(10)
   - `SkewX` 倾斜角沿x轴与沿y轴
   - `SkewY`
+
+#### 比例尺
+
+Scale-Linear
+
+```javascript
+const xScale = d3.scaleLinear()
+	.domain([min_d, max_d]) // 给出数据中的值
+	.range([min, max]) // 返回映射后的值
+// 
+var Scale = d3.scaleLiear()
+	.domain([10, 20])
+	.range([100, 200])
+Scale(15) // 150
+
+```
+
+
+
+
 
 #### 动画
 
