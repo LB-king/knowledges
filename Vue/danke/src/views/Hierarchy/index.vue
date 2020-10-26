@@ -15,42 +15,8 @@ export default {
   },
   methods: {
     init() {
-      let main = this.$refs.treeGraph
-      let [svgWidth, svgHeight] = [main.clientWidth, main.clientHeight]
-      this.rectAngle = {
-        w: 145,
-        h: 68,
-        intervalW: 200,
-        intervalH: 150
-      }
-      this.layoutTree = d3
-        .tree()
-        .nodeSize([this.rectAngle.intervalW, this.rectAngle.intervalH])
-        .separation(() => 1)
-      this.svg = d3
-        .select('#treeGraph')
-        .append('svg')
-        .attr('width', svgWidth)
-        .attr('height', svgHeight)
-        .attr('id', 'd3tree')
-        .call(
-          d3
-            .zoom()
-            .scaleExtent([0.5, 2])
-            .on('zoom', () => {
-              this.svg.attr(
-                'transform',
-                d3.event.transform.translate(svgWidth / 2, svgHeight / 2)
-              )
-            })
-        )
-        .on('dblclick.zoom', null)
-        .attr('style', 'position: relative; z-index: 0;')
-        .append('g')
-        .attr('id', 'g')
-        .attr('transform', `translate(${svgWidth / 2}, ${svgHeight / 2})`)
-        let upTree = stockData.children.filter(item => item.properties.direction === 'up')
-        console.log(upTree)
+      let _this = this
+      console.log(window.getComputedStyle(this.$el))
     }
   },
   mounted() {

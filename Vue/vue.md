@@ -381,7 +381,54 @@ var Scale = d3.scaleLiear()
 	.domain([10, 20])
 	.range([100, 200])
 Scale(15) // 150
+```
 
+#### 绘制柱状图
+
+- axisTop,axisRight,axisBottom,axisLeft 4条轴
+
+```javascript
+const barData = [
+  { name: 'java', value: 12 },
+  { name: 'c++', value: 30 },
+  { name: 'json', value: 32 },
+  { name: 'php', value: 11 },
+  { name: 'python', value: 18 }
+]
+const styles = window.getComputedStyle(document.getElementById('svgBox'))
+const margin = {
+  top: 60,
+  right: 30,
+  bottom: 60,
+  left: 100
+}
+const [width, height] = [parseInt(styles.width), parseInt(styles.height)]
+const [innerWidth, innerHeight] = [
+  width - margin.left - margin.right,
+  height - margin.top - margin.bottom
+]
+// 比例尺-x轴
+const xScale = d3
+.scaleLinear()
+.domain([0, d3.max(barData, d => d.value)])
+.range([0, innerWidth])
+// 比例尺-y轴
+const yScale = d3
+.scaleBand()
+.domain(barData.map(d => d.name))
+.range([0, innerHeight])
+let svg = d3.select('#svgBox')
+
+// 添加绘画的容器
+const g = svg
+.append('g')
+.attr('id', 'mainGroup')
+.attr('transform', `translate(${margin.left} ${margin.top})`)
+// 画坐标轴
+let yAxis = d3.axisLeft(yScale)
+let xAxis = d3.axisBottom(xScale)
+g.append('g').call(yAxis)
+g.append('g').call(xAxis).attr('transform', `translate(0 ${innerHeight})`)
 ```
 
 

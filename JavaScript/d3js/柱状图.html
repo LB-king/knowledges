@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>柱状图</title>
+    <script src="./static/d3.min.js"></script>
+    <style>
+      #svgBox {
+        height: 600px;
+        background-color: #f8f8f8;
+        width: 800px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <svg id="svgBox"></svg>
+  </body>
+  <script>
+    const barData = [
+      { name: 'java', value: 12 },
+      { name: 'c++', value: 30 },
+      { name: 'json', value: 32 },
+      { name: 'php', value: 11 },
+      { name: 'python', value: 18 }
+    ]
+    const styles = window.getComputedStyle(document.getElementById('svgBox'))
+    const margin = {
+      top: 60,
+      right: 30,
+      bottom: 60,
+      left: 100
+    }
+    const [width, height] = [parseInt(styles.width), parseInt(styles.height)]
+    const [innerWidth, innerHeight] = [
+      width - margin.left - margin.right,
+      height - margin.top - margin.bottom
+    ]
+    // 比例尺-x轴
+    const xScale = d3
+      .scaleLinear()
+      .domain([0, d3.max(barData, d => d.value)])
+      .range([0, innerWidth])
+    // 比例尺-y轴
+    const yScale = d3
+      .scaleBand()
+      .domain(barData.map(d => d.name))
+      .range([0, innerHeight])
+    let svg = d3.select('#svgBox')
+
+    // 添加绘画的容器
+    const g = svg
+      .append('g')
+      .attr('id', 'mainGroup')
+      .attr('transform', `translate(${margin.left} ${margin.top})`)
+    // 画坐标轴
+    let yAxis = d3.axisLeft(yScale)
+    let xAxis = d3.axisBottom(xScale)
+    g.append('g').call(yAxis)
+    g.append('g')
+      .call(xAxis)
+      .attr('transform', `translate(0 ${innerHeight})`)
+  </script>
+</html>
