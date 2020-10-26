@@ -1,5 +1,5 @@
 <template>
-  <div class="penetrate-chart">
+  <div class="penetrate-chart" id="mainTree">
     <div class="bt-group">
       <button class="save" @click="saveImg">保存</button>
       <button class="reset" @click="resetSvg">重置</button>
@@ -133,7 +133,7 @@ export default {
         .separation(() => 1)
       // 主图
       this.svg = d3
-        .select('#app')
+        .select('#mainTree')
         .append('svg')
         .attr('width', svgW)
         .attr('height', svgH)

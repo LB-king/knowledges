@@ -32,7 +32,7 @@ export default {
         .append('svg')
         .attr('width', svgWidth)
         .attr('height', svgHeight)
-        .attr('id', 'treeSvg')
+        .attr('id', 'd3tree')
         .call(
           d3
             .zoom()
