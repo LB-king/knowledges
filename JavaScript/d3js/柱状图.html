@@ -10,7 +10,7 @@
       #svgBox {
         height: 600px;
         background-color: #f8f8f8;
-        width: 800px;
+        width: 50%;
       }
     </style>
   </head>
@@ -26,41 +26,83 @@
       { name: 'php', value: 11 },
       { name: 'python', value: 18 }
     ]
-    const styles = window.getComputedStyle(document.getElementById('svgBox'))
-    const margin = {
-      top: 60,
-      right: 30,
-      bottom: 60,
-      left: 100
-    }
-    const [width, height] = [parseInt(styles.width), parseInt(styles.height)]
-    const [innerWidth, innerHeight] = [
-      width - margin.left - margin.right,
-      height - margin.top - margin.bottom
-    ]
-    // 比例尺-x轴
-    const xScale = d3
-      .scaleLinear()
-      .domain([0, d3.max(barData, d => d.value)])
-      .range([0, innerWidth])
-    // 比例尺-y轴
-    const yScale = d3
-      .scaleBand()
-      .domain(barData.map(d => d.name))
-      .range([0, innerHeight])
-    let svg = d3.select('#svgBox')
+    function init() {
+      console.log(d3.select('#svgBox'))
+      let svg = document.getElementById('svgBox')
+        ? d3.select('#svgBox')
+        : d3
+            .select('body')
+            .append('svg')
+            .attr('id', 'svgBox')
+      const styles = window.getComputedStyle(document.getElementById('svgBox'))
+      const margin = {
+        top: 60,
+        right: 30,
+        bottom: 60,
+        left: 100
+      }
+      const [width, height] = [parseInt(styles.width), parseInt(styles.height)]
+      const [innerWidth, innerHeight] = [
+        width - margin.left - margin.right,
+        height - margin.top - margin.bottom
+      ]
+      function draw(ctx) {
+        ctx.moveTo(100, 100)
+        ctx.lineTo(300, 100)
+        ctx.arc(300, 120, 20, 180, 90, false)
+        ctx.lineTo(300, 140)
+        ctx.lineTo(100, 140)
+        ctx.arc(100, 120, 20, 360, 225, false)
+        // ctx.lineTo(300, 180)
+        // ctx.lineTo(100, 120)
+        return ctx
+      }
+      // 比例尺-x轴
+      const xScale = d3
+        .scaleLinear()
+        .domain([0, d3.max(barData, d => d.value)])
+        .range([0, innerWidth])
+      // 比例尺-y轴
+      const yScale = d3
+        .scaleBand()
+        .domain(barData.map(d => d.name))
+        .range([0, innerHeight])
 
-    // 添加绘画的容器
-    const g = svg
-      .append('g')
-      .attr('id', 'mainGroup')
-      .attr('transform', `translate(${margin.left} ${margin.top})`)
-    // 画坐标轴
-    let yAxis = d3.axisLeft(yScale)
-    let xAxis = d3.axisBottom(xScale)
-    g.append('g').call(yAxis)
-    g.append('g')
-      .call(xAxis)
-      .attr('transform', `translate(0 ${innerHeight})`)
+      // 添加绘画的容器
+      const g = svg
+        .append('g')
+        .attr('id', 'mainGroup')
+        .attr('transform', `translate(${margin.left} ${margin.top})`)
+      // 画坐标轴-Y轴，X轴
+      let yAxis = d3.axisLeft(yScale)
+      let xAxis = d3.axisBottom(xScale)
+      g.append('g').call(yAxis)
+      g.append('g')
+        .call(xAxis)
+        .attr('transform', `translate(0 ${innerHeight})`)
+      let arc = d3
+        .arc()
+        .innerRadius(50)
+        .outerRadius(50)
+        .startAngle(0 * (Math.PI/180))
+        .endAngle(180 * (Math.PI/180))
+      g.append('path')
+        .attr('d', draw(d3.path()))
+        // .attr('transform', `translate(100 200)`)
+        // .attr('d', arc)
+        .style('stroke', 'red')
+        .style('stroke-width', 2)
+        .style('fill', 'red')
+      
+        
+    }
+    init()
+    function rePaint() {
+      d3.select('#svgBox').remove()
+      init()
+    }
+    window.addEventListener('resize', e => {
+      rePaint()
+    })
   </script>
 </html>

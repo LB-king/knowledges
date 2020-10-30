@@ -1,6 +1,8 @@
 <template>
   <div class="hierarchy-main">
-    <div class="tree-conteainer" id="treeGraph" ref="treeGraph"></div>
+    <div class="tree-conteainer" id="treeGraph" ref="treeGraph">
+      自适应
+    </div>
   </div>
 </template>
 
@@ -16,7 +18,6 @@ export default {
   methods: {
     init() {
       let _this = this
-      console.log(window.getComputedStyle(this.$el))
     }
   },
   mounted() {
@@ -27,9 +28,10 @@ export default {
 
 <style lang="scss">
 .hierarchy-main {
-  height: 800px;
-  width: 80%;
+  height: 300px;
+  width: 30%;
   margin: 10px auto;
+  font-size: 3vw;
   position: relative;
   background-color: #f8f8f8;
   border: 1px solid #ccc;

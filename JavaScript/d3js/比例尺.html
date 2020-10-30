@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Data_Driven_Document</title>
+    <script src="./static/d3.min.js"></script>
+  </head>
+
+  <body></body>
+  <style></style>
+  <script>
+    // 1.线性比例尺 scaleLinear
+    const scaleLinear = d3
+      .scaleLinear()
+      .domain([1, 5])
+      .range([0, 100])
+    console.log('scaleLinear(-2):', scaleLinear(-2)) // -75 超出范围也能计算
+    console.log('scaleLinear(10):', scaleLinear(10)) // 225
+    // 2.序数比例尺 scaleBand
+    const scaleBand = d3
+      .scaleBand()
+      .domain([1, 2, 3, 4])
+      .range([0, 100])
+    console.log('scaleBand(6):', scaleBand(6)) // undefined 只针对domain()中的数据集映射相应的值
+    console.log('scaleBand(3)', scaleBand(3)) // 50
+    // 3.序数比例尺 scaleOrdinal domain()和range()的数据是一一对应的，如果不一致，则按照顺序循环取range()的值
+    const scaleOrdinal = d3
+      .scaleOrdinal()
+      .domain(['a', 'b', 'c'])
+      .range([10, 20, 30])
+    console.log('scaleOrdinal(a):', scaleOrdinal('a'))
+    console.log('scaleOrdinal(b):', scaleOrdinal('b'))
+    console.log('scaleOrdinal(c):', scaleOrdinal('c'))
+    console.log('scaleOrdinal(d):', scaleOrdinal('d'))
+    console.log('scaleOrdinal(e):', scaleOrdinal('e'))
+
+    // 4.量化比例尺 scaleQuantize() domain()之外的值是对range()两侧的延展
+    const scaleQuantize = d3
+      .scaleQuantize()
+      .domain([0, 10])
+      .range(['small', 'middle', 'big'])
+    console.log('scaleQuantize(2):', scaleQuantize(2))
+    console.log('scaleQuantize(5):', scaleQuantize(5))
+    console.log('scaleQuantize(8):', scaleQuantize(8))
+    console.log('scaleQuantize(-99):', scaleQuantize(-99)) //small
+    console.log('scaleQuantize(99):', scaleQuantize(99)) //big
+    // 时间比例尺
+    // 颜色比例尺
+    // 其他比例尺。。。
+    // 逆序的过程
+    console.log('scaleLinear(50)', scaleLinear.invert(50))
+    console.log('scaleQuantize(big)', scaleQuantize.invertExtent('big'))
+  </script>
+</html>
