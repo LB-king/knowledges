@@ -11,3 +11,9 @@ document.body.contentEditable = true // 可编辑原网页
 
 不错的学习网站 https://www.yaconit.com/#/ 
 
+快速删除node_modules文件夹
+
+```shell
+rimraf node_modules
+```
+

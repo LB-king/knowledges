@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>css3新属性</title>
+    <style>
+      .box {
+        height: 50px;
+        width: 300px;
+        border: 30px solid #eeeeee;
+        margin-top: 10px;
+        overflow: hidden;
+      }
+      .bc1 {
+        border-color: red green blue yellow;
+      }
+
+      .bc2 {
+        border-image: url(./favicon.png) 30 30 repeat;
+      }
+      .bs {
+        box-shadow: 3px 3px 3px #888888;
+      }
+      .ts {
+        /* text-shadow: 3px 3px #00f; */
+        text-shadow: 2px 2px 2px #ccc, 3px 3px 3px #00f;
+      }
+      .wb {
+        /* word-wrap: break-word; */
+      }
+      .transform {
+        transform: rotate(7deg) translate(40px, 30px) skew(10deg, 1deg);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bc1 box"></div>
+    <div class="bc2 box"></div>
+    <div class="bs box"></div>
+    <div class="ts box">影子模式</div>
+    <div class="wb box">
+      Whenever you need me， I'll be hereherehere。 Whenever you're in trouble， I'm
+      always near。Whenever you feel alone， and you think everyone has given
+      up。。。Reach out for me， and I will give you my everlasting love
+    </div>
+    <div class="transform box">transform</div>
+  </body>
+</html>

@@ -1,44 +1,179 @@
 ## H5
 
+### video/audio
 
+```html
+<audio src="等你下课.mp3" controls ></audio>
+<video src="video.mp4" controls></video>
+```
 
+- `<video>`标签定义视频，其他电影片段或其他视频流:MP4、WebM、Ogg
+  - `controls` 显示控件，比如播放按钮
+  - `autoplay`
+  - `loop`
+- `<audio>`标签定义音频:MP3、Wav、Ogg
+  - `controls`
+  - `autoplay`
+  - `loop`
 
+### canvas画布
 
+### geolocation定位
 
+**---------------------------------------------------------------------------------------------------------------------**
 
 ## JavaScrit
 
+### RegRex
 
-
-
-
-
+**---------------------------------------------------------------------------------------------------------------------**
 
 ## Css
 
+### 动画
 
+- `keyframes`
 
+  ```css
+  @keyframes move{
+    0% {
+      margin-left: 0;
+      transform: rotate(0);
+    }
+    50% {
+      margin-left: 100px;
+      transform: rotate(180deg)
+    }
+    100% {
+      margin-left: 0;
+      tansform: rotate(360deg)
+    }
+  }
+  .animate-box {
+    animation: move 5s infinite;
+  }
+  /*transition*/
+  .box {
+    width: 200px;
+    transition: all .3s linear;
+  }
+  .box:hover {
+    width: 220px;
+  }
+  ```
 
+- .`transition `
 
+  ```css
+  .transition {
+    width: 100px;
+    transition: all .3s linear;
+    cursor: pointer;
+  }
+  ```
 
+- `transform`
 
+  css3提供了元素变形效果。旋转，缩放，平移
 
+  ```css
+  .t {
+    transform: rotate(7deg) translate(40px, 30px) skew(10deg, 1deg);
+  }
+  ```
+
+### 响应式
+
+- media
+
+  ```css
+  @media screen and (min-width: 1280px) {
+    .box {
+      width: 30%;
+    }
+  }
+  ```
+
+### less
+
+- 公用属性
+
+  ```less
+  .mix-style {
+  	height: 10px;
+  }
+  .main {
+  	.mix-style;
+  }
+  ```
+
+### CSS3新特性
+
+- `border-color`
+
+  ```css
+  .m {
+    border-color:  red green blue yellow; // 上 右 下 左
+  }
+  ```
+
+- `border-image`(IE11-不支持此属性)
+
+  ```css
+  .m{
+    border-image: url(./favicon.png) 30 30 round;
+  }
+  /*
+  border-image-source	用在边框的图片的路径。	
+  border-image-slice	图片边框向内偏移。	
+  border-image-width	图片边框的宽度。	
+  border-image-outset	边框图像区域超出边框的量。	
+  border-image-repeat	图像边框是否应平铺(repeat)、铺满(round)或拉伸(stretched)
+  */
+  ```
+
+- `border-radius` 圆角边框
+
+- `box-shadow` 阴影效果
+
+- `background-size` 背景图片尺寸
+
+- `background-origin` 指定背景图片从哪里开始显示(背景图片可以置放于content-box,padding-box或border-box区域)
+
+- `background-clip` 指定背景图片从什么位置开始裁剪
+
+  ```css
+  .m{
+    background-clip: content-box;
+  }
+  ```
+
+- `text-shadow` 文本阴影
+
+  ```css
+  .m {
+    text-shadow: 3px 3px #00f;
+    text-shadow: 2px 2px 2px #ccc, 3px 3px 3px #00f;
+  }
+  ```
+
+  - 颜色和模糊半径是可选的，颜色未指定的时候，将使用文本颜色；模糊半径未指定时，值为0
+  - 可以是逗号分隔的列表：`text-shadow: 2px 2px 2px #ccc, 3px 3px 3px #00f;`
+  - 阴影可能会跑到容器之外，但是不会影响容器的大小
+
+- `word-wrap:break-word` 自动换行
+
+  单词太长的话就可能无法超出某个区域，允许对长单词进行拆分，并换行到下一行
+
+**---------------------------------------------------------------------------------------------------------------------**
 
 ## Vue
 
-
-
-
-
-
+**---------------------------------------------------------------------------------------------------------------------**
 
 ## NodeJs
 
-
-
-
-
-
+**---------------------------------------------------------------------------------------------------------------------**
 
 ## Git
 
@@ -223,3 +358,65 @@ git commit -m"del"
 git push origin master
 ```
 
+**---------------------------------------------------------------------------------------------------------------------**
+
+## npm
+
+- 安装
+
+```shell
+npm install -g cnpm --registry=https://registry.npm.taobao.org
+npm err! Error: connect ECONNREFUSED 127.0.0.1:8087 // 出现此情况的解决办法
+npm config set proxy null
+npm ls // 查看包安装目录列表
+```
+
+版本号：语义版本号分为X,Y,Z三位，分别代表主版本号，次版本号，补丁版本号
+
+- 如果只是修复bug，需要修改Z位
+- 如果是新增了功能，但是向下兼容，需要更新Y位
+- 如果有大变动，向下不兼容，需要更新X位
+
+常用命令：
+
+```shell
+# npm help <command> 可以查看某条命令的详细帮助
+# npm update <package> 可以把当前目录下`node_modules`子目录里对应的模块更新至最新版本
+# npm update <package> -g 全局更新
+# npm cache clear 可以清空npm本地缓存
+npm publish # 发布？(未曾使用)
+```
+
+设置缓存的目录：
+
+```shell
+npm config get cache # 获取缓存目录
+npm config set cache "d:/cache" # 设置
+npm config get prefix # 包安装目录
+npm config set prefix "d:/cache"
+```
+
+快速删除node_modules文件夹
+
+```shell
+rimraf node_modules
+```
+
+
+
+**---------------------------------------------------------------------------------------------------------------------**
+
+## yarn
+
+安装：https://classic.yarnpkg.com/zh-Hans/docs/install#windows-stable
+
+| NPM                      | YARN                 | 说明               |
+| :----------------------- | :------------------- | :----------------- |
+| npm init                 | yarn init            | 初始化某个项目     |
+| npm install/link         | yarn install/link    | 默认的安装依赖操作 |
+| npm install vue --save   | yarn add vue         | 安装某个依赖       |
+| npm uninstall vue --save | yarn remove vue      | 移除某个依赖项     |
+| npm update vue --save    | yarn upgrade vue     | 更新某个依赖项     |
+| npm install cnpm -g      | yarn global add cnpm | 安装全局依赖       |
+
+安装项目的全部依赖项：yarn || yarn install
