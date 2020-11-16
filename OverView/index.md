@@ -420,3 +420,9 @@ rimraf node_modules
 | npm install cnpm -g      | yarn global add cnpm | 安装全局依赖       |
 
 安装项目的全部依赖项：yarn || yarn install
+
+**---------------------------------------------------------------------------------------------------------------------**
+
+## 实用工具
+
+- 截屏软件GIF：GifCam :https://gifcam.softonic.cn/download
