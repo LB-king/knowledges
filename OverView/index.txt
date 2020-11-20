@@ -1,0 +1,14 @@
+工程化，模块化，组件化
+性能，跨终端
+applet of wechat
+webpack
+nodejs
+SSR
+nuxt.js
+cookie-session-localStorage
+闭包
+浏览器缓存机制
+H5新标签
+vue的知识
+react的应用
+

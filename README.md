@@ -1,4 +1,5 @@
 # knowledges
+
 for usual collection
 
 ```shell
@@ -16,4 +17,10 @@ document.body.contentEditable = true // 可编辑原网页
 ```shell
 rimraf node_modules
 ```
+
+吉客猫随身wifi
+
+wifi名称： QY0OMTPR
+
+登陆密码 :ding1234
 

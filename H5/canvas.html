@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>canvas</title>
+    <style>
+      .cvs {
+        border: 1px solid chartreuse;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas class="cvs" id="cvs"></canvas>
+    <button id="btn">点击下载</button>
+
+    <script>
+      let c = document.getElementById('cvs')
+      c.width = 500
+      c.height = 500
+      let ctx = c.getContext('2d')
+      ctx.moveTo(0, 0)
+      ctx.lineTo(250, 250)
+      ctx.strokeStyle = '#00f'
+      ctx.lineWidth = 2 // 线的宽度
+      ctx.stroke()
+
+      ctx.beginPath()
+      ctx.arc(250, 250, 40, 0, 2 * Math.PI)
+      ctx.stroke()
+
+      let btn = document.querySelector('#btn')
+      btn.addEventListener('click', () => {
+        var save_url = c.toDataURL('image/png')
+        // 该方法将canvas转化成base64格式图片
+        var a = document.createElement('a')
+        document.body.appendChild(a)
+        a.href = save_url
+        a.download = '我的canvas作品'
+        a.click()
+      })
+    </script>
+  </body>
+</html>
