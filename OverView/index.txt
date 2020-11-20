@@ -11,4 +11,69 @@ cookie-session-localStorage
 H5新标签
 vue的知识
 react的应用
+垃圾回收机制
+this关键字的理解
+页面加载如何优化
+线程和进程的理解
+promise的理解
+闭包：
+### 1.如何产生闭包
+
+- 当一个嵌套的内部函数**引用**了外部函数的变量时，就产生了闭包
+
+  ```javascript
+  function fnOut(){
+      var a = 2
+      function fnIn(){
+          console.log(a)
+      }
+      //有的浏览器需要调用fnIn才能产生闭包
+      fnIn()
+  }
+  fnOut()
+
+### 2.闭包到底是什么
+
+- 使用chrome调试
+
+- 理解1：闭包是嵌套的内部函数
+
+- 理解2：包含被引用变量（函数）的对象
+
+  PS:闭包存在于嵌套的内部函数中
+
+### 3.产生闭包的条件
+
+- 函数嵌套
+- 函数内部引用了外部函数的变量
+
+### 4.常见闭包
+
+#### 4.1将函数作为一个外部函数的返回值
+```javascript
+ function fnOut(){
+     var a = 1
+     function fnIn(){
+          a++
+          console.log(a)
+     }
+     return fnIn
+ }
+  var f = fnOut()
+  f()//2
+  f()//3
+```
+#### 4.2将函数作为实参传给另一个函数
+
+```javascript
+function show(m){
+    setTimeout(function(){
+        console.log(m)
+    })
+}
+show('me')
+```
+### 5.作用
+- 使用函数内部的变量在函数执行完后，仍然存在于内存中（延长了局部变量的生命周期）
+- 让函数外部可以操作到函数内部的数据
 
