@@ -1,6 +1,7 @@
 <template>
   <div class="container">
-    <div>
+    向我中
+    <!-- <div>
       <Logo />
       <h1 class="title">
         app
@@ -23,7 +24,7 @@
           GitHub
         </a>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 

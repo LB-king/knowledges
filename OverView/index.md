@@ -441,3 +441,48 @@ rimraf node_modules
 ## 实用工具
 
 - 截屏软件GIF：GifCam :https://gifcam.softonic.cn/download
+
+- 代码风格
+
+  - standard: https://github.com/standard/standard/blob/master/docs/README-zhcn.md
+
+    安装vscode-standardjs 
+
+    安装vscode-standardjs-snippets 以获得JS snippets
+
+    ```powershell
+    npm install standard -g
+    standard --fix # 直接可以格式化js代码
+    ```
+
+    - 无需配置。统一代码风格
+
+    - 自动代码格式化。`standard --fix`
+
+    - 提前发现风格及程序问题
+
+    - 细则：
+
+      - 使用2个空格-进行缩进
+
+      - 字符串使用单引号-需要转义的地方除外
+
+      - 不再有冗余的变量
+
+      - 无分号
+
+      - 行首不要以`(`,`[`,or ` 开头
+
+        ```json
+        {
+          "scripts": {
+            "test": "standard --fix && node my.test.js"
+          }
+        }
+        ```
+
+  - Airbnb: https://github.com/lin-123/javascript
+
+  
+
+  
