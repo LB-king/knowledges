@@ -128,6 +128,12 @@ Vue.use(ElementUI, { size: 'small', zIndex: 3000 })
   // 解决方法
   this.$refs.target.suggestion = []
   ```
+  
+  `el-autocomplete`清除按钮点击之后导致查询不显示列表
+  
+  ```javascript
+  this.$refs.autoComplete.activated = true;
+  ```
 
 ### 4.pug
 

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>自增</title>
+  </head>
+  <body>
+    <script>
+      // 前置自增 ++i (先自身执行加法操作后再赋值)
+      var a = 1
+      var b = ++a
+      console.log('a:' + a, 'b:' + b) // a:2 b:2
+
+      // 后置自增 i++ (先赋值后再执行加法操作)
+      var j = 1
+      var k = j++
+      console.log('j:' + j, 'k:' + k) // j:2 k:1
+
+      /**
+       *格式化数字@param
+       *num: 要处理的数值
+       *cent: 保留的小尾数
+       *isThousand: 是否千分位
+       */
+      function numFormatter(num, cent, isThousand) {
+        const isNum =
+          num === '-' ||
+          Object.prototype.toString.call(num) === '[object Undefined]'
+        if (isNum) {
+          num = 0
+        }
+        return num
+      }
+      let res = numFormatter()
+      console.log(res)
+    </script>
+  </body>
+</html>
