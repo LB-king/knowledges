@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      var obj = {
+        name: 'kobe',
+        page: 8,
+        size: 1,
+        page: 89
+      }
+
+      // 将obj变成 name=kone&page=8
+      // let keys = Object.keys(obj)
+      // let res = []
+      // keys.map(key => {
+      //   res.push(key + '=' + obj[key])
+      // })
+      // console.log(res.join('&'))
+
+      let r = Object.entries(obj)
+        .reduce((acc, cur) => {
+          if (acc) {
+            return acc.concat(cur.join('='))
+          }
+          // return acc.join('=') + '&' + cur.join('=')
+        }, [])
+        .join('&')
+
+      console.log(r)
+
+      var a = [0, 1, 2, 3]
+      var sum = a.reduce(cb)
+      function cb(accumulator, currentValue, currentIndex, source) {
+        console.log('accumulator', accumulator)
+        console.log('currentValue', currentValue)
+        console.log('currentIndex', currentIndex)
+        console.log('source', source)
+        return accumulator + currentValue
+      }
+      console.log(sum)
+    </script>
+  </body>
+</html>

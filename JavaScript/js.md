@@ -41,7 +41,26 @@ b // [11, 22, 33]
 b = a.map(i => {...a})
 ```
 
-#### 函数柯里化
+#### reduce解析
+
+​		如果没有提供`initialValue`，reduce 会从索引1的地方开始执行 callback 方法，跳过第一个索引。如果提供`initialValue`，从索引0开始。
+
+```javascript
+var a = [0, 1, 2, 3]
+a.reduce(callback, 10)
+function callback(acc, cur) {
+  return acc + cur
+}
+// 结果是 10 + 1 + 2 + 3 = 16
+```
+
+| `callback`      | `accumulator` | `currentValue` | `currentIndex` | return value |
+| --------------- | ------------- | -------------- | -------------- | ------------ |
+| first callback  | 0             | 1              | 1              | 1            |
+| second callback | 1             | 2              | 2              | 3            |
+| third callback  | 3             | 3              | 3              | 6            |
+
+
 
 #### call和apply的区别
 
