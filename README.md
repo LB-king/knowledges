@@ -93,4 +93,14 @@ wifi名称： QY0OMTPR
   |       cat       | 显示或连接文件内容        | cat file                       |
   |       ln        | 为文件创建联接            | ln -s file1 file2 s 表示软联接 |
 
-  
+- 修改终端样式
+
+电脑版微信多开
+
+```bat
+start C:\"Program Files (x86)"\Tencent\WeChat\WeChat.exe
+start C:\"Program Files (x86)"\Tencent\WeChat\WeChat.exe
+```
+
+保存为`wx.bat`文件，双击即可
+

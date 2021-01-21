@@ -1044,4 +1044,85 @@ rimraf node_modules
   
   https://www.91flac.com/users/index    731540792@qq.com + qq
 
- 
+##  Nginx
+
+```shell
+# use nobody
+worker_processes 1;
+use nginx;
+events {
+	worker_connections 1024
+}
+http {
+	include mime.types;
+	default_type application/octet-stream;
+	#log_format main '$remote_addr - $remote_user [$time_local] "$request"'
+	#								'$status $body_bytes_sent "$http_referer"'
+	#								'"$http_user_agent" "$http_x_forwarded_for"'
+	sendfile on;
+	#tcp_nopush on;
+	#keepalive_timeout 65;
+	tcp_nodelay on;
+	client_header_buffer_size 32k;
+	large_client_header_buffers 4 32k;
+	client_max_body_size 1024m;
+	client_body_buffer_size 10m;
+	
+	gzip on;
+	gzip_disable "msie6";
+	
+	gzip_vary on;
+	gzip_proxied any;
+	gzip_comp_level 6;
+	gzip_buffers 16 8k;
+	gzip_http_version 1.1;
+	gzip_min_length 256;
+	gzip_types application/javascript text/plain text/css application/json application/x-javascript text/xml application/xml+rcc text/javascript application/vnd.ms-fontobject application/x-fontobject application/x-font-ttf font/opentype image/svg+xml image/x-icon image/png;
+	
+	upstream kgApi_server {
+		server 22.188.1.122:8000;
+		server 22.188.1.133:8080;
+		keepalive 2000
+	}
+	upstream auth_server {
+		ip_hash;
+		server 22.188.1.122:8000 weight=1 max_fails=2;
+		server 22.188.1.133:8080 weight=1 max_fails=2;
+	}
+	
+	server {
+		listen 80;
+		server_name localhost;
+		
+		#charset koi8-r;
+		access_log logs/host.access.log main;
+		
+		location / {
+			try_files $uri $uri/ /index.html;
+			root html;
+			index index.html index.htm;
+		}
+		
+		location /kg-api/ {
+			proxy_pass http://kgApi_server;
+			prox_set_header Host $host:#server_port;
+		}
+		
+		location /authSvr/ {
+			proxy_pass http://auth_server;
+			prox_set_header Host $host:#server_port;
+		}
+		
+		error_page 500 502 503 504 /50x.html;
+	}
+}
+
+```
+
+## React
+
+template 结构
+
+script 行为
+
+style 样式

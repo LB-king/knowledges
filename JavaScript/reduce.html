@@ -37,13 +37,26 @@
       var a = [0, 1, 2, 3]
       var sum = a.reduce(cb)
       function cb(accumulator, currentValue, currentIndex, source) {
-        console.log('accumulator', accumulator)
+        /*  console.log('accumulator', accumulator)
         console.log('currentValue', currentValue)
         console.log('currentIndex', currentIndex)
-        console.log('source', source)
+        console.log('source', source) */
         return accumulator + currentValue
       }
       console.log(sum)
+
+      // 一个很长的字符以一个标准换行
+      function cutNameByBytes(str, len, res = []) {
+        if (str.length && str.length > len) {
+          let nums = Math.ceil(str.length / len)
+          for (let i = 0; i < nums; i++) {
+            res.push(str.substr(i * len, len))
+          }
+          return res.join('</br>')
+        }
+        return str
+      }
+      console.log(cutNameByBytes('hello world', 3))
     </script>
   </body>
 </html>
