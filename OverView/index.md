@@ -1119,6 +1119,33 @@ http {
 
 ```
 
+autonginx.sh文件
+
+```shell
+#! /bin/bash
+##startnginx=/nginx/sbin/nginx -c /nginx/conf/nginx.conf
+##stopnginx=ps -ef|grep nginx|grep -v grep|cut -c 9-15|xargs kill -s 9
+case $1 in 
+start)
+		/nginx/sbin/nginx -c /nginx/conf/nginx.conf
+;;
+stop)
+		ps -ef|grep nginx|grep -v grep|cut -c 9-15|xargs kill -s 9
+;;
+*)
+		echo "Usage: $0 {start|stop}"
+esac
+```
+
+调用此脚本：
+
+```shell
+sudo /nginx/autonginx.sh start
+sudo /nginx/autonginx.sh stop 
+```
+
+
+
 ## React
 
 ### 1.简介
