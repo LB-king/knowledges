@@ -1079,15 +1079,15 @@ http {
 	gzip_min_length 256;
 	gzip_types application/javascript text/plain text/css application/json application/x-javascript text/xml application/xml+rcc text/javascript application/vnd.ms-fontobject application/x-fontobject application/x-font-ttf font/opentype image/svg+xml image/x-icon image/png;
 	
-	upstream kgApi_server {
-		server 22.188.1.122:8000;
-		server 22.188.1.133:8080;
+	upstream myApi_server {
+		server 1.1.1.2:8000;
+		server 1.1.1.3:8080;
 		keepalive 2000
 	}
 	upstream auth_server {
 		ip_hash;
-		server 22.188.1.122:8000 weight=1 max_fails=2;
-		server 22.188.1.133:8080 weight=1 max_fails=2;
+		server 1.1.1.2:8000 weight=1 max_fails=2;
+		server 1.1.1.3:8080 weight=1 max_fails=2;
 	}
 	
 	server {
@@ -1103,8 +1103,8 @@ http {
 			index index.html index.htm;
 		}
 		
-		location /kg-api/ {
-			proxy_pass http://kgApi_server;
+		location /my-api/ {
+			proxy_pass http://myApi_server;
 			prox_set_header Host $host:#server_port;
 		}
 		
