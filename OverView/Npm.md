@@ -1,8 +1,14 @@
-## npm
+###A. npm
 
 全称（Node Package Manager 即node包管理工具）
 
-- 安装
+快速删除node_modules文件夹
+
+```shell
+rimraf node_modules
+```
+
+### 1.安装
 
 ```shell
 npm install -g cnpm --registry=https://registry.npm.taobao.org
@@ -10,6 +16,51 @@ npm err! Error: connect ECONNREFUSED 127.0.0.1:8087 // 出现此情况的解决�
 npm config set proxy null
 npm ls // 查看包安装目录列表
 ```
+
+- 查看镜像的配置结果
+
+  ```shell
+  npm config get registry # 默认是：https://registry.npmjs.org/ 因此可以设置成淘宝镜像
+  npm config set registry https://registry.npm.taobao.org # 设置淘宝镜像
+  npm config set registry https://registry.npmjs.org # 回退初始化设置
+  npm config get disturl
+  ```
+
+- 设置缓存目录
+
+  ```shell
+  npm config get cache # 获取缓存目录
+  npm config set cache "d:/cache" # 设置
+  npm config get prefix # 包安装目录
+  npm config set prefix "d:/cache"
+  ```
+
+### 2.常用命令：
+
+```shell
+npm help <command> # 可以查看某条命令的详细帮助
+npm update <package> # 可以把当前目录下`node_modules`子目录里对应的模块更新至最新版本
+npm update <package> -g # 全局更新
+npm cache clear # 可以清空npm本地缓存
+npm publish # 发布？(未曾使用)
+npm install vue@2.6.2 # 下载指定版本的vue
+npm list -g # 查看全局所有安装的模块
+npm list vue # 查看某个模块的版本号
+npm install <package> # 不加后缀-save,--S,-S 在package文件的dependencies节点写入依赖
+npm install <package> # -save-dev,-D,--D在package文件的devDependencies节点写入依赖
+#dependencies:运行时的依赖，发布后，即生产环境下还需要用的模块
+#devDependencies:开发时的依赖，里面的模块是开发时用的，发布时用不到它，例：gulp，压缩css，js的模块。
+```
+
+### 3.配置文件
+
+- 快速配置
+
+  ```shell
+  npm init -y | --yes
+  ```
+
+  
 
 版本号：语义版本号分为X,Y,Z三位，分别代表主版本号，次版本号，补丁版本号
 
@@ -19,34 +70,11 @@ npm ls // 查看包安装目录列表
 
 常用命令：
 
-```shell
-# npm help <command> 可以查看某条命令的详细帮助
-# npm update <package> 可以把当前目录下`node_modules`子目录里对应的模块更新至最新版本
-# npm update <package> -g 全局更新
-# npm cache clear 可以清空npm本地缓存
-npm publish # 发布？(未曾使用)
-```
-
-设置缓存的目录：
-
-```shell
-npm config get cache # 获取缓存目录
-npm config set cache "d:/cache" # 设置
-npm config get prefix # 包安装目录
-npm config set prefix "d:/cache"
-```
-
-快速删除node_modules文件夹
-
-```shell
-rimraf node_modules
-```
-
 
 
 **---------------------------------------------------------------------------------------------------------------------**
 
-## yarn
+### B.yarn
 
 安装：https://classic.yarnpkg.com/zh-Hans/docs/install#windows-stable
 

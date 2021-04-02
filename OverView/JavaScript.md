@@ -137,6 +137,18 @@ reflow:
 
 repaint:
 
+
+
+### IIFE(立即调用函数表达式)
+
+```javascript
+(function () {
+  statements
+})()
+```
+
+
+
 ### 正则表达式
 
 ​	https://tool.oschina.net/uploads/apidocs/jquery/regexp.html

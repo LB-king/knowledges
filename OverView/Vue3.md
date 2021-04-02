@@ -1,4 +1,4 @@
-###1.新建
+###1.初始化项目
 
 ```powershell
 npm install vue/@next
@@ -14,11 +14,18 @@ npm install
 npm run dev # 启动项目
 ```
 
-IIFE(立即调用函数表达式)
+关于配置项：
+
+vite.config.js
 
 ```javascript
-(function () {
-  statements
-})()
+const path = require('path')
+module.exports = {
+  port: 8080 // 默认是3000，可自定义
+  alias: {
+		'/@/': path.resolve('src')
+  }
+}
 ```
 
+### 2.vue-router
