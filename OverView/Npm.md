@@ -60,7 +60,37 @@ npm install <package> # -save-dev,-D,--D在package文件的devDependencies节点
   npm init -y | --yes
   ```
 
-  
+- 生成基本配置`package.json`
+
+  ```json
+  {
+    "name": "npm",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "dependencies": {
+      "vue": "^3.0.4"
+    }
+  }
+  ```
+
+  - `name`: 包的名字
+  - `version`: 版本名
+  - `description`: 描述
+  - `main`: 字段指定了程序的主入口文件，require('moduleName')就会加载这个文件。这个字段的默认值是模块根目录下面的index.js。
+
+  `^X.Y.Z`: `^`更新最新的版本,Y,Z都更新
+
+  `~X.Y.Z: `^`更新Z
+
+  `X.Y.Z`: 固定版本号
+
+  `"debug: ">=2.6.9"`
+
+  同理：`>`,``>=``,``<=``,`<`
 
 版本号：语义版本号分为X,Y,Z三位，分别代表主版本号，次版本号，补丁版本号
 
