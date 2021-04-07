@@ -1,4 +1,4 @@
-#### 配置git
+#### 1.配置git
 
 ```shell
 git config --global user.name 'your name'
@@ -7,7 +7,7 @@ git config user.name #查看用户
 git config user.email #查看邮箱
 ```
 
-#### 生成SSH KEY
+#### 2.生成SSH KEY
 
 ```shell
 ssh-keygen -t rsa -C "xxx@git.com" # 生成密匙
@@ -16,7 +16,7 @@ cat id_rsa.pub # 查看ssh key
 # 在git设置中添加 ssh key
 ```
 
-#### 切换协议（http-ssh）
+#### 3.切换协议（http-ssh）
 
 ```shell
 git remote -v # 查看信息
@@ -26,7 +26,7 @@ git remote rm origin
 git remote add origin git@xxx.git
 ```
 
-#### 关联远程仓库
+#### 4.关联远程仓库
 
 1. clone的方式
 
@@ -61,7 +61,7 @@ git remote add origin git@xxx.git
      git push
      ```
 
-#### 撤销操作
+#### 5.撤销操作
 
 - 没有`git add`的情况，回到最近一次commit的情况
 
@@ -84,7 +84,7 @@ git remote add origin git@xxx.git
   git checkout readme.txt
   ```
 
-#### 修改已经push的commit信息
+#### 6.修改已经push的commit信息
 
 ```shell
 git log # 查看需要修改的提交
@@ -95,7 +95,17 @@ git rebase --continue
 git push -f origin dev
 ```
 
-#### 合并分支
+#### 7.撤回已经commit的问题
+
+```shell
+git reset --soft HEAD^ # 成功撤销了commit操作，写的代码仍然保留
+HEAD^ 的意思是上一个版本，也可以写成HEAD~1
+--mixed 不删除工作空间改动代码，并且撤销git add .操作
+--soft 不删除工作空间改动代码，撤销commit，不撤销git add
+--hard 删除工作空间改动代码，撤销commit，撤销git add,完成这个操作后，就恢复到了上一次的commit状态
+```
+
+#### 8.合并分支
 
 ```shell
 git branch
@@ -106,13 +116,13 @@ git push origin dev # 将fenzhi合并到dev
 git checkout -b dev1 origin dev1 #创建dev分支与远程dev分支关联，内容也会切换
 ```
 
-#### gitk乱码问题
+#### 9.gitk乱码问题
 
 ```shell
 git config --global gui.encoding utf-8
 ```
 
-#### 删除分支
+#### 10.删除分支
 
 ```shell
 git push origin --delete ding
@@ -120,7 +130,7 @@ git remote prune origin # 删除不存在的远程分支
 git branch -D ding # 删除本地分支
 ```
 
-#### 本地&远程分支
+#### 11.本地&远程分支
 
 ```shell
 git remote set-head origin my-test # 设置origin/HEAD
@@ -132,7 +142,7 @@ git branch -u origin/branch-name # 本地分支追踪远程分支
 git branch --track remotes/origin/ding # 切换远程分支
 ```
 
-#### gitbash快捷键
+#### 12.gitbash快捷键
 
 - `ctrl + L`  = 清屏
 - `ctrl + R` = 查找历史记录，输入keyword多次`ctrl + R`可返回下一匹配项
@@ -146,7 +156,7 @@ git branch --track remotes/origin/ding # 切换远程分支
 - `mv` = 移动文件
 - `pwd` = 展示工作目录
 
-#### 当前HEAD
+#### 13.当前HEAD
 
 ```powershell
 cat .git/HEAD
