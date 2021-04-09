@@ -53,8 +53,8 @@ wifi名称： QY0OMTPR
 - `cmd + shift + 5`：打开截屏使用工具，也可以用以下快捷键截屏
 
   - `cmd + shift + 3`: 以拍摄整个屏幕的截屏
-  - `cmd + shift + 4: 以拍摄所选屏幕区域的截屏
-  - `cmd + shift + 6: 以捕捉触控栏
+  - `cmd + shift + 4`: 以拍摄所选屏幕区域的截屏
+  - `cmd + shift + 6`: 以捕捉触控栏
   
 - 编辑文件 `vim a.txt`
 

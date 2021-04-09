@@ -586,7 +586,7 @@ js通过`exports`对象作为模块的接口
 
 require的过程
 
-![](E:\codeSpace\knowledges\OverView\nodejs-require.jpg)
+![](E:\codeSpace\knowledges\OverView\img\nodejs-require.jpg)
 
 ### 函数
 

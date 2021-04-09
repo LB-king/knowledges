@@ -45,7 +45,7 @@ npm cache clear # 可以清空npm本地缓存
 npm publish # 发布？(未曾使用)
 npm install vue@2.6.2 # 下载指定版本的vue
 npm list -g # 查看全局所有安装的模块
-npm list vue # 查看某个模块的版本号
+npm list vue -g # 查看某个模块的版本号
 npm install <package> # 不加后缀-save,--S,-S 在package文件的dependencies节点写入依赖
 npm install <package> # -save-dev,-D,--D在package文件的devDependencies节点写入依赖
 #dependencies:运行时的依赖，发布后，即生产环境下还需要用的模块
@@ -84,11 +84,11 @@ npm install <package> # -save-dev,-D,--D在package文件的devDependencies节点
 
   `^X.Y.Z`: `^`更新最新的版本,Y,Z都更新
 
-  `~X.Y.Z: `^`更新Z
+  `~X.Y.Z`: `~` 更新Z
 
   `X.Y.Z`: 固定版本号
 
-  `"debug: ">=2.6.9"`
+  `"debug": ">=2.6.9"`
 
   同理：`>`,``>=``,``<=``,`<`
 
@@ -98,9 +98,85 @@ npm install <package> # -save-dev,-D,--D在package文件的devDependencies节点
 - 如果是新增了功能，但是向下兼容，需要更新Y位
 - 如果有大变动，向下不兼容，需要更新X位
 
-常用命令：
+### 4.静态资源管理库
 
+在线地址：https://cdn.baomitu.com
 
+### 5.npx
+
+npx想要解决的主要问题，就是调用项目内部安装的模块。比如，项目内部安装了测试工具Mocha。
+
+一般来说，调用Mocha，只能在项目脚本和package.json的`scropts`字段里，如果想在命令行下调用。必须像下面这样：
+
+```shell
+node-modules/.bin/mocha --vesion
+```
+
+npx就是想解决这个问题，让项目内部安装的模块用起来更方便，只要像下面调用就行：
+
+```shell
+npx mocha --version
+```
+
+npx将包下载到一个临时目录，使用后再删除。所以以后再执行上面的命令，会重新下载某个包。
+
+--no-install参数和--ignore-existing
+
+- 如果想让npx强制使用本地模块，不下载远程模块，可以使用**--no-install**。如果本地不存在该模块，就会报错。
+
+  ```shell
+  npx http-server
+  npx --no-install http-server
+  ```
+
+- 如果想让npx强制使用远程模块，可以使用**--ignore-existing**
+
+  ```shell
+  npx --ignore-existing http-server
+  ```
+
+### 6.nrm(npm registry manager)
+
+npm的镜像源管理工具
+
+```shell
+nrm ls
+	*npm -------- https://registry.npmjs.org/
+  yarn ------- https://registry.yarnpkg.com/
+  cnpm ------- http://r.cnpmjs.org/
+  taobao ----- https://registry.npm.taobao.org/
+  nj --------- https://registry.nodejitsu.com/
+  npmMirror -- https://skimdb.npmjs.com/registry/
+  edunpm ----- http://registry.enpmjs.org/
+```
+
+带*号的是当前使用的源
+
+- 切换
+
+  ```shell
+  nrm use taobao
+  ```
+
+- 增加
+
+  ```she
+  nrm add registry http://registry.npm.frp.trmap.cn/
+  ```
+
+- 删除
+
+  ```shell
+  nrm del <registry>
+  ```
+
+- 测试速度
+
+  ```shell
+  nrm test npm
+  ```
+
+  
 
 **---------------------------------------------------------------------------------------------------------------------**
 
