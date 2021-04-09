@@ -135,7 +135,9 @@ npx将包下载到一个临时目录，使用后再删除。所以以后再执�
   npx --ignore-existing http-server
   ```
 
-### 6.nrm(npm registry manager)
+### 6.nrm
+
+npm registry manager
 
 npm的镜像源管理工具
 
@@ -176,7 +178,32 @@ nrm ls
   nrm test npm
   ```
 
-  
+### 7.babel
+
+```shell
+npm install babel-cli babel-core babel-preset-es2015 babel-plugin-transform-runtime babel-preset-stage-2 --save-dev
+```
+
+新建`.babelrc`配置文件,新建src，lib文件夹
+
+```jso
+{
+	"presets": ["es2015","stage-2"], //设置转码规则
+	"plugins": ["transform-runtime"] //设置插件
+}
+```
+
+配置`package.json`
+
+```shell
+"scripts": {
+	"build": "babel src -w -d lib"
+}
+# 将src文件夹中的js文件编译到es5存到lib文件夹。包括其中的文件里的js文件。src文件要存在，lib文件夹无要求。 否则就会报错
+# -w就是-watch的意思。监听文件，实时编译输出
+```
+
+
 
 **---------------------------------------------------------------------------------------------------------------------**
 

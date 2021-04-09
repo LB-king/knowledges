@@ -228,28 +228,27 @@ cnpm i babel-preset-react -D
 
    ```javascript
    module.exports = {
-       mode:'development',
-       //所有第三方 模块的配置规则
-       //webpack默认只能处理.js后缀名类型的文件
-       module:{
-           rules:[
-               {
-                   test:/\.js|jsx$/,
-                   use:'babel-loader',
-                   exclude:/node_modules/
-               }
-           ]
-       }
+     mode:'development',
+     //所有第三方 模块的配置规则
+     //webpack默认只能处理.js后缀名类型的文件
+     module:{
+       rules:[
+         {
+           test:/\.js|jsx$/,
+           use:'babel-loader',
+           exclude:/node_modules/
+         }
+       ]
+     }
    }
-   
    ```
-
+   
 4. 添加`.babelrc`配置文件
 
 ```json
 {
-    "presets":["enc","statge-0","react"],
-    "plugins":["transform-runtime"]
+  "presets":["enc","statge-0","react"],
+  "plugins":["transform-runtime"]
 }
 
 ```
