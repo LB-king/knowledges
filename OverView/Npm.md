@@ -201,6 +201,7 @@ npm install babel-cli babel-core babel-preset-es2015 babel-plugin-transform-runt
 }
 # 将src文件夹中的js文件编译到es5存到lib文件夹。包括其中的文件里的js文件。src文件要存在，lib文件夹无要求。 否则就会报错
 # -w就是-watch的意思。监听文件，实时编译输出
+# -d就是dir
 ```
 
 
