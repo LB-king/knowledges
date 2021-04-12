@@ -204,11 +204,16 @@ npm install babel-cli babel-core babel-preset-es2015 babel-plugin-transform-runt
 # -d就是dir
 ```
 
-
-
 **---------------------------------------------------------------------------------------------------------------------**
 
 ### B.yarn
+
+Yarn是由`Facebook`,`Google`,`Exponent`和`Tilde`联合推出了一个新的JS包管理器，正如官方文档中写的，Yarn是为了弥补npm的一些缺陷而出现的。NPM5以下：
+
+- npm install 的时候慢
+- 同一个项目，多人开发时，由于安装的版本不一致出现bug
+
+官网：www.yarnpkg.com
 
 安装：https://classic.yarnpkg.com/zh-Hans/docs/install#windows-stable
 
@@ -220,5 +225,20 @@ npm install babel-cli babel-core babel-preset-es2015 babel-plugin-transform-runt
 | npm uninstall vue --save | yarn remove vue      | 移除某个依赖项     |
 | npm update vue --save    | yarn upgrade vue     | 更新某个依赖项     |
 | npm install cnpm -g      | yarn global add cnpm | 安装全局依赖       |
+
+cli配置：https://yarnpkg.com/cli/add
+
+```shell
+yarn config get <name>
+yarn config get npmAuthToken --no-redacted
+yarn config set initScope myScope
+yarn config unset initScope
+
+```
+
+| Definition      | Description                                                  |
+| :-------------- | :----------------------------------------------------------- |
+| `--json`        | Format the output as an NDJSON stream<br />将输出格式化为NDJSON流 |
+| `--no-redacted` | Don't redact(编辑) secrets (such as tokens) from the output  |
 
 安装项目的全部依赖项：yarn || yarn install

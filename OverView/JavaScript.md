@@ -9,6 +9,8 @@
 
 - 在开发时直接转译
 
+- 比较通用的方案有babel,jsx,traceur,es6-shim等
+
 ### JavaScript方法积累
 
 #### 上传读取txt文件内容
