@@ -24,17 +24,34 @@
        *cent: 保留的小尾数
        *isThousand: 是否千分位
        */
-      function numFormatter(num, cent, isThousand) {
-        const isNum =
-          num === '-' ||
-          Object.prototype.toString.call(num) === '[object Undefined]'
-        if (isNum) {
-          num = 0
+      function numFormatter(param) {
+        if (Number.isNaN(param)) {
+          return '-'
+        } else {
+          let index = param.toString().indexOf('.')
+          if (index !== -1) {
+            let leftVal = param.toString().substring(0, index)
+            let rightVal = param.toString().substring(index, param.length)
+            let leftV = leftVal.replace(/(\d)(?=(?:\d{3})+$)/g, '$1,')
+            return leftV + rightVal
+          } else {
+            return param.toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,')
+          }
         }
-        return num
       }
-      let res = numFormatter(zz)
-      console.log(res)
+
+      // 判断是不是数字类型
+      function isNumber(val) {
+        var regPos = /^\d+(\.\d+)?$/ //非负浮点数
+        var regNeg = /^(-(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*)))$/ //负浮点数
+        if (regPos.test(val) || regNeg.test(val)) {
+          return true
+        } else {
+          return false
+        }
+      }
+
+      console.log(isNumber('9'))
     </script>
   </body>
 </html>
