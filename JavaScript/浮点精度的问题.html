@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>解决0.1+0.2的问题</title>
+    <style>
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+      }
+      input[type='number'] {
+        -moz-appearance: textfield;
+      }
+    </style>
+  </head>
+  <body>
+    <input type="number" />
+    <button id="btn">点击取随机数</button>
+    <script>
+      let a = 0.1,
+        b = 0.2
+      let c = a + b
+      console.log(c) //0.30000000000000004
+
+      // 取某个范围的随机数
+      document.querySelector('#btn').addEventListener('click', () => {
+        console.log(getRamdon(1, 5))
+      })
+      function getRamdon(min, max) {
+        return Math.round(Math.random() * (max - min) + min)
+      }
+
+      let arr = [1, 2, 3, 4]
+      let i = arr.length
+      while (i--) {
+        console.log(arr[i])
+      }
+      /* 
+      @param 
+      num 需要处理的数据
+      cent 保留的位数
+      isThousand 是否千分位
+      22334455.998877->22,334,455.9989
+      */
+      function numFormatter(num, cent, isThousand) {
+        if (isEmpty(num) || isNaN(num)) return 0
+        let numSource = num
+        // 将num中的$ ,符号剔除
+        num = num.toString().replace(/\$|\,/g, '')
+        if (num < 0) num = num * -1
+        num = Math.floor(num * Math.pow(10, cent) + 0.50000000001)
+        let cents = num % Math.pow(10, cent)
+        num = Math.floor(num / Math.pow(10, cent)).toString()
+        cents = cents.toString()
+        while (cents.length < cent) cents = '0' + cents
+        if (isThousand) {
+          num = num.toString().replace(/(?=(?!\b)(\d{3})+$)/g, ',')
+        }
+        if (numSource < 0) num = `-${num}`
+        return cent > 0 ? `${num}.${cents}` : `${num}`
+      }
+
+      // 判断是否是空值,为空返回true，否则返回false
+      function isEmpty(str) {
+        if (!str || JSON.stringify(str) === '{}') {
+          return true
+        }
+        return false
+      }
+      let r = numFormatter('22334455.999877', 3, true) // 22,334,456.000
+      let r1 = numFormatter(0.1+0.2, 2, true)
+      console.log(r)
+      console.log(r1)
+    </script>
+  </body>
+</html>
