@@ -51,7 +51,18 @@
         }
       }
 
+
+      // parseInt第二个参数表示进制 parseInt(1.23456, 10)
+      function toFixed(num, s) {
+        var times = Math.pow(10, s)
+        var des = num * times + 0.5
+        des = parseInt(des, 10) / times
+        return (des + '').toFixed(s)
+      }
       console.log(isNumber('9'))
+
+      var a = 667788.898
+      console.log(toFixed(a, 2))
     </script>
   </body>
 </html>

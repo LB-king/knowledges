@@ -133,6 +133,43 @@ a()
 - `RegExp`
 - `String`
 
+#### 数字千分位的实现
+
+```javascript
+/* 
+  @param 
+  num 需要处理的数据
+  cent 保留的位数
+  isThousand 是否千分位
+*/
+function numFormatter(num, cent, isThousand) {
+  if (isEmpty(num) || isNaN(num)) return 0
+  let numSource = num
+  // 将num中的$ ,符号剔除
+  num = num.toString().replace(/\$|\,/g, '')
+  if (num < 0) num = num * -1
+  num = Math.floor(num * Math.pow(10, cent) + 0.50000000001)
+  let cents = num % Math.pow(10, cent)
+  num = Math.floor(num / Math.pow(10, cent)).toString()
+  cents = cents.toString()
+  while (cents.length < cent) cents = '0' + cents
+  if (isThousand) {
+    num = num.toString().replace(/(?=(?!\b)(\d{3})+$)/g, ',')
+  }
+  if (numSource < 0) num = `-${num}`
+  return cent > 0 ? `${num}.${cents}` : `${num}`
+}
+// 判断是否是空值,为空返回true，否则返回false
+function isEmpty(str) {
+  if (!str || JSON.stringify(str) === '{}') {
+    return true
+  }
+  return false
+}
+```
+
+
+
 宿主对象就是执行JS脚本的环境提供的对象
 
 自定义对象
