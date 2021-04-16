@@ -49,6 +49,7 @@
         let numSource = num
         // 将num中的$ ,符号剔除
         num = num.toString().replace(/\$|\,/g, '')
+        console.log(typeof(99,889))
         if (num < 0) num = num * -1
         num = Math.floor(num * Math.pow(10, cent) + 0.50000000001)
         let cents = num % Math.pow(10, cent)
@@ -69,9 +70,9 @@
         }
         return false
       }
-      let r = numFormatter('22334455.999877', 3, true) // 22,334,456.000
-      let r1 = numFormatter(0.1+0.2, 2, true)
-      console.log(r)
+      //let r = numFormatter('22334455.999877', 3, true) // 22,334,456.000
+      let r1 = numFormatter(988,888, 2, true)
+      //console.log(r)
       console.log(r1)
     </script>
   </body>

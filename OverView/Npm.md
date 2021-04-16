@@ -208,6 +208,8 @@ npm install babel-cli babel-core babel-preset-es2015 babel-plugin-transform-runt
 
 ### B.yarn
 
+safe,stable,reproducible projects
+
 Yarn是由`Facebook`,`Google`,`Exponent`和`Tilde`联合推出了一个新的JS包管理器，正如官方文档中写的，Yarn是为了弥补npm的一些缺陷而出现的。NPM5以下：
 
 - npm install 的时候慢
@@ -216,6 +218,13 @@ Yarn是由`Facebook`,`Google`,`Exponent`和`Tilde`联合推出了一个新的JS�
 官网：www.yarnpkg.com
 
 安装：https://classic.yarnpkg.com/zh-Hans/docs/install#windows-stable
+
+```shell
+npm install yarn -g
+yarn --version
+```
+
+
 
 | NPM                      | YARN                 | 说明               |
 | :----------------------- | :------------------- | :----------------- |
@@ -228,12 +237,35 @@ Yarn是由`Facebook`,`Google`,`Exponent`和`Tilde`联合推出了一个新的JS�
 
 cli配置：https://yarnpkg.com/cli/add
 
+基本命令：
+
 ```shell
 yarn config get <name>
 yarn config get npmAuthToken --no-redacted
 yarn config set initScope myScope
 yarn config unset initScope
+#源分支
+yarn config set registry https://registry.npm.taobao.org -g
+yarn config set sass_binary_site http://cdn.npm.taobao.org/dist/node-sass -g
 
+yarn init 
+yarn install # 安装package.json里所有包，并将包及它的所有依赖项保存进yarn.lock
+yarn install --flat # 安装一个包的单一版本
+yarn install --force # 强制重新下载所有包
+yarn install --production # 只安装dependencies里的包
+yarn install --no-lockfile # 不读取或生成yarn.lock
+yarn install --pure-lockfile # 不生成yarn.lock
+yarn add [package] # 在当前的项目中添加一个依赖包，会自动更新到package.json和yarn.lock文件中
+yarn add [package]@[version] # 安装指定版本的包，这里指的是主要版本，如果需要精确到小版本，使用-E参数
+yarn add --dev/-D # 加到devDependencies
+yarn add --peer/-P # 加到peerDependencies
+yarn add --option/-O # 加到optionalDependencies
+yarn add --exact/-E # 安装包的精确版本。例如yarn add foo@1.2.3会接收1.9.1，但是yarn add foo@1.2.3 --exact 只会接收1.2.3版
+yarn run 用来执行在package.json中scripts属性下定义的脚本
+yarn info <packageName> # 显示某个包的信息
+yarn cache list
+yarn cache dir # 返回 全局缓存位置
+yarn cache clean # 清除缓存
 ```
 
 | Definition      | Description                                                  |
@@ -241,4 +273,10 @@ yarn config unset initScope
 | `--json`        | Format the output as an NDJSON stream<br />将输出格式化为NDJSON流 |
 | `--no-redacted` | Don't redact(编辑) secrets (such as tokens) from the output  |
 
-安装项目的全部依赖项：yarn || yarn install
+Yarn的优点：
+
+- 速度快
+- 安装版本统一
+- 更简洁的输出
+- 多注册来源处理
+- 更好的语义化
