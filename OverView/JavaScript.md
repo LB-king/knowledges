@@ -159,7 +159,7 @@ function numFormatter(num, cent, isThousand) {
   if (numSource < 0) num = `-${num}`
   return cent > 0 ? `${num}.${cents}` : `${num}`
 }
-// 判断是否是空值,为空返回true，否则返回false
+// 判断是否是空值,空对象{}也被认为是空。为空返回true，否则返回false
 function isEmpty(str) {
   if (!str || JSON.stringify(str) === '{}') {
     return true
@@ -182,7 +182,7 @@ repaint:
 
 
 
-### IIFE(立即调用函数表达式)
+#### IIFE(立即调用函数表达式)
 
 ```javascript
 (function () {
@@ -190,7 +190,19 @@ repaint:
 })()
 ```
 
+#### 函数表达式和函数声明
 
+函数表达式： 
+
+```javascript
+let fn = function(){}
+```
+
+函数声明：
+
+```javascript
+function fn(){}
+```
 
 ### 正则表达式
 
@@ -222,3 +234,7 @@ repaint:
 ### 西瓜播放器
 
 参考地址：http://h5player.bytedance.com/gettingStarted
+
+### 学习网站
+
+https://www.houdunren.com   dxl_1234
