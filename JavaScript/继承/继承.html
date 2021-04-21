@@ -58,6 +58,51 @@
       // 将son对象的原型指到parent上。因此在son__proto__上会找到 show 这个方法。son调用，因此打印出来的是son
       Object.setPrototypeOf(son, parent)
       son.show() // son
+      parent.show() // parent
+      Object.getPrototypeOf(son) // 返回的是parent这个对象
+
+      // 通过__proto__属性来连接对象直到null的一条链即为我们所谓的原型链
+
+      console.log('--------------------------------')
+      // 函数的prototype
+      function Foo(n) {}
+      let f1 = new Foo()
+      //因此f1.__proto__.constructor === Foo.prototype.constructor === Foo
+
+      function User(name) {
+        this.name = name
+      }
+      User.prototype = {
+        constructor: User, // 不加上则会把User.prototype赋值给了另一个对象，就会缺少constructor
+        show() {
+          console.log(this.name)
+        }
+      }
+      // User.prototype.show = function () { // 这种方式不是改变对象，而是向对象追加属性
+      //   console.log(this.name)
+      // }
+
+      let zf = new User.prototype.constructor('张飞')
+      zf.show()
+      function UU(name) {
+        this.name = name
+        this.show = function () {
+          console.log(this.name)
+        }
+        this.say = function () {
+          console.log('say')
+        }
+      }
+
+      let uu1 = new UU('UU1')
+      // 根据新建的对象创建一个对象
+      function createByObject(obj, arg) {
+        const constructor = Object.getPrototypeOf(obj).constructor
+        return new constructor(arg)
+      }
+
+      let uu2 = createByObject(uu1, 'UU2')
+      uu2.say()
     </script>
   </body>
 </html>

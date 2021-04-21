@@ -21,11 +21,44 @@
    // constructor: 某个构造函数
    ```
 
-2. `prototype`
+2. `prototype`含义就是 函数的原型对象,认为是函数才有的属性,
 
-3. `__proto__`
+   `__proto__`非标准属性(隐式原型)，现在一般弃用了
+
+   ```javascript
+   function Foo() {}
+   let f1 = new Foo()
+   console.log(f1.__proto__ === Foo.prototype) // true
+   console.log(Foo.prototype.constructor === Foo) // true
+   console.log(Foo.prototype.__proto__ === Object.prototype) // true
+   console.log(Foo.__proto__ === Object.__proto__) // true
+   ```
+
+3. `constructor` 属性是对象才拥有的，他是从一个对象指向一个函数。含义就是指向该对象的构造函数(每个对象都可以找到其对应的constructor)
 
 4. `Object.setPrototypeOf()` 方法设置一个指定的对象的原型 ( 即, 内部[[Prototype]]属性）到另一个对象或  null。
+
+5. `Object.getPrototypeof()` 返回指定对象的原型
+
+   ```javascript
+   function User(name) {
+     this.name = name
+     this.show = function() {
+       console.log(this.name)
+     }
+   }
+   let u1 = new User('u1')
+   function createByObject(obj, ...args) {
+     const constructor = Object.getPrototype(obj).constructor
+     rerurn new constructor(...args)
+   }
+   ```
+
+6. 通过`__proto__`属性来连接对象直到`null`的一条链即为我们所谓的**原型链**
+
+   参考文章解析：
+
+   https://blog.csdn.net/cc18868876837/article/details/81211729
 
 ### new
 
