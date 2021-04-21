@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>继承</title>
+  </head>
+
+  <body>
+    <script>
+      // 1.创建对象的方法
+      // a.直接定义 new Object
+      let o1 = {
+        name: 'blank me'
+      }
+      let o11 = new Object(o1)
+      console.log(o11.__proto__.constructor === Object.prototype.constructor) // true
+      console.log(o11.__proto__.constructor === Object) // true
+      // b.通过构造函数创建 new Object() 创建的新对象的原型指向Object.prototype
+      let O2 = function (name) {
+        this.name = name
+      }
+      let o22 = new O2('ok')
+      // c.Object.create   必须接收一个p对象参数，创建的新对象的原型指向接收的参数对象，创建的对象相对比较干净。
+      let p = null
+      let o3 = Object.create(p, {
+        name: {
+          value: 'o3'
+        }
+      })
+      /* O2是一个构造函数 */
+      let obj = {}
+      let obj1 = {
+        name: 'obj1'
+      }
+      console.log(Object.getPrototypeOf(obj) === Object.getPrototypeOf(obj)) // true
+      // 子类的实例属性方法继承父类的示例属性方法，子类的原型属性方法继承父类的原型属性方法。简称实例继承实例，原型继承原型
+      // 继承过程中，尽可能少的制造不必要的变量，节省资源
+
+      let arr = [] // new Array
+      console.log(arr.__proto__ === Array.prototype) // true
+      let str = '' // new String
+      console.log(str.__proto__ === String.prototype) //true
+      let bool = true // new Boolean
+      console.log(bool.__proto__ === Boolean.prototype) // true
+      let reg = /d/g // new RegExp
+      console.log(reg.__proto__ === RegExp.prototype) // true
+
+      console.log('--------------------------------')
+      let son = { name: 'son' }
+      let parent = {
+        name: 'parent',
+        show() {
+          console.log(this.name)
+        }
+      }
+      // 将son对象的原型指到parent上。因此在son__proto__上会找到 show 这个方法。son调用，因此打印出来的是son
+      Object.setPrototypeOf(son, parent)
+      son.show() // son
+    </script>
+  </body>
+</html>
