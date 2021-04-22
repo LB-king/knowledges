@@ -36,9 +36,23 @@
 
 3. `constructor` 属性是对象才拥有的，他是从一个对象指向一个函数。含义就是指向该对象的构造函数(每个对象都可以找到其对应的constructor)
 
-4. `Object.setPrototypeOf()` 方法设置一个指定的对象的原型 ( 即, 内部[[Prototype]]属性）到另一个对象或  null。
+4. `isPrototypeOf`检测一个对象是否存在于另一个对象的原型链中。某一个对象是否是另一个对象的原型链的一份子
 
-5. `Object.getPrototypeof()` 返回指定对象的原型
+   ```javascript
+   let a = {}
+   let b = {}
+   console.log(Object.prototype.isPrototypeOf(a)) // true
+   Object.setPrototypeOf(a, b) // 设置a的原型为b
+   console.log(b.isPrototypeOf(a)) // true
+   console.log(Object.getPrototypeOf(a) === b)
+   ```
+
+5. `Object.setPrototypeOf(obj, prototype)` 方法设置一个指定的对象的原型 ( 即, 内部[[Prototype]]属性）到另一个对象或  null。
+
+   - `obj` 要设置其原型的对象
+   - `prototype` 该对象的新原型
+
+6. `Object.getPrototypeOf()` 返回指定对象的原型
 
    ```javascript
    function User(name) {
@@ -54,7 +68,7 @@
    }
    ```
 
-6. 通过`__proto__`属性来连接对象直到`null`的一条链即为我们所谓的**原型链**
+7. 通过`__proto__`属性来连接对象直到`null`的一条链即为我们所谓的**原型链**
 
    参考文章解析：
 
@@ -99,3 +113,4 @@
 3. 安装`run at broswer`
 4. 安装`Code Runner`
 5. 安装`vetur`支持`.vue`文件
+6. 安装`Live Server`实现热更新，有利于学习验证知识点。ps(在vscode打开的目录的根目录下的文件，默认是index.html)
