@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>call和apply借用原型</title>
+  </head>
+  <body>
+    <script>
+      let a = {
+        data: [17, 22, 13, 24]
+      }
+      Object.setPrototypeOf(a, {
+        max(data) {
+          return data.sort((a, b) => b - a)[0]
+        }
+      })
+      console.log(a.max(a.data))
+
+      let b = {
+        score: {
+          js: 109,
+          java: 90,
+          node: 99
+        },
+        // getter
+        // get data() {
+        //   return Object.values(this.score)
+        // }
+      }
+      console.log(a.max(Object.values(b.score))) //109
+
+      
+    </script>
+  </body>
+</html>

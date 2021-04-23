@@ -13,9 +13,10 @@
       console.log(Object.prototype.isPrototypeOf(a)) //true
       console.log(b.__proto__.isPrototypeOf(a)) // true
 
-      Object.setPrototypeOf(a, b)
-      console.log(b.isPrototypeOf(a)) // true
-      console.log(Object.getPrototypeOf(a) === b) // true
+      Object.setPrototypeOf(a, b) // 设置a的原型是b 即a.__proto__ === b
+      console.log(a.__proto__ === b) //true
+      console.log(b.isPrototypeOf(a)) //true
+      console.log(Object.getPrototypeOf(a) === b) //获取a的原型  true
     </script>
   </body>
 </html>

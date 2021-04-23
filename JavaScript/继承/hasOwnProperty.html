@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>hasOwnProperty</title>
+  </head>
+  <body>
+    <script>
+      let a = { name: 'AA' }
+      let b = { age: 24 }
+      Object.setPrototypeOf(a, b)
+      console.log(a.hasOwnProperty('age')) //false
+      console.log('age' in a) //true
+      //hasOwnProperty 与 in的区别。hasOwnProperty只检查对象，in不止检测对象，还检测该对象的原型链
+
+      //加了条件限制就会只读取对象的属性，不会去原型链上找
+      for (let i in a) {
+        if (a.hasOwnProperty(i)) {
+          console.log('加条件:' + i)
+        }
+      }
+      // 对象本身的属性 和 对象原型链上的属性
+    </script>
+  </body>
+</html>

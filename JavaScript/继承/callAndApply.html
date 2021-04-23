@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>call和apply</title>
+  </head>
+  <body>
+    <script>
+      function Foo(name, price) {
+        this.name = name
+        this.price = price
+      }
+      function Bar(name, price, age) {
+        // Foo.call(this, name, price)
+        Foo.apply(this, [name, price])
+        this.age = age
+      }
+      let res = new Bar('kobe', 33, 40)
+      console.log(res) //{name: "kobe", price: 33, age: 40}
+
+      const numbers = [11, 3, 109, 88]
+      console.log(Math.max.call(null, ...numbers)) // 参数列表
+      console.log(Math.max.apply(null, numbers)) // 参数数组
+    </script>
+  </body>
+</html>
