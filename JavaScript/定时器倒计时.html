@@ -19,6 +19,32 @@
         }
         btn.innerHTML = `计时器：${count}`
       }, 1000)
+
+      //每隔1S打印一次的问题
+      // 1.ES5的解决方案
+      /*  for (var i = 0; i < 5; i++) {
+        (function(j) {
+          setTimeout(() => {
+            console.log(j)
+          }, 1000 * j)
+        })(i)
+      } */
+      // 2.把var换成let。用var声明，变量i是唯一的，每一次i的改变都改变了自身的栈地址;let就避免了变量提升。
+      /*  for (let i = 0; i < 5; i++) {
+        setTimeout(() => {
+          console.log(i)
+        }, 1000 * i)
+      } */
+
+      let arr = []
+      for (var i = 0; i < 5; i++) {
+        arr[i] = () => {
+          console.log(i)
+        }
+      }
+      arr.forEach((t) => {
+        t()
+      })
     </script>
   </body>
 </html>

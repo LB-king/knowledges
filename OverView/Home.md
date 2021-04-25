@@ -113,11 +113,102 @@
    }
    ```
 
-   
-
 9. `seal` `Object.seal(obj)`
 
    obj 要被冻结的对象 
+
+### 稀疏，密集数组
+
+1. 稀疏数组(稀疏数组含有空缺)
+
+   ```javascript
+   let ch = [,,3]
+   ```
+
+2. 密集数组(每个位置都有元素(undefined也算是元素))
+
+   ```javascript
+   let ci = [undefined, undefined, 3]
+   ```
+
+### 数组的拷贝
+
+- 浅拷贝-对象的内存地址一样
+
+  ```javascript
+  var a = [11, 22, 33]
+  // 1.直接赋值
+  var b = a
+  b[2] = 88
+  a // [11, 22, 88]
+  b // [11, 22, 88]
+  ```
+
+  ```javascript
+  // 2.使用valueOf()
+  var b = a.valueOf()
+  b[2] = 88
+  a // [11, 22, 88]
+  b // [11, 22, 88]
+  ```
+
+- 深拷贝
+
+  ```javascript
+  // 1.展开操作符
+  var a = [1,2,3]
+  var b = [...a]
+  a[2] = 88
+  a // [1, 2, 88]
+  b // [1,2,3]
+  ```
+
+  ```javascript
+  // 2.Array.of(...arr)
+  var a = [1,2,3]
+  var b = Array.of(...a)
+  a[2] = 88
+  a // [1, 2, 88]
+  b // [1, 2, 3]
+  ```
+
+  ```javascript
+  // 3.new Array
+  var a = [1,2,3]
+  var b = new Array(...a)
+  a[2] = 88
+  a // [1, 2, 88]
+  b // [1, 2, 3]
+  ```
+
+  ```javascript
+  // 4.Array(...arr)
+  var a = [1,2,3]
+  var b = Array(...a)
+  a[2] = 88
+  a // [1, 2, 88]
+  b // [1, 2, 3]
+  ```
+
+  ```javascript
+  // 5.slice
+  var a = [1,2,3]
+  var b = a.slice(0)
+  a[2] = 88
+  a // [1, 2, 88]
+  b // [1, 2, 3]
+  ```
+
+  ```javascript
+  // 6.concat
+  var a = [1,2,3]
+  var b = a.concat()
+  a[2] = 88
+  a // [1, 2, 88]
+  b // [1, 2, 3]
+  ```
+
+  
 
 ### call 和apply
 
