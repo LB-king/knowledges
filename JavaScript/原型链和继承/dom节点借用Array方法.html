@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>dom节点借用Array方法</title>
+  </head>
+  <body>
+    <button>按钮</button>
+    <button class="red">按钮2</button>
+
+    <script>
+      var btns = document.querySelectorAll('button')
+      btns = Array.prototype.filter.call(btns, (item) => {
+        // return true
+        return item.className === 'red'
+      })
+      console.log(btns)
+
+      var A = {
+        name: 'AAA',
+        say() {
+          console.log(this.name)
+        }
+      }
+      var B = {
+        name: 'BABY'
+      }
+
+      //现在要让B也有A的方法say
+      // A.say.call(B)
+      A.say.apply(B)
+    </script>
+  </body>
+</html>

@@ -49,9 +49,26 @@
    console.log(Foo.__proto__ === Object.__proto__) // true
    ```
 
-3. `constructor` 属性是对象才拥有的，他是从一个对象指向一个函数。含义就是指向该对象的构造函数(每个对象都可以找到其对应的constructor)
+3. `Object.create` 能定义对象的原型
 
-4. `isPrototypeOf`检测一个对象是否存在于另一个对象的原型链中。某一个对象是否是另一个对象的原型链的一份子
+   ```javascript
+   var P = {
+     name: 'AAA'
+   }
+   var a = Object.create(P, {
+     age: {
+       value: 99
+     }
+   })
+   // 设置a的原型为P
+   Object.getPrototype(a) === P //true
+   ```
+
+   
+
+4. `constructor` 属性是对象才拥有的，他是从一个对象指向一个函数。含义就是指向该对象的构造函数(每个对象都可以找到其对应的constructor)
+
+5. `isPrototypeOf`检测一个对象是否存在于另一个对象的原型链中。某一个对象是否是另一个对象的原型链的一份子
 
    ```javascript
    let a = {}
@@ -62,7 +79,7 @@
    console.log(Object.getPrototypeOf(a) === b)
    ```
 
-5. `Object.setPrototypeOf(obj, prototype)` 方法设置一个指定的对象的原型 ( 即, 内部[[Prototype]]属性）到另一个对象或  null。
+6. `Object.setPrototypeOf(obj, prototype)` 方法设置一个指定的对象的原型 ( 即, 内部[[Prototype]]属性）到另一个对象或  null。
 
    - `obj` 要设置其原型的对象
    - `prototype` 该对象的新原型
@@ -73,9 +90,7 @@
    console.log(a.__proto__.__proto__ === Object.prototype) //true
    ```
 
-   
-
-6. `Object.getPrototypeOf()` 返回指定对象的原型
+7. `Object.getPrototypeOf()` 返回指定对象的原型
 
    ```javascript
    function User(name) {
@@ -91,13 +106,13 @@
    }
    ```
 
-7. 通过`__proto__`属性来连接对象直到`null`的一条链即为我们所谓的**原型链**
+8. 通过`__proto__`属性来连接对象直到`null`的一条链即为我们所谓的**原型链**
 
    参考文章解析：
 
    https://blog.csdn.net/cc18868876837/article/details/81211729
-   
-8. `hasOwnProperty`与`in`判断属性是否存在。**自身属性**与**继承属性**，前者(`hasOwnProperty`)只会判断对象有没有某个属性，后者(`in`)会找该对象的原型链是否有该属性
+
+9. `hasOwnProperty`与`in`判断属性是否存在。**自身属性**与**继承属性**，前者(`hasOwnProperty`)只会判断对象有没有某个属性，后者(`in`)会找该对象的原型链是否有该属性
 
    ```javascript
    let a = { name: 'ok'}
@@ -113,23 +128,44 @@
    }
    ```
 
-9. `seal` `Object.seal(obj)`
+10. `seal`  `freeze` `Object.seal(obj)`
 
    obj 要被冻结的对象 
 
-### 稀疏，密集数组
-
-1. 稀疏数组(稀疏数组含有空缺)
-
    ```javascript
-   let ch = [,,3]
+   var obj = {name: 'TEST'}
+   Object.seal(obj)
+   obj.name = 'TEST1'
+   obj.age = 9
+   obj // {name: "TEST1"}
+   // seal能改变属性值，但是不能向对象中添加方法
+   var obj = {name: 'TEST'}
+   Object.freeze(obj)
+   obj.name = 'TEST1'
+   obj.age = 9
+   obj // {name: "TEST"}
+   // freeze 不可扩展，又是密封,但是可读
    ```
 
-2. 密集数组(每个位置都有元素(undefined也算是元素))
+11. 继承
 
-   ```javascript
-   let ci = [undefined, undefined, 3]
-   ```
+    ```javascript
+    function User(name) {
+      this.name = name
+      this.show = function() {
+        console.log(this.name)
+      }
+    }
+    var a = new User('AAA') // 
+    //每次new的时候，会开辟新的内存来存储show方法,因此可以把方法放到原型上实现继承
+    User.prototype = {
+      constructor: User,
+      show(){},
+      say(){}
+    }
+    ```
+
+    
 
 ### 数组的拷贝
 
@@ -208,8 +244,6 @@
   b // [1, 2, 3]
   ```
 
-  
-
 ### call 和apply
 
 - `call()`方法使用一个指定的`this`值和单独给出的一个或多个参数来调用一个函数
@@ -227,9 +261,32 @@ function Bar(name, price, age) {
 }
 let res = new Bar('kobe', 33, 40)
 console.log(res) //{name: "kobe", price: 33, age: 40}
+
+var A = {
+  name: 'AAA',
+  say() {
+    console.log(this.name)
+  }
+}
+var B = {
+  name: 'BABY'
+}
+
+//现在要让B也有A的方法say
+// A.say.call(B)
+A.say.apply(B) // BABY
+
 ```
 
 ### new
+
+### this
+
+```javascript
+//指向属性调用的对象
+```
+
+
 
 ### 闭包
 
@@ -292,3 +349,28 @@ ipconfig/flushdns
 ```
 
 重启浏览器再次访问，刷新。。。应该就可以出来了
+
+### 常用方法
+
+#### 防抖函数
+
+```javascript
+import { debounce } from 'throttle-debounce'
+window.addEventListener('resize', debounce(400, () => {
+  // do sth
+}))
+```
+
+#### 稀疏，密集数组
+
+1. 稀疏数组(稀疏数组含有空缺)
+
+   ```javascript
+   let ch = [,,3]
+   ```
+
+2. 密集数组(每个位置都有元素(undefined也算是元素))
+
+   ```javascript
+   let ci = [undefined, undefined, 3]
+   ```

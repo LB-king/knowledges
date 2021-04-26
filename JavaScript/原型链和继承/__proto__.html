@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>__proto__</title>
+  </head>
+  <body>
+    <script>
+      /*  var dk = { name: 'danke' }
+      dk.__proto__ = {
+        show() {
+          console.log(this.name)
+        }
+      }
+      dk.__proto__ = 'ok'
+      dk.show() */
+
+      var dk = {
+        action: {},
+        get data() {
+          return this.action
+        },
+        set data(obj) {
+          if (obj instanceof Object) {
+            this.action = obj
+          }
+        }
+      }
+
+      dk.data = { value: 'Object' }
+      dk.data = 'string'
+      console.log(dk.data) // 只设置了对象
+
+      var hd = Object.create(null)
+      // var hd = {} 想得到String这个结果。就要避开原型上的getter setter
+      hd.__proto__ = 'String'
+      console.log(hd.__proto__)
+    </script>
+  </body>
+</html>
