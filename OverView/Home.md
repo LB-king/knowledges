@@ -147,7 +147,26 @@
    // freeze 不可扩展，又是密封,但是可读
    ```
 
-11. 继承
+11. `getOwnPropertyDescriptor`
+
+    指定对象上一个自有属性对应的属性描述符。（自有属性指的是直接赋予该对象的属性，不需要从原型链上进行查找的属性）
+
+    ```javascript
+    var a = {name: 'a'}
+    Object.getOwnPropertyDescriptor(a, 'name')
+    /*
+    {
+      value: "张飞"
+      writable: true
+      enumerable: true
+      configurable: true
+    }
+    */
+    ```
+
+    
+
+12. 继承
 
     ```javascript
     function User(name) {
