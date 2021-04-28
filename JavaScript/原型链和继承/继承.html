@@ -48,6 +48,17 @@
 
       // this和原型是没有关系的
       // this指向属性调用的对象
+      var name = 'Window.name'
+      var person = {
+        name: 'Person.name',
+        say() {
+          console.log(this.name)
+        }
+      }
+      var p = person.say() //Person.name
+      var p1 = person.say
+      p1() //Window.name p1默认是挂在window
+      
     </script>
   </body>
 </html>
