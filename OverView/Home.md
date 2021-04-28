@@ -314,9 +314,11 @@ A.say.apply(B) // BABY
 
 - **Eval 函数执行上下文:**使用少，不讨论。
 
-- **执行栈:**用于存储在代码执行期间创建的所有执行上下文。在其它语言中也叫调用栈，具有LIOF(后进先出)结构。
+- **执行栈:**用于存储在代码执行期间创建的所有执行上下文。在其它语言中也叫调用栈，具有**LIOF(后进先出)**结构。
 
   每当发生一个函数调用，引擎都会为该函数创建一个新的执行上下文并将其推到当前执行栈的顶端
+
+  ![](E:\codeSpace\knowledges\OverView\img\执行上下文.png)
 
 ### 闭包
 
@@ -404,6 +406,81 @@ window.addEventListener('resize', debounce(400, () => {
    ```javascript
    let ci = [undefined, undefined, 3]
    ```
+
+#### 自增问题
+
+1. 前置自增-**先计算后赋值**
+
+   ```javascript
+   var a = 1
+   var b = ++a
+   console.log(a) //2
+   console.log(b) //2
+   ```
+
+2. 后置自增-**先赋值后计算**
+
+   ```javascript
+   var a = 1
+   var b = a++
+   console.log(a) //2
+   console.log(b) //1
+   ```
+
+#### 截取一段字符串
+
+```javascript
+function cutNameBySeparator(str, len, separator) {
+  let res = []
+  if(str && str.length > len) {
+    let nums = Math.ceil(str.length / len)
+    for(let i = 0; i < nums; i++) {
+      res.push(str.substr(i * len, len))
+    }
+    // return res.join(separator)
+    return res.reduce((acc, cur) => {
+      return acc += separator + cur
+    })
+  }
+  return str
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 2019.11.20
 

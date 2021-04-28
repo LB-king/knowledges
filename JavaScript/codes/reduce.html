@@ -46,17 +46,34 @@
       console.log(sum)
 
       // 一个很长的字符以一个标准换行
-      function cutNameByBytes(str, len, res = []) {
+      /**
+       *@param
+       *str 要处理的字符串
+       *len 以一定的长度处理
+       *separator 分隔符号
+       *例如 cutNameByBytes('aaabbbccc', 3, '*') -> 'aaa*bbb*ccc'
+       */
+      function cutNameByBytes(str, len, separator) {
+        let res = []
         if (str.length && str.length > len) {
           let nums = Math.ceil(str.length / len)
           for (let i = 0; i < nums; i++) {
             res.push(str.substr(i * len, len))
           }
-          return res.join('</br>')
+          // return res.join(separator)
+          return res.reduce((acc, cur) => {
+            return (acc += separator + cur)
+          })
         }
         return str
       }
-      console.log(cutNameByBytes('hello world', 3))
+      console.log(cutNameByBytes('hello world', 3, '</br>'))
+      var longNames = ['aaa', 'bbb', 'ccc', 'ddd', 'eee', 'fff']
+      let names = longNames.reduce((acc, cur) => {
+        // return acc.concat('#' + cur)
+        return (acc += '#' + cur)
+      })
+      console.log(names) //aaa#bbb#ccc#ddd#eee#fff
     </script>
   </body>
 </html>
