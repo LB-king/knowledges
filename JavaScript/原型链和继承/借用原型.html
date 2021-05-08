@@ -23,7 +23,7 @@
           js: 109,
           java: 90,
           node: 99
-        },
+        }
         // getter
         // get data() {
         //   return Object.values(this.score)
@@ -32,7 +32,15 @@
       console.log(a.max(Object.values(b.score))) //109
       console.log(a.max.call(null, Object.values(b.score))) //109
 
-      
+      const m1 = {
+        name: 'm1'
+      }
+      Object.setPrototypeOf(m1, {
+        say() {
+          console.log(this.name)
+        }
+      })
+      m1.say.call({ name: '调用对象' })
     </script>
   </body>
 </html>
