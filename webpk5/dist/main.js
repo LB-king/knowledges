@@ -1,0 +1,1 @@
+(()=>{var t={85:t=>{t.exports={n:100,add:(t,o)=>t+o,test:(t,o)=>t*o}},326:(t,o,r)=>{const{n:s,add:e}=r(85);let n=e(s,99);t.exports={sum:n}}},o={};function r(s){var e=o[s];if(void 0!==e)return e.exports;var n=o[s]={exports:{}};return t[s](n,n.exports,r),n.exports}(()=>{const{sum:t}=r(326);console.log(t)})()})();
