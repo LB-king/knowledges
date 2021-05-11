@@ -2,6 +2,8 @@
 
 5.0+版本
 
+约定大于配置
+
 - 树结构
 - 模块
 - chunk
@@ -36,8 +38,9 @@ loader和plugin来扩展webpack的功能
 - 生产环境优化
 - 开发环境优化
 
-问题: 'webpack' 不是内部或外部命令，也不是可运行的程序或批处理文件
+问题: `webpack` 不是内部或外部命令，也不是可运行的程序或批处理文件
 解决方法:
+
   - 全局安装`webpack`,`webpack-cli`
 
   - 当前项目的根目录配置一个`webpack.cmd`文件
@@ -54,8 +57,89 @@ loader和plugin来扩展webpack的功能
 
 ```shell
 webpack --mode development # production 生产环境(代码就被压缩了，没注释)
+# 样例中 
+# production 1kb
+# development 3kb
 ```
 
 默认以`src`文件夹下的`index.js`为入口打包到 `dist`文件夹
 
 打包完之后，运行`node dist/main.js`
+
+### 5个核心概念 
+
+1. `entry`
+   
+   - 入口，指示`webpack`以哪个文件作为入口起点开始打包，分析构建内部依赖图
+   
+   - 单个入口文件(简写)
+   
+     ```javascript
+     module.exports = {
+     	entry: './path/index.js'
+     }
+     ```
+   
+   - 写法(对象写法)
+   
+     ```javascript
+     module.exports = {
+       entry: {
+         main: './path/index.js'
+       }
+     }
+     ```
+   
+     
+2. `output`
+   
+   - 输出，指示`webpack`打包后的资源`bundles`输出到哪里，以及如何命名
+3. `loader`
+   
+   - `loader`可以让`webpack`能够处理那些非`JavaScript`资源`css`、`img`等，将它们处理成`webpack`能够识别的资源，可以理解为一个翻译的过程(webpack自身只能理解js和json)
+4. `plugins`
+   
+   - 插件，可用于执行范围更广的任务。插件的范围包括，从打包优化和压缩，一直到重新定义环境中的变量等
+5. `mode`
+   - 指`webpack`使用相应的模式配置
+     - `development`:配置比较简单，能让代码本地调试运行
+     - `production`:代码需要不断优化达到性能最好，能让代码优化上线运行的环境
+   - 都会自动启用一些插件，生产模式启用的插件更多
+
+```shell
+webpack ./src/index.js -o ./build/build.js --mode development
+# 将src文件夹下的index.js(入口文件)打包到build/main.js -o 表示output输出文件夹
+```
+
+### 配置文件
+
+默认在项目根目录新增`webpack.config.js`;自定义js名称也可以。只不过在运行`webpack`的时候需要制定配置文件的名称`webpack --config webpack.test.js`
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```javascript
+module.exports = {
+  mode: 'development' // 生产 production 开发 development
+}
+```
+
+
+
