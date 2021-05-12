@@ -3,3 +3,4 @@ let sum = add(n , 99)
 module.exports = {
   sum
 }
+console.log('this is b.js')

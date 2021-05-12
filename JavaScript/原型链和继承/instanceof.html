@@ -39,6 +39,16 @@
       console.log(b instanceof A) // false
       console.log(b.isPrototypeOf(a)) // true
       console.log(b.isPrototypeOf(c)) // false
+
+
+
+      function f() {
+        return f
+      }
+      var r = new f()
+      console.dir(f)
+      console.dir(r)
+      console.dir(r instanceof f)
     </script>
   </body>
 </html>

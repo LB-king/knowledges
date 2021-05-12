@@ -361,7 +361,24 @@ A.say.apply(B) // BABY
 
 ### 缓存
 
-### webpack
+### with
+
+```javascript 
+var obj = {
+  a: 'AA',
+  b: 'BB',
+  c: 'CC'
+}
+with (obj) a // AA
+
+with (obj) {
+  var a = a
+  a // AA
+}
+```
+
+- 优点：解构对象时很清晰
+- 缺点：js的编辑器会检测`with`块中的变量是否属于`with`传入的对象，以上述例子为例，`js`会检测a和b是否属于`obj`对象。这样就会导致`with`语句的执行速度大大降低，性能比较差。
 
 ### vscode 设置
 

@@ -15,27 +15,7 @@
   \******************/
 /***/ ((module) => {
 
-eval("const n = 100\r\nconst add = (x, y) => x + y\r\nconst test = (x, y) => x * y\r\nmodule.exports = {\r\n  n,\r\n  add,\r\n  test\r\n}\r\n\r\n\n\n//# sourceURL=webpack://webpk5/./src/a.js?");
-
-/***/ }),
-
-/***/ "./src/b.js":
-/*!******************!*\
-  !*** ./src/b.js ***!
-  \******************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-eval("const {n,add} = __webpack_require__(/*! ./a */ \"./src/a.js\")\r\nlet sum = add(n , 99)\r\nmodule.exports = {\r\n  sum\r\n}\n\n//# sourceURL=webpack://webpk5/./src/b.js?");
-
-/***/ }),
-
-/***/ "./src/index.js":
-/*!**********************!*\
-  !*** ./src/index.js ***!
-  \**********************/
-/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
-
-eval("const { sum } = __webpack_require__(/*! ./b */ \"./src/b.js\")\r\nconsole.log(sum)\r\n\n\n//# sourceURL=webpack://webpk5/./src/index.js?");
+eval("const n = 100\r\nconst add = (x, y) => x + y\r\nconst test = (x, y) => x * y\r\nmodule.exports = {\r\n  n,\r\n  add,\r\n  test\r\n}\r\nconsole.log('this is a.js')\r\n\n\n//# sourceURL=webpack://webpk5/./src/a.js?");
 
 /***/ })
 
@@ -69,8 +49,8 @@ eval("const { sum } = __webpack_require__(/*! ./b */ \"./src/b.js\")\r\nconsole.
 /******/ 	
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
-/******/ 	// This entry module can't be inlined because the eval devtool is used.
-/******/ 	var __webpack_exports__ = __webpack_require__("./src/index.js");
+/******/ 	// This entry module is referenced by other modules so it can't be inlined
+/******/ 	var __webpack_exports__ = __webpack_require__("./src/a.js");
 /******/ 	
 /******/ })()
 ;

@@ -69,7 +69,7 @@ webpack --mode development # production 生产环境(代码就被压缩了，没
 ### 5个核心概念 
 
 1. `entry`
-   
+  
    - 入口，指示`webpack`以哪个文件作为入口起点开始打包，分析构建内部依赖图
    
    - 单个入口文件(简写)
@@ -80,26 +80,54 @@ webpack --mode development # production 生产环境(代码就被压缩了，没
      }
      ```
    
-   - 写法(对象写法)
+   - 多个入口,所有入口文件形成一个`chunk`，名称是默认的
+   
+     ```javascript
+     module.exports = {
+       entry: ['./path/a.js', './path/b.js']
+     }
+     ```
+   
+   - 多个入口第二种写法,这种写法就需要在`output`中`filename`定义为一个变量`[name].js`
    
      ```javascript
      module.exports = {
        entry: {
-         main: './path/index.js'
+         a: './src/a.js',
+         b: './src/b.js'
        }
      }
      ```
    
      
+   
+   - 写法(对象写法)
+   
+     ```javascript
+     module.exports = {
+       entry: {
+         // 单个入口
+         // main: './path/index.js'
+         // 多个入口
+         main: ['./path/a.js', './path/b.js']
+       }
+     }
+     ```
+   
 2. `output`
-   
+
    - 输出，指示`webpack`打包后的资源`bundles`输出到哪里，以及如何命名
+
+     
+
 3. `loader`
-   
+
    - `loader`可以让`webpack`能够处理那些非`JavaScript`资源`css`、`img`等，将它们处理成`webpack`能够识别的资源，可以理解为一个翻译的过程(webpack自身只能理解js和json)
+
 4. `plugins`
-   
+
    - 插件，可用于执行范围更广的任务。插件的范围包括，从打包优化和压缩，一直到重新定义环境中的变量等
+
 5. `mode`
    - 指`webpack`使用相应的模式配置
      - `development`:配置比较简单，能让代码本地调试运行
@@ -125,7 +153,7 @@ webpack ./src/index.js -o ./build/build.js --mode development
 
 
 
-
+GCN 052 774 G1（以前叫G12），沸点是107摄氏度，冰点是零下35摄氏度
 
 
 
@@ -137,7 +165,14 @@ webpack ./src/index.js -o ./build/build.js --mode development
 
 ```javascript
 module.exports = {
-  mode: 'development' // 生产 production 开发 development
+  mode: 'development', // 生产 production 开发 development
+  entry: {
+    main: './src/index.js' // 入口文件的对象写法
+  },
+  output: {
+    filename: 'test.js', 
+    path: path.resolve(__dirname, 'test')
+  }
 }
 ```
 

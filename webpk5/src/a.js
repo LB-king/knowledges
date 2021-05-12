@@ -6,4 +6,4 @@ module.exports = {
   add,
   test
 }
-
+console.log('this is a.js')
