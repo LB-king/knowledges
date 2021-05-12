@@ -2,17 +2,22 @@ const path = require('path')
 
 module.exports = {
   mode: 'development',
-  // entry: ['./src/index.js']
+  entry: ['./src/index.js'],
   // entry: {
   //   main: ['./src/index.js', './src/a.js']
   // },
-  entry: {
-    a: './src/a.js',
-    b: './src/b.js'
-  },
+  // entry: {
+  //   a: './src/a.js',
+  //   b: './src/b.js'
+  // },
+  // // 特殊用法
+  // entry: {
+  //   one: ['./src/index.js', './src/a.js'],
+  //   two: './src/b.js'
+  // },
   output: {
     filename: '[name].js',
-    path: path.resolve(__dirname, 'bundle')
+    path: path.resolve(__dirname, 'dist')
   },
   // loader配置
   module: {

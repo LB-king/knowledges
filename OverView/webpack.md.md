@@ -99,8 +99,6 @@ webpack --mode development # production 生产环境(代码就被压缩了，没
      }
      ```
    
-     
-   
    - 写法(对象写法)
    
      ```javascript
@@ -113,10 +111,32 @@ webpack --mode development # production 生产环境(代码就被压缩了，没
        }
      }
      ```
+     
+   - 特殊写法(混合的写)
+   
+     ```javascript
+     module.exports = {
+       entry: {
+         a: ['./src/a.js', './src/b.js'],
+         b:'./src/index.js'
+       }
+     }
+     ```
+   
+     
    
 2. `output`
 
    - 输出，指示`webpack`打包后的资源`bundles`输出到哪里，以及如何命名
+
+     ```javascript
+     module.exports = {
+       output: {
+         filename: '[name].js', // 这种写法是变量的写法，默认是main.js
+         path: path.resolve(__dirname, 'bundle')
+       }
+     }
+     ```
 
      
 
