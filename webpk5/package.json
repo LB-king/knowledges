@@ -10,5 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {},
-  "devDependencies": {}
+  "devDependencies": {
+    "html-webpack-plugin": "^5.3.1"
+  }
 }
