@@ -1,0 +1,9 @@
+$width: 200px;
+$height: 300px;
+$color: green;
+.main3 {
+  width: $width * 2;
+  height: $height;
+  color: $color;
+  background-color: #bfc;
+}

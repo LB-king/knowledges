@@ -130,7 +130,7 @@ webpack --mode development # production 生产环境(代码就被压缩了，没
      ```javascript
      module.exports = {
        output: {
-         filename: '[name].js', // 这种写法是变量的写法，默认是main.js
+         filename: 'js/[name].js', // 这种写法是变量的写法，默认是main.js,可在文件名前添加文件夹.
          path: path.resolve(__dirname, 'bundle')
        }
      }
@@ -175,7 +175,7 @@ module.exports = {
 }
 ```
 
-### 打包html资源(其他资源)
+### 打包html资源
 
 使用插件对html文件进行处理(html-webpack-plugin)
 
@@ -195,8 +195,8 @@ module.exports = {
     plugins: [
       new HtmlWebpackPlugin({
         template: './src/index.html', // 模板文件
-        filename: 'demo.html', // 打包后的文件名
-        chunks: ['home', 'vendor'],
+        filename: 'html/demo.html', // 打包后的文件名，可以在前面添加文件夹
+        chunks: ['home', 'vendor'], //entry里面的vendor,这些公共的资源需要写在前面。这样在打包后的文件中就会先引入库，再引入自己定义的方法js以及每个模块的js
         minify: {
           collapseWhitespace: true, //是否去掉空格
           removeComments: true //移除注释
@@ -207,4 +207,112 @@ module.exports = {
   ```
 
   `html-webpack-plugin`插件生成的内存中的页面已经帮我们创建并正确引用了打包编译生成的资源(JS/CSS)
+
+### 打包CSS资源
+
+需要下载安装两个louder帮我们完成打包
+
+```shell
+npm install css-loader style-loader -D
+```
+
+1. `css-loader`的作用是处理`css`中的`@import`和`url`这样的外部资源
+2. `style-loader`的作用是把样式插入到`dom`中，方法是在`header`中插入一个`style`标签，并把样式写入到这个标签的`innerHTML`里。
+
+```javascript
+module.exports = {
+  module: {
+    rules: [
+      // {loader: 'css-loader'}
+      { test: /\.css$/, use: ['style-loader', 'css-loader'] }, //从右向左
+      { test: /\.less$/, use: ['style-loader', 'css-loader', 'less-loader'] },
+      { test: /\.scss$/, use: ['style-loader', 'css-loader', 'sass-loader'] }
+    ]
+  },
+}
+```
+
+### 打包less或sass
+
+- 由于css只是单纯的属性描述，它并不具有变量、条件语句等，所以难组织和维护
+
+- sass和less都属于css预处理器，定义了一种新的语言，其基本思想是用一种专门的编程语言，为css增加一些编程的特性，将css作为目标生成文件，然后开发者使用这种语言进行css编码工作
+
+- less需要`less`和`less-loader`
+
+  ```shell
+  npm install less less-loader -D
+  ```
+
+- sass需要`node-sass`和`sass-loader`
+
+  ```shell
+  npm install node-sass sass-loader -D
+  ```
+
+### 提取css为单独文件
+
+css内容是打包在js文件中的，可以使用`mini-css-extract-plugin`插件提取成单独的CSS文件。
+
+```shell
+npm install mini-css-extract-plugin -D
+```
+
+- 引入插件
+
+  ```javascript
+  const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+  module.exports = {
+    
+    module: {
+      rules: [
+        {test:/\.css$/, use: [MiniCssExtractPlugin.loader, 'css-loader']},
+        {test:/\.less$/, use: [MiniCssExtractPlugin.loader, 'css-loader', 'less-loader']}
+      ]
+    },
+    plugins: [
+    	new MiniCssExtractPlugin({
+        filename: '[name].css' //只能打包成一个css文件，后面需要优化，打包成一个一个文件
+      })
+    ]
+  }
+  ```
+
+- 在`plugins`中使用插件
+
+- 在`css`的`rules`中，使用`MiniCssExtractPlugin`取代`style-loader`,提取js中的Css内容为单文件
+
+### 处理css兼容性
+
+需要用`postcss`处理，下载两个包`post-loader`和`postcss-preset-env`
+
+```shell
+npm install postcss-loader postcss-preset-env -D
+```
+
+webpack.config.js配置：
+
+```javascript
+module.exports = {
+  module: {
+    rules: [
+      { test: /\.css$/, use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader'] }
+    ]
+  }
+}
+```
+
+- `postcss`会找到`package.json`中的`browserslist`里面的配置，通过配置加载`css`的兼容性
+
+- 修改`loader`的配置，新版需要写`postcss.config.js`
+
+  ```javascript
+  module.exports = {
+    plugins: [
+      require('postcss-preset-env')()
+    ]
+  }
+  ```
+
+  
 

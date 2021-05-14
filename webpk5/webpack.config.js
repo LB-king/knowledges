@@ -1,5 +1,6 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 module.exports = {
   mode: 'development',
   // entry: ['./src/index.js'],
@@ -22,32 +23,43 @@ module.exports = {
     about: './src/js/about.js'
   },
   output: {
-    filename: '[name].js',
+    // filename: '[name].js',
+    filename: 'js/[name].[chunkhash:8].js', // 可以在文件名前加文件夹名称，配置chunkhash长度
     path: path.resolve(__dirname, 'dist')
   },
   // loader配置
   module: {
-    rules: []
+    rules: [
+      // {loader: 'css-loader'}
+      { test: /\.css$/, use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader'] }, //从右到左
+      { test: /\.less$/, use: [MiniCssExtractPlugin.loader, 'css-loader', 'less-loader'] },
+      // { test: /\.scss$/, use: ['style-loader', 'css-loader', 'sass-loader'] }
+      { test: /\.scss$/, use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'] }
+    ]
   },
   // plugins插件配置
   plugins: [
     new HtmlWebpackPlugin({
-      template: './src/index.html', // 模板文件
-      filename: 'index.html', // 打包后的文件名
-      chunks: ['index', 'public'],
+      template: './src/home.html', // 模板文件
+      filename: 'html/home.html', // 打包后的文件名,可以在前面加上文件夹名称
+      chunks: ['home', 'public'],
       minify: {
         collapseWhitespace: false, //是否去掉空格
         removeComments: true //移除注释
       }
     }),
     new HtmlWebpackPlugin({
-      template: './src/about.html', // 模板文件
-      filename: 'about.html', // 打包后的文件名
-      chunks: [ 'public','about'],
-     /*  minify: {
-        collapseWhitespace: false, //是否去掉空格
-        removeComments: true //移除注释
-      } */
+      template: './src/about.html',
+      filename: 'html/about.html',
+      chunks: ['public', 'about']
+    }),
+    new HtmlWebpackPlugin({
+      template: './src/index.html',
+      filename: 'html/index.html',
+      chunks: ['public', 'index']
+    }),
+    new MiniCssExtractPlugin({
+      filename: '[name].css'
     })
   ]
 }
