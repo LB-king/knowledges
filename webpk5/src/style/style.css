@@ -1,6 +1,26 @@
-.main{
+.main {
   height: 200px;
   width: 330px;
   background: rgb(79, 16, 224);
   backface-visibility: visible;
+}
+.box {
+  width: 300px;
+  height: 300px;
+}
+/* 注释 */
+.img1 {
+  background-image: url('../assets/gif.gif');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+.img2 {
+  background-image: url('../assets/jpg.jpg');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+.img3 {
+  background-image: url('../assets/png.png');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
 }

@@ -15,9 +15,6 @@
 
 ```shell
 npm init -y
-```
-
-```shell
 npm install webpack webpack-cli webpack-dev-server -D
 ```
 
@@ -155,6 +152,14 @@ webpack ./src/index.js -o ./build/build.js --mode development
 # 将src文件夹下的index.js(入口文件)打包到build/main.js -o 表示output输出文件夹
 ```
 
+### 运行命令
+
+```shell
+webpack --progress # 显示打包的进程(百分比)
+webpack ./src/index.js -o ./build/build.js --mode development
+# 将src文件夹下的index.js(入口文件)打包到build/main.js -o 表示output输出文件夹
+```
+
 ### 配置文件
 
 默认在项目根目录新增`webpack.config.js`;自定义 js 名称也可以。只不过在运行`webpack`的时候需要制定配置文件的名称`webpack --config webpack.test.js`
@@ -208,7 +213,7 @@ module.exports = {
 
   `html-webpack-plugin`插件生成的内存中的页面已经帮我们创建并正确引用了打包编译生成的资源(JS/CSS)
 
-### 打包CSS资源
+### 打包css资源
 
 需要下载安装两个louder帮我们完成打包
 
@@ -314,5 +319,124 @@ module.exports = {
   }
   ```
 
+### 压缩css文件
+
+使用optimize-css-assets-webpack-plugin插件压缩css内容
+
+```shell
+npm install optimize-css-assets-webpack-plugin -D
+```
+
+- 引入插件
+
+- 使用插件
+
+  ```javascript
+  const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
+  module.exports = {
+    plugins: [
+      new OptimizeCssAssetsWebpackPlugin()
+    ]
+  }
+  ```
+
+  注释和空格都默认去掉了。
+
+### 打包img(del)
+
+```shell
+npm install url-loader file-loader -D
+```
+
+- 在css文件中使用
+
+  ```javascript
+  module.exports = {
+    module: {
+      rules: [
+        {
+          test: /\.(jpg|jpeg|png|gif)$/,
+          use: {
+            loader: 'url-loader',// url-loader基于file-loader,因此要先安装file-loader
+            options: {
+              publicPath: './images',
+              outputPath: 'images/',
+              limit: 1024 * 20, // 将20KB以下的图片打包时以base64的格式处理
+              name:'[name].[hash:8].[ext]'
+            }
+          }
+        }
+      ]
+    }
+  }
+  ```
+
   
+
+- 在html文件使用
+
+  ```html
+  <img src="./a.jpg">
+  ```
+
+### 其他资源
+
+`webpack5`打包其他资源已经可以不用到`file-loader`与`url-loader`,可以通过`assets module type`处理
+
+https://blog.csdn.net/lin_fightin/article/details/115140736
+
+- `asset/resource` 发送一个单独的文件并导出URL，代替`file-loader`
+
+- `asset/inline` 导出一个资源的data URL, 替代 url-loader
+
+  因为没有生成文件，所以没有`generator`属性。
+
+- `asset/source` 导出资源的源代码。代替`raw-loader`
+
+- `asset`在导出一个`data URL`和发送一个单独的文件之间做选择，之前通过`url-loader+limit`属性实现。
+
+```javascript
+module.exports = {
+  output: {
+    filename: 'js/[name].[chunkhash:8].js',
+    path: path.resolve(__dirname, 'dist'),
+    assetModuleFilename: 'imgs/[name].[hash:8][ext]' // assetModuleFilename直接把ext加了一个.
+  },
+  module: {
+    rules: [
+       {
+        test: /\.(jpe?g|png|gif)$/,
+        type: 'asset'
+       }
+    ]
+  }
+}
+```
+
+指定打包资源的目录：两种方法
+
+1. 在`output`中配置`assetModuleFilename`，详见上述代码
+2. 在每一个`type`值后面配置`generator`属性,如下
+
+```javascript
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.(png|jpe?g|svg|gif)$/,
+        type: 'asset/resource',
+        generator: {
+          filename: 'imgs/[name].[hash:8].[ext]'
+        },
+        // 使用limit的方法,在parser属性中配置
+        parser: {
+          dataUrlCondition: {
+            maxSize: 20 * 1024
+          }
+        }
+      }
+    ]
+  }
+}
+```
 

@@ -50,6 +50,12 @@ npm install <package> # 不加后缀-save,--S,-S 在package文件的dependencies
 npm install <package> # -save-dev,-D,--D在package文件的devDependencies节点写入依赖
 #dependencies:运行时的依赖，发布后，即生产环境下还需要用的模块
 #devDependencies:开发时的依赖，里面的模块是开发时用的，发布时用不到它，例：gulp，压缩css，js的模块。
+rm test.txt # 删除文件
+rm -r test # 删除文件夹
+mkdir filename # 创建文件夹
+touch test.txt # 创建文件
+vi test.txt # 编辑文件
+
 ```
 
 ### 3.配置文件
