@@ -434,9 +434,89 @@ module.exports = {
             maxSize: 20 * 1024
           }
         }
+      },
+      // 打包字体文件
+      {
+        test: /\.(ttf|eto|woff2?)$/i,
+        type: 'asset/resource',
+        generator: {
+          filename: 'font/[name][ext]'
+        }
       }
     ]
   }
 }
 ```
 
+### 语法检查eslint
+
+- js代码检查工具，保持团队统一
+
+- 和`webpack`没有关系，可单独使用
+
+- 语法检查使用`eslint-loader`,并基于`eslint`包，只用来检查`js`语法
+
+- 注意：第三方库是不用检查的，可以在`npmjs.com`中查看规则
+
+- 我们使用`airbnb`法则测试。
+
+  ```shell
+  npm install eslint-loader eslint eslint-config-airbnb-base eslint-plugin-import -D
+  ```
+
+1. 在`webpack.config.js`中配置
+
+   ```javascript
+   module.exports = {
+     module: {
+       rules: [
+         {
+           test: /\.js$/,
+           loader: 'eslint-loader' //去package.json中查找规则,或者去找.eslintrc.js查找
+         }
+       ]
+     }
+   }
+   ```
+
+2. 在`package.json`中配置
+
+   ```json
+   {
+     "eslintConfig": {
+       "extends": "airbnb-base"
+     }
+   }
+   ```
+
+   或者新建一个`.eslintrc.js`
+
+   ```javascript
+   module.exports = {
+     "extends": "airbnb-base"
+   }
+   ```
+
+3. 下一行`eslint`规则不生效
+
+   ```javascript
+   //eslint-disable-next-line
+   ```
+
+### 开发服务器devServer
+
+安装：
+
+```shell
+npm i webpack-dev-server -D
+```
+
+- `devServer`给我们提供了开发过程中的服务器，是一个使用了`express`的`http`服务器，它的作用主要是为了监听资源文件的改变，该http服务器和client使用了`websocket`通信协议，只要资源文件发生改变，`webpack-dev-server`就会实时的进行编译
+- 只会在内存中编译，不会有任何输出，下载`webpack-dev-server`
+- `WDS`不能读取`webpack.config.js`中的配置
+- 启动`devServe`的指令：`npx webpack serve`
+- `webpack5`无法刷新，解决：`target: 'web'`
+
+附：`vscode` 中 `webpack`无法无法加载文件
+
+**管理员身份运行powershell, Set-ExecutionPolicy RemoteSigned为y**

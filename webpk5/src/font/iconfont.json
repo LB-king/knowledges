@@ -1,0 +1,30 @@
+{
+  "id": "",
+  "name": "",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "21490689",
+      "name": "姐妹",
+      "font_class": "001-sisters",
+      "unicode": "e70f",
+      "unicode_decimal": 59151
+    },
+    {
+      "icon_id": "21490752",
+      "name": "聊天",
+      "font_class": "009-talking",
+      "unicode": "e711",
+      "unicode_decimal": 59153
+    },
+    {
+      "icon_id": "21490807",
+      "name": "电视机",
+      "font_class": "022-tv",
+      "unicode": "e714",
+      "unicode_decimal": 59156
+    }
+  ]
+}

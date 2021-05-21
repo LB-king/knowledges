@@ -1,9 +1,10 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
+// const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
 module.exports = {
   mode: 'development',
+  target: 'web',
   // entry: ['./src/index.js'],
   // entry: {
   //   main: ['./src/index.js', './src/a.js']
@@ -26,7 +27,7 @@ module.exports = {
   output: {
     // filename: '[name].js',
     filename: 'js/[name].[chunkhash:8].js', // 可以在文件名前加文件夹名称，配置chunkhash长度
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'dist')
     // assetModuleFilename: 'imgs/[name][ext]'
   },
   // loader配置
@@ -51,28 +52,34 @@ module.exports = {
         type: 'asset',
         parser: {
           dataUrlCondition: {
-            maxSize: 12* 1024
+            maxSize: 12 * 1024
           }
         },
         generator: {
-          filename: 'imgs/[name].[hash:8].[ext]'
+          filename: 'imgs/[name].[hash:8][ext]'
         }
-        // use: {
-        //   loader: 'url-loader', // url-loader要基于file-loader,因此要安装file-loader
-        //   options: {
-        //     //默认不配置的情况:会将css中的图片打包成base64格式存于css文件中
-        //     outputPath: 'imgs/',
-        //     limit: 1024 * 16,
-        //     name: '[name].[hash:8].[ext]',
-        //   }
-        // }
       },
       {
         test: /\.(html|htm)$/,
         use: {
           loader: 'html-loader'
         }
-      }
+      },
+      {
+        test: /\.(ttf|eto|woff2?)$/i,
+        type: 'asset/resource',
+        generator: {
+          filename: 'font/[name][ext]'
+        }
+      },
+      // {
+      //   test: /\.js$/,
+      //   exclude: /node_modules/,
+      //   loader: 'eslint-loader',
+      //   options: {
+      //     fix:true
+      //   }
+      // }
     ]
   },
   // plugins插件配置
@@ -86,15 +93,12 @@ module.exports = {
         removeComments: true //移除注释
       }
     }),
-    new HtmlWebpackPlugin({
-      template: './src/about.html',
-      filename: 'html/about.html',
-      chunks: ['public', 'about']
-    }),
+    
+    
     new HtmlWebpackPlugin({
       template: './src/index.html',
-      filename: 'html/index.html',
-      chunks: ['public', 'index']
+      filename: 'index.html',
+      // chunks: ['public', 'index']
     }),
     // 提取css为单独文件
     new MiniCssExtractPlugin({

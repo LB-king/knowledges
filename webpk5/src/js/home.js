@@ -1,1 +1,2 @@
-console.log('home')
+// eslint-disable-next-line
+console.log('home');
