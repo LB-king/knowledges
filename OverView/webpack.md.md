@@ -520,3 +520,61 @@ npm i webpack-dev-server -D
 附：`vscode` 中 `webpack`无法无法加载文件
 
 **管理员身份运行powershell, Set-ExecutionPolicy RemoteSigned为y**
+
+```shell
+webpack serve --open Chrome --port 9080
+```
+
+配置的命令很多，因此可以把命令配置在package.json 中的scripts
+
+`package.json>scripts`中的命令 > `webpack.config.js>devServer`中的配置。
+
+`package.json:`
+
+```json
+{
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "rimraf dist && webpack",
+    "dev": "webpack serve --mode development --port 9080",
+    "build": "npm start"
+  },
+}
+```
+
+`webpack.config.js:`
+
+```javascript
+module.exports = {
+  devSever: {
+    port: 9081,
+    compress: true,
+    open: true
+  }
+}
+```
+
+运行`npm run dev`监听的端口是`9080`
+
+### 优化
+
+- 开发环境优化
+  - 打包构建速度
+  - 优化代码调试
+- 生产环境优化
+  - 代码运行的性能
+
+#### HMR(模块热替换)
+
+- 模块热替换(Hot Module Replacement)是webpack提供的最有用的功能之一，它允许在运行时更新各种模块，而无需全局刷新。
+
+- 启用这个功能，只需要修改webpack.config.js的配置，使用webpack内置的插件就可以了，在DevServer中使用hot参数。
+
+- 启用HMR插件后，module.hot接口就会暴露在index.js中，接下来需要在index.js中配置告诉webpack接受HMR的模块。
+
+  1. 样式HMR功能，在开发环境中使用style-loader
+  2. HTM的HMR功能，默认也没有HMR(不用做HMR功能)，需要在entry入口中引入html文件。
+  3. js的HMR功能，默认没有HMR功能，只能处理非入口文件的js文件
+
+  
+

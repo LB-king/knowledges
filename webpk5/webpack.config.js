@@ -1,14 +1,20 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-// const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
+const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
 module.exports = {
-  mode: 'development',
+  mode: 'production',
   target: 'web',
+  devServer: {
+    port: 9081,
+    compress: true,
+    open: true,
+    hot: true
+  },
   // entry: ['./src/index.js'],
-  // entry: {
-  //   main: ['./src/index.js', './src/a.js']
-  // },
+  entry: {
+    main: ['./src/index.js', './src/index.html']
+  },
   // entry: {
   //   a: './src/a.js',
   //   b: './src/b.js'
@@ -103,9 +109,9 @@ module.exports = {
     // 提取css为单独文件
     new MiniCssExtractPlugin({
       filename: '[name].css'
-    })
+    }),
     // 压缩css文件
-    // new OptimizeCssAssetsWebpackPlugin()
+    new OptimizeCssAssetsWebpackPlugin()
   ]
 }
 
