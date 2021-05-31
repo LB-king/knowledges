@@ -2,6 +2,7 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
+
 module.exports = {
   mode: 'production',
   target: 'web',
@@ -13,7 +14,7 @@ module.exports = {
   },
   // entry: ['./src/index.js'],
   entry: {
-    main: ['./src/index.js', './src/index.html']
+    main: ['./src/js/index.js', './src/index.html']
   },
   // entry: {
   //   a: './src/a.js',
@@ -24,12 +25,12 @@ module.exports = {
   //   one: ['./src/index.js', './src/a.js'],
   //   two: './src/b.js'
   // },
-  entry: {
-    public: './src/js/public.js',
-    index: './src/js/index.js',
-    home: './src/js/home.js',
-    about: './src/js/about.js'
-  },
+  // entry: {
+  //   public: './src/js/public.js',
+  //   index: './src/js/index.js',
+  //   home: './src/js/home.js',
+  //   about: './src/js/about.js'
+  // },
   output: {
     // filename: '[name].js',
     filename: 'js/[name].[chunkhash:8].js', // 可以在文件名前加文件夹名称，配置chunkhash长度
@@ -42,8 +43,13 @@ module.exports = {
       // {loader: 'css-loader'}
       {
         test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader']
-      }, //从右到左
+        use: ['style-loader', 'css-loader', 'postcss-loader']
+      }, 
+      // {
+      //   test: /\.css$/,
+      //   use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader']
+      // }, 
+      //从右到左
       {
         test: /\.less$/,
         use: [MiniCssExtractPlugin.loader, 'css-loader', 'less-loader']

@@ -573,8 +573,57 @@ module.exports = {
 - 启用HMR插件后，module.hot接口就会暴露在index.js中，接下来需要在index.js中配置告诉webpack接受HMR的模块。
 
   1. 样式HMR功能，在开发环境中使用style-loader
-  2. HTM的HMR功能，默认也没有HMR(不用做HMR功能)，需要在entry入口中引入html文件。
-  3. js的HMR功能，默认没有HMR功能，只能处理非入口文件的js文件
-
   
+     ```javascript
+   module.exports = {
+       module: {
+         rules: [
+            {
+             test: /\.css$/,
+             use: ['style-loader', 'css-loader', 'postcss-loader'] //以style标签插入头部，可以实现热更新
+              // MiniCssExtractPlugin.loader 生产环境使用此loader
+           }
+         ],
+         entry: {
+           main: ['./src/js', './src/index.html']
+         }
+       }
+     }
+     ```
+  
+  2. HTML的HMR功能，默认也没有HMR(不用做HMR功能)，需要在entry入口中引入html文件。
+  
+  3. js的HMR功能，默认没有HMR功能，不能处理非入口文件的js文件
+  
+     在入口js中添加代码：
+  
+     ```javascript
+     if(module.hot) {
+       module.hot.accept('./home.js', function() {
+         console.log('home.js被改变了')
+       })
+     }
+     ```
+
+#### 去除代码里的死代码
+
+1. 去除没有用到的js代码
+
+   - `webpack`通过`tree-shaking`去掉了实际上并没有使用的js代码来减少包的大小。
+   - 1.必须使用`ES6`模块化，2.开启`production`环境
+
+2. 去除没有用到css
+
+   - 例如我们经常使用的bootstrap(140kb)就可以减少到只有35kb大小
+   - webpack使用purgecss-webpack-plugin去除无用的css
+
+   ```javascript
+   cosnt {resolve, join} = require('path')
+   const PurgecssPlugin = require('purgecss-webpack-plugin')
+   const glob = require('glob')
+   const PATHS = {src: join(__dirname, 'src')}
+   new PurgecssPlugin({
+     paths: glob.sync(`${PATHS.src}/**/*`, {nodir: true})
+   })
+   ```
 
