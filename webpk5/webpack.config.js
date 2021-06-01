@@ -44,11 +44,11 @@ module.exports = {
       {
         test: /\.css$/,
         use: ['style-loader', 'css-loader', 'postcss-loader']
-      }, 
+      },
       // {
       //   test: /\.css$/,
       //   use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader']
-      // }, 
+      // },
       //从右到左
       {
         test: /\.less$/,
@@ -83,7 +83,7 @@ module.exports = {
         generator: {
           filename: 'font/[name][ext]'
         }
-      },
+      }
       // {
       //   test: /\.js$/,
       //   exclude: /node_modules/,
@@ -105,11 +105,10 @@ module.exports = {
         removeComments: true //移除注释
       }
     }),
-    
-    
+
     new HtmlWebpackPlugin({
       template: './src/index.html',
-      filename: 'index.html',
+      filename: 'index.html'
       // chunks: ['public', 'index']
     }),
     // 提取css为单独文件

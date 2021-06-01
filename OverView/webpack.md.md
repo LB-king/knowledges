@@ -615,7 +615,7 @@ module.exports = {
 2. 去除没有用到css
 
    - 例如我们经常使用的bootstrap(140kb)就可以减少到只有35kb大小
-   - webpack使用purgecss-webpack-plugin去除无用的css
+   - `webpack`使用`purgecss-webpack-plugin`去除无用的css
 
    ```javascript
    cosnt {resolve, join} = require('path')
