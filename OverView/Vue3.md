@@ -12,9 +12,51 @@
 
        在与上次虚拟节点进行对比时，只对比带有patchFlag的节点，并且可以通过flag信息得知当前节点要对比的具体内容
 
+       ```javascript
+       /*
+       <div>静态</div>
+       <div>静态</div>
+       <div>{{name}}</div>
+       <div :class="cls">{{age}}</div>
+       */
+       export function render(_ctx, _cache, $props, $setup, $data, $options) {
+         return (_openBlock(), _createBlock(_Fragment, null, [
+           _createVNode("div", null, "静态"),
+           _createVNode("div", null, "静态"),
+           _createVNode("div", null, _toDisplayString(_ctx.name), 1 /* TEXT */),
+           _createVNode("div", { class: _ctx.cls }, _toDisplayString(_ctx.age), 3 /* TEXT, CLASS */)
+         ], 64 /* STABLE_FRAGMENT */))
+       }
+       ```
+
      - hoistStatic静态提升
 
-     - cacheHandlers
+       Vue2中无论元素是否参与更新，每次都会重新创建
+
+       Vue3中对于不参与更新的元素，只会被创建一次，只会会在每次渲染时被不停的复用
+
+       ```javascript
+       /*
+       <div>静态</div>
+       <div>静态</div>
+       <div>{{name}}</div>
+       */
+       const _hoisted_1 = /*#__PURE__*/_createVNode("div", null, "静态", -1 /* HOISTED */)
+       const _hoisted_2 = /*#__PURE__*/_createVNode("div", null, "静态", -1 /* HOISTED */)
+       
+       export function render(_ctx, _cache, $props, $setup, $data, $options) {
+         return (_openBlock(), _createBlock(_Fragment, null, [
+           _hoisted_1,
+           _hoisted_2,
+           _createVNode("div", null, _toDisplayString(_ctx.name), 1 /* TEXT */)
+         ], 64 /* STABLE_FRAGMENT */))
+       }
+       ```
+
+     - cacheHandlers 事件侦听器缓存
+       默认情况下onClick会被视为动态绑定，所以每次都会去追踪它的变化
+
+       但是因为是同一个函数，所以没有追踪变化，直接缓存起来复用即可。
 
      - ssr渲染
 
@@ -24,6 +66,22 @@
 
    - 事件监听缓存
 
+     ```javascript
+     /*
+     <div @click="do">静态</div>
+     */
+     
+     export function render(_ctx, _cache, $props, $setup, $data, $options) {
+       return (_openBlock(), _createBlock("div", { onClick: _ctx.do }, "静态", 8 /* PROPS */, ["onClick"]))
+     }
+     
+     export function render(_ctx, _cache, $props, $setup, $data, $options) {
+       return (_openBlock(), _createBlock("div", {
+         onClick: _cache[1] || (_cache[1] = (...args) => (_ctx.do && _ctx.do(...args)))
+       }, _toDisplayString(_ctx.msg), 1 /* TEXT */))
+     }
+     ```
+     
      
 
 2. `Tree-Shaking Support` 将无用模块"剪辑"，仅打包需要的
