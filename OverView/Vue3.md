@@ -69,6 +69,8 @@
 
 #### V3 的变化
 
+​	`.vue`文件中的`template`不再需要一个根节点。
+
 1. `Performance` 性能提升 1.3~2.x
 
    - diff 算法的优化(主要体现在以下方面)
@@ -220,8 +222,10 @@
    setup函数是组合API的入口函数，如果想到定义响应式变量，需要引入ref 
 
    ```javascript
-   import {ref} from 'vue'
+   import {ref, reactive} from 'vue'
    setup() {
+     // ref函数注意点：只能监听简单类型的变化，不能监听复杂类型的变化(对象/数组)
+     // reactive 可以监听复杂类型的变化
      // 定义了count这个变量，初始值是0，此变量改变后，Vue会自动更新UI
      let count = ref(0)
      // 在组合api中，如果想定义方法，不需要到methods中去定义，直接在setup中定义即可
@@ -236,10 +240,29 @@
    }
    ```
 
-   
+   `Composition API` 和 `Option API`混用
+
+   注入`API`,把`setup`中的变量注入到`data`中，方法注入到`methods`里面，以供页面使用。
 
 4. `Fragment，Teleport，Suspense` 碎片 | 心灵运输，远距离传送 | 悬念
 
 5. `Better TypeScript Support`
 
 6. `Custom Render API`
+
+#### setup
+
+1. `setup`执行时机
+
+   是在组件的`beforeCreated`和`created`之间的时机执行的。
+
+   beforeCreate: 表示组件刚刚被创建，组件的data和methods属性还没有初始化好。
+
+   setup: 
+
+   created: 表示组件刚刚被创建，组件的`data`和`methods`属性已经初始化好了。
+
+2. `setup`注意点
+
+   由于在执行`setup`函数的时候，还没有执行`created`的生命周期方法。所以在setup函数中，是无法使用`data`和`methods`属性的
+
