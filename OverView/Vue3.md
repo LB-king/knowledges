@@ -250,19 +250,103 @@
 
 6. `Custom Render API`
 
+#### pug语法
+
+直接安装包就行了
+
+```shell
+npm install pug pug-loader pug-plain-loader -D
+```
+
+```vue
+<template lang="pug">
+  #app.main-app
+    router-view
+    p joke
+</template>
+```
+
 #### setup
 
 1. `setup`执行时机
 
    是在组件的`beforeCreated`和`created`之间的时机执行的。
 
-   beforeCreate: 表示组件刚刚被创建，组件的data和methods属性还没有初始化好。
+   `beforeCreate:` 表示组件刚刚被创建，组件的`data`和`methods`属性还没有初始化好。
 
-   setup: 
+   `setup:`
 
-   created: 表示组件刚刚被创建，组件的`data`和`methods`属性已经初始化好了。
+   `created:` 表示组件刚刚被创建，组件的`data`和`methods`属性已经初始化好了。
 
 2. `setup`注意点
 
-   由于在执行`setup`函数的时候，还没有执行`created`的生命周期方法。所以在setup函数中，是无法使用`data`和`methods`属性的
+   - 由于在执行`setup`函数的时候，还没有执行`created`的生命周期方法。所以在`setup`函数中，是无法使用`data`和`methods`属性的
+   
+   - 由于我们不能在setup函数中使用data和methods，所以Vue为了避免我们错误的使用，直接将setup函数中的this修改成了undefined
+   
+   - setup函数只能是同步的，不能是异步的。
+
+#### reactive
+
+什么是react
+
+- reactive是Vue3中提供响应式数据的方法
+- 在Vue2中响应式数据是通过defineProperty来实现的，而在Vue3中响应式数据是通过ES6的Proxy来实现的
+
+reactive注意点
+
+- reactive参数必须是对象(json/arr)
+- 如果给reactive传递了其他对象
+  - 默认情况下修改对象，界面不会自动更新
+  - 如果想更新，可以通过重新赋值的方式
+
+#### ref
+
+​	ref和reactive一样，也是用来实现响应式数据的方法
+
+​	ref实现对简单值的监听
+
+ref本质：
+
+​	ref底层的本质还是reactive，系统会自动根据我们给ref传入的值将它转换成ref(xx)->reactive({value:xx})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

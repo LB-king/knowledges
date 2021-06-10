@@ -8,10 +8,8 @@ function addFn(state) {
   })
   function addPerson(e) {
     e.preventDefault()
-    state.persons.push({
-      name: stating.person.name,
-      age: stating.person.age
-    })
+    const newPerson= Object.assign({}, stating.person)
+    state.persons.push(newPerson)
   }
   return { stating, addPerson }
 }

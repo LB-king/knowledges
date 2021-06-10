@@ -139,7 +139,7 @@ Vue.use(ElementUI, { size: 'small', zIndex: 3000 })
 ### 4.pug
 
 ```powershell
-npm install pug pug-loader pug-plain-loader -S
+npm install pug pug-loader pug-plain-loader -D
 ```
 
 在`.vue`文件中使用
