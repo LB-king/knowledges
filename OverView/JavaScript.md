@@ -11,6 +11,18 @@
 
 - 比较通用的方案有babel,jsx,traceur,es6-shim等
 
+#### Proxy
+
+用于创建一个对象的代理，从而实现基本操作的拦截和自定义(如属性查找、赋值、枚举、函数调用等等)。
+
+语法：
+
+```javascript
+const p = new Proxy(target, handler)
+```
+
+
+
 ### JavaScript方法积累
 
 #### 上传读取txt文件内容

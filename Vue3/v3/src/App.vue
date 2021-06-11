@@ -10,7 +10,8 @@
 import { ref, reactive } from 'vue'
 import TodoList from './components/todoList/TODOLIST.vue'
 import reactiveCom from './components/reactive/index.vue'
-const navsArr = ['TodoList', 'reactiveCom', 'ref']
+import refCom from './components/ref/index.vue'
+const navsArr = ['TodoList', 'reactiveCom', 'refCom']
 export default {
   name: 'App',
   setup() {
@@ -35,7 +36,8 @@ export default {
   },
   components: {
     TodoList,
-    reactiveCom
+    reactiveCom,
+    refCom
   }
 }
 </script>

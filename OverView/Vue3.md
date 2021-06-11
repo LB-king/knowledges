@@ -288,29 +288,33 @@ npm install pug pug-loader pug-plain-loader -D
 
 #### reactive
 
-什么是react
+什么是`react`
 
-- reactive是Vue3中提供响应式数据的方法
-- 在Vue2中响应式数据是通过defineProperty来实现的，而在Vue3中响应式数据是通过ES6的Proxy来实现的
+- `reactive`是`Vue3`中提供响应式数据的方法
+- 在`Vue2`中响应式数据是通过`defineProperty`来实现的，而在`Vue3`中响应式数据是通过`ES6`的`Proxy`来实现的
 
-reactive注意点
+`reactive`注意点
 
-- reactive参数必须是对象(json/arr)
-- 如果给reactive传递了其他对象
+- `reactive`参数必须是对象`(json/arr)`
+- 如果给`reactive`传递了其他对象
   - 默认情况下修改对象，界面不会自动更新
   - 如果想更新，可以通过重新赋值的方式
 
 #### ref
 
-​	ref和reactive一样，也是用来实现响应式数据的方法
+​	`ref`和`reactive`一样，也是用来实现响应式数据的方法
 
-​	ref实现对简单值的监听
+​	`ref`实现对简单值的监听
 
-ref本质：
+`ref`本质：
 
-​	ref底层的本质还是reactive，系统会自动根据我们给ref传入的值将它转换成ref(xx)->reactive({value:xx})
+​	`ref`底层的本质还是`reactive`，系统会自动根据我们给`ref`传入的值将它转换成`ref(xx)->reactive({value:xx})`
 
+`ref`注意点：
 
+​	在`Vue`中使用`ref`的值不用通过`value`获取
+
+​	在`JS`中使用ref的值必须通过`value`获取
 
 
 

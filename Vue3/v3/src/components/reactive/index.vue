@@ -16,7 +16,7 @@ export default {
       time: new Date()
     })
     function handleClick() {
-      // state[0] = 666
+      // state[0] = 5566
       // state.a = '我可以变'
       // 直接改变日期对象，控制台改变，但是界面不更新。
       // state.time.setDate(state.time.getDate() + 1)

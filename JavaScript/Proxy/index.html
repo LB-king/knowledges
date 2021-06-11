@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Proxy</title>
+  </head>
+  <body>
+    <script>
+      /* var target = {
+        name: 'kobe',
+        age: 34
+      }
+      var handler = {
+        get(obj, prop) {
+          return prop in obj ? obj[prop] : 88
+        }
+      }
+      var p = new Proxy(target, handler)
+      p.name = 'kobe1'
+      p.score = undefined
+      console.log(p.name, p.score) // kobe1 undefined
+      console.log('c' in p, p.c) // false 88 */
+
+      let validate = {
+        set(obj, prop, value) {
+          if (prop === 'age') {
+            if (!Number.isInteger(value)) {
+              throw new TypeError('The age is not an integer')
+            }
+            if (value > 200) {
+              throw new RangeError('The age seems invalid')
+            }
+          }
+          obj[prop] = value
+          return true
+        }
+      }
+
+      let Person = new Proxy({}, validate)
+      // Person.age = 'me' //Uncaught TypeError: The age is not an integer
+      // console.log(Person)
+      // Person.age = 800 // index.html:33 Uncaught RangeError: The age seems invalid
+    </script>
+  </body>
+</html>

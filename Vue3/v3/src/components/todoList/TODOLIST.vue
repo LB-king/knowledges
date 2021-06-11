@@ -28,7 +28,7 @@ export default {
     let { stating, addPerson } = addFn(state)
     function changeVal(e) {
       e.preventDefault()
-      main.value += 666
+      main.value += 123
     }
     return { state, removePerson, stating, addPerson, main, changeVal }
   }
