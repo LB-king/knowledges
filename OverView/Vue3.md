@@ -316,11 +316,17 @@ npm install pug pug-loader pug-plain-loader -D
 
 ​	在`JS`中使用ref的值必须通过`value`获取
 
+ref与reactive的区别：
 
+​	如果在template使用的是ref类型的数据，Vue会自动帮我们添加.value
 
+​	如果在template使用的是reactive类型的数据，Vue不会自动帮我们添加.value
 
+​	Vue解析数据之前，会自动判断这个数据是不是ref类型。会根据数据中的`__v_ref`属性来判断的。也可以根据Vue中封装好的方法来判断 `isRef`  `isReactive`来判断。
 
+#### 递归监听
 
+无论是通过`ref`还是`reactive`都是通过递归监听的
 
 
 

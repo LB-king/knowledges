@@ -17,18 +17,30 @@ form
   p {{ main }}
 </template>
 <script>
-import { ref, reactive } from 'vue'
+import { ref, reactive, isReactive, isRef, isProxy } from 'vue'
 import removeFn from './remove'
 import addFn from './add'
 export default {
   name: 'todo_list',
   setup() {
     let main = ref(123)
+    let reactiveVal = reactive({
+      value: 'reactiveValue'
+    })
     let { state, removePerson } = removeFn()
     let { stating, addPerson } = addFn(state)
     function changeVal(e) {
       e.preventDefault()
+      console.log('isReactive', isReactive(main))
+      console.log('isRef', isRef(main))
       main.value += 123
+
+      var a = Reflect.get(reactiveVal, 'value')
+      var b = Reflect.set(reactiveVal, 'value', 'new')
+      console.log(reactiveVal)
+      console.log(a)
+      console.log(b)
+      // console.log(reactiveVal)
     }
     return { state, removePerson, stating, addPerson, main, changeVal }
   }

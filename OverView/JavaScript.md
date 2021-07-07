@@ -216,6 +216,28 @@ let fn = function(){}
 function fn(){}
 ```
 
+#### Proxy
+
+#### Reflect
+
+是一个内置的对象，它提供拦截JavaScript操作的方法。这些方法与proxy_handler的方法相同。不是一个函数对象，所以不可构造。类似Math就可以理解，它里面的方法都是静态的
+
+Reflect.apply(target, thisArgument, argumentsList)
+
+​	对一个函数进行调用，同时可以传入一个数组作为调用函数
+
+Reflect.get(target, propertyKey)
+
+​	获取对象某个属性的值
+
+Reflect.set(target, propertyKey, receiver)
+
+​	将值分配给属性的函数。返回一个`Boolean`，如果更新成功，则返回`true`。
+
+Reflect.has(target, propertyKey)
+
+​	判断一个对象是否存在某个属性，和 in 运算符 的功能完全相同
+
 ### 正则表达式
 
 ​	https://tool.oschina.net/uploads/apidocs/jquery/regexp.html
