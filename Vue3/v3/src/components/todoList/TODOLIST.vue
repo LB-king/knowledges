@@ -17,12 +17,15 @@ form
   p {{ main }}
 </template>
 <script>
-import { ref, reactive, isReactive, isRef, isProxy } from 'vue'
+import { ref, reactive, isReactive, isRef, isProxy, toRaw, markRaw } from 'vue'
 import removeFn from './remove'
 import addFn from './add'
 export default {
   name: 'todo_list',
   setup() {
+    let obj = { name: 'nn' }
+    let newN = ref(obj)
+    console.log(toRaw(newN.value))
     let main = ref(123)
     let reactiveVal = reactive({
       value: 'reactiveValue'

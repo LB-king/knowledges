@@ -1,7 +1,9 @@
 <template>
   <!-- <div>{{ count }}</div>
   <button @click="myFn">点击</button> -->
-  <button v-for="(item, index) in navs" :key="index" @click="handleClick(item)">{{ item }}</button>
+  <button v-for="(item, index) in navs" :key="index" @click="handleClick(item)">
+    {{ item }}
+  </button>
   <component :is="currentCom"></component>
   <!-- <TodoList></TodoList> -->
 </template>
@@ -11,7 +13,9 @@ import { ref, reactive } from 'vue'
 import TodoList from './components/todoList/TODOLIST.vue'
 import reactiveCom from './components/reactive/index.vue'
 import refCom from './components/ref/index.vue'
-const navsArr = ['TodoList', 'reactiveCom', 'refCom']
+import toRef from './components/toRef/index.vue'
+import shallowReactive from './components/shallowReactive/index.vue'
+const navsArr = ['TodoList', 'reactiveCom', 'refCom', 'shallowReactive', 'toRef']
 export default {
   name: 'App',
   setup() {
@@ -37,7 +41,9 @@ export default {
   components: {
     TodoList,
     reactiveCom,
-    refCom
+    refCom,
+    shallowReactive,
+    toRef
   }
 }
 </script>

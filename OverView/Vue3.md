@@ -326,31 +326,103 @@ ref与reactive的区别：
 
 #### 递归监听
 
-无论是通过`ref`还是`reactive`都是通过递归监听的
+1.无论是通过`ref`还是`reactive`都是通过递归监听的
+
+递归(recursion) 
+
+2.递归监听存在的问题：
+
+​	如果数据量比较大，非常消耗性能。递归监听会将对象每一层都包装成proxy
+
+3.非递归监听 `shallowReactive` `shallowRef`
+
+​	非递归监听会将对象第一层包装成`proxy`
+
+只改变对象里某一个字段的值，仅支持`shallowRef`(数据量大的时候使用)类型数据。可以通过`triggerRef`来触发
+
+```javascript
+import { triggerRef } from 'vue'
+state.value.son.son.c = 3
+triggerRef(state)
+```
+
+如果是通过`shallowRef`创建的数据，它监听的是`.value`的变化
+
+因为底层本质上`value`才是第一层。
+
+#### toRaw
+
+用来获取`ref/reactive/readonly`代理的原始对象。可用于临时读取数据而不用触发更改。不建议保留对原始对象的持久引用。
+
+```javascript
+import { reactive, toRow, ref } from 'vue'
+let obj = {
+  name: 'park'
+}
+let state = reactive(obj) // state的本质是Proxy对象，在这个Proxy对象中引用了obj
+// 如果只是修改了obj，视图是不会触发更新的
+// 只有通过修改包装之后的对象来修改，才会触发界面的更新
+let obj2 = toRow(state)
+obj === obj2 // true
+
+let state1 = ref(obj)
+let obj3 = toRaw(state1.value) // 通过toRaw拿到ref类型的数据，需要添加.value
+obj3 === obj
+```
+
+注意：如果想通过`toRaw`拿到`ref`类型的原始数据(创建时传入的那个对象)，那就需要获取`.value`中保存的值
+
+#### markRaw
+
+标记一个对象，使其永远不会转换为`proxy`
+
+- 有些值不应该是响应式的，例如复杂的第三方实例或Vue组件对象
+- 当渲染具有不可变数据源的大列表时，跳过`proxy`可以提高性能
+
+```javascript
+import { reactive } from 'vue'
+let obj = { name: 'park' }
+obj = markRaw(obj)
+let state = reactive(obj)
+// 此时的变量就不是响应式的
+```
+
+#### toRef
+
+数据发生改变，不会触发UI更新 
+
+```javascript
+setup() {
+    let obj = {
+      name: 'park'
+    }
+    // let name = ref(obj)
+    let name = toRef(obj, 'name')
+    function myFn() {
+      name.value = 'zs' 
+      // 如果利用ref将某一个对象中的属性变成响应式的数据，我们修改响应式的数据是不会影响到原始数据的
+      // 如果利用toRef将某一个对象中的属性变成响应式的数据，我们修改响应式的数据是会影响到原始数据的
+      console.log(obj)
+      console.log(name)
+    }
+    return {
+      name,
+      myFn
+    }
+  }
+/*
+ref -> 复制，数据改变，界面也更新
+toRef -> 引用，数据改变，界面不会更新
+*/
+```
 
 
 
+#### toRefs
 
+#### customRef
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+自定义ref，设置工厂函数，其中包含get和set方法。
 
 
 
