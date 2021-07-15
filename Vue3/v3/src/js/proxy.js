@@ -1,3 +1,4 @@
+// proxy实现
 let obj = {
   name: 'park',
   age: 34
