@@ -1,15 +1,21 @@
 <template lang="pug">
-.ref_box 
+.ref_box(ref='box') 
   | {{ name }}
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 export default {
   setup() {
     let name = ref('kobe')
+    let box = ref(null)
+    
+    onMounted(() => {
+      console.log('onMounted', box.value)
+    })
     return {
-      name
+      name,
+      box
     }
   }
 }

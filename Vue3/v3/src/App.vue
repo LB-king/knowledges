@@ -4,7 +4,9 @@
   <button v-for="(item, index) in navs" :key="index" @click="handleClick(item)">
     {{ item }}
   </button>
-  <component :is="currentCom"></component>
+  <keep-alive>
+    <component :is="currentCom"></component>
+  </keep-alive>
   <!-- <TodoList></TodoList> -->
 </template>
 
@@ -15,7 +17,17 @@ import reactiveCom from './components/reactive/index.vue'
 import refCom from './components/ref/index.vue'
 import toRef from './components/toRef/index.vue'
 import shallowReactive from './components/shallowReactive/index.vue'
-const navsArr = ['TodoList', 'reactiveCom', 'refCom', 'shallowReactive', 'toRef']
+import customRef from './components/customRef/index.vue'
+import readonly from './components/readonly/index.vue'
+const navsArr = [
+  'TodoList',
+  'reactiveCom',
+  'refCom',
+  'shallowReactive',
+  'toRef',
+  'customRef',
+  'readonly'
+]
 export default {
   name: 'App',
   setup() {
@@ -43,7 +55,9 @@ export default {
     reactiveCom,
     refCom,
     shallowReactive,
-    toRef
+    toRef,
+    customRef,
+    readonly
   }
 }
 </script>

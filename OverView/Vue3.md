@@ -355,14 +355,14 @@ triggerRef(state)
 用来获取`ref/reactive/readonly`代理的原始对象。可用于临时读取数据而不用触发更改。不建议保留对原始对象的持久引用。
 
 ```javascript
-import { reactive, toRow, ref } from 'vue'
+import { reactive, toRaw, ref } from 'vue'
 let obj = {
   name: 'park'
 }
 let state = reactive(obj) // state的本质是Proxy对象，在这个Proxy对象中引用了obj
 // 如果只是修改了obj，视图是不会触发更新的
 // 只有通过修改包装之后的对象来修改，才会触发界面的更新
-let obj2 = toRow(state)
+let obj2 = toRaw(state)
 obj === obj2 // true
 
 let state1 = ref(obj)
@@ -380,7 +380,7 @@ obj3 === obj
 - 当渲染具有不可变数据源的大列表时，跳过`proxy`可以提高性能
 
 ```javascript
-import { reactive } from 'vue'
+import { reactive, markRaw } from 'vue'
 let obj = { name: 'park' }
 obj = markRaw(obj)
 let state = reactive(obj)
@@ -393,42 +393,193 @@ let state = reactive(obj)
 
 ```javascript
 setup() {
-    let obj = {
-      name: 'park'
-    }
-    // let name = ref(obj)
-    let name = toRef(obj, 'name')
-    function myFn() {
-      name.value = 'zs' 
-      // 如果利用ref将某一个对象中的属性变成响应式的数据，我们修改响应式的数据是不会影响到原始数据的
-      // 如果利用toRef将某一个对象中的属性变成响应式的数据，我们修改响应式的数据是会影响到原始数据的
-      console.log(obj)
-      console.log(name)
-    }
-    return {
-      name,
-      myFn
-    }
+  let obj = {
+    name: 'park'
   }
+  // let name = ref(obj)
+  let name = toRef(obj, 'name')
+  function myFn() {
+    name.value = 'zs' 
+    // 如果利用ref将某一个对象中的属性变成响应式的数据，我们修改响应式的数据是不会影响到原始数据的
+    // 如果利用toRef将某一个对象中的属性变成响应式的数据，我们修改响应式的数据是会影响到原始数据的
+    console.log(obj)
+    console.log(name)
+  }
+  return {
+    name,
+    myFn
+  }
+}
 /*
 ref -> 复制，数据改变，界面也更新
 toRef -> 引用，数据改变，界面不会更新
 */
 ```
 
-
-
 #### toRefs
+
+就是将某个对象的多个属性的值变成响应式的数据，是对toRef的补充
+
+```javascript
+import { toRefs } from 'vue'
+let obj = {
+  name: 'park',
+  age: 18
+}
+let state = toRefs(obj)
+state.name = 'zs'
+```
+
+
 
 #### customRef
 
-自定义ref，设置工厂函数，其中包含get和set方法。
+返回一个`ref`对象，可以显示地控制依赖追踪和触发响应。
 
+用来自定义一个`ref`
 
+```javascript
+import { customRef } from 'vue'
+function myFn(value) {
+  return customRef((track, trigger) => {
+    return {
+      get() {
+        track() //标记这个变量需要追踪变化
+        return value
+      },
+      set(newValue) {
+        value = newValue
+        trigger() //告诉vue触发界面更新
+      }
+    }
+  })
+}
+setup() {
+  let state = myFn('sun')
+  return { state }
+}
+```
 
+为什么需要自定义一个`ref`,可以封装一个异步请求的方法
 
+```javascript
+import { customRef } from 'vue'
+function myFn(value) {
+  return customRef((track, trigger) => {
+    fetch(value)
+    	.then(res => {
+      	return res.json()
+    	})
+    	.then(data => {
+      	value = data
+      	trigger()
+    	})
+    return {
+      get() {
+        // 不能在get方法中发送网络请求 ->进入死循环
+        track() //标记这个变量需要追踪变化
+        return value
+      },
+      set(newValue) {
+        value = newValue
+        trigger() //告诉vue触发界面更新
+      }
+    }
+  })
+}
+setup() {
+  //let state = myFn('sun')
+  let list = myFn('../data.json')
+  return { list }
+}
+```
 
+#### onMounted
 
+在`Vue2.x`中我们可以通过给元素添加`ref='xxx'`,然后代码中通过`refs.xxx`的方法来获取元素，在`Vue3.x`中我们也可以通过`ref`来获取元素
+
+```vue
+<template>
+	<p ref="box">
+    {{age}}
+  </p>
+</template>
+```
+
+```javascript
+import { ref, onMOunted } from 'vue'
+setup() {
+  let box = ref(null)
+  onMounted(() => {
+    console.log(box)
+  })
+  return {box}
+}
+```
+
+#### readonly
+
+`readonly:` 用于创建一个只读的数据，并且是递归只读的  递归(recursion)
+
+`shallowReadonly` 用于创建一个只读的数据，但是不是递归只读的
+
+`const和readonly的区别` 
+
+- const  赋值保护，不能给变量重新赋值
+- readonly  属性保护，不能给属性重新赋值
+
+```javascript
+import { readonly, isReadonly, shallowReadonly } from 'vue'
+setup() {
+  let state = readonly({
+    name: 'lbj',
+    attr: {
+      height: 1.8
+      age: 18
+    }
+  })
+  function myFn() {
+    state.name = 'new-name'
+    state.attr.height = 2
+    state.attr.age = 22
+    console.log(state) // 并未更新
+  }
+  console.log(isReadonly(state))
+  return { state, myFn }
+}
+```
+
+#### 本质
+
+在Vue2.X中是通过defineProperty来实现响应式数据的，详见：手写Vue全家桶视频
+
+Vue3是通过Proxy来实现响应式的
+
+```javascript
+let obj = {
+  name: 'park',
+  age: 34
+}
+let state = new Proxy(obj, {
+  get(obj, key) {
+    // 两个参数 obj->操作对象，key->键值
+    console.log(obj, key)
+    return obj[key]
+  },
+  set(obj, key, newVal) {
+    //三个参数 obj->操作对象，key->键值，newVal->新的值
+    console.log(obj, key, newVal)
+    obj[key] = newVal
+  }
+})
+
+console.log(state.name) // { name: 'park', age: 34 } name park
+console.log(state.age) // { name: 'park', age: 34 } age 34
+
+state.name = 'lbj' //{ name: 'park', age: 11 } name lbj
+state.age = 11 //{ name: 'park', age: 34 } age 11
+
+```
 
 
 
