@@ -34,6 +34,8 @@ export default {
     let count = ref(0)
     let currentCom = ref('TodoList')
     const navs = reactive(navsArr)
+    let a = [{a:9,b:8}]
+    console.log(a)
     function myFn() {
       count.value = count.value += 1
     }

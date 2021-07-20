@@ -581,5 +581,113 @@ state.age = 11 //{ name: 'park', age: 34 } age 11
 
 ```
 
+#### 实现原理
 
+##### 1.shallowReactive&shallowRef
+
+```javascript
+function shallowReactive(obj) {
+   return new Proxy(obj, {
+      get(obj, key) {
+        return obj[key]
+      },
+      set(obj, key, val) {
+        obj[key] = val
+      }
+    })
+}
+
+function shallowRef(obj) {
+  return shallowReactive({
+    value: obj
+  })
+}
+```
+
+##### 2.reactive&ref
+
+```javascript
+function reactive(obj) {
+  // 如果是一个数组,那么取出数据中的每一个元素，判断每一个元素是否又是一个对象，如果又是一个对象，那么也需要包装成Proxy
+  if (getType(obj) === '[object Array]') {
+    obj.forEach((item, index) => {
+      obj[index] = reactive(item)
+    })
+  } else if (getType(obj) === '[object Object]') {
+    for (let i in obj) {
+      obj[i] = reactive(obj[i])
+    }
+  } else {
+    return obj
+  }
+  return new Proxy(obj, {
+    get(obj, key) {
+      return obj[key]
+    },
+    set(obj, key, val) {
+      obj[key] = val
+      console.log('UI更新')
+      return true
+    }
+  })
+}
+
+function getType(value) {
+  return Object.prototype.toString.call(value)
+}
+
+function ref(obj) {
+  return reactive({
+    value: obj
+  })
+}
+```
+
+
+
+##### 3.shallowReadonly&readonly
+
+```javascript
+function shallowReadonly(only) {
+  return new Proxy(obj, {
+    get(obj, key) {
+      return obj[key]
+    },
+    set() {
+      console.warn('只读属性，不可修改')
+    }
+  })
+}
+
+function readonly(obj) {
+  if (getType(obj) === '[object Array]') {
+    obj.forEach((item, index) => {
+      obj[index] = readonly(item)
+    })
+  } else if (getType(obj) === '[object Object]') {
+    for (let i in obj) {
+      obj[i] = readonly(obj[i])
+    }
+  } else {
+    return obj
+  }
+  return new Proxy(obj, {
+    get(obj, key) {
+      return obj[key]
+    },
+    set() {
+     console.warn('只读属性不可修改')
+    }
+  })
+}
+```
+
+##### 4.isReactive&isRef
+
+```javascript
+// 判断一个对象是不是ref对象
+function isRef(obj) {
+  return obj.__v_isRef || false
+}
+```
 

@@ -10,7 +10,7 @@
 
 <script>
 //import x from ''
-// 非递归监听 && 递归监听
+// 非递归监听 && 递归监听,非递归监听只能监听对象第一层的属性值变化
 import { reactive, shallowReactive, shallowRef, triggerRef } from 'vue'
 export default {
   setup() {
