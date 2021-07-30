@@ -28,6 +28,8 @@ const navsArr = [
   'customRef',
   'readonly'
 ]
+console.log(import.meta.env)
+console.log(import.meta)
 export default {
   name: 'App',
   setup() {

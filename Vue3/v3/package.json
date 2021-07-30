@@ -2,14 +2,16 @@
   "name": "v3",
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite",
+    "dev": "cross-env NODE_ENV=dev vite",
     "build": "vite build"
   },
   "dependencies": {
     "vue": "^3.1.4"
   },
   "devDependencies": {
-    "@vue/compiler-sfc": "^3.1.4",
+    "@vue/compiler-sfc": "^3.1.5",
+    "cross-env": "^7.0.3",
+    "dotenv": "^10.0.0",
     "pug": "^3.0.2",
     "pug-loader": "^2.4.0",
     "pug-plain-loader": "^1.1.0",
