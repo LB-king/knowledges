@@ -691,3 +691,14 @@ function isRef(obj) {
 }
 ```
 
+#### 环境配置
+
+根目录新建`.env.production` `env.development`,要以`VITE_`开头，配置的变量才能暴露给客户端。
+
+```te
+VITE_SOME_KEY=开发环境
+VITE_SOME_KEY=生产环境
+```
+
+
+

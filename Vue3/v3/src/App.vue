@@ -28,8 +28,6 @@ const navsArr = [
   'customRef',
   'readonly'
 ]
-console.log(import.meta.env)
-console.log(import.meta)
 export default {
   name: 'App',
   setup() {
@@ -43,6 +41,7 @@ export default {
     }
     function handleClick(item) {
       console.log(item)
+      console.log(import.meta.env)
       currentCom.value = item
     }
     let result = {
