@@ -1,4 +1,20 @@
 /* pages/index.wxss */
-.d1{
-  color: red;
+image {
+  width: 150rpx;
+  height: 120rpx;
+}
+
+.menu {
+  display: grid;
+  /* grid-template-columns: repeat(auto-fill, 24%); */
+  grid-template-columns: repeat(4, 1fr);
+  /* display: flex;
+  flex-wrap: wrap; */
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  align-items: center;
 }

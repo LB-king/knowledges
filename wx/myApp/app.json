@@ -1,7 +1,8 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/index/tab"
+    "pages/tab/tab",
+    "pages/setting/setting"
   ],
   "window": {
     "navigationBarBackgroundColor": "#bbb",
@@ -10,15 +11,28 @@
     "navigationStyle": "default"
   },
   "tabBar": {
+    "position": "bottom",
+    "selectedColor": "#1afa29",
     "list": [
       {
         "pagePath": "pages/index/index",
-        "text": "index"
+        "text": "index",
+        "iconPath": "static/icons/home.png",
+        "selectedIconPath": "static/icons/home-selected.png"
       },
       {
-        "pagePath": "pages/index/tab",
-        "text": "tab"
+        "pagePath": "pages/tab/tab",
+        "text": "tab",
+        "iconPath": "static/icons/user.png",
+        "selectedIconPath": "static/icons/user-selected.png"
+      },
+      {
+        "pagePath": "pages/setting/setting",
+        "text": "setting",
+        "iconPath": "static/icons/setting.png",
+        "selectedIconPath": "static/icons/setting-selected.png"
       }
     ]
-  }
+  },
+  "sitemapLocation": "sitemap.json"
 }

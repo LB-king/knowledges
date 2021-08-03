@@ -1,4 +1,4 @@
-// pages/index/tab.js
+// pages/setting/setting.js
 Page({
 
   /**

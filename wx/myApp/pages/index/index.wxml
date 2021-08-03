@@ -1,4 +1,25 @@
 <!--pages/index.wxml-->
-<text>span</text>
-<view class="d1">div</view>
-
+<view>示例</view>
+<view class="menu">
+  <view class="item">
+    <image src="/static/img/img02.jpg" mode="scaleToFill"/>
+    <text>菜单</text>
+  </view>
+  <view class="item">
+    <image src="/static/img/img02.jpg" mode="scaleToFill"/>
+    <text>菜单</text>
+  </view>
+  <view class="item">
+    <image src="/static/img/img02.jpg" mode="scaleToFill"/>
+    <text>菜单</text>
+  </view>
+  <view class="item">
+    <image src="/static/img/img01.jpg" mode="scaleToFill"/>
+    <text>菜单</text>
+  </view>
+  <view class="item">
+    <image src="/static/img/img02.jpg" mode="scaleToFill"/>
+    <text>菜单</text>
+  </view>
+  
+</view>
