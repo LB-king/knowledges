@@ -2,24 +2,28 @@
 <view>示例</view>
 <view class="menu">
   <view class="item">
-    <image src="/static/img/img02.jpg" mode="scaleToFill"/>
+    <image src="/static/img/img02.jpg" mode="scaleToFill" />
     <text>菜单</text>
   </view>
   <view class="item">
-    <image src="/static/img/img02.jpg" mode="scaleToFill"/>
+    <image src="/static/img/img02.jpg" mode="scaleToFill" />
     <text>菜单</text>
   </view>
   <view class="item">
-    <image src="/static/img/img02.jpg" mode="scaleToFill"/>
+    <image src="/static/img/img02.jpg" mode="scaleToFill" />
     <text>菜单</text>
   </view>
   <view class="item">
-    <image src="/static/img/img01.jpg" mode="scaleToFill"/>
+    <image src="/static/img/img01.jpg" mode="scaleToFill" />
     <text>菜单</text>
   </view>
   <view class="item">
-    <image src="/static/img/img02.jpg" mode="scaleToFill"/>
+    <image src="/static/img/img02.jpg" mode="scaleToFill" />
     <text>菜单</text>
   </view>
-  
+</view>
+<button size="mini" type="primary" bindtap="handleTap" plain="true" data-id="110"
+  data-name="{a:11,b:99}">toDirect</button>
+<view>
+  <navigator url="/pages/direct/direct?id=999">toTAb</navigator>
 </view>

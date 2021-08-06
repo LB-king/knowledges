@@ -1,0 +1,7 @@
+<!--pages/direct.wxml-->
+<view>this is direct page</view>
+<text>{{msg}}</text>
+<view>
+  <view>当前用户:{{userName}}</view>
+  <button size="mini" bindtap="handleClick">btn</button>
+</view>

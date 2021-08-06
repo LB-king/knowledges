@@ -2,7 +2,8 @@
   "pages": [
     "pages/index/index",
     "pages/tab/tab",
-    "pages/setting/setting"
+    "pages/setting/setting",
+    "pages/direct/direct"
   ],
   "window": {
     "navigationBarBackgroundColor": "#bbb",

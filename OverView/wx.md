@@ -88,6 +88,8 @@ app.json:
 
 ##### 3.3rpx
 
+整个页面的宽度是750rpx，不要使用px
+
 | 设备         | rpx换算px (屏幕宽度/750) | px换算rpx (750/屏幕宽度) |
 | :----------- | :----------------------- | :----------------------- |
 | iPhone5      | 1rpx = 0.42px            | 1px = 2.34rpx            |
@@ -97,4 +99,107 @@ app.json:
 ##### 3.3.1dpi
 
 dots per inch(每英寸所打印的点数)
+
+
+
+首页，拍卖，消息，个人  写布局页面
+
+wxss wxml
+
+##### 4.1跳转
+
+###### 4.1.1事件绑定
+
+参数传递定义如下 `data-age="18"`
+
+```html
+<button size="mini" type="primary" bindtap="handleTap" data-id="110" data-name="张三">toDirect</button>
+```
+
+```javascript
+// pages/index.js
+Page({
+ //点击跳转
+  handleTap(e) {
+    console.log(e);
+    console.log(e.currentTarget.dataset); // 当前操作的对象，用于事件捕获
+    wx.navigateTo({ //只能跳转到非tabBar的页面,fail can not navigateTo a tabbar pag
+      url: "/pages/detail/detail?id=1122"
+    })
+  }
+})
+```
+
+###### 4.1.2页面跳转
+
+- 内置方法
+
+  ```javascript
+  wx.navigateTo({url:"xxx"})
+  ```
+
+- 标签跳转
+
+  ```html
+  <navigator url="/pages/direct/direct?id=999">跳转到新页面</navigator>
+  ```
+
+**注意：只能跳转到非`tabbar`页面。**
+
+在跳转页面接收参数
+
+`detail.js`:
+
+```javascript
+Page({
+  onLoad(options) {
+    console.log(options)
+    // 在此接收参数
+  }
+})
+```
+
+##### 4.2数据绑定
+
+```javascript
+// pages/direct.js
+Page({
+  /**
+   * 页面的初始数据
+   */
+  data: {
+    msg: 'this is fraction'
+  },
+  handleClick(data) {
+    // 只在内存中修改，页面没有改变
+    // this.data.msg = 'new msg'
+    this.setData({
+      msg: 'new msg'
+    })
+    console.log(this.data)
+  }
+})
+
+```
+
+###### 4.2.1获取用户信息
+
+`getUserInfo`接口返回的数据不符合要求，已更换为以下方法。
+
+`getUserProfile`,desc字段必传:https://developers.weixin.qq.com/miniprogram/dev/api/open-api/user-info/wx.getUserProfile.html
+
+```javascript
+wx.getUserProfile({
+  desc: 'for test',
+  success(res) {
+    console.log('success', res)
+    _this.setData({
+      userName: res.userInfo.nickName
+    }) 
+  },
+  fail(err) {
+    console.log('fail: ', err)
+  }
+})
+```
 
