@@ -393,21 +393,21 @@ export default {
         .attr('d', 'M0,-5L10,0L0,5')
         .attr('fill', '#FD7D00')
 
-      nodeEnter
-        .append('marker')
-        .attr('id', showtype + 'resolved1')
-        .attr('markerUnits', 'strokeWidth')
-        .attr('markerUnits', 'userSpaceOnUse')
-        .attr('viewBox', '0 -5 10 10')
-        .attr('markerWidth', 12)
-        .attr('markerHeight', 12)
-        .attr('orient', '90')
-        .attr('refX', () => (showtype === 'up' ? '-5' : '15'))
-        .attr('stroke-width', 2)
-        .attr('fill', 'red')
-        .append('path')
-        .attr('d', 'M0,-5L10,0L0,5')
-        .attr('fill', '#7A9EFF')
+      // nodeEnter
+      //   .append('marker')
+      //   .attr('id', showtype + 'resolved1')
+      //   .attr('markerUnits', 'strokeWidth')
+      //   .attr('markerUnits', 'userSpaceOnUse')
+      //   .attr('viewBox', '0 -5 10 10')
+      //   .attr('markerWidth', 12)
+      //   .attr('markerHeight', 12)
+      //   .attr('orient', '90')
+      //   .attr('refX', () => (showtype === 'up' ? '-5' : '15'))
+      //   .attr('stroke-width', 2)
+      //   .attr('fill', 'red')
+      //   .append('path')
+      //   .attr('d', 'M0,-5L10,0L0,5')
+      //   .attr('fill', '#7A9EFF')
 
       // 将节点转换到它们的新位置。
       let nodeUpdate = node

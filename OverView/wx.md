@@ -184,7 +184,7 @@ Page({
 
 ###### 4.2.1获取用户信息
 
-`getUserInfo`接口返回的数据不符合要求，已更换为以下方法。
+`getUserInfo`接口返回的数据不符合要求，已更换为以下接口。
 
 `getUserProfile`,desc字段必传:https://developers.weixin.qq.com/miniprogram/dev/api/open-api/user-info/wx.getUserProfile.html
 

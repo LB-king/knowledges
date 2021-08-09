@@ -327,6 +327,36 @@ export default {
           }, 400);
         })
 
+/*
+       * 绘制箭头
+       * @param  {string} markerUnits [设置为strokeWidth箭头会随着线的粗细发生变化]
+       * @param {string} viewBox 坐标系的区域
+       * @param {number} markerWidth,markerHeight 标识的大小
+       * @param {string} orient 绘制方向，可设定为：auto（自动确认方向）和 角度值
+       * @param {number} stroke-width 箭头宽度
+       * @param {string} d 箭头的路径
+       * @param {string} fill 箭头颜色
+       * @param {string} id resolved0表示公司 resolved1表示个人
+       * 直接用一个marker达不到两种颜色都展示的效果
+       */
+      enterNodes
+        .append('marker')
+        .attr('id', d => {
+          let r = d.data.id
+          return (r || 'resolved') + 'resolved'
+        })
+        .attr('markerUnits', 'strokeWidth')
+        .attr('markerUnits', 'userSpaceOnUse')
+        .attr('viewBox', '0 -5 10 10')
+        .attr('markerWidth', 12)
+        .attr('markerHeight', 12)
+        .attr('orient', 'auto')
+        .attr('refX', 10)
+        .attr('stroke-width', 2)
+        .attr('fill', 'red')
+        .append('path')
+        .attr('d', 'M0,-5L10,0L0,5')
+        .attr('fill', '#FD7D00')
       var nodePlus = enterNodes
         .append("g")
         .classed("plus-circle", !0)
@@ -512,6 +542,7 @@ export default {
         .enter()
         .append("path")
         .classed("link", !0)
+        .attr('marker-end', d => `url(#${d.target.data.id}resolved)`)
         .attr("link-flow-animation-id", function (t) {
           if (
             !graphConfig.isMoreNode(t.source.data) &&

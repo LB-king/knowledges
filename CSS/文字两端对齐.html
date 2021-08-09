@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      span {
+        /* position: absolute; */
+        display: inline-block;
+        width: 4em;
+        height: 20px;
+        padding: 5px;
+        background-color: #ccc;
+        /* overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap; */
+        text-align: justify;
+        overflow: hidden;
+      }
+      span:after {
+        display: inline-block;
+        width: 100%;
+        content: '';
+        /* text-align: justify; */
+        /* overflow: hidden; */
+      }
+
+      .small-unit {
+        padding: 10px 0;
+        display: none;
+      }
+      .label {
+        position: absolute;
+        display: inline-block;
+        width: 4em;
+        height: 40px;
+        text-align: justify;
+        overflow: hidden;
+      }
+      .label:after {
+        display: inline-block;
+        content: '';
+        width: 4em;
+        height: 40px;
+        text-align: justify;
+        overflow: hidden;
+      }
+      .msg {
+        display: inline-block;
+        margin-left: 5em;
+        position: relative;
+      }
+      .msg:before {
+        content: '：';
+        position: absolute;
+        left: -1em;
+      }
+    </style>
+  </head>
+  <body>
+    <span>多行</span>
+
+    <hr />
+
+    <div class="small-unit">
+      <label class="label">开发</label>
+      <div class="msg">阿斯顿</div>
+    </div>
+    <div class="small-unit">
+      <label class="label">开发商</label>
+      <div class="msg">阿斯顿阿斯顿阿斯顿阿斯顿阿斯顿阿斯顿</div>
+    </div>
+    <div class="small-unit">
+      <label class="label">开发周期</label>
+      <div class="msg">
+        阿斯顿阿斯顿阿斯顿阿斯顿阿斯顿阿斯顿阿斯顿阿斯顿阿斯顿阿斯顿阿斯顿阿斯顿阿斯顿
+      </div>
+    </div>
+  </body>
+</html>
