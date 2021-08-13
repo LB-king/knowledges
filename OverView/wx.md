@@ -356,3 +356,12 @@ handleInput(e) {
 }
 ```
 
+#### 5.后台程序
+
+##### 5.1 express启动后台服务
+
+```shell
+express itemName
+npm install express-jwt jsonwebtoken -S
+```
+
