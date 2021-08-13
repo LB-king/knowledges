@@ -8,8 +8,8 @@ Page({
     wx.request({
       url: 'http://127.0.0.1:3000/login',
       data: {
-        name: 'test',
-        password: 'test'
+        name: 'admin',
+        password: '123456'
       },
       method: 'POST',
       success(res) {

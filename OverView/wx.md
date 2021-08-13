@@ -356,7 +356,18 @@ handleInput(e) {
 }
 ```
 
-#### 5.后台程序
+##### 4.8API
+
+- navigateTo 路由跳转
+
+- request 网络请求API，
+
+  - 网络地址https
+  - 后台设置域名
+
+  本地测试：把详情打开，关掉https协议
+
+##### 5.后台程序
 
 ##### 5.1 express启动后台服务
 

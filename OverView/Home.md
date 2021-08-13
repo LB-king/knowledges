@@ -1,3 +1,35 @@
+### postman配置
+
+- 打开manage enviroments
+
+  | VARIABLE | INITIAL VALUE           | CURRENT VALUE                    |
+  | -------- | ----------------------- | -------------------------------- |
+  | base_url | http://192.168.1.1:2000 | http://192.168.1.1:2000          |
+  | token    | 121212                  | 0c5862de82275e1c575fb4ea7f92eaba |
+
+- 在登陆的接口中设置
+
+  ```shell
+  {{base_url}}/sso-auth/api/auth/doLogin
+  ```
+
+- 在Tests中设置
+
+  ```javascript
+  // 把json字符串转化为对象
+  var data = JSON.parse(responseBody);
+  //获取data对象的token值
+  var token = data.data.token; //根据实际参数结构修改
+  pm.globals.set("token", token)
+  ```
+
+- 在其他接口中 **Hearder**中加入token即可
+
+  | KEY          | VALUE            |
+  | :----------- | :--------------- |
+  | token        | {{token}}        |
+  | Content-Type | application/json |
+
 ### 继承、原型链
 
 1. `instanceof`
