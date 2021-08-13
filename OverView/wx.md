@@ -75,6 +75,8 @@ app.json:
 
 - image - 图片
 
+- navigator - 导航
+
   ps:flex布局。grid布局。
 
   ```css
@@ -182,24 +184,175 @@ Page({
 
 ```
 
-###### 4.2.1获取用户信息
+##### 4.3获取用户信息
 
 `getUserInfo`接口返回的数据不符合要求，已更换为以下接口。
 
-`getUserProfile`,desc字段必传:https://developers.weixin.qq.com/miniprogram/dev/api/open-api/user-info/wx.getUserProfile.html
+###### 方式一
+
+`getUserProfile`
+
+desc字段必传:https://developers.weixin.qq.com/miniprogram/dev/api/open-api/user-info/wx.getUserProfile.html
+
+wxml
+
+```html
+<button size="mini" bindtap="handleClick">btn</button>
+```
+
+js
 
 ```javascript
-wx.getUserProfile({
-  desc: 'for test',
-  success(res) {
-    console.log('success', res)
-    _this.setData({
-      userName: res.userInfo.nickName
-    }) 
-  },
-  fail(err) {
-    console.log('fail: ', err)
+handleClick(data) {
+  let _this = this
+  // 只在内存中修改，页面没有改变
+  // this.data.msg = 'new msg'
+  this.setData({
+    msg: 'new msg'
+  })
+  wx.getUserProfile({
+    lang: 'en',
+    desc: 'for dev',
+    success(res) {
+      console.log('success', res)
+      _this.setData({
+        userName: res.userInfo.nickName
+      }) 
+    },
+    fail(err) {
+      console.log('fail: ', err)
+    }
+  })
+}
+```
+
+###### 方式二
+
+`button：`
+
+wxml
+
+```html
+<button open-type="getUserInfo" bindgetuserinfo="getUserInfo">获取用户信息</button>
+```
+
+js
+
+```javascript
+getUserInfo(info) {
+  console.log('获取用户信息：', info);
+}
+```
+
+二者的区别：`getUserProfile`会有弹窗，提示是否允许获取个人信息
+
+​					  `button`不会弹窗
+
+使用`wx.openSetting()`打开设置页面，手动授权。
+
+##### 4.4获取用户位置信息
+
+```javascript
+//获取地址
+getLocation() {
+  let _this = this
+  wx.chooseLocation({
+    success(res) {
+      console.log(res)
+      _this.setData({
+        address: res.address
+      })
+    },
+    fail(err) {
+      console.log('err', err);
+    },
+    complete() {
+      console.log('complete');
+    }
+  })
+}
+```
+
+##### 4.5wx:for
+
+循环对象和数组
+
+js
+
+```javascript
+Page({
+  data: {
+    list: [
+      {id: '11', name: '穆勒'},
+      {id: '22', name: '莱万'}
+    ],
+    listObj: {
+      name: '张飞',
+      age: 33,
+      sex: '男'
+    }
   }
 })
+```
+
+wxml
+
+```html
+<view wx:for="{{list}}" wx:key="index">{{item.name}}-{{index}}</view>
+<view wx:for="{{listObj}}" wx:for-index="idx" wx:key="idx">{{item}}-{{idx}}</view>
+```
+
+加上`wx:key`避免警告,`wx:for-index="idx"`和` wx:for-item="i" `分别改变`index`和`item`的别名。
+
+##### 4.6获取图片
+
+```javascript
+uploadImage() {
+  let _this = this
+  wx.chooseImage({
+    count: 9, //最多9个
+    sizeType: ['original', 'compressed'],
+    sourceType: ['album', 'camera'],
+    success(res) {
+      console.log(res);
+      _this.setData(
+        {imageList : res.tempFilePaths}
+      )
+    }
+  })
+}
+```
+
+##### 小结：
+
+组件：
+
+- view
+- text
+- navigator `<navigator url="/pages/direct/direct?id=999" data-id="12">toTAb</navigator>`
+- button `<button open-type="getUserInfo" bindgetuserinfo="getUserInfo">获取用户信息</button>`
+- image
+
+事件：
+
+- bindtap
+
+api:
+
+- wx.navigate
+
+##### 4.7双向绑定
+
+```html
+<input value="{{inputValue}}" bindinput="handleInput"></input>
+<view>输入了：{{inputValue}}</view>
+```
+
+```javascript
+handleInput(e) {
+  this.setData({
+    inputValue: e.detail.value
+  })
+}
 ```
 

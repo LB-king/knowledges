@@ -296,7 +296,7 @@ A.say.apply(B) // BABY
 
 ### Promise
 
-
+### async await
 
 ```javascript
 //指向属性调用的对象

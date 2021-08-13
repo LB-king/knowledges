@@ -1,1 +1,6 @@
 /* pages/direct.wxss */
+.img-box image {
+  height: 200rpx;
+  width: 200rpx;
+  padding: 5rpx;
+}

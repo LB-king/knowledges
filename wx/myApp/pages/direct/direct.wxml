@@ -5,3 +5,19 @@
   <view>当前用户:{{userName}}</view>
   <button size="mini" bindtap="handleClick">btn</button>
 </view>
+<button open-type="getUserInfo" bindgetuserinfo="getUserInfo">获取用户信息</button>
+<view class="line"></view>
+<view bindtap="getLocation">{{address}}</view>
+<view class="line"></view>
+<view wx:for="{{list}}" wx:key="index">{{item.name}}-{{index}}</view>
+
+<view wx:for="{{listObj}}" wx:for-index="idx" wx:key="idx">{{item}}-{{idx}}</view>
+<view class="line"></view>
+<view bindtap="uploadImage">上传图片</view>
+<view class="img-box" wx:if="{{imageList.length > 0}}">
+  <image wx:for="{{imageList}}" wx:key="index" src="{{item}}"></image>
+</view>
+<view class="line"></view>
+<view>双向绑定</view>
+<input value="{{inputValue}}" bindinput="handleInput"></input>
+<view>输入了：{{inputValue}}</view>
