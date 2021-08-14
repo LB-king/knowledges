@@ -4,6 +4,15 @@ for usual collection
 
 ```shell
 slmgr.vbs -xpr // 查看win10激活时间
+# 计算机 删除运行中的记录
+```
+
+删除运行中的记录
+
+```shell
+# regedit
+# \HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\RunMRU
+# 删除 需要删除的数据
 ```
 
 ```javascript
