@@ -322,13 +322,30 @@ var B = {
 A.say.apply(B) // BABY
 ```
 
+### 数据类型
+
+- String
+- Number
+- Boolean
+- Object(function,Array,Date)
+- undefined
+- null
+- symbol(es6),用来创建独一无二的标识
+- bigint(es10)
+
 ### new
 
 ### this
 
 ### Promise
 
+### 闭包
+
+### 栈内存和堆内存
+
 ### async await
+
+### 单线程和多线程
 
 ```javascript
 //指向属性调用的对象
@@ -390,10 +407,6 @@ A.say.apply(B) // BABY
   每当发生一个函数调用，引擎都会为该函数创建一个新的执行上下文并将其推到当前执行栈的顶端
 
 ![](E:\codeSpace\knowledges\OverView\img\执行上下文.png)
-
-### 闭包
-
-### 单线程和多线程
 
 ### 缓存
 
@@ -637,11 +650,19 @@ function isEmpty(str) {
 
 
 
+### Vue相关
 
+- vue响应式数据实现原理？
 
+  数据代理和数据劫持，对新增的数据无法实现劫持，但是vue3解决了这个问题。使用proxy代理实现。
 
+- computed和methods区别
 
+- vue&react的区别 
 
+  > vue是一个以数据响应式为核心的框架，核心思想是把所有数据放在一个对象里面，我们操作对象，就是改变数据，监听这个改变从而更新UI
+  >
+  > react是用一个函数来表示一个组件，数据放进去，它就会把数据渲染到页面上 。dom diff
 
 2019.11.20
 
