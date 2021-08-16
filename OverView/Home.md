@@ -30,6 +30,50 @@
   | token        | {{token}}        |
   | Content-Type | application/json |
 
+### vscode 设置
+
+```json
+{
+  // 窗口缩放
+  "window.zoomLevel": 1.1,
+  // 按住ctrl+滚轮缩放编辑器
+  "editor.mouseWheelZoom": true,
+  // 配置是否接收自动更新。更改后需要重新启动。更新是从微软在线服务获取的。
+  //  - none: 禁用更新。
+  //  - manual: 禁用自动后台更新检查。如果手动检查更新，更新将可用。
+  //  - start: 仅在启动时检查更新。禁用自动后台更新检查。
+  //  - default: 启用自动更新检查。代码将定期自动检查更新。
+  "update.mode": "manual",
+  // 安装完prettier插件后，选择配置会生成以下选项
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  // 单引号
+  "prettier.singleQuote": true,
+  // 末尾逗号none,all,es5
+  "prettier.trailingComma": "none",
+  // 禁止末尾分号
+  "prettier.semi": false
+}
+```
+
+1. 安装`Prettier - Code formatter`插件，格式化代码的时候选择这个插件。
+
+2. 如果在项目根目录有**.prettierrc** 配置文件。vscode 会以此文件的配置优先
+
+3. 安装`run at broswer`
+
+4. 安装`Code Runner`
+
+5. 安装`vetur`支持`.vue`文件
+
+6. 安装`Live Server`实现热更新，有利于学习验证知识点。ps(在 vscode 打开的目录的根目录下的文件，默认是 index.html)
+
+   bug管理工具https://pingcode.com/  `PingCode`
+
 ### 继承、原型链
 
 1. `instanceof`
@@ -333,13 +377,23 @@ A.say.apply(B) // BABY
 - symbol(es6),用来创建独一无二的标识
 - bigint(es10)
 
-### new
-
-### this
-
 ### Promise
 
-### 闭包
+一个promise对象代表一个在这个promise被创建出来时不一定已知的值。它让能够把异步操作最终的成功返回值或者失败原因和相应的处理程序关联起来。异步方法不会立即返回最终的值，而是返回一个promise，以便在未来某个时候把值交给使用者。
+
+promise必然处于一下三种状态：
+
+- 待定(`pending`):初始状态，既没有被兑现，也没有被拒绝
+- 已兑现(`fulfilled`):操作成功完成
+- 已拒绝(`rejected`):操作失败
+
+`promise`用来解决回调地狱的问题，是回调的升级版，用来处理一些需要花费较长时间的异步任务时，防止阻塞。
+
+### new
+
+### 宏任务和微任务
+
+### this
 
 ### 栈内存和堆内存
 
@@ -350,6 +404,10 @@ A.say.apply(B) // BABY
 ```javascript
 //指向属性调用的对象
 ```
+
+### 闭包
+
+### 作用域链
 
 ### 执行上下文(execution)
 
@@ -389,7 +447,7 @@ A.say.apply(B) // BABY
 
        词法环境是一种规范类型，基于`ECMAScript`代码的词法嵌套结构来定义标识符与特定变量和函数的关联关系。
 
-       词法环境有 2 中类型：
+       词法环境有 2 种类型：
 
        1. **全局环境**
 
@@ -480,43 +538,6 @@ with (obj) {
 
 - 优点：解构对象时很清晰
 - 缺点：js的编辑器会检测`with`块中的变量是否属于`with`传入的对象，以上述例子为例，`js`会检测a和b是否属于`obj`对象。这样就会导致`with`语句的执行速度大大降低，性能比较差。
-
-### vscode 设置
-
-```json
-{
-  // 窗口缩放
-  "window.zoomLevel": 1.1,
-  // 按住ctrl+滚轮缩放编辑器
-  "editor.mouseWheelZoom": true,
-  // 配置是否接收自动更新。更改后需要重新启动。更新是从微软在线服务获取的。
-  //  - none: 禁用更新。
-  //  - manual: 禁用自动后台更新检查。如果手动检查更新，更新将可用。
-  //  - start: 仅在启动时检查更新。禁用自动后台更新检查。
-  //  - default: 启用自动更新检查。代码将定期自动检查更新。
-  "update.mode": "manual",
-  // 安装完prettier插件后，选择配置会生成以下选项
-  "[html]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  // 单引号
-  "prettier.singleQuote": true,
-  // 末尾逗号none,all,es5
-  "prettier.trailingComma": "none",
-  // 禁止末尾分号
-  "prettier.semi": false
-}
-```
-
-1. 安装`Prettier - Code formatter`插件，格式化代码的时候选择这个插件。
-2. 如果在项目根目录有**.prettierrc** 配置文件。vscode 会以此文件的配置优先
-3. 安装`run at broswer`
-4. 安装`Code Runner`
-5. 安装`vetur`支持`.vue`文件
-6. 安装`Live Server`实现热更新，有利于学习验证知识点。ps(在 vscode 打开的目录的根目录下的文件，默认是 index.html)
 
 ### 常用方法
 

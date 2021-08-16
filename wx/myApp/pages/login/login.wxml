@@ -1,2 +1,6 @@
 <!--pages/login/login.wxml-->
-<text bindtap="login">登陆</text>
+<view>
+  <text>用户名： </text>
+  <input type="text"></input>
+</view>
+

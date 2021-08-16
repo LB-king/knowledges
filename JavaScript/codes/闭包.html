@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>闭包-执行上下文</title>
+  </head>
+  <body>
+    <script>
+      /* 执行上下文:全局,函数,eval(不讨论),执行栈(先进去的后出来),这是js执行代码的方式
+       */
+      function a() {
+        b()
+        function b() {
+          c()
+          function c() {
+            console.log('我在里面C')
+          }
+        }
+      }
+      // a()
+      // 全局执行上下文,执行js代码前先进入全局的执行上下文
+      for (var i = 0; i < 5; i++) {
+        setTimeout(() => {
+          console.log(i)
+        })
+      }
+      console.log('全局执行上下文')
+      // 能够读取其他函数内部变量的函数
+
+      function Person(name) {
+        this.name = name
+        return 'ui'
+      }
+      var p1 = new Person('kk')
+      console.log(p1)
+    </script>
+  </body>
+</html>

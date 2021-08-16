@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      /* 
+        简单实现promise
+      */
+      var flag = true
+      var p = new Promise((resolve, reject) => {
+        if (flag) resolve('成功')
+        reject('失败')
+      })
+
+      p.then((title) => {
+        console.log(title)
+      })
+        .catch((e) => {
+          console.log(e)
+        })
+        .finally(() => {
+          console.log('end')
+        })
+      /* 应用 */
+      const imgUrl =
+        'https://img0.baidu.com/it/u=261320478,309952173&fm=26&fmt=auto&gp=0.jpg'
+      function loadImg(url) {
+        return new Promise((resolve, reject) => {
+          var img = new Image()
+          img.src = url
+          img.width = 200
+          img.onload = () => {
+            resolve(img)
+          }
+          img.onerror = () => {
+            reject(new Error('图片有误'))
+          }
+        })
+      }
+      loadImg(imgUrl)
+        .then((res) => {
+          document.body.appendChild(res)
+        })
+        .catch((err) => {
+          document.body.innerHTML = err
+        })
+    </script>
+  </body>
+</html>
