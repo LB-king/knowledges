@@ -407,7 +407,26 @@ promise必然处于一下三种状态：
 
 ### 闭包
 
-### 作用域链
+​	函数外部可以访问内部的变量。
+
+> 在浏览器打断点，然后在调试工具栏就可以看到Scope->Local->fn->[[Scopes]]
+
+​	谈闭包，先谈谈作用域(全局作用域，函数作用域)
+
+```javascript
+function fn() {
+  var a = 100
+  return function() {
+    console.log(a)
+  }
+}
+var res = fn()
+res()
+```
+
+#### 作用域链
+
+全局->嵌套函数->嵌套函数->嵌套函数...
 
 ### 执行上下文(execution)
 

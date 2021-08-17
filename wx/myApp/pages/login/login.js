@@ -4,11 +4,11 @@ Page({
    * 页面的初始数据
    */
   data: {},
-  login() {
+  handleApi() {
     wx.request({
-      url: 'http://127.0.0.1:3000/login',
+      url: 'https://www.fastmock.site/mock/fb0033c9e52e7ca3b16f22255a580ffd/dxl/login',
       data: {
-        name: 'admin',
+        name: 'admin233',
         password: '123456'
       },
       method: 'POST',

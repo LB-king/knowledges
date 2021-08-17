@@ -2,5 +2,6 @@
 <view>
   <text>用户名： </text>
   <input type="text"></input>
+  <button bindtap="handleApi">点击</button>
 </view>
 

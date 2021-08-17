@@ -21,20 +21,52 @@
       }
       // a()
       // 全局执行上下文,执行js代码前先进入全局的执行上下文
-      for (var i = 0; i < 5; i++) {
-        setTimeout(() => {
-          console.log(i)
-        })
-      }
-      console.log('全局执行上下文')
       // 能够读取其他函数内部变量的函数
 
-      function Person(name) {
-        this.name = name
-        return 'ui'
+      /* 我们说闭包，首先就要说一说javascript的作用域，在js中有两种作用域：全局作用域，函数作用域。代码执行的时候，函数内部可以访问外部的变量，但是外部无法访问内部的变量，函数内部再嵌套函数，这样作用域里面嵌套作用域就行成了作用域链*/
+      function fn() {
+        let a = 0
+        function fn1() {
+          a++
+          console.log(a)
+        }
+        return fn1
       }
-      var p1 = new Person('kk')
-      console.log(p1)
+      var res = fn()
+      res() //1
+      res() //2
+      res() //3
+      console.log('************************')
+      //用途
+      // 1.计数器
+      function count() {
+        var a = 0
+        return function() {
+          return a++
+        }
+      }
+      let sum = count()
+      console.log(sum()) // 0
+      console.log(sum()) // 1
+      // 2.封装对象的私有属性和方法
+      function Person() {
+        var age;
+        function getAge() {
+          return age
+        }
+        function setAge(n) {
+          age = n
+        }
+        return {
+          age,
+          setAge,
+          getAge
+        }
+      }
+      var p1 = Person('joke')
+      p1.setAge(88)
+      console.log(p1.getAge()) //88
+      p1 = null //释放内存
     </script>
   </body>
 </html>

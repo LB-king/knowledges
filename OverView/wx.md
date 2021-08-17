@@ -376,3 +376,8 @@ express itemName
 npm install express-jwt jsonwebtoken -S
 ```
 
+##### 5.2在线mock
+
+https://www.fastmock.site/#/project/fb0033c9e52e7ca3b16f22255a580ffd
+
+email: 731540792@qq.com
