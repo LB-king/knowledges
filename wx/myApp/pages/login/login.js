@@ -9,7 +9,7 @@ Page({
     wx.request({
       url: 'https://www.fastmock.site/mock/fb0033c9e52e7ca3b16f22255a580ffd/dxl/login',
       data: {
-        name: 'admin233',
+        name: 'admin',
         password: '123456'
       },
       method: 'POST',
@@ -35,7 +35,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    console.log(app.globalData);
+   
   },
 
   /**

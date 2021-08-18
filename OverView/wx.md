@@ -382,7 +382,7 @@ https://www.fastmock.site/#/project/fb0033c9e52e7ca3b16f22255a580ffd
 
 email: 731540792@qq.com
 
-#### 6.1全局存储
+##### 6.1全局存储
 
 获取全局存储
 
@@ -408,4 +408,91 @@ Page({
   }
 })
 ```
+
+wx.setStorage('user', info)
+
+wx.setStorageSync('user', info)
+
+wx.getStorage('user')
+
+wx.getStorageSync('user')
+
+```javascript
+wx.setStorage({
+  key:"key",
+  data:"value"
+})
+```
+
+wx.removeStorageSync('user')
+
+wx.removeStorage()
+
+##### 6.2页面调用栈
+
+```javascript
+var pages = getCurrentPages()
+var prev = pages[pages.length - 2]
+```
+
+##### 6.3跳转到上一个页面
+
+```javascript
+wx.navigateBack()
+```
+
+##### 6.4页面的生命周期
+
+- onLoad(一次)
+- onShow(只要展示就会触发)
+- onReady(一次)
+- onHide(每次页面隐藏就会加载)
+- onUnload(卸载页面触发)
+
+##### 6.5页面传值
+
+- 父页面->子页面
+
+  父：
+
+  ```
+  /pages/xx?id=111
+  ```
+
+  子：
+
+  ```javascript
+  onLoad(options) {
+    
+  }
+  ```
+
+- 子页面->父页面
+
+  子：
+
+  ```javascript
+  var pages = getCurrentPages()
+  var prev = pages[pages.length - 2]
+  prev.changeData(item)
+  ```
+
+  父：
+
+  ```javascript
+  data() {
+    name: '',
+    id: ''
+  },
+  changeData(res) {
+    this.setData({
+      name: res.name,
+      id: res.id
+    })
+  }
+  ```
+
+  
+
+
 
