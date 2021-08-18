@@ -381,3 +381,31 @@ npm install express-jwt jsonwebtoken -S
 https://www.fastmock.site/#/project/fb0033c9e52e7ca3b16f22255a580ffd
 
 email: 731540792@qq.com
+
+#### 6.1全局存储
+
+获取全局存储
+
+app.js
+
+```javascript
+App({
+  globalData: {
+    name: 'admin',
+    pwd: '12'
+  }
+})
+```
+
+demo.js
+
+```javascript
+var app = getApp()
+Page({
+  // 每次打开页面都会调用
+  onShow() {
+    //此处可以获取全局app.js的数据
+  }
+})
+```
+
