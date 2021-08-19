@@ -400,6 +400,20 @@ promise必然处于一下三种状态：
 ### async await
 
 ### 单线程和多线程
+### cookie&localStorage
+
+- 生命周期
+  - cookie 可设置失效时间，没有设置的话，默认关闭浏览器就会失效
+  - localStorage 永久保存，除非手动清除
+  - sessionStorage 仅在当前网页会话下有效，关闭页面或者浏览器后就会被清除
+- 存放数据大小
+  - cookie 4kb
+  - localStorage和sessionStorage可以保存5Mb左右的数据
+- http请求
+  - cookie 每次都会携带在HTTP请求头中，如果使用cookie存储过多数据会带来性能问题
+  - localStorage和sessionStorage 仅在客户端中保存，不参与和服务器的通信
+
+在服务器端使用session管理cookie
 
 ```javascript
 //指向属性调用的对象
@@ -417,7 +431,8 @@ promise必然处于一下三种状态：
 function fn() {
   var a = 100
   return function() {
-    console.log(a)
+    a++
+    return a
   }
 }
 var res = fn()
