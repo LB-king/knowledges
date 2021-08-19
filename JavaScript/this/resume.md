@@ -111,6 +111,30 @@ result-结果
 
 
 
+做的项目以Vue居多。
+1.v-if和v-for的优先级：
+官方写了v-for有比v-if更高的优先级，但是在vue3中修改了这个问题。
+这种写法对性能的消耗还是挺大的。官方不建议我们这样使用，应当合理使用计算属性
+看到源码里写的一个方法，具体叫啥不记得了，里面先走的是once -> for ->if,一般来说不会把这两个东西写一块，因为性能比较低。
+
+
+2.单向数据流和双向数据流的理解：
+像Vue中的v-model就是双向绑定，但是computed是一个单向的数据流，就比如在一个输入框中用v-model去绑定compuetd中的某个值，就会报错提示缺少响应的setter
+3.computed和methods的区别：
+对象属性的方式调用，methods必须要函数调用的方式才返回值。computed是有缓存的。
+4.actions和mutations的区别:
+调用方式不同
+dispatch
+commit
+actions:用于通过提交mutations改变数据，是一种异步的操作->mutations->mutate->state
+mutations：通过commit改变数据->mutate->state
+5.性能优化
+代码：路由懒加载，图片懒加载。。。图标使用雪碧图
+打包：不生成.map文件啦，tree-shaking的机制，去掉无关的代码
+chrome中查看waterful，查看是否有重绘
+6.web安全
+常见的sql注入，xss攻击
+7.
 
 
 
