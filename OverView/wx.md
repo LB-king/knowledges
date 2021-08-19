@@ -463,7 +463,7 @@ wx.navigateBack()
 
   ```javascript
   onLoad(options) {
-    
+    //参数就存在options里面
   }
   ```
 
@@ -492,6 +492,18 @@ wx.navigateBack()
   }
   ```
 
+  ##### 6.6修改数组的属性值
+  
+  ```js
+  var arr = [{id:1,name:'kg',value:'45'}]
+  
+  function change() {
+    this.setDtata({
+      ['arr[0].value']: 889
+    })
+  }
+  ```
+  
   
 
 
