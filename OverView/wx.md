@@ -504,7 +504,40 @@ wx.navigateBack()
   }
   ```
   
+  ##### 6.7下拉刷新
   
+  注意把最新的一条记录返回给后端，让后台去查询比对，如果数据库没有最新的数据，则无需重新加载，优化了性能。
+  
+  - 记录最大的id
+  
+  - 记录最小的id(或者其他的标志字段)
+  
+    全局配置:
+  
+    ```json
+    {
+      "window": {
+        "enablePullDownRefresh": false
+      }
+    }
+    ```
+  
+    局部配置:
+  
+    ```json
+    {
+      "usingComponents": {},
+      "enablePullDownRefresh": true
+    }
+    ```
+  
+    停止下拉刷新
+  
+    ```js
+    wx.stopPullDownRefresh()
+    ```
+  
+    
 
 
 

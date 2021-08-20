@@ -400,6 +400,9 @@ promise必然处于一下三种状态：
 ### async await
 
 ### 单线程和多线程
+
+### 输入URL过程
+
 ### cookie&localStorage
 
 - 生命周期
