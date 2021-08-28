@@ -501,7 +501,7 @@ res()
 
   每当发生一个函数调用，引擎都会为该函数创建一个新的执行上下文并将其推到当前执行栈的顶端
 
-![](E:\codeSpace\knowledges\OverView\img\执行上下文.png)
+![](.\img\执行上下文.png)
 
 ### 缓存
 
@@ -509,7 +509,7 @@ res()
 
 - 强缓存：不会向服务器发送请求，直接从缓存中读取资源，在`chrome`控制台中可以看到请求返回200的状态码，并且`size`显示f`rom disk cache` 或 `from memory cache`
 
-- 协商缓存：向服务器发送请求，服务器会根据这个请求的`request header`的一些参数来判断是否命中协商缓存，如果命中，则返回304状态码并带上新的re`sponse header`通知浏览器从缓存中读取资源
+- 协商缓存：向服务器发送请求，服务器会根据这个请求的`request header`的一些参数来判断是否命中协商缓存，如果命中，则返回304状态码并带上新的`response header`通知浏览器从缓存中读取资源
 
 - 共同点是：都是从客户端读取资源，区别是强缓存不会发请求，协商缓存会发请求
 
@@ -519,7 +519,7 @@ res()
 
   `Cache-Control`: 当值设置为`max-age=300`时，则代表在这个请求正确返回时间的5分钟内再次加载资源，就会命中强缓存
 
-  ![](E:\codeSpace\knowledges\OverView\img\cache-control.png)
+  ![](.\img\cache-control.png)
 
   Expires 是 http1.0的产物
 
@@ -529,7 +529,7 @@ res()
 
   `etag`和`If-None-Match`: etag是上一次加载资源时，服务器返回的response header，是对该资源的一种唯一标识，只要资源有变化，etag就会重新生成。浏览器在下一次加载资源向服务器发送请求时，会将上一次返回的etag值放到request header里的`If-None-Match`里，服务器接受到`If-None-Match`的值后，会拿来跟该资源文件的etag进行比较，如果相同，则表示资源文件没有发生改变，命中协商缓存。
 
-   ![](E:\codeSpace\knowledges\OverView\img\协商缓存.png)
+   ![](.\img\协商缓存.png)
 
   `Last-Modified`和`If-Modified-since`:  Last-Modified是该资源文件最后一次更改时间，服务器会在response header中返回，同时浏览器会将这个值保存起来，在下一次发送请求时，放到request header里的`If-Modified-since`里，服务器在接收到后也会做对比，如果相同则命中协商缓存。
 

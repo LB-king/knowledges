@@ -79,7 +79,7 @@
 
        Vue2 中的虚拟 dom 是进行全量的对比；
 
-       Vue3 新增了静态标记(pathFlag)
+       Vue3 新增了静态标记(patchFlag)
 
        在与上次虚拟节点进行对比时，只对比带有 patchFlag 的节点，并且可以通过 flag 信息得知当前节点要对比的具体内容
 
