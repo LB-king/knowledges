@@ -860,3 +860,13 @@ function isEmpty(str) {
   - mutation： 更改vuex的store中状态的唯一方法
   - action：包含任意异步操作，通过提交mutation更改状态
   - module：将store分割成模块
+  
+- 如何理解vue的tree diff
+
+- mixins的用法
+
+  > 名字相同的变量和方法，组件会覆盖mixins中的变量和方法
+  >
+  > Minxin: [mix2, mix1]  mix1中的同名函数和变量会覆盖mix2中。但是他们都先于实体组件执行。
+
+- vue3的mvvm实现原理
