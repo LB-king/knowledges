@@ -395,6 +395,10 @@ promise必然处于一下三种状态：
 
 ### this
 
+### 异步引入js的方式
+
+### js的事件机制
+
 ### 栈内存和堆内存
 
 ### async await
@@ -402,6 +406,8 @@ promise必然处于一下三种状态：
 ### 单线程和多线程
 
 ### 输入URL过程
+
+### position的属性
 
 ### cookie&localStorage
 
@@ -718,7 +724,11 @@ function isEmpty(str) {
   >
   > vue的数据双向绑定将mvvm作为数据绑定的入口，整合observer compile和watcher三者，通过observer来监听自己的model数据变化，通过compile来解析编译模板指令，最终利用watcher搭起observer和compile之间的通信桥梁达到数据变化便会更新视图或者视图变化，更新数据
 
+  
+
   数据代理和数据劫持，对新增的数据无法实现劫持，但是vue3解决了这个问题。使用proxy代理实现。
+
+- Object.defineProperty劫持属性用的是什么方法?
 
 - computed和methods区别
 
@@ -856,10 +866,10 @@ function isEmpty(str) {
   5大核心属性
 
   - state：存储数据，用this.$store.state
-  - getter: 可以认为是store的计算属性
-  - mutation： 更改vuex的store中状态的唯一方法
-  - action：包含任意异步操作，通过提交mutation更改状态
-  - module：将store分割成模块
+  - getters: 可以认为是store的计算属性
+  - mutations： 更改vuex的store中状态的唯一方法
+  - actions：包含任意异步操作，通过提交mutation更改状态
+  - modules：将store分割成模块
   
 - 如何理解vue的tree diff
 
@@ -869,4 +879,43 @@ function isEmpty(str) {
   >
   > Minxin: [mix2, mix1]  mix1中的同名函数和变量会覆盖mix2中。但是他们都先于实体组件执行。
 
-- vue3的mvvm实现原理
+- vue3的mvvm实现原理？
+
+- computed和watch的区别？
+
+  > computed: 1.是一个计算属性，支持缓存，只有依赖的数据发生变化时，才会更新
+  >
+  > ​	2.不支持异步
+  >
+  > watch:  1.是一个监听器，当监听的对象发生变化时，会触发相应的操作，
+  >
+  > ​	2.支持异步
+  >
+  > ​	3.监听的函数会返回2个参数(新值和旧值)
+  >
+  > ​		immediate: 组件加载时就立即触发回调函数执行
+  >
+  > ​		deep: 深度监听
+
+- 组件之间如何传值
+
+  1. 父组件传递给子组件：父组件通过props向下传值给子组件
+
+  2. 子组件通过事件的形式向父组件传值。子：`this.$emit('xxx', 'yyy')` 父：`@xxx="getVal"`
+
+  3. 兄弟组件传值：ABC ，先new一个Vue对象vm1，A：`vm1.$emit('data-a', 'aa')`, B: `vm1.$emit('data-b', 'bb')`
+
+     ```javascript
+     // C
+     mounted() {
+       vm1.$on('data-a', val => {})
+       vm1.$on('data-b', val => {})
+     }
+     ```
+
+  4. vuex
+
+- $nextTick的原理
+
+  
+
