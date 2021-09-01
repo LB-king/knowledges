@@ -1,3 +1,5 @@
+https://juejin.cn/user/958429872534056/posts
+
 ### postman配置
 
 - 打开manage enviroments
@@ -409,6 +411,16 @@ promise必然处于一下三种状态：
 
 ### position的属性
 
+### 防抖和节流
+
+### JS事件轮询
+
+### canvas中图片跨域
+
+### SSR
+
+### 前端防止攻击
+
 ### cookie&localStorage
 
 - 生命周期
@@ -531,34 +543,42 @@ res()
 
   Cache-Control 优先级高于 Expires
 
+  Cache-Control的属性：
+
+  - no-cache 不进行缓存
+- no-store  报文中存在机密信息，不可以保存
+  - max-age  过期时间
+- no-transform  禁止代理改变实体主体的类型
+  - 
+
   **协商缓存**
-
+  
   `etag`和`If-None-Match`: etag是上一次加载资源时，服务器返回的response header，是对该资源的一种唯一标识，只要资源有变化，etag就会重新生成。浏览器在下一次加载资源向服务器发送请求时，会将上一次返回的etag值放到request header里的`If-None-Match`里，服务器接受到`If-None-Match`的值后，会拿来跟该资源文件的etag进行比较，如果相同，则表示资源文件没有发生改变，命中协商缓存。
-
+  
    ![](.\img\协商缓存.png)
-
+  
   `Last-Modified`和`If-Modified-since`:  Last-Modified是该资源文件最后一次更改时间，服务器会在response header中返回，同时浏览器会将这个值保存起来，在下一次发送请求时，放到request header里的`If-Modified-since`里，服务器在接收到后也会做对比，如果相同则命中协商缓存。
 
   > Etag和last-modified区别
-  >
+>
   > 1.精度： etag > last-modified(单位时间是s)
   >
   > 2.性能： etag < last-modified(只需要记录时间)，而前者需要通过服务器算出一个hash值
   >
   > 3.优先级：etag > last-modified
-
+  
   **浏览器缓存过程**
 
   > 1.浏览器第一次加载资源，服务器返回200，浏览器将资源文件从服务器下载到本地，并缓存response header中返回的时间；
-  >
+>
   > 2.下一次加载资源时，先比较当前时间和上一次返回200时的时间差，如果没有超过Cache-Control中的max-age,则没有过期，命中强缓存，不发送请求，直接从本地缓存中读取资源(如果浏览器不支持http1.1，则用expires判断是否过期)；如果时间过期，则向服务器发送header中带有If-None-Match和If-Modified-Since的请求；
   >
   > 3.服务器接到请求后，优先根据etag判断被请求的文件是否有修改，etag值一致，则没有修改，命中协商缓存，返回304；如果不一致则有改动，直接返回新的资源并带上新的etag；
   >
   > 4.如果服务器收到的请求没有etag值，则将If-Modified-Since和被请求文件的最后修改时间做对比，一致则命中协商缓存，返回304；不一致则返回新的last-modified和文件以及200.
-
+  
   **用户行为**
-
+  
   - 地址栏访问：会触发浏览器缓存机制
   - F5刷新：浏览器会设置max-age=0,跳过强缓存，会进行协商缓存判断
   - ctrl+F5刷新：跳过强缓存和协商缓存，直接从服务器拉取资源
@@ -917,5 +937,15 @@ function isEmpty(str) {
 
 - $nextTick的原理
 
+- 自定义指令
+
+  钩子：
+  
+  - bind
+  - inserted
+  - update
+  - componentUpdated
+  - unbind
+  
   
 
