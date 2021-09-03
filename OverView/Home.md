@@ -423,6 +423,64 @@ promise必然处于一下三种状态：
 
 ### 深克隆和浅克隆
 
+浅克隆：
+
+- ...扩展运算符
+
+  ```js
+  var obj = {
+    name: 'kobe',
+    list: [11, 23, 8],
+    hobbies: {
+      name: 'basketball'
+    }
+  }
+  var obj1 = {...obj}
+  obj1.list.push(999)
+  obj // obj会受到污染
+  ```
+
+- for循环
+
+  ```js
+  for(let i in obj) {
+    if(obj.hasOwnProperty(i)) {
+      obj1[i] = obj[i]
+    }
+  }
+  ```
+
+深克隆：
+
+- JSON.parse
+
+  ```js
+  var obj1 = JSON.parse(JSON.stringify(obj));
+  // 缺点
+  /**
+  1.function(){} => 属性名直接转没了
+  2.new Date() =>对象转成字符串了
+  3./\W/ => 正则表达式转成{}
+  **/
+  ```
+
+- 函数写递归
+
+  ```js
+  function deepClone(obj) {
+    if(obj === null) return null
+    if(typeof obj !== 'object') return obj
+    var newObj = new obj.constructor
+    for(let i in obj) {
+      newObj[i] = deepClone(obj[i])
+    }
+  }
+  ```
+
+  
+
+
+
 ### cookie&localStorage
 
 - 生命周期
@@ -549,6 +607,7 @@ res()
 
   - no-cache 不进行缓存
 - no-store  报文中存在机密信息，不可以保存
+  
   - max-age  过期时间
 - no-transform  禁止代理改变实体主体的类型
   - 
