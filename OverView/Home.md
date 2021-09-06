@@ -421,6 +421,22 @@ promise必然处于一下三种状态：
 
 ### 前端防止攻击
 
+### 手写new方法
+
+### js执行顺序
+
+无参数new
+
+有参数new
+
+**.**表示成员访问
+
+https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Operator_Precedence
+
+### 变量提升
+
+> es5中，代码执行之前，会进行变量提升，在当前作用域下，带var的会提前声明，带function的会提前声明和定义
+
 ### 深克隆和浅克隆
 
 浅克隆：
