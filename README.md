@@ -104,7 +104,22 @@ wifi名称： QY0OMTPR
 
 - 修改终端样式
 
-电脑版微信多开
+  ```shell
+  # 查看安装了哪些shell
+  cat /etc/shells
+  # 如果目前shell不是bin/bash，想切换回bin／bash
+  chsh -s /bin/bash
+  # 下载安装oh my zsh
+  sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+  # 切换
+  vim ~/.zshrc
+  
+  ZSH_THEME="cloud"
+  ```
+
+  
+
+### 电脑版微信多开
 
 ```bat
 start C:\"Program Files (x86)"\Tencent\WeChat\WeChat.exe

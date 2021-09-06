@@ -33,6 +33,8 @@
 
 3. babel.min.js  下载地址：  https://github.com/babel/babel-standalone/releases
 
+   作用：
+
    > 1. es6 => es5
    > 2. jsx => js
 

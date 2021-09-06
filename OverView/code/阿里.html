@@ -34,6 +34,15 @@
       new Foo.getName()
       new Foo().getName()
       new new Foo().getName()
+
+      function fn() {
+        v = function() {
+          console.log('vv');
+        }
+        return this
+      }
+      fn()
+      console.log(v);
     </script>
   </body>
 </html>
