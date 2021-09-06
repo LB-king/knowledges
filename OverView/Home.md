@@ -825,6 +825,8 @@ function isEmpty(str) {
 
   数据代理和数据劫持，对新增的数据无法实现劫持，但是vue3解决了这个问题。使用proxy代理实现。
 
+- 为什么需要数据响应式？
+
 - Object.defineProperty劫持属性用的是什么方法?
 
 - computed和methods区别
@@ -968,8 +970,6 @@ function isEmpty(str) {
   - actions：包含任意异步操作，通过提交mutation更改状态
   - modules：将store分割成模块
   
-- 如何理解vue的tree diff
-
 - mixins的用法
 
   > 名字相同的变量和方法，组件会覆盖mixins中的变量和方法
@@ -1027,4 +1027,10 @@ function isEmpty(str) {
 - 路由的历史模式和非历史模式有什么区别？
 
 - tree shaking的原理？
+
+- 说说你对diff算法的理解？
+
+- $mount干了什么事？
+
+  > 获取渲染之后的dom，追加到宿主元素
 
