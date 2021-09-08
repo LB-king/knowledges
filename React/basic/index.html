@@ -6,15 +6,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>react</title>
   <script src="./static/babel.min.js"></script>
+  <!-- 核心库 -->
   <script src="./static/react.development.js"></script>
+  <!-- 用于react支持dom操作 -->
   <script src="./static/react-dom.development.js"></script>
 </head>
 <body>
   <div id="app">
     
   </div>
-  <script>
-    console.log(React)
+  <script type="text/babel">
+  // 此处 不要加引号
+    const VDOM = <h1>hello react</h1>
+    ReactDOM.render(VDOM, document.getElementById('app'))
   </script>
 </body>
 </html>
