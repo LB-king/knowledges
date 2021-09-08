@@ -423,6 +423,45 @@ promise必然处于一下三种状态：
 
 ### 手写new方法
 
+### 全等的规则
+
+==比较规则
+
+- 对象==字符串 - 对象.toString()变为字符串
+
+- null == undefined 相等，但是和其他值比较就不相等了
+
+- NaN == NaN 不相等
+
+- 剩下的都是转化为数字
+
+  ```js
+   if (a == 1 && a == 2 && a == 3) {
+     console.log('条件成立')
+   }
+  // 1.toString 或者 valueOf也可以
+  /*
+  var a = {
+  	i: 0,
+  	toString() {
+  		return ++i
+  	}
+  }
+  */
+  // 2. Object.defineProperty
+  var i = 0
+  Object.defineProperty(window, 'a', {
+    get() {
+      return ++i
+    },
+  })
+  // 3.数组实现
+  var a = [1, 2, 3]
+  a.toString = a.shift
+  ```
+
+  
+
 ### js执行顺序
 
 无参数new

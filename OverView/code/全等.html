@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>全等和严格全等</title>
+  </head>
+  <body>
+    <script>
+      // 1.null == undefined true
+      // 2.NaN == NaN false
+      // 3.对象==字符串 对象.toString()再去比较
+      // 4.其他都转化为数字
+      // 1 == true true
+      // 0 == false true
+      // 如果两个值的类型相同，再去进行三个等号对比
+      // 当a等于多少时?以下成立
+      // 1.toString
+      // var a = {
+      //   i: 0,
+      //   toString() {  // valueOf也成立
+      //     return ++this.i
+      //   }
+      // }
+
+      // 2.数据劫持
+      // var i = 0
+      // Object.defineProperty(window, 'a', {
+      //   get() {
+      //     console.log('get')
+      //     return ++i
+      //   },
+      // })
+
+      var a = [1, 2, 3]
+      a.toString = a.shift
+      if (a == 1 && a == 2 && a == 3) {
+        console.log('条件成立')
+      }
+      
+    </script>
+  </body>
+</html>
