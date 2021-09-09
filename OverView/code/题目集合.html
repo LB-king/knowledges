@@ -25,6 +25,17 @@
       m(4)
       y.z(5)
       console.log(x, y.x)
+
+
+
+      var i =99
+      var a = {
+        b: (function(){
+          i++
+          console.log(this)
+        })()
+      }
+      console.log(i)
     </script>
   </body>
 </html>

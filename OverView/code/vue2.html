@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>vuw2</title>
+  </head>
+  <body>
+    <span id="spanName"></span>
+    <hr />
+    <input type="text" id="inputValue" />
+    <script>
+      // 使用Object.defineProperty
+      /*  let obj = {
+        name: ''
+      }
+      let newObj = { ...obj }
+      Object.defineProperty(obj, 'name', {
+        get() {
+          console.log('get触发了：')
+          return newObj.name
+        },
+        set(val) {
+          console.log('set触发了：')
+          if (val === newObj.name) return
+          newObj.name = val
+          observer()
+        }
+      })
+
+      function observer() {
+        spanName.innerHTML = obj.name
+        inputValue.value = obj.name
+      }
+      setTimeout(() => {
+        obj.name = '新的值'
+      }, 2000)
+      inputValue.oninput=function() {
+        spanName.innerHTML = this.value
+      } */
+
+      /**
+       * 1.对原始数据进行克隆
+       * 2.需要对象中的每一个属性进行监听
+       * 3.新增的属性，无法监听 需要用$set强制触发更新
+       */
+
+      // 使用proxy
+      let obj = {}
+      obj = new Proxy(obj, {
+        get(target, prop) {
+          console.log('get:::')
+          return target[prop]
+        },
+        set(target, prop, val) {
+          console.log('set:::')
+          target[prop] = val
+          observer()
+        }
+      })
+      function observer() {
+        spanName.innerHTML = obj.name
+        inputValue.value = obj.name
+      }
+      setTimeout(() => {
+        obj.name = '新的值'
+      }, 2000)
+      inputValue.oninput = function () {
+        spanName.innerHTML = this.value
+      }
+    </script>
+  </body>
+</html>
