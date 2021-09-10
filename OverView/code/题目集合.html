@@ -8,7 +8,8 @@
   </head>
   <body>
     <script>
-      var x = 2
+      // debugger
+      var x = 10
       var y = {
         x: 3,
         z: (function (x) {
@@ -21,21 +22,20 @@
           }
         })(x)
       }
+      console.log(x)
       var m = y.z
       m(4)
-      y.z(5)
-      console.log(x, y.x)
+      // y.z(5)
+      // console.log(x, y.x)
 
-
-
-      var i =99
-      var a = {
-        b: (function(){
-          i++
-          console.log(this)
-        })()
-      }
-      console.log(i)
+      // var i =99
+      // var a = {
+      //   b: (function(){
+      //     i++
+      //     console.log(this)
+      //   })()
+      // }
+      // console.log(i)
     </script>
   </body>
 </html>

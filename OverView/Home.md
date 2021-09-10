@@ -423,6 +423,55 @@ promise必然处于一下三种状态：
 
 ### 手写new方法
 
+### 跨域问题的解决方案和实现原理
+
+web服务器 http://aaa.com
+
+资源服务器 http://bbb.com
+
+数据服务器 http://ccc.com
+
+协议，域名，端口号有一个不一样，就是跨域。
+
+因此跨域问题普遍存在。浏览器默认限制不让互相访问，非同源策略应用广泛。
+
+1. JSONP:利用script，img，link标签不存在跨域
+
+   > 动态创建script标签，给他src赋值属性
+
+   ```html
+   <script src="http://qq.com?callback=func"></script>
+   ```
+
+   ```js
+   function func(data) {
+     //TODO data就是从服务器拿回来的数据
+   }
+   ```
+
+   服务端：
+
+   data = {xxxx}
+
+   拼接成数据结构： "func({xxxx})"
+
+   GET: 不安全，有缓存，有大小限制
+
+2. 基于iframe的跨域解决方案
+
+   - window.name
+   - document.domain
+   - location.hash
+   - post message
+
+3. CORS跨域资源共享(服务器端处理)
+
+   package.json中加proxy:"地址"
+
+   开发的时候:用 deveServer->proxy -> target/proxyTimeout/ws/changeOrigin
+
+   打包之后：用nginx反向代理
+
 ### 全等的规则
 
 ==比较规则
@@ -550,6 +599,12 @@ https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Oper
   - localStorage和sessionStorage 仅在客户端中保存，不参与和服务器的通信
 
 在服务器端使用session管理cookie
+
+localStorage:实现数据持久化，存入的时候，加一个存储的时间，下次请求的时候和该时间做对比，决定是否需要从服务器重新请求资源。
+
+cookie和session的区别：
+
+服务器设置session，服务器返回给客户端的信息，在响应头中带着set-cookie="connect.sid"(当前服务端与客户端建立唯一的标识)，客户端会把信息种植到本地的cookie中(httponly),客户端再次向服务器发送请求的时候，会默认在请求头中cookies把connect.sid传递给服务器。他俩过期时间一致。
 
 ```javascript
 //指向属性调用的对象
@@ -878,13 +933,13 @@ function isEmpty(str) {
   
 - MVVM的理解
 
-  先说MVC：
+  先说MVC：react(少了一个视图更改影响数据)
 
   - 视图(View):  用户界面。(传送指令到Controller)
   - 控制器(Controller): 业务逻辑(完成业务逻辑后，要求Model改变状态)
   - 模型(Model): 数据保存(将新的数据发送到View，用户界面更新)
 
-  再谈MVVM：
+  再谈MVVM：vue
 
   - View：用户界面
   - Model：业务逻辑
@@ -997,7 +1052,7 @@ function isEmpty(str) {
 
 - vuex是什么？
 
-  > vuex是一个专为vue.js应用程序开发的状态管理模式
+  > vuex是一个专为vue.js应用程序开发的状态管理模式.本地存储方案
 
 - vuex的核心概念？
 

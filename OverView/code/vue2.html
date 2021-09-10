@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>vuw2</title>
+    <title>vue2&3</title>
   </head>
   <body>
     <span id="spanName"></span>
@@ -47,8 +47,8 @@
        */
 
       // 使用proxy
-      let obj = {}
-      obj = new Proxy(obj, {
+      let obj1 = {}
+      let obj = new Proxy(obj1, {
         get(target, prop) {
           console.log('get:::')
           return target[prop]
@@ -64,10 +64,36 @@
         inputValue.value = obj.name
       }
       setTimeout(() => {
-        obj.name = '新的值'
-      }, 2000)
+        obj.name = 123
+      }, 100)
       inputValue.oninput = function () {
+        this.value = NumberCheck(this.value)
         spanName.innerHTML = this.value
+      }
+
+      //限定输入框只能输入数字，不允许01,9.9.8
+      function NumberCheck(num) {
+        var str = num
+        var len1 = str.substr(0, 1)
+        var len2 = str.substr(1, 1)
+        //1.正则替换，保留数字和小数点
+        str = str.replace(/[^\d^\.]+/g, '')
+        //2.第一位是0，第二位就不能输入其他数字，但是.可以
+        if (len1 == '0' && len2 != '.') {
+          str = len1
+        }
+        //3.第一位不能是.
+        if (len1 == '.') {
+          str = ''
+        }
+        //4.限制只能输入一个小数点
+        if (str.indexOf('.') != -1) {
+          var str_ = str.substr(str.indexOf('.') + 1)
+          if (str_.indexOf('.') != -1) {
+            str = str.substr(0, str.indexOf('.') + str_.indexOf('.') + 1)
+          }
+        }
+        return str
       }
     </script>
   </body>
