@@ -18,10 +18,15 @@
     <div id="demo"></div>
   </div>
   <script type="text/babel">
-  // 此处 不要加引号
-    const VDOM = <h1 id="main">hello react</h1>
-    console.log('虚拟dom',VDOM)
-    console.log('真实dom',demo)
+    const name = 'baseName'
+    // 此处 不要加引号
+    const VDOM = (<div>
+      <h1 id="main">hello react</h1>
+      <h3 className="red">我是H3标签</h3>
+      <h4 style={{color: 'red', backgroundColor: '#ccc'}}>基本信息：{name}</h4>
+    </div>)
+    console.log('虚拟dom', VDOM)
+    console.log('真实dom', demo)
     // debugger
     ReactDOM.render(VDOM, document.getElementById('app'))
   </script>
