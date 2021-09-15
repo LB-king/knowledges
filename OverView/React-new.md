@@ -179,9 +179,12 @@ ReactDOM.render(<Com/>, app) 之后发生了什么
 
 #### 4.2类式组件
 
+用类定义的组件
+
 ```jsx
 class MyCom extends React.Component {
   render() {
+    //this ->组件实例对象  props  refs  state
     return <h3>类组件</h3>
   }
 }
@@ -190,9 +193,94 @@ class MyCom extends React.Component {
 ReactDOM.render(<Com/>, app) 之后发生了什么
 1.React解析组件标签，找到Com组件
 2.发现组件是用类定义的，随后new出来该类的实例，并通过该实例调用到原型上的render方法。
+3.将render返回的虚拟dom转化为真实dom，随后呈现到页面中
 */
 ```
 
+**class类**的注意事项：
+
+- 类中的构造器不是必须要写的，要对实例进行一些初始化的操作，如添加指定属性时才写
+
+- 如果A类继承B类，且A类中写了构造器，那么A类中的**super**是必须调用的
+
+- 类中所定义的方法，都放在了类的原型对象上，供实例去使用
+
+- class中定义的方法，已经在局部开启了严格模式
+
+- 类中可以直接写赋值语句
+
+  ```jsx
+  class Car {
+    constructor(name) {
+      this.name = name
+    }
+    // 给car的实例对象添加一个属性，名a 值333
+    a = 333
+  }
+  ```
+
+  
+
+#### 4.3组件三大核心属性
+
+##### 4.3.1 state
+
+1. state是组件对象最重要的属性，值是对象(可以包含多个key-value的组合)
+
+2. 组件被称为"状态机"，通过更新组件的state来更新对应的页面显示(重新渲染组件)
+
+   ```jsx
+   class Weather extends React.Component {
+     // 构造器调用1次
+     constructor(props) {
+       // 如果A类继承B类，且A类中写了构造器，那么A类中的super是必须调用的
+       super(props)
+       this.state = {
+         name: ''
+       }
+       // 绑定this
+       this.change = this.change.bind(this)
+     }
+     render() {
+       // 更新的时候就调用,this指向当前的实例对象
+       return (<h3 onClick={change}>this is {this.state.name}</h3>)
+     }
+     change() {
+       this.setState({
+         name: 'xxx'
+       })
+     }
+   }
+   ```
+
+   简写：
+
+   ```jsx
+   class Com extends React.Component {
+     state = {
+       name: 'kobe'
+     }
+   // 自定义方法：赋值语句 + 箭头函数
+     change = () => {
+       let name = this.state.name
+       this.setState({
+         name: name === 'kobe' ? 'james' : 'kobe'
+       })
+     }
+     render() {
+       let { name } = this.state
+       return <h4 onClick={this.change}>{name}</h4>
+     }
+   }
+   
+   ReactDOM.render(<Com />, app)
+   ```
+
+   
+
+##### 4.3.2
+
+##### 4.3.3
 
 
 
@@ -222,10 +310,7 @@ ReactDOM.render(<Com/>, app) 之后发生了什么
 
 
 
-
-#### 4.2类式组件
-
-​	用类定义的组件
+​	
 
 
 

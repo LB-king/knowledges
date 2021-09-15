@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>组件</title>
+    <title>state简写</title>
     <script src="./static/babel.min.js"></script>
     <!-- 核心库 -->
     <script src="./static/react.development.js"></script>
@@ -15,20 +15,24 @@
   <body>
     <div id="app"></div>
     <script type="text/babel">
-      //1.函数式组件
-      function Comp() {
-        console.log(this) // undefined,因为babel翻译之后，开启了严格模式，所以此时this为undefined
-        return <h2>函数式定义组件</h2>
-      }
-      // ReactDOM.render(<Comp />, app)
-
-      //2.创建类式组件
-      class Mycomponent extends React.Component {
+      class Com extends React.Component {
+        state = {
+          name: 'kobe'
+        }
+        // 自定义方法：赋值语句 + 箭头函数
+        change = () => {
+          let name = this.state.name
+          this.setState({
+            name: name === 'kobe' ? 'james' : 'kobe'
+          })
+        }
         render() {
-          return <h3>类定义的组件</h3>
+          let { name } = this.state
+          return <h4 onClick={this.change}>{name}</h4>
         }
       }
-      ReactDOM.render(<Mycomponent />, app)
+
+      ReactDOM.render(<Com />, app)
     </script>
   </body>
 </html>
