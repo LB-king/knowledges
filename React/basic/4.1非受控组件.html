@@ -15,18 +15,27 @@
   <body>
     <div id="app"></div>
     <script type="text/babel">
-      class Demo extends React.Component {
-       
+      class Login extends React.Component {
+        handleClick = (e) => {
+          e.preventDefault();
+          console.log(this.input1)
+          console.log(this.input2)
+        }
         render() {
-         
           return (
             <div>
-              
+              <form action="http://www.baidu.com" onSubmit={this.handleClick}>
+                用户名：
+                <input ref={c => this.input1 = c} type="text" name="userName" />
+                密码：
+                <input ref={c => this.input2 = c} type="password" name="password" />
+                <button>点击</button>
+              </form>
             </div>
           )
         }
       }
-      ReactDOM.render(<Demo />, app)
+      ReactDOM.render(<Login />, app)
     </script>
   </body>
 </html>

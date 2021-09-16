@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>refs</title>
+    <script src="./static/babel.min.js"></script>
+    <!-- 核心库 -->
+    <script src="./static/react.development.js"></script>
+    <!-- 用于react支持dom操作 -->
+    <script src="./static/react-dom.development.js"></script>
+  </head>
+
+  <body>
+    <div id="app"></div>
+    <script type="text/babel">
+      class Demo extends React.Component {
+        state = {
+          isHot: true
+        }
+        showData = () => {
+          let { input1 } = this.state
+          console.log(input1.value)
+        }
+        change = () => {
+          this.setState({
+            isHot: !this.state.isHot
+          })
+        }
+        saveInput = (c) => {
+          this.state.input1 = c
+          console.log('#', c)
+        }
+        render() {
+          let wName = this.state.isHot ? '热' : '凉快'
+          return (
+            <div>
+              {/*
+             <input
+                ref={(c) => {
+                  this.state.input1 = c
+                  console.log('#', c)
+                }}
+                type="text"
+              />
+              */}
+
+              <input ref={this.saveInput} type="text" />
+              <button onClick={this.showData}>提示信息</button>
+              <br />
+              <h3>今天天气{wName}</h3>
+              <button onClick={this.change}>点击切换天气</button>
+            </div>
+          )
+        }
+      }
+      // 内联式的ref，在属性改变时会触发两次
+      ReactDOM.render(<Demo />, app)
+    </script>
+  </body>
+</html>

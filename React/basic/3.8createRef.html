@@ -16,12 +16,29 @@
     <div id="app"></div>
     <script type="text/babel">
       class Demo extends React.Component {
-       
+        state = {
+          list: ['AAA', 'BBB', 'CCC']
+        }
+        myRef = React.createRef()
+        myRef2 = React.createRef()
+        showData = () => {
+          console.log(this.myRef.current.value)
+        }
+        blurData = (e) => {
+          console.log(e)
+          // console.log(this.myRef2.current.value)
+        }
         render() {
-         
           return (
             <div>
-              
+              <input ref={this.myRef} type="text" placeholder="请输入" />
+              <button onClick={this.showData}>点击提示左侧数据</button>
+              <input
+                ref={this.myRef2}
+                onBlur={this.blurData}
+                type="text"
+                placeholder="失去焦点触发"
+              />
             </div>
           )
         }

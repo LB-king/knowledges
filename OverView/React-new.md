@@ -340,8 +340,6 @@ Com.defaultProps = {
 ReactDOM.render(<Com />, app)
 ```
 
-##### 4.3.3refs
-
 ##### 关联
 
 |       | 函数式组件               | 类式组件 |
@@ -350,11 +348,56 @@ ReactDOM.render(<Com />, app)
 | props | √                        | √        |
 | refs  | X(后面版本的hooks会解决) | √        |
 
+##### 4.3.3refs
 
+- 字符串ref
 
+- 回调函数形式ref
 
+  - 内联形式
 
+    ```jsx
+    <input ref={(c) => { this.state.input1 = c console.log('#', c)}} type="text"/>
+    ```
 
+  - 类绑定
+
+    ```jsx
+     saveInput = (c) => {
+       this.state.input1 = c
+       console.log('#', c)
+     }
+    <input ref={this.saveInput} type="text" />
+    ```
+
+    > 如果**ref**回调函数是以内联函数的方式定义的，在更新过程中他会被执行2次，第一次传入null，然后第二次会传入参数DOM元素。因为在每次渲染时会创建一个新的函数实例，所以React清空旧的ref并设置新的。通过将ref的回调函数定义成class的绑定函数的方式可以避免上述问题，但是大多数情况下是无关紧要的。
+
+- createRef
+
+  ```jsx
+  myRef = React.createRef()
+  show = () => {
+    let v = this.myRef.current.value
+  }
+  <input ref={this.myRef} type="text" placeholder="请输入" />
+  <button onClick={this.show}>点击提示左侧数据</button>
+  ```
+
+  字符串类型的ref  不推荐使用;createRef推荐使用
+
+#### 4.4react事件处理
+
+1. 通过**onXxxx**属性指定事件处理函数，注意大小写、
+   - **react**使用的是自定义(合成)事件，而不是使用原生的**DOM**事件——为了更好的兼容性
+   - **react**中的事件是通过事件委托方式处理的(委托给最外层的元素)——为的是高效
+2. 通过**event.target**得到发生事件的**dom**元素对象——不要过度使用**ref**
+
+#### 4.5收集表单数据
+
+包含表单的组件分类：
+
+- 受控组件
+- 非受控组件
 
 
 
