@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>受控组件</title>
+  <script src="./static/babel.min.js"></script>
+  <!-- 核心库 -->
+  <script src="./static/react.development.js"></script>
+  <!-- 用于react支持dom操作 -->
+  <script src="./static/react-dom.development.js"></script>
+</head>
+
+<body>
+  <div id="app"></div>
+  <script type="text/babel">
+    class Login extends React.Component {
+      handleClick = (e) => {
+        e.preventDefault();
+        alert(`名字：${this.state.userName}，密码：${this.state.password}`)
+      }
+      getName = (e) => {
+        this.setState({
+          userName: e.target.value
+        })
+      }
+      getPassword = (e) => {
+        this.setState({
+          password: e.target.value
+        })
+      }
+      render() {
+        return (
+          <div>
+            <form action="http://www.baidu.com" onSubmit={this.handleClick}>
+              用户名：
+              <input onChange={this.getName} type="text" name="userName" />
+              密码：
+              <input onChange={this.getPassword} type="password" name="password" />
+              <button>点击</button>
+            </form>
+          </div>
+        )
+      }
+    }
+    //实现双向绑定，把数据挂到state上
+    ReactDOM.render(<Login />, app)
+  </script>
+</body>
+
+</html>

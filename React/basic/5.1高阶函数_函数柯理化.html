@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>refs</title>
+    <title>函数柯理化</title>
     <script src="./static/babel.min.js"></script>
     <!-- 核心库 -->
     <script src="./static/react.development.js"></script>
@@ -16,24 +16,47 @@
     <div id="app"></div>
     <script type="text/babel">
       class Login extends React.Component {
+        state = {
+          userName: '',
+          password: ''
+        }
+        //表单提交
         handleClick = (e) => {
           e.preventDefault()
-          console.log(this.input1)
-          console.log(this.input2)
+          alert(`名字：${this.state.userName}，密码：${this.state.password}`)
+        }
+
+        //存储表单数据
+        getFormData = (keyName) => {
+          console.log(keyName)
+          return (event) => {
+            console.log('@', event.target.value)
+            this.setState({
+              [keyName]: event.target.value
+            })
+          }
         }
         render() {
           return (
             <div>
               <form action="http://www.baidu.com" onSubmit={this.handleClick}>
+                {/*用户名：
+                <input onChange={this.getName} type="text" name="userName" />
+                密码：
+                <input
+                  onChange={this.getPassword}
+                  type="password"
+                  name="password"
+                />*/}
                 用户名：
                 <input
-                  ref={(c) => (this.input1 = c)}
+                  onChange={this.getFormData('userName')}
                   type="text"
                   name="userName"
                 />
                 密码：
                 <input
-                  ref={(c) => (this.input2 = c)}
+                  onChange={this.getFormData('password')}
                   type="password"
                   name="password"
                 />
@@ -43,6 +66,7 @@
           )
         }
       }
+      //实现双向绑定，把数据挂到state上
       ReactDOM.render(<Login />, app)
     </script>
   </body>
