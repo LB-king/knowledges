@@ -17,30 +17,22 @@
   <body>
     <div id="app"></div>
     <script type="text/babel">
-      class Com extends React.Component {
-        render() {
-          console.log(this)
-          let { name, age, sex } = this.props
-          return (
-            <ul>
-              <li>名称：{name}</li>
-              <li>性别：{sex}</li>
-              <li>年龄：{age}</li>
-            </ul>
-          )
-        }
+      function Com({ name }) {
+        console.log(p)
+        return <h4>{name}</h4>
       }
-      // 添加限制
       Com.propTypes = {
-        name: PropTypes.string.isRequired, //15之前可用，16已经被弃用
+        //name: React.PropTypes.string.isRequired, //15之前可用，16已经被弃用
+        name: PropTypes.string.isRequired,
         sex: PropTypes.string,
-        age: PropTypes.number
+        age: PropTypes.number,
+        speak: PropTypes.func //此处不能写function，因为function是一个关键字
       }
       Com.defaultProps = {
         sex: '未知性别'
       }
       // ReactDOM.render(<Com name="kobe" age="45" />, app)
-      let p = { name: 'kobe', age: 45 }
+      let p = { name: 999, age: 45 }
       ReactDOM.render(<Com {...p} />, app)
       // react + babel可以允许...p这种写法
     </script>

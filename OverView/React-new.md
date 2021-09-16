@@ -209,6 +209,8 @@ ReactDOM.render(<Com/>, app) 之后发生了什么
 
 - 类中可以直接写赋值语句
 
+- 类自身添加属性
+
   ```jsx
   class Car {
     constructor(name) {
@@ -216,14 +218,18 @@ ReactDOM.render(<Com/>, app) 之后发生了什么
     }
     // 给car的实例对象添加一个属性，名a 值333
     a = 333
+    // 类自身添加属性
+  	static color = {
+    bg: 'red'
+    }
   }
   ```
-
+  
   
 
 #### 4.3组件三大核心属性
 
-##### 4.3.1 state
+##### 4.3.1state
 
 1. state是组件对象最重要的属性，值是对象(可以包含多个key-value的组合)
 
@@ -255,34 +261,94 @@ ReactDOM.render(<Com/>, app) 之后发生了什么
 
    简写：
 
-   ```jsx
-   class Com extends React.Component {
-     state = {
-       name: 'kobe'
-     }
-   // 自定义方法：赋值语句 + 箭头函数
-     change = () => {
-       let name = this.state.name
-       this.setState({
-         name: name === 'kobe' ? 'james' : 'kobe'
-       })
-     }
-     render() {
-       let { name } = this.state
-       return <h4 onClick={this.change}>{name}</h4>
-     }
-   }
-   
-   ReactDOM.render(<Com />, app)
+   ```html
+   <!-- 引入prop-types 用于对组件标签属性进行限制 -->
+   <script src="./static/prop-types.js"></script>
    ```
 
-   
+##### 4.3.2props
 
-##### 4.3.2
+解释：
 
-##### 4.3.3
+- 每个组件对象都会有props属性
+- 组件标签的所有属性都保存在props中
 
+作用：
 
+- 通过标签属性从组件外向组件内传递变化的数据
+- 注意：组件内部不要修改props数据
+
+对数据的限制：
+
+- 第一种方式`15.5`已经弃用
+
+  ```jsx
+  P.propTypes = {
+    name: React.PropTypes.string.isRequired,
+    age: React.PropTypes.number
+  }
+  ```
+
+- 第二种方式(新)
+
+  ```jsx
+  P.propTypes = {
+    name: PropTypes.string.isRequired,
+    age: PropTypes.number
+  }
+  P.defaultProps = {
+    age: 12,
+    sex: 'man'
+  }
+  ```
+
+  
+
+```jsx
+class Com extends React.Component {
+   //构造器是否接受props，是否传递给super，取决于：是否希望在构造器中通过this访问props
+  constructor (props) {
+    super(props)
+    console.log(this.props) //不传props 就是undefined
+  }
+  // 类中的构造器能省则省
+  state = {
+    name: 'kobe'
+  }
+// 自定义方法：赋值语句 + 箭头函数
+  change = () => {
+    let name = this.state.name
+    this.setState({
+      name: name === 'kobe' ? 'james' : 'kobe'
+    })
+  }
+  render() {
+    let { name } = this.state
+    return <h4 onClick={this.change}>{name}</h4>
+  }
+}
+Com.propTypes = {
+  name: PropTypes.string.isRequired,
+  sex: PropTypes.string,
+  age: PropTypes.number,
+  say: PropTypes.func //不能写function，因为它是一个关键字
+}
+Com.defaultProps = {
+  sex: '未知性别'
+}
+
+ReactDOM.render(<Com />, app)
+```
+
+##### 4.3.3refs
+
+##### 关联
+
+|       | 函数式组件               | 类式组件 |
+| ----- | ------------------------ | -------- |
+| state | X                        | √        |
+| props | √                        | √        |
+| refs  | X(后面版本的hooks会解决) | √        |
 
 
 

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>props</title>
+    <script src="./static/babel.min.js"></script>
+    <!-- 核心库 -->
+    <script src="./static/react.development.js"></script>
+    <!-- 用于react支持dom操作 -->
+    <script src="./static/react-dom.development.js"></script>
+    <!-- 引入prop-types 用于对组件标签属性进行限制 -->
+    <script src="./static/prop-types.js"></script>
+  </head>
+
+  <body>
+    <div id="app"></div>
+    <script type="text/babel">
+      class Com extends React.Component {
+        render() {
+          console.log(this)
+          let { name, age, sex } = this.props
+          // props是只读的
+          return (
+            <ul>
+              <li>名称：{name}</li>
+              <li>性别：{sex}</li>
+              <li>年龄：{age}</li>
+            </ul>
+          )
+        }
+      }
+      //this.props.name = 'joke' //这里会报错，因为props是只读的
+      // 添加限制
+      Com.propTypes = {
+        //name: React.PropTypes.string.isRequired, //15之前可用，16已经被弃用
+        name: PropTypes.string.isRequired,
+        sex: PropTypes.string,
+        age: PropTypes.number,
+        speak: PropTypes.func //此处不能写function，因为function是一个关键字
+      }
+      Com.defaultProps = {
+        sex: '未知性别'
+      }
+      // ReactDOM.render(<Com name="kobe" age="45" />, app)
+      let p = { name: 'kobe', age: 45 }
+      ReactDOM.render(<Com {...p} speak={speak}/>, app)
+      // react + babel可以允许...p这种写法
+      function speak() {
+        //do sth
+      }
+    </script>
+  </body>
+</html>
