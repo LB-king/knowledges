@@ -550,6 +550,8 @@ ReactDOM.render(<AAA />, app)
 
   以上钩子需要加`UNSAFE_`
 
+  ![](\img\react-生命周期(新).png)
+
 和旧的钩子区别：
 
 > 废弃了3个钩子`componentWillMount` ,`componentWillUpdate`,`componentWillReceiveProps`

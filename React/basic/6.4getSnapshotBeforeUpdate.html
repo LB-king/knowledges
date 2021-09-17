@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>getSnapshotBeforeUpdate</title>
+    <script src="./static/babel.min.js"></script>
+    <!-- 核心库 -->
+    <script src="./static/react.development@17.js"></script>
+    <!-- 用于react支持dom操作 -->
+    <script src="./static/react-dom.development@17.js"></script>
+    <style>
+      .list {
+        height: 150px;
+        width: 200px;
+        overflow: auto;
+      }
+      li {
+        height: 30px;
+        background-color: blueviolet;
+      }
+      #test {
+        height: 200px;
+        width: 200px;
+        background-color: #ccc;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="app"></div>
+    <div id="test"></div>
+    <script type="text/babel">
+      class List extends React.Component {
+        state = {
+          list: []
+        }
+        componentDidMount() {
+          setInterval(() => {
+            let { list } = this.state
+            let news = '列表' + (list.length + 1)
+            this.setState({
+              list: [news, ...list]
+            })
+          }, 1000)
+        }
+        getSnapshotBeforeUpdate() {
+          console.log('getSapshotBeforeUpdate')
+          return this.listDom.scrollHeight
+        }
+        componentDidUpdate(preProps, preState, height) {
+          this.listDom.scrollTop += this.listDom.scrollHeight - height
+        }
+        getList = (list) => {
+          this.listDom = list
+        }
+        render() {
+          return (
+            <ul className="list" ref={this.getList}>
+              {this.state.list.map((n, index) => {
+                return <li key={index}>{n}</li>
+              })}
+            </ul>
+          )
+        }
+      }
+      ReactDOM.render(<List />, app)
+    </script>
+  </body>
+</html>
