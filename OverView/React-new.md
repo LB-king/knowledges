@@ -428,16 +428,135 @@ ReactDOM.render(<Com />, app)
 > 挂载 - mount
 >
 > 卸载 - unmount
+>
+> 1.组件从创建到销毁会经历一些特定的阶段
+>
+> 2.react组件中包含一系列钩子函数(生命周期函数)，会在特定的时间调3.用
+>
+> 我们在定义组件时，会在特定的生命周期回调函数中做特定的事
 
+```jsx
+class Life extends React.Component {
+  state = {
+    name: 'XXX'
+  }
+	render() {
+    //初始化渲染 调用n+1次
+    return (<h3>{this.state.name}</h3>)
+  }
+	componentDidMount() {
+    //组件挂载完毕
+  }
+	componentWillUnmount() {
+    //组件将要卸载
+  }
+}
+```
 
+#### 6.1生命周期流程图(旧)
 
+![](\img\react-生命周期(旧).png)
 
+- setState: 更新状态
 
+- forceUpdate: 强制更新会触发  
 
+  componentWillUpdate->render->omponentDidUpdate
 
+  ```jsx
+  this.forceUpdate()
+  ```
 
+**注意：**
 
+​	`componentWillReceiveProps`中的坑，第一次调用不会触发
 
+```jsx
+class AAA extends React.Component {
+   state = {
+     name: 'IVERSON'
+   }
+change = () => {
+  this.setState({
+    name: 'JORDAN'
+  })
+}
+render() {
+  let { name } = this.state
+  return (
+    <div>
+      <h3>我是AAA组件</h3>
+      <button onClick={this.change}>换名字</button>
+      <BBB username={name} />
+    </div>
+  )
+}
+}
+class BBB extends React.Component {
+  constructor(props) {
+    super(props)
+    console.log(props)
+  }
+  componentDidMount() {
+    console.log('BBB--componentDidMount')
+  }
+  // 第一次传的参数不算,新的才算
+  componentWillReceiveProps(props) {
+    console.log('BBB--componentWillReceiveProps', props)
+  }
+  render() {
+    return <h3>这是BBB组件，接收的name是:{this.props.username}</h3>
+  }
+}
+ReactDOM.render(<AAA />, app)
+```
+
+总结：
+
+​	生命周期的三个阶段：
+
+1. **初始化阶段** 由ReactDOM.render()触发初次渲染
+   1. construtor()
+   2. componentWillMount()
+   3. render()
+   4. componentDidMount()
+2. **更新阶段** 由组件内部this.setState()或父组件更新render触发
+   1. shouldComponentUpdate()
+   2. componentWillUpdate()
+   3. render()
+   4. componentDidUpdate()
+3. **卸载组件 **由ReactDOM.unmountComponentAtNode()触发
+   1. componentWillUnmount
+
+​	**常用的钩子**
+
+- **componentDidMount**
+
+  > 一般在这个钩子中做一些初始化的操作,例如开启定时器，发送网络请求，订阅消息
+
+- **componentWillUnmount**
+
+  > 做一些收尾的操作，例如：清除定时器，取消订阅
+
+- **render** 必用
+
+#### 6.2新版本
+
+- componentWillMount
+
+- componentWillUpdate
+
+- componentWillReceiveProps
+
+  以上钩子需要加`UNSAFE_`
+
+和旧的钩子区别：
+
+> 废弃了3个钩子`componentWillMount` ,`componentWillUpdate`,`componentWillReceiveProps`
+>
+> 新增了2个钩子`getDerivedStateFromProps(从props里得到一个派生的状态)`,`getSnapshotBeforeUpdate`
+>
+> getDerivedStateFromProps： state的值在任何时候都取决于props
 
 
 

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>组件生命周期</title>
+    <script src="./static/babel.min.js"></script>
+    <!-- 核心库 -->
+    <script src="./static/react.development.js"></script>
+    <!-- 用于react支持dom操作 -->
+    <script src="./static/react-dom.development.js"></script>
+  </head>
+
+  <body>
+    <div id="app"></div>
+    <script type="text/babel">
+      class Count extends React.Component {
+        constructor(props) {
+          console.log('Count-constructor')
+          super(props)
+          this.state = {
+            count: 0
+          }
+        }
+        // 按钮事件回调
+        add = () => {
+          let { count } = this.state
+          this.setState({
+            count: (count += 1)
+          })
+        }
+        uninstall = () => {
+          ReactDOM.unmountComponentAtNode(app)
+        }
+        //强制更新,触发一下更新 componentWillUpdate -> render -> componentDidUpdate
+        force = () => {
+          this.forceUpdate()
+        }
+        //组件即将挂载
+        componentWillMount() {
+          console.log('Count-componentWillMount')
+        }
+        //组价挂载完
+        componentDidMount() {
+          console.log('Count-componentDidMount')
+        }
+        //组件卸载之前
+        componentWillUnmount() {
+          console.log('Count-componentWillUnmount')
+        }
+        //控制组件更新的阀门,默认返回值为true
+        shouldComponentUpdate() {
+          console.log('Count-shouldComponentUpdate')
+          return true
+        }
+        //组件将要更新
+        componentWillUpdate() {
+          console.log('Count-componentWillUpdate')
+        }
+        //组件更新完毕
+        componentDidUpdate() {
+          console.log('Count-componentDidUpdate')
+        }
+        render() {
+          console.log('Count-render')
+          let { count } = this.state
+          return (
+            <div>
+              <h3>当前数值为{count}</h3>
+              <button onClick={this.add}>点击加一</button>
+              <button onClick={this.uninstall}>卸载组件</button>
+              <br />
+              <button onClick={this.force}>
+                不更改状态中的数据，强制更新一下
+              </button>
+            </div>
+          )
+        }
+      }
+
+      class AAA extends React.Component {
+        state = {
+          name: 'IVERSON'
+        }
+        change = () => {
+          this.setState({
+            name: 'JORDAN'
+          })
+        }
+        //组件将要更新
+        componentWillUpdate() {
+          console.log('AAA-componentWillUpdate')
+        }
+        //组件更新完毕
+        componentDidUpdate() {
+          console.log('AAA-componentDidUpdate')
+        }
+        render() {
+          let { name } = this.state
+          return (
+            <div>
+              <h3>我是AAA组件</h3>
+              <button onClick={this.change}>换名字</button>
+              <BBB username={name} />
+            </div>
+          )
+        }
+      }
+      class BBB extends React.Component {
+        constructor(props) {
+          super(props)
+          console.log(props)
+        }
+        componentDidMount() {
+          console.log('BBB--componentDidMount')
+        }
+        // 第一次传的参数不算,新的才算
+        componentWillReceiveProps(props) {
+          console.log('BBB--componentWillReceiveProps', props)
+        }
+        //组件将要更新
+        componentWillUpdate() {
+          console.log('BBB-componentWillUpdate')
+        }
+        //组件更新完毕
+        componentDidUpdate() {
+          console.log('BBB-componentDidUpdate')
+        }
+        render() {
+          return <h3>这是BBB组件，接收的name是:{this.props.username}</h3>
+        }
+      }
+      ReactDOM.render(<AAA />, app)
+    </script>
+  </body>
+</html>

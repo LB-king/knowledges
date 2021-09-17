@@ -15,24 +15,34 @@
   <body>
     <div id="app"></div>
     <script type="text/babel">
-      //2s内从完全可见到彻底小时
+      //2s内从完全可见到彻底消失
       class Life extends React.Component {
         state = {
           opacity: 1
         }
-        timer = setInterval(() => {
-          this.setState({
-            opacity: (this.state.opacity -= 0.1)
-          })
-          if (this.state.opacity <= 0) {
-            this.setState({
-              opacity: (this.state.opacity = 1)
-            })
-          }
-        }, 200)
+
         remove = () => {
           ReactDOM.unmountComponentAtNode(app)
         }
+        // 组件挂载完毕调用
+        componentDidMount() {
+          this.timer = setInterval(() => {
+            this.setState({
+              opacity: (this.state.opacity -= 0.1)
+            })
+            if (this.state.opacity <= 0) {
+              this.setState({
+                opacity: (this.state.opacity = 1)
+              })
+            }
+          }, 200)
+        }
+        //组件卸载之前
+        componentWillUnmount() {
+          console.log('组件将要被卸载')
+          clearInterval(this.timer)
+        }
+        //初始化渲染
         render() {
           return (
             <div>

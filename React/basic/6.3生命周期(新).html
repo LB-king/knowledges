@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>新的什么周期</title>
+    <script src="./static/babel.min.js"></script>
+    <!-- 核心库 -->
+    <script src="./static/react.development@17.js"></script>
+    <!-- 用于react支持dom操作 -->
+    <script src="./static/react-dom.development@17.js"></script>
+  </head>
+
+  <body>
+    <div id="app"></div>
+    <script type="text/babel">
+      class Count extends React.Component {
+        constructor(props) {
+          console.log('Count-constructor')
+          super(props)
+          this.state = {
+            count: 0
+          }
+        }
+        // 按钮事件回调
+        add = () => {
+          let { count } = this.state
+          this.setState({
+            count: (count += 1)
+          })
+        }
+        uninstall = () => {
+          ReactDOM.unmountComponentAtNode(app)
+        }
+        //强制更新,触发一下更新 componentWillUpdate -> render -> componentDidUpdate
+        force = () => {
+          this.forceUpdate()
+        }
+
+        //组价挂载完
+        componentDidMount() {
+          console.log('Count-componentDidMount')
+        }
+        //组件卸载之前
+        componentWillUnmount() {
+          console.log('Count-componentWillUnmount')
+        }
+        //控制组件更新的阀门,默认返回值为true
+        shouldComponentUpdate() {
+          console.log('Count-shouldComponentUpdate')
+          return true
+        }
+        //组件更新完毕
+        componentDidUpdate(preProps, PreState, snapshotValue) {
+          console.log(
+            'Count-componentDidUpdate',
+            preProps,
+            PreState,
+            snapshotValue
+          )
+        }
+        // 派生状态
+        static getDerivedStateFromProps(props, state) {
+          console.log('Count-getDerivedStateFromProps', props, state)
+          return null
+          //return props //返回null或者一个状态对象,影响状态的更新,派生状态中 state值任何时候都取决于props,派生状态会导致代码冗余(了解即可)
+        }
+        // 更新之前获取快照
+        getSnapshotBeforeUpdate(props) {
+          console.log('Count-getSnapshotBeforeUpdate', props)
+          return '我是快照' //传给componentDidUpdate 第三个参数
+        }
+        render() {
+          console.log('Count-render')
+          let { count } = this.state
+          return (
+            <div>
+              <h3>当前数值为{count}</h3>
+              <button onClick={this.add}>点击加一</button>
+              <button onClick={this.uninstall}>卸载组件</button>
+              <br />
+              <button onClick={this.force}>
+                不更改状态中的数据，强制更新一下
+              </button>
+            </div>
+          )
+        }
+      }
+
+      ReactDOM.render(<Count name="KG" count={999} />, app)
+    </script>
+  </body>
+</html>
