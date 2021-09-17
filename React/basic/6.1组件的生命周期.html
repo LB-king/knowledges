@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>生命周期</title>
+    <script src="./static/babel.min.js"></script>
+    <!-- 核心库 -->
+    <script src="./static/react.development.js"></script>
+    <!-- 用于react支持dom操作 -->
+    <script src="./static/react-dom.development.js"></script>
+  </head>
+
+  <body>
+    <div id="app"></div>
+    <script type="text/babel">
+      //2s内从完全可见到彻底小时
+      class Life extends React.Component {
+        state = {
+          opacity: 1
+        }
+        timer = setInterval(() => {
+          this.setState({
+            opacity: (this.state.opacity -= 0.1)
+          })
+          if (this.state.opacity <= 0) {
+            this.setState({
+              opacity: (this.state.opacity = 1)
+            })
+          }
+        }, 200)
+        remove = () => {
+          ReactDOM.unmountComponentAtNode(app)
+        }
+        render() {
+          return (
+            <div>
+              <h2 style={{ opacity: this.state.opacity }}>这是一个标题</h2>
+              <button onClick={this.remove}>点我消失</button>
+            </div>
+          )
+        }
+      }
+      ReactDOM.render(<Life />, app)
+    </script>
+  </body>
+</html>

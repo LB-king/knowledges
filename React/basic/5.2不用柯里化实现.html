@@ -34,19 +34,14 @@
 
         // 2.若A函数，调用的返回值依然是一个函数，那么A就可以称之为高阶函数
         // 常见的高阶函数有哪些？Promise,setTimeout,arr.map,string.replace...
-        
-        
+
         // #endregion
 
         //函数柯里化：通过函数调用继续返回函数的方式，实现多次接收参数最后统一处理的函数编码形式
-        getFormData = (keyName) => {
-          console.log(keyName)
-          return (event) => {
-            console.log('@', event.target.value)
-            this.setState({
-              [keyName]: event.target.value
-            })
-          }
+        getFormData = (keyName, event) => {
+          this.setState({
+            [keyName]: event.target.value
+          })
         }
         render() {
           return (
@@ -62,13 +57,17 @@
                 />*/}
                 用户名：
                 <input
-                  onChange={this.getFormData('userName')}
+                  onChange={(event) => {
+                    this.getFormData('userName', event)
+                  }}
                   type="text"
                   name="userName"
                 />
                 密码：
                 <input
-                  onChange={this.getFormData('password')}
+                  onChange={(event) => {
+                    this.getFormData('password', event)
+                  }}
                   type="password"
                   name="password"
                 />
