@@ -559,8 +559,37 @@ ReactDOM.render(<AAA />, app)
 > 新增了2个钩子`getDerivedStateFromProps(从props里得到一个派生的状态)`,`getSnapshotBeforeUpdate`
 >
 > getDerivedStateFromProps： state的值在任何时候都取决于props
+>
+> getSnapshotBeforeUpdate:  在最近一次渲染输出（提交到 DOM 节点）之前调用
 
+**总结：**
 
+1. 初始化阶段
+
+   - constructor()
+   - getDerivedStateFromProps()
+   - render()
+   - componentDidMount()
+
+2. 更新阶段
+
+   - getDerivesStateFromProps()
+   - shouldComponentUpdate()
+   - render()
+   - getSnapshotBeforeUpadate()
+   - componentDidUpdate()
+
+3. 卸载阶段
+
+   - componentWillUnmount()
+
+   经常使用的还是那三个钩子：
+
+   - **render()**
+   - **componentDidMount()**
+   - **componentWillUnmount()**
+
+### 7.diff算法
 
 
 
