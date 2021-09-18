@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>key的作用</title>
+    <script src="./static/babel.min.js"></script>
+    <!-- 核心库 -->
+    <script src="./static/react.development@17.js"></script>
+    <!-- 用于react支持dom操作 -->
+    <script src="./static/react-dom.development@17.js"></script>
+  </head>
+
+  <body>
+    <div id="app"></div>
+    <!-- 
+      使用index作为key
+      初始数据
+        { name: '张飞', age: 18, id: 111 },
+        { name: '关羽', age: 23, id: 222 }
+      初始的虚拟dom
+        <li key=0>张飞</li>
+        <li key=1>关羽</li>
+      更新后的数据
+        { name: '赵云', age: 22, id: 333 },
+        { name: '张飞', age: 18, id: 111 },
+        { name: '关羽', age: 23, id: 222 }
+      更新数据后的虚拟dom
+        <li key=0>赵云</li>
+        <li key=1>张飞</li>
+        <li key=2>关羽</li>
+        在前方加了一条，重新绘制dom的代价太大,严重的效率问题
+     -->
+    <script type="text/babel">
+      class Person extends React.Component {
+        state = {
+          msg: '基本信息',
+          persons: [
+            { name: '张飞', age: 18, id: 111 },
+            { name: '关羽', age: 23, id: 222 }
+          ]
+        }
+        componentDidMount() {
+          this.setState({
+            msg: '改变后的信息'
+          })
+          console.log('componentDidMount: ', this.state.msg)
+        }
+        add = () => {
+          let { persons } = this.state
+          this.setState({
+            persons: [
+              {
+                name: '赵云',
+                age: 18,
+                id: 3
+              },
+              ...persons
+            ]
+          })
+        }
+        render() {
+          console.log('render: ', this.state.msg)
+          let { persons } = this.state
+          return (
+            <div>
+              <h4>列表信息：</h4>
+              <ul>
+                {persons.map((person, index) => {
+                  return (
+                    <li key={index}>
+                      {person.name}
+                      <input type="text" />
+                    </li>
+                  )
+                })}
+              </ul>
+              <button onClick={this.add}>添加一个人员</button>
+              <h4>使用id作为key</h4>
+              <ul>
+                {persons.map((person) => {
+                  return (
+                    <li key={person.id}>
+                      {person.name}
+                      <input type="text" />
+                    </li>
+                  )
+                })}
+              </ul>
+            </div>
+          )
+        }
+      }
+      ReactDOM.render(<Person />, app)
+    </script>
+  </body>
+</html>

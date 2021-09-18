@@ -591,7 +591,31 @@ ReactDOM.render(<AAA />, app)
 
 ### 7.diff算法
 
+- 最小颗粒度是标签
 
+  ```
+  初始数据
+    { name: '张飞', age: 18, id: 111 },
+    { name: '关羽', age: 23, id: 222 }
+  初始的虚拟dom
+    <li key=0>张飞</li>
+  	<li key=1>关羽</li>
+  更新后的数据
+  	{ name: '赵云', age: 22, id: 333 },
+    { name: '张飞', age: 18, id: 111 },
+    { name: '关羽', age: 23, id: 222 }
+  更新数据后的虚拟dom
+    <li key=0>赵云</li>
+    <li key=1>张飞</li>
+    <li key=2>关羽</li>
+  在前方加了一条，重新绘制dom的代价太大,严重的效率问题
+  ```
+
+  ![](img\不用index作为key.png)
+
+### 	8.react脚手架
+
+#### 8.1使用creat-react-app创建应用
 
 
 

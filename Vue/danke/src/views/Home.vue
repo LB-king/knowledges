@@ -4,6 +4,8 @@
   p.item(v-for='(item, index) in objList')
     | {{ index }}--{{ item }}
   el-button(@click='click') 按钮
+  input(type='text' v-if='show' key="t1")
+  input(type='text' v-else key='t2')
 </template>
 
 <script>
@@ -21,13 +23,15 @@ export default {
       objList: {
         name: 'KO',
         age: 35
-      }
+      },
+      show: true
     }
   },
   mixins: [mix2, mix1],
   components: {},
   methods: {
     click() {
+      this.show = !this.show
       axios.defaults.headers['Content-Type'] = 'application/json;charset=UTF-8'
       // axios.defaults.withCredentials = true
       // axios.defaults.crossDomain = true

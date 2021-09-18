@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>refs</title>
+    <script src="./static/babel.min.js"></script>
+    <!-- 核心库 -->
+    <script src="./static/react.development@17.js"></script>
+    <!-- 用于react支持dom操作 -->
+    <script src="./static/react-dom.development@17.js"></script>
+  </head>
+
+  <body>
+    <div id="app"></div>
+    <script type="text/babel">
+      class Time extends React.Component {
+        state = {
+          time:new Date().toLocaleString()
+        }
+        componentDidMount() {
+          setInterval(() => {
+            this.setState({
+              time: new Date().toLocaleString()
+            })
+          }, 1000)
+        }
+        render() {
+          let { time } = this.state
+          return (
+            <div>
+              <h3>第一个元素</h3>
+              <h3>第二个元素</h3>
+              <h4>现在的时间是 {time}</h4>
+            </div>
+          )
+        }
+      }
+      ReactDOM.render(<Time />, app)
+    </script>
+  </body>
+</html>
