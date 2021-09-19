@@ -617,7 +617,34 @@ ReactDOM.render(<AAA />, app)
 
 #### 8.1使用creat-react-app创建应用
 
+1. 全局安装
 
+   ```shell
+   npm install -g create-react-app
+   ```
+
+2. 切换到想创建项目的目录，使用命令：`create-react-app hello-react`
+
+3. 进入项目文件夹 cd XXX
+
+4. 启动项目： `npm start`
+
+#### 8.2文件解释
+
+1. public/index.html
+
+   ```html
+   <!-- %PUBLIC_URL% 代表public文件夹的路径 -->
+   <link rel="icon" href="%PUBLIC_URL%favicon.ico"/>
+   <!-- 用于配置浏览器页签 + 地址栏的颜色(仅支持安卓手机浏览器) -->
+   <meta name="them-color" content="#ccc" />
+   <!--  用于指定网页添加到手机主屏幕的图标-->
+   <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png"/>
+   <!--  应用加壳时的配置文件 -->
+   <link rel="manifest"  href="%PUBLIC_URL%manifest.json"/>
+   ```
+
+   
 
 ​	
 
