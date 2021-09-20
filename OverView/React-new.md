@@ -644,17 +644,111 @@ ReactDOM.render(<AAA />, app)
    <link rel="manifest"  href="%PUBLIC_URL%manifest.json"/>
    ```
 
-   
+2. 样式的模块化
 
-​	
+   ![react_组件](img/react_组件.png)
 
+- 可以将样式名称改为：`index.module.css`
 
+  ```jsx
+  import hello from './index.module.css'
+  
+  class A extends Component{
+    render() {
+      return (
+      	<div className={hello.hello}></div>
+      )
+    }
+  }
+  ```
 
+- 使用less sass
 
+#### 8.3vscode技巧
 
+安装插件：ES7 React/Redux/React-Native/JS snippets
 
+新建jsx文件时，快速生成模板：
 
+- rcc 类式组件
+- rfc 函数式组件
+- imp 引入某个库
+- ren render函数
 
+#### 8.4功能界面的组件化编码流程
 
+1. 拆分组件：拆分界面，抽取组件
+2. 实现静态组件
+3. 实现动态组件：
+   - 动态组件初始化数据
+     - 数据类型
+     - 数据名称
+     - 保存在哪个组件
+   - 交互(从绑定事件监听开始)
 
+#### 8.5子组件给父组件传递数据
+
+> 父组件给子组件的props传递一个函数，子组件回传的时候调用此函数即可实现数据传递
+
+```jsx
+//父组件
+paramsFn = (data) => {
+  console.log('从子组件过来的data')
+}
+<Son params={this.paramsFn} />
+
+//子组件
+change = (data) => {
+  //调用函数，把data传给父组件
+  this.props.paramsFn(data)
+}
+```
+
+uuid
+
+nanoid
+
+父-->子-->子
+
+状态在哪里，方法就写哪里
+
+#### 8.6类型限制
+
+```shell
+npm install prop-types -S
+```
+
+```jsx
+import PropTypes from 'prop-types'
+
+class A extends Component{
+  // 注意static的写法：propTypes,类型和必要性的性质
+  static propTypes {
+    addTodo: PropTypes.func.isRequired //函数、必须
+  }
+}
+```
+
+总结：
+
+1. 如何确定将数据放在哪个组件的state中？
+
+   - 某个组件使用：放在其自身的state中
+
+   - 某些组件使用：放在他们共同的父组件state中(官方称此操作为：状态提升)
+
+2. 关于父子组价通信：
+
+   - 【父组件】给【子组件】传递数据：通过props传递
+   - 【子组件】给【父组件】传递数据，通过props传递，要求父组件提前传给子组件传递一个函数
+
+3. 状态在哪里，操作状态的方法就在哪里
+
+### 9.react axios
+
+axios轻量级，建议使用
+
+1. 封装XmlHttpRequest
+2. Promise风格
+3. 可以用在浏览器端和node服务器端
 

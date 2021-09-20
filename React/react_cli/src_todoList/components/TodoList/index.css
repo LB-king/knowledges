@@ -1,0 +1,10 @@
+.main_container {
+  width: 80%;
+  background-color: #f4f4f4;
+  margin: 20px auto;
+  border: 1px solid #eee;
+  padding: 20px;
+}
+input[type='text'] {
+  width: 80%;
+}
