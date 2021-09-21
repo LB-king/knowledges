@@ -752,3 +752,86 @@ axios轻量级，建议使用
 2. Promise风格
 3. 可以用在浏览器端和node服务器端
 
+#### 9.1跨域
+
+- 在package.json中配置：
+
+  ```json
+  {
+    "proxy": "http://localhost:5000"
+  }
+  ```
+
+  ```js
+  axios.get('http://localhost:3000/index.html')
+    .then((res) => {
+    console.log('success: ', res.data);
+  })
+    .catch((err) => {
+    console.log('fail: ', err);
+  })
+  
+  //会在3000下找index.html,有则返回，无则转发到5000代理
+  ```
+
+  注意：经过测试，http://localhost:3000/index.html找的是WDS编译内存中的文件。
+
+  缺点：只能配置一个代理
+
+- 使用`http-proxy-middleware`
+
+  在src文件夹下新建 `setupProxy.js`
+
+  ```js
+  const proxy = require('http-proxy-middleware')
+  
+  module.exports = function(app) {
+    app.use(
+      proxy('/api', {//遇到/api前缀的请求，就会触发该代理配置
+        target: 'http://localhost:5000',//请求转发给谁
+        changeOrigin: true,//控制服务器收到的请求头中Host的值
+        pathRewrite: {
+          '/api': '' //重写请求路径(必须的)
+        }
+      }),
+      proxy('/api2', {
+        target: 'http://localhost:5001',
+        changeOrigin: true,
+        pathRewrite: {
+          '/api2': ''
+        }
+      })
+    )
+  }
+  ```
+
+  在调用的js中，接口要添加api
+
+  ```js
+  axios.get('http://localhost:3000/api/users')
+  axios.get('http://localhost:3000/api2/students')
+  ```
+
+  changeOrigin 加不加都会执行成功：
+
+  加了：服务器中收到的请求头中Host的值是：localhost:5000
+
+  不加：服务器中收到的请求头中Host的值是：localhost:3000
+
+#### 9.2连续解构赋值
+
+```js
+let obj = {
+  a: {
+    b: {
+      c: 'CCC'
+    }
+  }
+}
+
+let {a: {b: {c: data}}} = obj
+// 连续解构赋值+重命名
+// data = CCC
+```
+
+api网站：https://api.github.com/search/users?q=xxx
