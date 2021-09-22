@@ -941,12 +941,12 @@ api网站：https://api.github.com/search/users?q=xxx
 
       使用NavLink实现高亮：给标签添加一个active属性
    
-      使用activeName 可以自定义类名
+      使用activeClassName 可以自定义类名
    
       ```jsx
       <Link to="/home">home</Link>
       <Link to="/about">about</Link>
-      <NavLink activeName="isSelect" to="/about">about</NavLink> 
+      <NavLink activeClassName="isSelect" to="/about">about</NavLink> 
       ```
    
    3. 展示区写Route标签进行路径的匹配
