@@ -1210,4 +1210,51 @@ function isEmpty(str) {
   12. sync
 
       父子组件传值，子组件想要更新这个值，使用此修饰符
+  
+- 刷新当前路由
 
+  App.vue
+
+  ```vue
+  <template>
+  	<router-view name="default" v-if="isRouterAlive" />
+  </template>
+  <script>
+    export default {
+       provide () {
+          return {
+            reload: this.reload
+          }
+        },
+        data() {
+          return {
+            isRouterAlive: true,
+          }
+        },
+        methods: {
+          reload () {
+            this.isRouterAlive = false
+            this.$nextTick(() => {
+              this.isRouterAlive = true
+            })
+          },
+        },
+    }
+  </script>
+  ```
+
+  需要刷新的组件：
+
+  ```vue
+  export default {
+  	inject: ['reload']
+  	// 在需要刷新的方法中调用
+  	methods: {
+  		do() {
+  			this.reload()
+    	}
+    }
+  } 
+  ```
+
+  

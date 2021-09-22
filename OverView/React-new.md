@@ -835,3 +835,151 @@ let {a: {b: {c: data}}} = obj
 ```
 
 api网站：https://api.github.com/search/users?q=xxx
+
+### 10.消息订阅与发布机制
+
+1. PubSubJS
+
+   ```shell
+   npm install pubsub-js --save
+   ```
+
+   ```jsx
+   // 订阅 
+   componentDidMount() {
+     this.sub = PubSub.subscribe('list-change', (_, data) => {
+       this.setState({
+         gitList: data
+       })
+     })
+    }
+   // 组件销毁时，取消订阅
+   componentWillUnmount() {
+     PubSub.unsubscribe(this.sub)
+   }
+   // 发布
+   PubSub.publish('list-change', res.data.items)
+   ```
+
+### 11.ajax有哪些方式
+
+- xhr
+
+- jQuery
+
+- axios
+
+- fetch (原生函数)
+
+  ```jsx
+  search = async()=> {
+    try {
+      let res = await fetch('xxx')
+    	let data = await res.json()
+    } catch(err) {
+      console.log(err)
+    }
+  }
+  ```
+
+### 12.React路由
+
+#### 12.1SPA的理解
+
+1. SPA的理解(single page web application, SPA)
+2. 整个应用只有**一个完整的页面**
+3. 点击页面中的链接不会刷新页面，只会做页面的**局部更新**
+4. 数据通过ajax请求获取，在前端异步展示
+5. 单页面多组件
+
+#### 12.2路由的解释
+
+1. 一个路由就是一个映射关系(key-value)
+2. key作为路径，value可能是function或component
+
+#### 12.3路由分类
+
+1. 后端路由
+   - 理解：value是function，用来处理客户端提交的请求
+   - 注册路由：router.get(path, function(req, res) {})
+   - 工作过程：当node接收到一个请求时，根据路径匹配对应的路由，调用路由中的函数来处理请求，返回响应数据
+2. 前端路由
+   - 浏览器端路由：value是component，用于展示页面内容
+   - 注册路由：<Route path="/test" component={test}/>
+   - 工作过程：当浏览器的path变成/test时，当前路由组件就会变成test组件
+
+#### 12.4react-router
+
+1. history.js操作bom的history
+
+   ```js
+   var history = History.createBrowserHistory() // 直接使用H5推出的history身上的API
+   var history = History.createHashHistory() //hash值(锚点),会有#兼容性极佳
+   ```
+
+2. react-router-dom(web native  any)
+
+   - react的一个插件库
+   - 专门用来实现一个SPA应用
+   - 基于react的项目
+
+   route-路由
+
+   router-路由器
+
+   安装：
+
+   ```shell
+   yarn add react-router-dom 
+   ```
+
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+​	
+
