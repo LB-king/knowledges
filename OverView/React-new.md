@@ -933,11 +933,46 @@ api网站：https://api.github.com/search/users?q=xxx
    yarn add react-router-dom 
    ```
 
-   
+   路由的基本使用：
 
+   1. 明确好界面中的导航区、展示区
 
+   2. 导航区的a标签改写为Link标签
 
+      ```jsx
+      <Link to="/home">home</Link>
+      <Link to="/about">about</Link>
+      ```
 
+   3. 展示区写Route标签进行路径的匹配
+
+      ```jsx
+      <Route path="/home" component={Home}></Route>
+      ```
+
+   4. <App/>的最外层包裹了一个<BrowserRouter>或<HashRouter>
+
+      直接在入口js修改：
+
+      ```js
+      import { BrowserRouter, HashRouter } from 'react-router-dom'
+      reactDOM.render(
+        <HashRouter>
+          <App />
+        </HashRouter>,
+        document.getElementById('root')
+      )
+      ```
+
+   5. 路由组件和非路由组件
+
+      路由组件一般放在 pages 目录中
+
+      路由组件的props信息：
+
+      1. history:
+      2. location:
+      3. match: 
 
 
 
