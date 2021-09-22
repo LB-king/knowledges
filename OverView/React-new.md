@@ -939,21 +939,26 @@ api网站：https://api.github.com/search/users?q=xxx
 
    2. 导航区的a标签改写为Link标签
 
+      使用NavLink实现高亮：给标签添加一个active属性
+   
+      使用activeName 可以自定义类名
+   
       ```jsx
       <Link to="/home">home</Link>
       <Link to="/about">about</Link>
+      <NavLink activeName="isSelect" to="/about">about</NavLink> 
       ```
-
+   
    3. 展示区写Route标签进行路径的匹配
-
+   
       ```jsx
       <Route path="/home" component={Home}></Route>
       ```
-
+   
    4. <App/>的最外层包裹了一个<BrowserRouter>或<HashRouter>
-
+   
       直接在入口js修改：
-
+   
       ```js
       import { BrowserRouter, HashRouter } from 'react-router-dom'
       reactDOM.render(
@@ -963,24 +968,59 @@ api网站：https://api.github.com/search/users?q=xxx
         document.getElementById('root')
       )
       ```
-
+   
    5. 路由组件和非路由组件
-
-      路由组件一般放在 pages 目录中
-
-      路由组件的props信息：
-
-      1. history:
-      2. location:
-      3. match: 
-
-
-
-
-
-
-
-
+   
+      1. 写法不同
+   
+      2. 存放位置-路由组件一般放在 pages 目录中
+   
+      3. 接收到的props不同
+   
+         路由组件的props信息：
+   
+      > history:
+      >      go: *ƒ go(n)*
+      >      goBack: *ƒ goBack()*
+      >      goForward: *ƒ goForward()*
+      >      push: *ƒ push(path, state)*
+      >      replace: *ƒ replace(path, state)*
+      >
+      > location:
+      >      pathname: "/home"
+      >      search: ""
+      >      state: undefined
+      >
+      > match:
+      >     params: {}
+      >     path: "/home"
+      >     url: "/home"
+   
+   6. NavLink和Link的区别
+   
+      - NavLink可以实现路由链接的高亮，通过activeClassName指定样式名
+      - 标签体内容是一个特殊的标签属性
+      - 通过this.props.children可以回去标签体的内容
+   
+   7. Switch
+   
+      ```jsx
+      <Route path="/about" component={About} />
+      <Route path="/home" component={Home} />
+      <Route path="/home" component={Test} />
+      ```
+   
+      会继续识别，展示Test和Home
+   
+      ```jsx
+      <Switch>
+      	<Route path="/about" component={About} />
+        <Route path="/home" component={Home} />
+        <Route path="/home" component={Test} />	
+      </Switch>
+      ```
+   
+      使用Switch之后就不再往下匹配
 
 
 
