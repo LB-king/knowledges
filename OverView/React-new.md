@@ -996,117 +996,136 @@ api网站：https://api.github.com/search/users?q=xxx
       >     path: "/home"
       >     url: "/home"
    
-   6. NavLink和Link的区别
+#### 12.5NavLink和Link的区别
+
+   - NavLink可以实现路由链接的高亮，通过activeClassName指定样式名
    
-      - NavLink可以实现路由链接的高亮，通过activeClassName指定样式名
+   - 标签体内容是一个特殊的标签属性
    
-      - 标签体内容是一个特殊的标签属性
+   - 通过this.props.children可以回去标签体的内容
    
-      - 通过this.props.children可以回去标签体的内容
+     ```jsx
+     <MyNavLink className="item" to="home">
+       Home
+     </MyNavLink>
+     ```
    
-        ```jsx
-        <MyNavLink className="item" to="home">
-          Home
-        </MyNavLink>
-        ```
+     ```jsx
+     export default class MyNavLink extends Component {
+       render() {
+         return (
+           <NavLink {...this.props}></NavLink>
+         )
+       }
+     }
+     ```
    
-        ```jsx
-        export default class MyNavLink extends Component {
-          render() {
-            return (
-              <NavLink {...this.props}></NavLink>
-            )
-          }
-        }
-        ```
-   
-        
-   
-   7. Switch
-   
-      ```jsx
-      <Route path="/about" component={About} />
-      <Route path="/home" component={Home} />
-      <Route path="/home" component={Test} />
-      ```
-   
-      会继续识别，展示Test和Home
-   
-      ```jsx
-      <Switch>
-      	<Route path="/about" component={About} />
-        <Route path="/home" component={Home} />
-        <Route path="/home" component={Test} />	
-      </Switch>
-      ```
-   
-      > 1.使用Switch之后就不再往下匹配
-      >
-      > 2.通常情况，path和component是一一对应的关系
-      >
-      > 3.Switch可以提高路由匹配效率(单一匹配)
-   
-   注意：
-   
-   默认会以**public**作为根文件夹，路由前面加/ding/home
-   
-   刷新之后，路径问题导致请求的文件加载不到，react会默认**index.html**文件的内容
-   
-   http://localhost:3000/comm.css
-   
-   http://localhost:3000/ding/comm.css
-   
-   index.html**兜底**
-   
-   多级路径的路由，刷新会导致样式丢失，解决办法如下：
-   
-   1. public/index.html 中,引入路径改成绝对的 **推荐使用**
-   
-      ```html
-      <link rel="stylesheet" href="/comm.css">
-      ```
-   
-   2. %PUBLIC_URL% ：代表public文件夹的路径
-   
-      ```html
-      <link rel="stylesheet" href="%PUBLIC_URL%/comm.css">
-      ```
-   
-   3. 改成HashRouter,#后面的内容不去解析，所以路径是什么并不会影响结果
-   
-      ```html
-      <link rel="stylesheet" href="./comm.css">
-      ```
-   
-      ```jsx
-      reactDOM.render(
-        <HashRouter>
-          <App />
-        </HashRouter>,
-        document.getElementById('root')
-      )
-      ```
-   
-   http-server：
-   
-   ```shell
-   http-server -p 8888 -o -P 
+     
+
+#### 12.6Switch
+
+```jsx
+<Route path="/about" component={About} />
+<Route path="/home" component={Home} />
+<Route path="/home" component={Test} />
+```
+
+会继续识别，展示Test和Home
+
+```jsx
+<Switch>
+	<Route path="/about" component={About} />
+  <Route path="/home" component={Home} />
+  <Route path="/home" component={Test} />	
+</Switch>
+```
+
+> 1.使用Switch之后就不再往下匹配
+>
+> 2.通常情况，path和component是一一对应的关系
+>
+> 3.Switch可以提高路由匹配效率(单一匹配)
+
+注意：
+
+默认会以**public**作为根文件夹，路由前面加/ding/home
+
+刷新之后，路径问题导致请求的文件加载不到，react会默认**index.html**文件的内容
+
+http://localhost:3000/comm.css
+
+http://localhost:3000/ding/comm.css
+
+index.html**兜底**
+
+多级路径的路由，刷新会导致样式丢失，解决办法如下：
+
+1. public/index.html 中,引入路径改成绝对的 **推荐使用**
+
+   ```html
+   <link rel="stylesheet" href="/comm.css">
    ```
-   
-   
-   
-   -p 要使用的端口（默认为8080）；
-   -o 启动服务器后打开浏览器窗口；
-   -P 或 --proxy代理不能在本地解析给定的url的所有请求；
-   -S 或 --ssl启用https；
+
+2. %PUBLIC_URL% ：代表public文件夹的路径
+
+   ```html
+   <link rel="stylesheet" href="%PUBLIC_URL%/comm.css">
+   ```
+
+3. 改成HashRouter,#后面的内容不去解析，所以路径是什么并不会影响结果
+
+   ```html
+   <link rel="stylesheet" href="./comm.css">
+   ```
+
+   ```jsx
+   reactDOM.render(
+     <HashRouter>
+       <App />
+     </HashRouter>,
+     document.getElementById('root')
+   )
+   ```
+
+http-server：
+
+```shell
+http-server -p 8888 -o -P 
+```
 
 
 
+-p 要使用的端口（默认为8080）；
+-o 启动服务器后打开浏览器窗口；
+-P 或 --proxy代理不能在本地解析给定的url的所有请求；
+-S 或 --ssl启用https；
 
+#### 12.5匹配模式
 
+默认是模糊匹配：
 
+> <NavLink to="/home/a/b" />
+>
+> <Route path="/home" />
+>
+> 上面能够匹配下面的路由
 
+开启严格匹配：exact
 
+> <Route exact path="/home" />
+
+1. 默认使用的是模糊匹配(简单记：【输入的路径】必须包含要【匹配的路径】，且顺序要一致)
+2. 开启严格匹配：<Route exact path="/home" />
+3. 严格匹配不要随便开启，需要再开，有些时候开启会导致无法继续匹配二级路由
+
+#### 12.6重定向Redirect
+
+```jsx
+<Redirect to="home" />
+//放在路由最下方
+```
+
+#### 12.7路由嵌套
 
 
 
