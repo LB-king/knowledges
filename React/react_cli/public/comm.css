@@ -1,0 +1,13 @@
+.item {
+  display: inline-block;
+  width: 200px;
+  padding: 15px;
+  background-color: #eee;
+  color: #666;
+  text-align: center;
+  margin-right: 10px;
+}
+.item.active {
+  color: red;
+  background-color: rgb(153, 153, 47);
+}
