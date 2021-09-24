@@ -1,5 +1,5 @@
 import { Component } from 'react' //分别暴露
-import { Route } from 'react-router-dom'
+import { Route, Redirect } from 'react-router-dom'
 import Home from './pages/Home'
 import About from './pages/About'
 import Title from './components/Title'
@@ -18,7 +18,7 @@ export default class App extends Component {
         <div className="routerMain">
           <Route path="/about" component={About} />
           <Route path="/home" component={Home} />
-          {/* <Redirect to="about" /> */}
+          <Redirect to="home" />
         </div>
 
         {/* 注册路由 */}

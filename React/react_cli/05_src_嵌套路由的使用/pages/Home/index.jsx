@@ -14,7 +14,7 @@ class Home extends Component {
           <Switch>
             <Route path="/home/message" component={Message} />
             <Route path="/home/news" component={News} />
-            <Redirect to="/home/news" />
+            <Redirect to="/home/message" />
           </Switch>
         </div>
       </div>

@@ -1,3 +1,16 @@
+### 其他
+
+vscode中jsx语法标签自动闭合：
+
+```json
+{
+  "emmet.includeLanguages": {
+    "wxml": "html",
+    "javascript": "javascriptreact"
+  },
+}
+```
+
 ### 1.react是什么？
 
 > 用于构建用户界面的JavsScript库
@@ -1126,6 +1139,131 @@ http-server -p 8888 -o -P
 ```
 
 #### 12.7路由嵌套
+
+1. 注册子路由时要写上父路由的path值
+2. 路由的匹配是按照注册路由的顺序进行的
+
+```jsx
+import React, { Component } from 'react'
+import { Route, Redirect, Switch } from 'react-router-dom'
+import MyNavLink from '../../components/MyNavLink'
+import Message from './Message'
+import News from './News'
+class Home extends Component {
+  render() {
+    return (
+      <div>
+        <h3>Home页面的内容</h3>
+        <MyNavLink to="/home/news">news</MyNavLink>
+        <MyNavLink to="/home/message">message</MyNavLink>
+        <div>
+          <Switch>
+            <Route path="/home/message" component={Message} />
+            <Route path="/home/news" component={News} />
+            <Redirect to="/home/message" />
+          </Switch>
+        </div>
+      </div>
+    )
+  }
+}
+
+export default Home
+```
+
+#### 12.8路由组件传递参数
+
+1. 传递params参数
+
+   - 路由链接(携带参数):<Link to={/home/msg/id/name}>详情</Link>
+   - 注册路由(声明接收): <Route path="/home/msg/:id/:name" component={User}/>
+   - 接收参数：const {id, name} = this.props.match.params
+
+2. 传递search参数
+
+   **key=value&key=value  这种编码方式叫urlencoded方式**
+
+   - 路由链接(携带参数): 
+
+     ```jsx
+     let id, name;
+     <Link to=`/home/msg/detail?id=${id}&name=${name}`>详情</Link>
+     ```
+
+   - 注册路由(声明参数):什么都不用传
+
+     ```jsx
+     <Route path="/home/message/detail" component={Detail} />
+     ```
+
+   - 接收参数： 
+
+     ```jsx
+     import qs from 'querystring'
+     //参数存在：this.props.location.search
+     //?id=xxx&name=xxx,所以用以下方法去掉?slice
+      let { id, title } = qs.parse(this.props.location.search.slice(1))
+     ```
+
+3. 传递state参数
+
+   - 路由链接(携带参数),路径没有参数
+
+     ```jsx
+     let routeParam = {
+       pathname: '/home/msg/detail',
+       state: {
+         id: 'xxx',
+         name: 'xxx'
+       }
+     }
+     <Link to={routeParam}>详情</Link>
+     ```
+
+   - 注册路由(声明参数)：什么都不用传
+
+     ```jsx
+     <Route path="/home/message/detail" component={Detail} />
+     ```
+
+   - 接收参数
+
+     ```jsx
+      let { id, name } = this.props.location.state
+     ```
+
+     刷新浏览器数据不会丢，BrowserRouter 会把信息存储在history的location里面。
+
+     清除缓存会导致历史记录被清除，不能回到原页面，所以要做为空处理
+
+#### 12.9多种路由跳转方式
+
+​	push(压栈) & replace(替换)
+
+​	留痕迹 & 不留痕迹
+
+```jsx
+<MyNavLink replace to="/about">About</MyNavLink>
+```
+
+#### 12.10编程式路由：
+
+```jsx
+//2.params参数
+this.props.history.push(`/home/message/detail/${item.id}/${item.title}`)
+//2.search参数
+this.props.history.push(`/home/message/detail/?id=${item.id}&title=${item.title}`)
+//3.state参数
+this.props.history.push(`/home/message/detail`, {id:'XXX', name: 'YYY'})
+```
+
+前进和回退
+
+```jsx
+this.props.history.goBack()
+this.props.history.goForward()
+this.props.history.go(-1) //-1回退1步，2前进2步
+```
 
 
 

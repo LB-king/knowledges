@@ -13,11 +13,11 @@ export default class Detail extends Component {
   render() {
     console.log(this.props)
     // 1.接收params参数
-    let { id, title } = this.props.match.params
+    // let { id, title } = this.props.match.params
     // 2.接收search参数
     // let { id, title } = qs.parse(this.props.location.search.slice(1))
     // 3.接收state参数
-    // let { id, title } = this.props.location.state || {}
+    let { id, title } = this.props.location.state || {}
     let content = contents.find((c) => c.id === id) || ''
     return (
       <ul>
