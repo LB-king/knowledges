@@ -1490,9 +1490,70 @@ https://blog.csdn.net/Sitaigu/article/details/119223742
 
 #### 16.5完整案例
 
+![](\img\redux完整版.png)
 
+constant.js
 
+该模块是用于定义action对象中type类型的常量值,既便于管理，又防止写错
 
+```js
+export const INCREASE = 'increaseNum'
+export const DECREASE = 'decreaseNum'
+```
+
+action.js
+
+```js
+/* 该文件专门为Count组件生成action对象 */
+import { INCREASE, DECREASE } from './constant'
+export const increaseAction = (data) => ({ type: INCREASE, data })
+export const decreaseAction = (data) => ({ type: DECREASE, data })
+```
+
+#### 16.6异步action
+
+action:
+
+- 对象{} 同步
+- function(){} 异步
+
+1. 延迟的动作不想交给组件自身，想交给action
+
+2. 何时需要异步action：想要对状态进行操作，但是具体的数据靠异步任务返回。
+
+3. 具体编码：
+
+   - `yarn add reduc-thunk` ,并配置到store中
+   - 创建action的函数不再返回一个对象，而是一个函数，该函数中写异步任务
+   - 异步任务有结果后，分发一个同步的action去真正操作数据
+
+4. 备注：异步action不是必须要写的
+
+   action.js
+
+   ```js
+   export const increaseActionAsync = (data, time) => {
+     return (dispatch) => {
+       setTimeout(() => {
+         dispatch(increaseAction(data))
+       }, time)
+     }
+   }
+   ```
+
+   store.js
+
+   ```js
+   //引入createStore，专门用于创建redux中最核心的store对象
+   import { createStore, applyMiddleware } from 'redux'
+   //引入为Count组件服务的reducer
+   import countReducer from './count_reducer'
+   import thunk from 'redux-thunk'
+   //暴露store
+   export default createStore(countReducer, applyMiddleware(thunk))
+   ```
+
+   
 
 
 
