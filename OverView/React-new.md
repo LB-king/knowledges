@@ -1269,6 +1269,267 @@ this.props.history.go(-1) //-1回退1步，2前进2步
 
 
 
+antd适用哪些样式?
+
+内部系统，后台管理系统
+
+移动端-vant
+
+### 14.按需引入
+
+运行npm run **eject**
+
+暴露webpack的配置：项目根目录会多2个文件夹 scripts  config
+
+- 修改默认配置
+
+  1. ```shell
+     yarn add react-app-rewired customize-cra
+     ```
+
+  2. 修改package.json
+
+     ```json
+     /* package.json */
+     "scripts": {
+     -   "start": "react-scripts start",
+     +   "start": "react-app-rewired start",
+     -   "build": "react-scripts build",
+     +   "build": "react-app-rewired build",
+     -   "test": "react-scripts test",
+     +   "test": "react-app-rewired test",
+     }
+     ```
+
+  4. 然后在项目根目录创建一个 `config-overrides.js` 用于修改默认配置。
+
+     ```js
+     module.exports = function override(config, env) {
+       // do stuff with the webpack config...
+       return config;
+     };
+     ```
+
+  4. 使用 babel-plugin-import
+  
+     ```shell
+     yarn add babel-plugin-import
+     ```
+  
+     ```js
+     const { override, fixBabelImports } = require('customize-cra')
+     module.exports = override(
+       fixBabelImports('import', {
+         libraryName: 'antd',
+         libraryDirectory: 'es',
+         style: 'css'
+       })
+     )
+     ```
+  
+     
+
+| 只引入Button | 开启按需引入 |      |
+| ------------ | ------------ | ---- |
+| 2.75Mb       | 1.01Mb       |      |
+|              |              |      |
+|              |              |      |
+
+### 15.自定义主题 
+
+存在版本问题
+
+less-loader 5.xx的版本做如下配置：
+
+```js
+const { override, fixBabelImports, addLessLoader } = require('customize-cra')
+module.exports = override(
+  fixBabelImports('import', {
+    libraryName: 'antd',
+    libraryDirectory: 'es',
+    style: true
+  }),
+  addLessLoader({
+    javascriptEnabled: true, //允许js修改less
+    modifyVars: { '@primary-color': '#cd0026' }
+  })
+)
+```
+
+### 16.redux
+
+#### 16.1什么是redux
+
+1. redux是一个专门用于做**状态管理**的JS库(不是react插件库)
+2. 它可以用在react，angular，vue等项目中，但是基本上与react配合使用
+3. 作用：集中式管理react应用中多个组件**共享**的状态
+
+#### 16.2什么时候需要
+
+1. 某个组件的状态，需要让其他组件可以随时拿到(共享)
+2. 一个组件需要改变另一个组件的状态(通信)
+3. 总体原则：能不用就不用，如果不用比较吃力才考虑使用
+
+#### 16.3原理
+
+图片示意
+
+![](\img\redux-原理.png)
+
+reducer初始化状态&加工状态
+
+初始化的时候 :
+
+previousState 是undefined
+
+action: {type:@@init, data: ''} 没有data属性
+
+#### 16.4三个核心概念
+
+1. **action**
+
+   - 动作的对象
+   - 包含2个属性
+     - type：标识属性，值为字符串，唯一，必要属性
+     - data：数据属性，值任何类型，可选属性
+   - 如： {type:'ADD', data: {name:'xxx', price:333}}
+
+2. **reducer**
+
+   - 用于初始化，加工状态
+   - 加工时，根据旧的**state**和**action**，产生新的state的**纯函数**
+
+3. **store**
+
+   - 将**state**和**action**、**reducer**联系在一起的对象
+   - 如何得到此对象？
+     - import {createStore} from 'redux'
+     - import reducer from './reducers
+     - const store = createStore(reducer)
+   - 此对象功能？
+     - getState():获取state
+     - dispatch(action):分发action，触发reducer调用，产生新的state
+     - subscribe(listener):注册监听，当产生了新的state时，自动调用
+
+4. 案例解析：
+
+   1. 去除Count组件的state
+
+   2. src目录新建：
+
+      -src
+
+      ​	-redux
+
+      ​		-store.js
+
+      ​		-count_reducer.js
+
+   3. store.js
+
+      ```js
+      /* 该文件专门暴露一个store对象 */
+      //引入createStore，专门用于创建redux中最核心的store对象
+      //引入为Count组件服务的reducer
+      //暴露store
+      import { createStore } from 'redux'
+      import countReducer from './count_reducer'
+      export default createStore(countReducer)
+      
+      ```
+
+   4. count_reducer.js
+
+      ```js
+      /*
+      1.reducer本身是一个函数，接收：prestate，action，返回加工后的状态
+      2.reducer有2个作用：初始化状态，加工状态
+      3.reducer第一次被调用时，是store自动触发的，
+      	传递的preState是undefined
+      	传递的action是:@@initxxxxx
+      */
+      export default function countReducer(preState = 0, action) {
+        console.log('action', action)
+        let { type, data } = action
+        switch (type) {
+          case 'increaseNum':
+            return preState + data
+          case 'decreaseNum':
+            return preState - data
+          default:
+            return preState
+        }
+      }
+      ```
+
+   5. 在入口文件index.js中监测store中状态的改变，一旦改变则重新渲染<App/>，省的在子页面组件中每次都写
+
+      ```js
+      import store from './redux/store'
+      //初始化渲染
+      reactDOM.render(
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>,
+        document.getElementById('root')
+      )
+      //更改之后渲染
+      store.subscribe(() => {
+        reactDOM.render(
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>,
+          document.getElementById('root')
+        )
+      })
+      ```
+
+      redux只管理状态，更新页面的事需要开发中手动驱动
+
+https://blog.csdn.net/Sitaigu/article/details/119223742
+
+#### 16.5完整案例
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
