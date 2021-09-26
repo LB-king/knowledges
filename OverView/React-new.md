@@ -1257,23 +1257,63 @@ this.props.history.push(`/home/message/detail/?id=${item.id}&title=${item.title}
 this.props.history.push(`/home/message/detail`, {id:'XXX', name: 'YYY'})
 ```
 
-前进和回退
+借助this.props.history对象上的API操作路由跳转、前进、后退
 
 ```jsx
+this.props.history.push()
+this.props.history.replace()
+//前进和后退
 this.props.history.goBack()
 this.props.history.goForward()
 this.props.history.go(-1) //-1回退1步，2前进2步
 ```
 
+#### 12.11withRouter
+
+让一般组件使用路由组件的API
+
+withRouter的返回值是一个新的组件
+
+```jsx
+import { withRouter } from 'react-router-dom'
+class Component extends Component {}
+export default withRouter(Component)
+```
+
+#### 12.12BrowserRouter和HashRouter的区别
+
+1. 底层原理不一样
+   - BrowserRouter使用的是H5的history API，不兼容IE9及以下产品
+   - HashRouter使用的是URL的哈希值
+2. Path表现形式不一样
+   - BrowserRouter的路径中没有#
+   - HashRouter包含#，#后面的参数都不会发送给服务器
+3. 刷新后对路由state参数的影响
+   - BrowserRouter没有任何影响，因为state存在history对象中
+   - HashRouter刷新后会导致路由state参数的丢失，没有history这个api，所以参数会丢失
+4. 备注：HashRouter可以解决一些路径错误相关的问题
+
+### 13.UI组件库
+
+#### 13.1.marerial-ui
+
+#### 13.2.ant-design
+
+https://ant.design/index-cn
+
+注意：有些组件直接从antd上引入，有些是从下面的库引入
+
+```jsx
+import { Button } from 'antd'
+import { HomeOutlined } from '@ant-design/icons'
+
+<div className="App">
+  <Button type="primary">primary button</Button>
+  <HomeOutlined />
+</div>
+```
 
 
-
-
-antd适用哪些样式?
-
-内部系统，后台管理系统
-
-移动端-vant
 
 ### 14.按需引入
 
