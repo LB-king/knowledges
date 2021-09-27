@@ -1674,7 +1674,62 @@ export default createStore(countReducer, applyMiddleware(thunk))
 
 在入口文件就不需要使用 `store.subscribe(() => {})`方法包住组件了，react-redux帮助我们实现视图的更新了
 
+引入Provider，监控所有引入store 的容器组件。不用对单个组件监听
 
+```jsx
+<Hello store={store}></Hello>
+```
+
+
+
+index.js
+
+```js
+import reactDOM from 'react-dom'
+import { Provider } from 'react-redux'
+import store from './redux/store'
+
+reactDOM.render(
+  <BrowserRouter>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </BrowserRouter>,
+  document.getElementById('root')
+)
+```
+
+#### 17.4优化
+
+- 容器组件和UI组件整合一个文件
+
+- 无需自己给组件传递store，给App包裹一个Provider即可
+
+  ```jsx
+  <Hello store={store}></Hello>
+  <Provider store={store}>
+    <App />
+  </Provider>
+  ```
+
+- 使用react-redux后不用自己监测redux中状态的改变，容器组件自动完成这个工作
+
+- mapDispatchToProps 对象写法
+
+- 一个组件要和redux产生关系的步骤：
+
+  1. 定义好UI组件，暴露容器组件
+
+  2. 引入connect生成容器组件：
+
+     ```
+     connect(
+     	state => {name: xxxx}, //映射状态
+     	{key: 方法名称} //映射操作状态的方法
+     )(UI组件)
+     ```
+
+  3. 在UI组件中通过this.props.xxx读取和操作状态
 
 
 

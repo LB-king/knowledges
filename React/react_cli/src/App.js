@@ -1,6 +1,5 @@
 import { Component } from 'react' //分别暴露
 import { Button } from 'antd'
-import store from './redux/store'
 import Count from './containers/Count'
 import './App.css'
 
@@ -13,7 +12,7 @@ export default class App extends Component {
         <Button type="primary">按钮</Button>
         <Button>基础按钮</Button>
         <hr />
-        <Count store={store} />
+        <Count />
       </div>
     )
   }
