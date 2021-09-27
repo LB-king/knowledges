@@ -1563,13 +1563,13 @@ action:
 
 3. 具体编码：
 
-   - `yarn add reduc-thunk` ,并配置到store中
+   - `yarn add redux-thunk` ,并配置到store中
    - 创建action的函数不再返回一个对象，而是一个函数，该函数中写异步任务
    - 异步任务有结果后，分发一个同步的action去真正操作数据
 
 4. 备注：异步action不是必须要写的
 
-   action.js
+   action.js，异步action一般会调用一个同步action
 
    ```js
    export const increaseActionAsync = (data, time) => {
@@ -1583,6 +1583,8 @@ action:
 
    store.js
 
+   引入中间件applyMiddleware()，并使用中间件
+   
    ```js
    //引入createStore，专门用于创建redux中最核心的store对象
    import { createStore, applyMiddleware } from 'redux'
@@ -1590,14 +1592,87 @@ action:
    import countReducer from './count_reducer'
    import thunk from 'redux-thunk'
    //暴露store
-   export default createStore(countReducer, applyMiddleware(thunk))
+export default createStore(countReducer, applyMiddleware(thunk))
    ```
 
-   
+### 17.react-redux
 
+![](E:\codeSpace\knowledges\OverView\img\react-redux模型图.png)
 
+#### 17.1基本使用
 
+1. 安装react-redux
 
+   ```shell
+   yarn add react-redux
+   ```
+
+2. 引入容器组件,直接传递store
+
+   ```jsx
+   import store from './redux/store'
+   <Count store={store}/>
+   ```
+
+3. 新建容器组件 container/Count
+
+   ```jsx
+   import {connect} from 'react-redux'
+   import CountUI from '../components/Count'
+   import {increaseAction} from '../redux/count_action'
+   // 传递状态，ract-redux已经将状态处理为state放在函数默认参数中
+   function mapStateToProps(state) {
+     return {
+       count: state
+     }
+   }
+   // 传递修改状态的方法
+   function mapDispathToProps(dispatch){
+     return {
+       add: num => dispatch(increaseAction(num)),
+       minus: num => dispatch(decreaseAction(num))
+     }
+   }
+   export default connect(mapStateToProps,mapDispathToProps)(CountUI)
+   ```
+
+#### 17.2简化写法
+
+1. 明确两个概念：
+
+   - UI组件：不能使用redux的API，只负责页面展示和交互
+   - 容器组件：负责和redux通信，将结果交给UI组件
+
+2. 如何创建一个容器组件--使用react-redux的connect函数
+
+    ```jsx
+   connect(mapStateToProps, mapDispatchToProps)(CountUI)
+    ```
+
+   mapStateToProps：映射状态，返回值是一个对象
+
+   mapDispatchToProps：映射操作状态的方法，返回值是一个对象
+
+3. 备注：容器组件的store是靠props传递进去的，而不是直接在容器组件中引入
+
+4. mapDispatchToProps也可以是一个对象
+
+   简写：react-redux会帮我们自动dispatch
+
+   ```jsx
+   export default connect(
+     (state) => ({ count: state }),
+     {
+       increase: increaseAction,
+       decrease: decreaseAction,
+       increaseAsync: increaseActionAsync
+     }
+   )(CountUI)
+   ```
+
+#### 17.3响应式
+
+在入口文件就不需要使用 `store.subscribe(() => {})`方法包住组件了，react-redux帮助我们实现视图的更新了
 
 
 
