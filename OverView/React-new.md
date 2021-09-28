@@ -1422,7 +1422,7 @@ reducer初始化状态&加工状态
 
 previousState 是undefined
 
-action: {type:@@init, data: ''} 没有data属性
+action: {type:"@@redux/INITp.5.g.f.o.9", data: ""} 没有data属性
 
 #### 16.4三个核心概念
 
@@ -1647,7 +1647,7 @@ export default createStore(countReducer, applyMiddleware(thunk))
 
     ```jsx
    connect(mapStateToProps, mapDispatchToProps)(CountUI)
-    ```
+   ```
 
    mapStateToProps：映射状态，返回值是一个对象
 

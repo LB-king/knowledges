@@ -6,7 +6,7 @@ import {
   increaseAction,
   decreaseAction,
   increaseActionAsync
-} from '../../redux/count_action'
+} from '../../redux/actions/count'
 
 //定义Count的UI组件
 class CountUI extends Component {
@@ -56,7 +56,7 @@ class CountUI extends Component {
 
 // 使用connect()()创建并暴露一个Count的容器组件
 export default connect(
-  (state) => ({ count: state }),
+  (state) => ({ count: state.count }),
   //一般写法
   /*  (dispatch) => ({
     increase: (num) => dispatch(increaseAction(num)),

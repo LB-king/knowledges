@@ -1,6 +1,7 @@
 import { Component } from 'react' //分别暴露
 import { Button } from 'antd'
 import Count from './containers/Count'
+import Person from './containers/Person'
 import './App.css'
 
 //创建并暴露App
@@ -13,6 +14,8 @@ export default class App extends Component {
         <Button>基础按钮</Button>
         <hr />
         <Count />
+        <hr />
+        <Person />
       </div>
     )
   }

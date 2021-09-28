@@ -4,3 +4,4 @@
 
 export const INCREASE = 'increaseNum'
 export const DECREASE = 'decreaseNum'
+export const ADD_PERSON = 'addPerson'
