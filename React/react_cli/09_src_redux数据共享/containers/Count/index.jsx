@@ -35,10 +35,11 @@ class CountUI extends Component {
   }
 
   render() {
-    let { count } = this.props
+    let { count, personsNum } = this.props
     return (
       <div>
         <h2>当前求和为：{count}</h2>
+        <h2>下面列表的人数是：{personsNum}</h2>
         <select ref={(e) => (this.selectValue = e)}>
           <option value="1">1</option>
           <option value="2">2</option>
@@ -56,7 +57,10 @@ class CountUI extends Component {
 
 // 使用connect()()创建并暴露一个Count的容器组件
 export default connect(
-  (state) => ({ count: state.count }),
+  (state) => ({
+    count: state.count,
+    personsNum: state.persons.length
+  }),
   //一般写法
   /*  (dispatch) => ({
     increase: (num) => dispatch(increaseAction(num)),

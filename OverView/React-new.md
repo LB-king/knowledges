@@ -33,7 +33,7 @@ vscode中jsx语法标签自动闭合：
 
 4. react高效的原因？
 
-   - 使用虚拟dom，不直接对操作页面的真是dom
+   - 使用虚拟dom，不直接对操作页面的真实dom
    - dom diffing算法，最小化页面重绘
 
 ### 3.基本使用
@@ -1534,7 +1534,7 @@ https://blog.csdn.net/Sitaigu/article/details/119223742
 
 constant.js
 
-该模块是用于定义action对象中type类型的常量值,既便于管理，又防止写错
+该模块是用于定义action对象中type类型的常量值,既便于管理,又防止写错
 
 ```js
 export const INCREASE = 'increaseNum'
@@ -1620,7 +1620,7 @@ export default createStore(countReducer, applyMiddleware(thunk))
    import {connect} from 'react-redux'
    import CountUI from '../components/Count'
    import {increaseAction} from '../redux/count_action'
-   // 传递状态，ract-redux已经将状态处理为state放在函数默认参数中
+   // 传递状态，react-redux已经将状态处理为state放在函数默认参数中
    function mapStateToProps(state) {
      return {
        count: state
@@ -1731,15 +1731,100 @@ reactDOM.render(
 
   3. 在UI组件中通过this.props.xxx读取和操作状态
 
+#### 17.5数据共享
+
+1. 定义一个Person组件，和Count组件通过redux共享数据
+2. 为Person组件编写reducer、action，配置constant常量
+3. 重点：Person的reducer和Count的reducer要使用combineReducers进行合并，合并后的总状态是一个对象
+4. 交给store的是总reducer，最后注意在组件中取出状态的时候，取到位
 
 
 
+###17.0 纯函数
 
+```js
+ case ADD_PERSON:
+      return [...preState, data]
 
+//写成：
+preState.unshift(data)
+return preState
+//打印数据preState会变化，但是页面并不会刷新，react底层进行了浅比较，所以不会更新
+```
 
+1. 一类特别的函数：只要是同样的输入(实参)，必定得到同样的输出(返回)
+2. 必须遵守以下一些约束
+   - 不得改写参数数据
+   - 不会产生任何副作用，例如网络请求，输入和输出设备
+   - 不能调用Date.now()或者Math.random()等不纯的方法
+3. redux的render函数必须是一个纯函数
 
+### 18.redux开发者工具
 
+```shell
+yarn add redux-devtools-extension
+```
 
+store.js
+
+```js
+//引入redux-devtools-extension
+import { composeWithDevTools } from 'redux-devtools-extension'
+import { createStore, applyMiddleware, combineReducers } from 'redux'
+import countReducer from './reducers/count'
+import personReducer from './reducers/person'
+export default createStore(
+  allReducer,
+  composeWithDevTools(applyMiddleware(thunk))
+)
+```
+
+### 扩展
+
+#### 1.setState
+
+setState更新状态的2种写法
+
+- 对象式的写法
+
+```js
+setState(stateChange, [callback]) ---对象式的setState
+//stateChange是状态改变对象(该对象可以体现出状态的更改)
+//callback是可选的回调函数，他表示在状态更新完成，界面也更新后(render调用后才被调用)
+this.setState(
+  {
+    count: this.state.count + 1
+  },
+  () => {
+    console.log(this.state.count) //表示在状态更新完成，界面也更新后(render调用后才被调用)
+  }
+)
+console.log(this.state.count) //由于react是异步更新界面的，所以这里不会打印改变之后的值
+```
+
+- 函数式的setState
+
+  setState(updater, [callback]) ---函数式的setState
+
+  - updater为返回statechange对象的函数
+  - updater可以接收state和props
+  - callback是可选的回调函数，他表示在状态更新完成，界面也更新后(render调用后才被调用)
+
+```js
+this.setState((state, props) => {
+  return {
+    count: state.count + 1
+  }
+})
+```
+
+- 对象式的setState是函数式的setState的简写方式(语法糖)
+- 使用原则：
+  - 如果新状态不依赖于原状态  ===> 使用对象方式
+  - 如果新状态依赖于原状态 ===> 使用函数方式
+  - 如果需要在setState()执行后获取最新的状态数据，要在第二个callback函数中读取
+
+#### 2
 
 
 

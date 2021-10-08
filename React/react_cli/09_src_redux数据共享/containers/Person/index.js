@@ -11,19 +11,19 @@ class Person extends Component {
       target: { value }
     } = event
     if (event.keyCode === 13 && value) {
-      this.props.addPerson({name: value, age:'xxx'})
+      this.props.addPerson({ name: value, age: 'xxx' })
       event.target.value = ''
     }
   }
   render() {
-    let list = this.props.persons
-    console.log(list)
+    let { persons, count } = this.props
     return (
       <div>
         <h3>这是Person组件：</h3>
+        <h3>上面组件的求和是：{count}</h3>
         <input placeholder="输入内容并添加" type="text" onKeyUp={this.add} />
         <ul>
-          {list.map((item, index) => (
+          {persons.map((item, index) => (
             <li key={index}>{item.name}</li>
           ))}
         </ul>
@@ -32,6 +32,12 @@ class Person extends Component {
   }
 }
 
-export default connect((state) => ({ persons: state.persons }), {
-  addPerson
-})(Person)
+export default connect(
+  (state) => ({
+    persons: state.persons,
+    count: state.count
+  }),
+  {
+    addPerson
+  }
+)(Person)
