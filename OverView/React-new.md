@@ -1824,27 +1824,194 @@ this.setState((state, props) => {
   - 如果新状态依赖于原状态 ===> 使用函数方式
   - 如果需要在setState()执行后获取最新的状态数据，要在第二个callback函数中读取
 
-#### 2
+#### 2.lazyLoad
 
+```jsx
+import React, { Component, lazy, Suspense } from 'react'
+import { NavLink, Route } from 'react-router-dom'
+// import Home from './pages/Home'
+// import About from './pages/About'
+let Home = lazy(() => import('./pages/Home'))
+let About = lazy(() => import('./pages/About'))
 
+//需要用Suspense包住Route
+ <Suspense fallback={<h3>loading......</h3>}>
+   <Route path="/LazyLoad/home" component={Home}></Route>
+   <Route path="/LazyLoad/about" component={About}></Route>
+ </Suspense>
+```
 
+注意：loading组件不能用**lazy**引入
 
+#### 3.Hooks
 
+##### 3.1是什么？
 
+> 1.Hook是react16.8版本增加的新特性，新语法
+>
+> 2.可以让你在**函数组件**中使用state以及其他的react特性
 
+##### 3.2三个常用Hook
 
+> State Hook:React.useState()
+>
+> Effect Hook:React.useEffect()
+>
+> Ref Hook:React.useRef()
 
+##### 3.3State Hook
 
+- state hook让函数组件也可以有state状态，并进行状态数据的读写操作
 
+- 语法：const [xxx,setXxx] = React.useState(initValue)
 
+- useState说明：
 
+  - 参数：第一次初始化指定的值在内部做缓存
+  - 返回值：包含2个元素的数组，第1个为内部当前状态值，第2个为更新状态的函数
 
+- setXxx的2种写法：
 
+  - setXxx(newValue):参数为非函数，直接指定新的状态，内部用其覆盖原来的状态值
+  - setXxx(value => newValue): 参数是函数，接收原来的状态值，返回新的状态值，内部用其覆盖原来的状态值
 
+  ```jsx
+  const [count, setCount] = React.useState(0)
+  const [name, setName] = React.useState('TOM')
+  function add() {
+    //setCount(count + 1)//第一种写法
+    setCount((count) => count + 1)
+  }
+  function changeName() {
+    setName((name) => name + 'xxx')
+  }
+  ```
 
+##### 3.4Effect Hook
 
+- Effect Hook 可以让你在函数组件中执行副作用操作(用于模拟类组件中的生命周期钩子)
 
+- React中的副作用操作：
 
+  - 发ajax请求
+  - 设置订阅 / 启动定时器
+  - 手动更改真实dom
+
+- 语法和说明：
+
+  ```jsx
+  //不加第二个参数就检测所有人的变化，[]谁都不检测,[name]只检测name
+    React.useEffect(() => 
+      //在此可以执行任何带副作用操作
+      let timer = setInterval(() => {
+        setCount((count) => count + 1)
+      }, 1000)
+      //返回的回调相当于componentWillUnmount
+      return () => {
+        clearInterval(timer)
+      }
+    }, []) //如果指定的是[],回调函数只会在第一次render()后执行
+  ```
+
+- 可以把 useEffect hook看做一下3个函数的组合
+
+  - componentDidMount
+  - componentDidUpdate
+  - componentWillUnmount
+
+##### 3.5ref hook
+
+- ref hook可以在函数组件中存储/查找组件内的标签或其他数据
+
+- 语法  const myRef = React.useRef()
+
+- 作用：保存标签对象，功能与React.createRef()一样
+
+  ```jsx
+   const myRef = React.useRef()
+   function show(e) {
+      if(e.keyCode === 13)
+      console.log(myRef.current.value)
+    }
+  <input type="text" ref={myRef} onKeyUp={show}/>
+  ```
+
+#### 4.Fragment
+
+```jsx
+import React, { Component, Fragment } from 'react'
+<Fragment key={3}> //其他属性会报错
+  <input type="text"/>
+  <input type="text"/>
+</Fragment>
+  
+  //空标签也可以，但是不能写其他属性
+  <>
+  </> 
+```
+
+#### 5.Context
+
+理解：
+
+> 一种组件间通信方式，常用于【祖组件】与【后代组件】间通信
+
+使用：
+
+```jsx
+//1.创建context容器对象
+const MyContext = React.createContext()
+let { Provider, Consumer } = MyContext
+
+//2.渲染子组件时，外面包裹Provider，通过value给后代组件传递数据
+<Provider value={{ name, age: 18 }}>
+  <B />
+</Provider>
+
+//3.后代组件读取数据
+  //第一种方式：仅适用于类组件
+  static contextType = MyContext
+	this.context //存储数据
+	//第二种方式：函数组件和类组件都可以使用
+function C() {
+  return (
+    <div className="grand">
+     <Consumer>
+       {({ name, age }) => {
+         return `${name}, 年龄是:${age}`
+       }}
+      </Consumer>
+    </div>
+  )
+}
+  
+```
+
+注意：在应用开发中一般不用context，一般用它封装react插件
+
+#### 6.组件优化
+
+**Component的2个问题**
+
+> 1.只要执行setState(),即使不改变状态数据，组件也会重新render()
+>
+> 2.只要当前组件重新render()，就会自动重新render子组件,即使子组件没有用到父组件的任何数据 ==>效率低
+
+**效率高的做法**
+
+> 只有当组件的state或props数据发生改变的时候才重新render()
+
+**原因**
+
+> Component中的shouldComponentUpdate()总是返回**true**
+
+**解决办法**
+
+1. 重写shouldComponentUpdate()
+
+2. 使用PureComponent
+
+   注意：只是进行state和props数据的浅比较，不要直接修改数据，要产生新的数据
 
 
 
