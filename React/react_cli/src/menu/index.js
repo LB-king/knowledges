@@ -4,6 +4,7 @@ import Hooks from '../components/03_hooks'
 import Fragment from '../components/04_fragment'
 import Context from '../components/05_context'
 import Optimize from '../components/06_optimize'
+import RenderProps from '../components/07_renderProps'
 let menus = [
   {
     name: 'SetState',
@@ -28,6 +29,10 @@ let menus = [
   {
     name: 'Optimize',
     component: Optimize
+  },
+  {
+    name: 'RenderProps',
+    component: RenderProps
   }
 ]
 export default menus

@@ -2013,23 +2013,90 @@ function C() {
 
    注意：只是进行state和props数据的浅比较，不要直接修改数据，要产生新的数据
 
+#### 7.renderProps
+
+相当于vue中的插槽
+
+如何向组件内部动态传入带内容的结构(标签)？
+
+VUE中：
+
+​	使用slot技术，通过组件标签体传入结构 <A><B/></A>
+
+REACT中：
+
+​	使用children props：通过组件标签传入结构
+
+​	使用render props：通过组件便签属性传入结构，并且可以传递参数，一般用render函数属性
+
+**children props**
+
+```jsx
+<A>KKKKK</A>
+
+{this.props.children}
+```
+
+**render props**
+
+```jsx
+<A render={(param) => <B param={param} />}></A>
+
+{this.props.render({ name, age: 18 })}
+```
 
 
 
+#### 8.错误边界
+
+error boundary,适用于生产环境
+
+子组件的错误不能影响到父组件
+
+```jsx
+ //当Parent的子组件报错的时候会触发getDerivedStateFromError
+  static getDerivedStateFromError(err) {
+    console.log(err)
+    return { hasErr: err }
+  }
+
+ {this.state.hasErr ? 'net err' :  <A/>}
+```
 
 
 
+#### 9.组件间通信方式
 
+- 组件间的关系
 
+  1. 父子组件
+  2. 兄弟组件(非嵌套组件)
+  3. 祖孙组件(跨级组件)
 
+- 几种通信方式
 
+  1. props
 
+     > 1.children props
+     >
+     > 2.render props
 
+  2. 消息订阅-发布
 
+     > pub-sub event
 
+  3. 集中式管理
 
+     > redux dva
 
+  4. context
 
+     > 生产者-消费者模式
 
-​	
+- 几种好的搭配
 
+  > 父子组件：props
+  >
+  > 兄弟组件：消息订阅-发布  集中式管理
+  >
+  > 祖孙组件：消息订阅-发布，集中式管理，context(一般用于开发插件)
