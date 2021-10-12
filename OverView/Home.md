@@ -907,6 +907,20 @@ function isEmpty(str) {
 
 ### Vue相关
 
+- Vue中的数据代理
+
+  通过vm对象来代理data对象中的属性操作(读/写)
+
+  好处：更加方便的操作data中的数据
+
+  基本原理：
+
+  ​	通过Object.defineProperty()把data对象中所有属性添加到vm上
+
+  ​	为每一个添加到vm上的属性，都指定一个getter/setter
+
+  ​	在getter和setter内部去操作(读/写)data中对应的属性
+
 - vue响应式数据实现原理？
 
   > 主要是通过Object.defineProperty属性方法来完成，vue实现数据双向绑定主要是采用数据劫持结合发布者订阅者模式的方式。通过Object.defineProperty来劫持各个属性的getter和setter，在数据变动时发布消息给订阅者，触发相应监听回调。
