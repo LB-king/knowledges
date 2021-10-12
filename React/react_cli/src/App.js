@@ -51,7 +51,7 @@ class App extends Component {
         </Header>
         <Content style={{ padding: '0 50px' }}>
           <Route path={`/${activeItem}`} component={activeCom}></Route>
-          {/* <Redirect to="/setState"></Redirect> */}
+          {/* <Redirect to="/SetState"></Redirect> */}
         </Content>
       </div>
     )

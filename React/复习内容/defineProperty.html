@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>defineProperty</title>
+  </head>
+  <body>
+    <script>
+      var number = 18
+      var obj = {
+        name: 'TOM',
+        sex: 'MAN',
+        age: number
+      }
+
+      Object.defineProperty(obj, 'age', {
+        // value: 18, //打印出来的结果颜色会浅一点
+        // enumerable: true, //可枚举的，默认是false
+        // writable: true, //控制属性是否可以被修改
+        // configurable: true //控制属性是否可以被删除
+        //当有人读取obj的age时,get函数(getter)就会被调用,返回的值就是age的值
+        get() {
+          console.log('getter被调用了')
+          return number
+        },
+        //当有人修改obj的age时,set函数(setter)就会被调用
+        set(value) {
+          console.log('有人修改age啦，且修改的值是：', value)
+          number = value
+        }
+      })
+      console.log(Object.keys(obj)) //不加emumerable，就无法遍历出age属性
+      console.log(obj)
+    </script>
+  </body>
+</html>
