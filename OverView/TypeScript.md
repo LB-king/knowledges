@@ -10,7 +10,7 @@ npm install typescript -g
 tsc -v
 ```
 
-**TypeScripe**是**JavaScript**的一个超集，主要提供了系统类型和对ES6的支持。
+**TypeScript*是**JavaScript**的一个超集，主要提供了系统类型和对ES6的支持。
 
 - TS增加了代码的可读性和可维护性
   - 类型系统实际上是最好的文档，大部分的函数看看类型的定义就知道如何使用了
@@ -87,6 +87,8 @@ vscode设置自动编译：
 
 ### 4.数据类型
 
+let a:number | string (联合类型)
+
 ts为了使代码编写的更规范，更有利于维护，增加了类型校验，在ts中主要给我们新增了以下数据类型：
 
 - 布尔类型(boolean)
@@ -122,7 +124,7 @@ ts为了使代码编写的更规范，更有利于维护，增加了类型校验
   let arr:Array<number> = [1, 2, 3]
   ```
 
-- 元组类型(tuple)
+- 元组类型(tuple)-固定长度的数组
 
   ```typescript
   let arr2: [string, number, boolean] = ['dr', 23, false]
@@ -135,28 +137,231 @@ ts为了使代码编写的更规范，更有利于维护，增加了类型校验
   var f:Flag = Flag.fail
   console.log(f) //0
   
-  enum Color {red, blue, orange
-  }
+  enum Color {red, blue, orange}
   console.log(Color.blue) //没有赋值的话，打印出来的是索引值1
+  ```
+
+- 任意类型(any)
+
+  ```typescript
+  let a //隐式any
+  var oBox:any = document.querySelector('box')
+  ```
+
+- unknown
+
+  > 实际上就是一个类型安全的any
+  >
+  > unknown类型的变量，不能直接赋值给其他变量
+
+  ```typescript
+  let a:unknown
+  let b:string
+  a = 99
+  a = 'ui'
+  b = a
+  //会报错
+  let a:any
+  let b:string
+  a = 99
+  a = 'ui'
+  b = a
+  //不报错，a直接祸害b了
+  ```
+
+- null和undefined
+
+  其他(never)类型的子类型
+
+  ```typescript
+  var num:number | undefined | null
+  console.log(num)
+  ```
+
+- void类型
+
+  表示没有任何类型，一般用于定义方法的时候方法没有返回值
+
+  ```typescript
+  function Void():void {
+    console.log('void')
+  }
+  Void()
+  ```
+
+  有返回值
+
+  ```typescript
+  function Void():number {
+    console.log('void')
+    return 2 //有返回值的情况，并且类型是number
+  }
+  Void()
+  ```
+
+- never类型
+
+  ```typescript
+  function fn():never {
+    throw new Error('报错')
+  }
+  //永远不会返回结果
+  ```
+
+- 类型断言
+
+  ```typescript
+  //语法：
+  变量 as 类型
+  <类型>变量
+  //类型断言,可以用来告诉解析器变量的实际类型
+  b = a as string
+  b = <string>a
+  ```
+
+- 未知的属性
+
+  ```typescript
+  // 除了name属性，其他的属性随意
+  var b: { name: string; [propName: string]: unknown }
+  b = { name: 'b', age: 18, favo: 'play' }
+  
+  //1.对象属性限制
+  var a: { name: string; age?: number } //结构要一模一杨
+  a = { name: 'tom', age: 9 }
+  //2.name之外的属性不做限制
+  var b: { name: string; [propName: string]: unknown }
+  b = { name: 'b', age: 18, favo: 'play' }
+  //3.函数限制
+  //设置函数的类型声明
+  //语法：
+  // (形参:类型,形参:类型...) => 返回值
+  var c: (a: number, b: number) => number
+  c = (m: number, n: number) => m + n
+  ```
+
+- &连接符
+
+  ```velocity
+  //连接符
+  var user: {name: string} & {age: number}
+  user = {
+    name: 'ko',
+    age: 100
+  }
+  ```
+
+- 类型的别名
+
+  ```typescript
+  type myType = 1 | 2 | 3
+  let j: myType
+  let k: myType
   ```
 
   
 
-- 任意类型(any)
+### 5.函数
 
-- null和undefined
+```typescript
+function n():number {
+  return 2233
+}
 
-- void类型
+//正确写法
+function getInfo(name:string, age:number):string {
+  return `${name}---${age}`
+}
+console.log(getInfo('KG',66))
 
-- never类型
+//可选参数，后面加一个?,记得放在必选参数后面
+function getInfo(name:string, age?:number):string {
+  return `${name}---${age}`
+}
 
+//默认参数
+function getInfo(name:string, age:number = 88):string {
+  return `${name}---${age}`
+}
 
+```
 
+### 6.编译配置
 
+编译当前文件夹下的ts，需要配合`tsconfig.json`使用
 
+```shell
+tsc -w
+```
 
+tsconfig.json
 
+```json
+{
+	"outDir": "./js", #修改编译后的js存放目录
+  "include": [
+  	"./src/**/*" #指定需要编译的文件
+  ],
+	"exclude": [
+    "./src/test/**/*"
+    #默认值：["node_modules","bower_components","jsonp_packages"]
+  ]
+}
+```
 
+配置项：
 
+- include(定义要被编译的文件目录)
 
+  > **表示任意目录
+  >
+  > *表示任意文件
+
+- exclude(定义需要排除在外的目录)
+
+- extend(定义被继承的配置文件)
+
+  ```json
+  {
+    "extends": "./config/base"
+  }
+  ```
+
+- files(指定被编译的文件)
+
+  ```json
+  {
+    "files": [
+      "a.ts",
+      "b.ts"
+    ]
+  }
+  ```
+
+- compilerOptions(常用配置&最重要的选项)
+
+  ```json
+  {
+    "compilerOptions": {
+      "target": "es5",
+      "module": "commonjs",
+      "outDir": "./js", 
+      outFile: "./dist/bundle.js"
+    }
+  }
+  ```
+
+  - target:设置ts代码编译的目标版本
+
+    > 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018', 'ES2019', 'ES2020', or 'ESNEXT'
+
+  - module(指定要使用的模块化的规范)
+
+    > 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', 'es2020', or 'ESNext'
+
+  - lib(指定代码运行时所包含的库)
+
+  - outDir(输出的文件存放目录)
+
+  - outFile(将代码合并为一个文件)-模块化需要module是system amd
 
