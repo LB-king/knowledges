@@ -346,22 +346,229 @@ tsconfig.json
       "target": "es5",
       "module": "commonjs",
       "outDir": "./js", 
-      outFile: "./dist/bundle.js"
+      "outFile": "./dist/bundle.js",
+      "removeComments": true //移除注释
     }
   }
-  ```
-
-  - target:设置ts代码编译的目标版本
-
-    > 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018', 'ES2019', 'ES2020', or 'ESNEXT'
-
-  - module(指定要使用的模块化的规范)
-
-    > 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', 'es2020', or 'ESNext'
-
-  - lib(指定代码运行时所包含的库)
-
-  - outDir(输出的文件存放目录)
-
+```
+  
+- target:设置ts代码编译的目标版本
+  
+  > 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018', 'ES2019', 'ES2020', or 'ESNEXT'
+  
+- module(指定要使用的模块化的规范)
+  
+  > 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', 'es2020', or 'ESNext'
+  
+- lib(指定代码运行时所包含的库)
+  
+- outDir(输出的文件存放目录)
+  
   - outFile(将代码合并为一个文件)-模块化需要module是system amd
+  
+  - allowJs(允许编译js)
+  
+    ```json
+    {
+      "allowJs": true
+    }
+    ```
+  
+  - checkJs(检查js代码)
+  
+  - removeComments(是否移除注释)
+  
+  - noEmit(不生成编译后的文件)
+  
+  - noEmitError(当有错误时不生成编译后的文件)
+  
+  - alwaysStrict(用来设置编译后的文件是否使用严格模式)
+  
+  - noImplicitAny(不允许隐式的any)
+  
+  - noImplicitThis(不允许隐式的this)
+  
+    ```js
+    function fn() {
+      console.log(this)
+    }
+    ```
+  
+  - strictNullChecks(严格的空值检查)
+  
+  - strict(所有严格检查的总开关)
+
+### 7.配合webpack
+
+安装：
+
+```shell
+npm intstall -D webpack webpack-cli typescript ts-loader
+yarn add webpack-dev-server clean-webpack-plugin
+
+#初始化一个package.json
+npm init -y
+#初始化一个tsconfig.json
+tsc--init
+```
+
+webpack.config.js
+
+```js
+const path = require('path')
+const HTMLWebpackPlugin = require('html-webpack-plugin')
+//引入clean插件
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+module.exports = {
+  mode: 'production',
+  //指定入口文件
+  entry: './src/index.ts',
+  //指定打包文件所在的目录
+  output: {
+    //指定打包文件的目录
+    path: path.resolve(__dirname, 'dist'),
+    //打包后文件的文件名
+    filename: 'bundle.js',
+    //告诉webpack不使用箭头函数
+    environment: {
+      arrowFunction: false
+    }
+  },
+  module: {
+    //指定要加载的规则
+    rules: [
+      {
+        test: /\.ts$/,
+        //要使用的loader
+        use: 'ts-loader',
+        //要排除的文件
+        exclude: /node_modules/
+      }
+    ]
+  },
+  // 配置webpack插件
+  plugins: [
+    new HTMLWebpackPlugin({
+      // title: 'DIY-Title'
+      template: './src/index.html'
+    }),
+    new CleanWebpackPlugin()
+  ],
+  //用来设置引用模块
+  resolve: {
+    extensions: ['.ts', '.js']
+  }
+}
+```
+
+#### 7.1使用babel
+
+```shell
+yarn add @babel/core @babel/preset-env babel-loader core-js
+```
+
+使用core-js实现Promise等属性
+
+### 8.类
+
+以abstract开头的类，是抽象类，不能用来创建对象
+
+```typescript
+//抽象类
+abstract class Animal {
+  name: string
+  age: number
+  //定义一个抽象方法，抽象方法必须定义在抽象类中，子类必须对抽象方法进行重写
+  abstract speak(): void
+}
+```
+
+### 9.接口
+
+> 接口用来定义一个类结构，定义一个类中应该包含哪些属性和方法，
+>
+>   接口也可以当做类型声明去使用
+
+```jsx
+interface myInterface {
+  name: string
+  age: number
+}
+interface myInterface {
+  gender: string
+}
+
+let tom: myInterface = {
+  name: 'tom',
+  age: 8,
+  gender: 'man'
+}
+```
+
+> 接口中的所有的属性都不能有实际的值
+>
+>    接口只定义对象的结构，而不去考虑实际值
+>
+> ​    在接口中所有的方法都是抽象方法
+
+```jsx
+interface myInter {
+  name: string
+  say(): void
+}
+class MyIn implements myInter {
+  name: string
+  constructor(name: string) {
+    this.name = name
+  }
+  say() {
+    console.log('hi~~')
+  }
+
+}
+```
+
+### 10.属性
+
+属性的封装
+
+TS可以在属性前添加属性的修饰符
+
+​	public-修饰的属性可以在任意位置修改，默认值
+
+​    private-私有属性只能在类内部进行访问
+
+​	protect 受保护的属性，只能在当前类，和子类访问(new 出来的实例无法访问)
+
+​     -通过在类中添加方法使得私有属性可以被外部访问
+
+```ts
+ class Person {
+    //private _name: string
+    //private _age: number
+    constructor(private name: string, private age: number) {
+      this._name = name
+      this._age = age
+    }
+    
+   /*  //获取name
+    getName() {
+      return this._name
+    }
+    //修改name
+    setName(val) {
+      this._name = val
+    }
+    setAge(val) {
+      if(val >= 0) {
+        this._age = val
+      }
+    } */
+
+    //ts中的getter方法
+    // get name():string {
+    //   return this._name
+    // }
+  }
+```
 
