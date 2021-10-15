@@ -350,6 +350,7 @@ tsconfig.json
       "removeComments": true //移除注释
     }
   }
+  ```
 ```
   
 - target:设置ts代码编译的目标版本
@@ -372,8 +373,8 @@ tsconfig.json
     {
       "allowJs": true
     }
-    ```
-  
+```
+
   - checkJs(检查js代码)
   
   - removeComments(是否移除注释)
@@ -469,6 +470,52 @@ yarn add @babel/core @babel/preset-env babel-loader core-js
 
 使用core-js实现Promise等属性
 
+```json
+{
+  module: {
+    //指定要加载的规则
+    rules: [
+      {
+        test: /\.ts$/,
+        //要使用的loader
+        use: [
+          //配置babel
+          {
+            //指定loader
+            loader: 'babel-loader',
+            options: {
+              //设置预定义的环境
+              presets: [
+                //指定环境的插件
+                [
+                  '@babel/preset-env',
+                  //配置信息
+                  {
+                    targets: {
+                      chrome: '58',
+                      ie: 11
+                    },
+                    //指定corejs版本
+                    corejs: '3',
+                    //使用corejs的方式usage按需加载
+                    useBuiltIns: 'usage'
+                  }
+                ]
+              ]
+            }
+          },
+          'ts-loader'
+        ],
+        //要排除的文件
+        exclude: /node_modules/
+      }
+    ]
+  },
+}
+```
+
+
+
 ### 8.类
 
 以abstract开头的类，是抽象类，不能用来创建对象
@@ -538,7 +585,7 @@ TS可以在属性前添加属性的修饰符
 
 ​    private-私有属性只能在类内部进行访问
 
-​	protect 受保护的属性，只能在当前类，和子类访问(new 出来的实例无法访问)
+​	protect-受保护的属性，只能在当前类，和子类访问(new 出来的实例无法访问)
 
 ​     -通过在类中添加方法使得私有属性可以被外部访问
 
@@ -571,4 +618,162 @@ TS可以在属性前添加属性的修饰符
     // }
   }
 ```
+
+### 11.泛型
+
+```typescript
+/* 定义函数或者类的时候，如果遇到类型不明确就可以使用泛型
+ */
+function fn<T>(a: T): T {
+  return a
+}
+
+//1.直接调用具有泛型的函数
+console.log(fn(20)) //ts自动类型推断
+console.log(fn<string>('泛型'))
+//2.泛型可以同时指定多个
+function fn2<T, K>(a: T, b: K): T {
+  console.log(b)
+  return a
+}
+
+console.log(fn2<string, number>('kg', 8))
+//3.引用接口
+interface Inter {
+  length: number
+}
+
+function fn3<T extends Inter>(a: T): number {
+  return a.length
+}
+
+console.log(fn3('joke'))
+
+```
+
+### 12.项目
+
+#### 12.1添加less
+
+```shell
+yarn add css-loader style-loader less less-loader
+```
+
+webpack.config.js
+
+```js
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.less$/,
+        use: [
+          'style-loader',
+          'css-loader',
+          'less-loader',
+        ]
+      }
+    ]
+  }
+}
+```
+
+#### 12.2postcss
+
+```shell
+yarn add postcss postcss-loader postcss-preset-env
+```
+
+```json
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.less$/,
+        use: [
+          'style-loader',
+          'css-loader',
+          //引入postcss
+          {
+            loader: 'postcss-loader',
+            options: {
+              postcssOptions: {
+                plugins: [
+                  [
+                    'postcss-preset-env',
+                    {
+                      browsers: 'last 2 versions'
+                    }
+                  ]
+                ]
+              }
+            }
+          },
+          'less-loader'
+        ]
+      }
+    ]
+  }
+}
+```
+
+#### 12.3提取css为单独文件
+
+```shell
+yarn add mini-css-extract-plugin 
+```
+
+webpack.config.js
+
+```shell
+//提取CSS文件
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+
+module.exports = {
+  module: {
+    //指定要加载的规则
+    rules: [
+      {test:/\.css$/, use: [MiniCssExtractPlugin.loader, 'css-loader']},
+      {
+        test: /\.less$/,
+        use: [
+        	//引入MiniCssExtractPlugin后，替代style-loader
+          // 'style-loader',
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          //引入postcss
+          {
+            loader: 'postcss-loader',
+            options: {
+              postcssOptions: {
+                plugins: [
+                  [
+                    'postcss-preset-env',
+                    {
+                      browsers: 'last 2 versions'
+                    }
+                  ]
+                ]
+              }
+            }
+          },
+          'less-loader'
+        ]
+      }
+    ]
+  },
+  // 配置webpack插件
+  plugins: [  
+    new MiniCssExtractPlugin({
+      filename: '[name].css'
+    })
+  ],
+  //用来设置引用模块
+  resolve: {
+    extensions: ['.ts', '.js']
+  }
+}
+```
+
+
 
