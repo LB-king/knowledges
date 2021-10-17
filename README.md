@@ -117,7 +117,9 @@ wifi名称： QY0OMTPR
   ZSH_THEME="cloud"
   ```
 
-  
+- 查看隐藏文件
+
+  shift+command+.
 
 ### 电脑版微信多开
 

@@ -432,7 +432,8 @@ module.exports = {
     filename: 'bundle.js',
     //告诉webpack不使用箭头函数
     environment: {
-      arrowFunction: false
+      arrowFunction: false,
+      const: false //不要const
     }
   },
   module: {
@@ -492,6 +493,7 @@ yarn add @babel/core @babel/preset-env babel-loader core-js
                   //配置信息
                   {
                     targets: {
+                      //48版本const会编译为var，58还是const
                       chrome: '58',
                       ie: 11
                     },
@@ -513,8 +515,6 @@ yarn add @babel/core @babel/preset-env babel-loader core-js
   },
 }
 ```
-
-
 
 ### 8.类
 
@@ -653,91 +653,103 @@ console.log(fn3('joke'))
 
 ### 12.项目
 
-#### 12.1添加less
+初始化：
 
-```shell
-yarn add css-loader style-loader less less-loader
-```
+1. ```shell
+   yarn add webpack webpack-cli webpack-dev-server
+   ```
 
-webpack.config.js
+2. Package.json
+
+   ```json
+   {
+      "scripts": {
+       "test": "echo \"Error: no test specified\" && exit 1",
+       "build": "webpack",
+       "start": "webpack serve"
+     },
+   }
+   ```
+
+3. 添加less
+
+   ```shell
+   yarn add less less-loader css-loader style-loader
+   ```
+
+   问题：所有css代码都集成在打包后的js代码中
+
+   优化：引入`mini-css-extract-plugin'`
+
+   ```shell
+   yarn add mini-css-extract-plugin'
+   ```
+
+#### 12.1-webpack.config.js
 
 ```js
-module.exports = {
-  module: {
-    rules: [
-      {
-        test: /\.less$/,
-        use: [
-          'style-loader',
-          'css-loader',
-          'less-loader',
-        ]
-      }
-    ]
-  }
-}
-```
-
-#### 12.2postcss
-
-```shell
-yarn add postcss postcss-loader postcss-preset-env
-```
-
-```json
-module.exports = {
-  module: {
-    rules: [
-      {
-        test: /\.less$/,
-        use: [
-          'style-loader',
-          'css-loader',
-          //引入postcss
-          {
-            loader: 'postcss-loader',
-            options: {
-              postcssOptions: {
-                plugins: [
-                  [
-                    'postcss-preset-env',
-                    {
-                      browsers: 'last 2 versions'
-                    }
-                  ]
-                ]
-              }
-            }
-          },
-          'less-loader'
-        ]
-      }
-    ]
-  }
-}
-```
-
-#### 12.3提取css为单独文件
-
-```shell
-yarn add mini-css-extract-plugin 
-```
-
-webpack.config.js
-
-```shell
+const path = require('path')
+const HTMLWebpackPlugin = require('html-webpack-plugin')
+//引入clean插件
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 //提取CSS文件
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-
 module.exports = {
+  mode: 'production',
+  //指定入口文件
+  entry: './src/index.ts',
+  //指定打包文件所在的目录
+  output: {
+    //指定打包文件的目录
+    path: path.resolve(__dirname, 'dist'),
+    //打包后文件的文件名
+    filename: 'bundle.js',
+    environment: {
+      //告诉webpack不使用箭头函数
+      arrowFunction: false
+    }
+  },
   module: {
     //指定要加载的规则
     rules: [
+      {
+        test: /\.ts$/,
+        //要使用的loader
+        use: [
+          //配置babel
+          {
+            //指定loader
+            loader: 'babel-loader',
+            options: {
+              //设置预定义的环境
+              presets: [
+                //指定环境的插件
+                [
+                  '@babel/preset-env',
+                  //配置信息
+                  {
+                    targets: {
+                      chrome: '58',
+                      ie: 11
+                    },
+                    //指定corejs版本
+                    corejs: '3',
+                    //使用corejs的方式usage按需加载
+                    useBuiltIns: 'usage'
+                  }
+                ]
+              ]
+            }
+          },
+          'ts-loader'
+        ],
+        //要排除的文件
+        exclude: /node_modules/
+      },
       {test:/\.css$/, use: [MiniCssExtractPlugin.loader, 'css-loader']},
       {
         test: /\.less$/,
         use: [
-        	//引入MiniCssExtractPlugin后，替代style-loader
           // 'style-loader',
           MiniCssExtractPlugin.loader,
           'css-loader',
@@ -763,7 +775,12 @@ module.exports = {
     ]
   },
   // 配置webpack插件
-  plugins: [  
+  plugins: [
+    new HTMLWebpackPlugin({
+      // title: 'DIY-Title'
+      template: './src/index.html'
+    }),
+    new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename: '[name].css'
     })
@@ -773,7 +790,61 @@ module.exports = {
     extensions: ['.ts', '.js']
   }
 }
+
 ```
+
+#### 12.2-postcss
+
+```shell
+yarn add postcss postcss-loader postcss-preset-env
+```
+
+```json
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.less$/,
+        use: [
+          'style-loader',
+          'css-loader',
+          //引入postcss
+          {
+            loader: 'postcss-loader',
+            options: {
+              postcssOptions: {
+                plugins: [
+                  [
+                    'postcss-preset-env',
+                    {
+                      browsers: 'last 2 versions'//加了这段代码后，编译的css代码会加上-ms-, -webkit-等前缀以兼容浏览器
+                    }
+                  ]
+                ]
+              }
+            }
+          },
+          'less-loader'
+        ]
+      }
+    ]
+  }
+}
+```
+
+#### 12.3-提取css为单独文件
+
+```shell
+yarn add mini-css-extract-plugin 
+```
+
+
+
+### 14.面向对象
+
+1. 食物：
+
+   > 
 
 
 
