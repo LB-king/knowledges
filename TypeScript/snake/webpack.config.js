@@ -9,6 +9,13 @@ module.exports = {
   resolve: {
     extensions: ['.ts', '.js']
   },
+  output: {
+    environment: {
+      //告诉webpack不使用箭头函数
+      arrowFunction: false,
+      const: false
+    }
+  },
   module: {
     rules: [
       {
@@ -51,7 +58,7 @@ module.exports = {
                   {
                     targets: {
                       //48编译的是const
-                      chrome: '58',
+                      chrome: '48',
                       ie: '11'
                     },
                     corejs: '3',
@@ -60,7 +67,8 @@ module.exports = {
                 ]
               ]
             }
-          }
+          },
+          'ts-loader'
         ]
       }
     ]
