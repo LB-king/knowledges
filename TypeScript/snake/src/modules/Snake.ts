@@ -31,7 +31,7 @@ export default class Snake {
     if (this.Y === value) return
     if (value < 0 || value > 290) {
       //通知外部的容器，蛇完了
-      throw new Error('撞墙了')
+      throw new Error('游戏结束！')
     }
     this.head.style.top = value + 'px'
   }
@@ -39,5 +39,11 @@ export default class Snake {
   addBody() {
     //向element中添加一个div
     this.element.insertAdjacentHTML('beforeend', '<div></div>')
+  }
+  //5.移动身体
+  moveBody() {
+    // for(let i =this.bodies.length -1;i>0;i--){
+    //   this.bodies[i].style.left=
+    // }
   }
 }
