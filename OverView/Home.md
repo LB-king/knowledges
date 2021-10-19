@@ -1271,4 +1271,82 @@ function isEmpty(str) {
   } 
   ```
 
+### 前端工程化
+
+1. 项目上线前，压缩代码
+2. ES6+或CSS3新特性进行转换
+3. Less等CSS预编译语言进行编译处理
+4. 格式化代码
+
+![](\img\前工程化端.png)
+
+工程化≠某个工具
+
+- 通用脚手架工具
+
+  - yeoman
+
+  使用说明：
+
+  全局安装yo：
+
+  ```shell
+  yarn add yo -g
+  ```
+
+  全局安装generator:
+
+  - generator-webapp    网站项目
+  - generator-venv    vue项目
+  - generator-rn-toolbox    react-native项目
+  - generator-node    node项目
+  - 。。。
+
+  ```shell
+  yarn add generator-webapp -g
+  ```
+
+  通过yo运行generator
+
+  ```shell
+  mkdir project-name
+  cd project-name
+  yo webapp#不需要generator前缀
+  #启动应用
+  npm run start
+  ```
+
   
+
+- 专用脚手架工具
+
+  - creat-react-app
+  - vue-cli
+  - angular-cli
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
