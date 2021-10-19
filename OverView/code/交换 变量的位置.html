@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>交换变量位置</title>
+  </head>
+  <body>
+    <script>
+      var [a, b] = ['AAA', 'BBB']
+      //1.解构赋值
+      // var [a, b] = [b, a]
+      //2.数组写法
+      // a = [a, b][1]
+      // b = [a, b][0]
+      //3.对象写法
+      // var o = { a: b, b: a }
+      // var { a, b } = o
+      // 4.简单写法
+      var a = [b, (b = a)][0]
+      console.log('a:', a)
+      console.log('b:', b)
+    </script>
+  </body>
+</html>

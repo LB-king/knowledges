@@ -12,7 +12,7 @@ export default class GameCenter {
   constructor() {
     this.snake = new Snake()
     this.food = new Food()
-    this.score = new Score()
+    this.score = new Score(10, 2)
     this.init()
   }
 
@@ -20,6 +20,7 @@ export default class GameCenter {
   init() {
     //1.监听键盘的按键事件
     document.addEventListener('keydown', this.handleKeydown.bind(this))
+    //调用run方法
     this.run()
   }
   //2.创建一个让蛇移动的方法
@@ -63,7 +64,6 @@ export default class GameCenter {
       this.isLive = false
       window.alert(err.message + 'GAME OVER!')
     }
-
     this.isLive &&
       setTimeout(this.run.bind(this), 300 - (this.score.level - 1) * 30)
   }
@@ -75,7 +75,8 @@ export default class GameCenter {
   checkFood(X: number, Y: number) {
     // console.log('snake', X, Y);
     // console.log('food',this.food.X, this.food.Y);
-    if (this.food.X === X && this.food.Y === Y) {
+    if (X === this.food.X && Y === this.food.Y) {
+      console.log('碰到食物了~~')
       //1.食物改变位置
       this.food.changePos()
       //2.分数增加1分
