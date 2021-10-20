@@ -1316,17 +1316,75 @@ function isEmpty(str) {
   npm run start
   ```
 
-  
-
 - 专用脚手架工具
 
   - creat-react-app
   - vue-cli
   - angular-cli
 
+- 创建一个generator项目
 
+  ```shell
+  yarn add yeoman -g
+  ```
 
+  创建一个 generator-ding 脚手架
 
+  1. 安装
+
+     ```shell
+     yarn add yeoman-generator
+     ```
+
+  2. 新建目录
+
+     ![](\img\yeoman-目录.png)
+
+  3. 配置js：   \generator-ding\generators\app\index.js
+
+     ```js
+     const Generator = require('yeoman-generator')
+     
+     module.exports = class extends Generator {
+       write() {
+         this.fs.write(this.destinationPath('test.txt'), Math.random().toString())
+       }
+     }
+     
+     ```
+
+  4. 在generator-ding目录下运行
+
+     ```shell
+     #挂载一个全局命令
+     npm link
+     #解绑 npm unlink
+     ```
+
+  5. 在其他文件夹中运行
+
+     ```shell
+     yo ding
+     ```
+
+     > 就会生成一个test.txt的文件，并且里面的内容是随机数
+
+- 构建自己的脚手架工具(使用模板和命令行交互)
+
+  **EJS**模板语法
+
+  ```ejs
+   <%= title%>
+  ```
+
+  通过命令行工具启动一个程序，在命令行交互中，获取用户输入，然后创建对应的代码文件
+
+  ```shell
+  npm init -y
+  yarn add ejs inquirer
+  ```
+
+  
 
 
 
