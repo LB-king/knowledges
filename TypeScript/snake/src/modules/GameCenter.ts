@@ -20,8 +20,8 @@ export default class GameCenter {
   init() {
     //1.监听键盘的按键事件
     document.addEventListener('keydown', this.handleKeydown.bind(this))
-    //调用run方法
-    this.run()
+    setTimeout( //调用run方法
+      this.run.bind(this), 300)
   }
   //2.创建一个让蛇移动的方法
   /* 
