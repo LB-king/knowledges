@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "yeoman-generator": "^5.4.2",
-    "yo": "^4.3.0"
-  }
-}

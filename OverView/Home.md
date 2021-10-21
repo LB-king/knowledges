@@ -1322,73 +1322,194 @@ function isEmpty(str) {
   - vue-cli
   - angular-cli
 
-- 创建一个generator项目
+#### 1.创建一个generator项目
 
-  ```shell
-  yarn add yeoman -g
-  ```
+```shell
+yarn add yo -g
+```
 
-  创建一个 generator-ding 脚手架
+创建一个 generator-ding 脚手架
 
-  1. 安装
+1. 安装
 
-     ```shell
-     yarn add yeoman-generator
-     ```
+   ```shell
+   yarn add yeoman-generator
+   ```
 
-  2. 新建目录
+2. 新建目录
 
-     ![](\img\yeoman-目录.png)
+   ![](\img\yeoman-目录.png)
 
-  3. 配置js：   \generator-ding\generators\app\index.js
+3. 配置js：   \generator-ding\generators\app\index.js
 
-     ```js
-     const Generator = require('yeoman-generator')
-     
-     module.exports = class extends Generator {
-       write() {
-         this.fs.write(this.destinationPath('test.txt'), Math.random().toString())
-       }
+   ```js
+   const Generator = require('yeoman-generator')
+   
+   module.exports = class extends Generator {
+     write() {
+       this.fs.write(this.destinationPath('test.txt'), Math.random().toString())
      }
-     
-     ```
+   }
+   
+   ```
 
-  4. 在generator-ding目录下运行
+4. 在generator-ding目录下运行
 
-     ```shell
-     #挂载一个全局命令
-     npm link
-     #解绑 npm unlink
-     ```
+   ```shell
+   #挂载一个全局命令
+   npm link
+   #解绑 npm unlink
+   ```
 
-  5. 在其他文件夹中运行
+5. 在其他文件夹中运行
 
-     ```shell
-     yo ding
-     ```
+   ```shell
+   yo ding
+   ```
 
-     > 就会生成一个test.txt的文件，并且里面的内容是随机数
+   > 就会生成一个test.txt的文件，并且里面的内容是随机数
 
-- 构建自己的脚手架工具(使用模板和命令行交互)
+#### 2.构建自己的脚手架工具(使用模板和命令行交互)
 
-  **EJS**模板语法
+**EJS**模板语法
 
-  ```ejs
-   <%= title%>
-  ```
+```ejs
+ <%= title%>
+```
 
-  通过命令行工具启动一个程序，在命令行交互中，获取用户输入，然后创建对应的代码文件
+通过命令行工具启动一个程序，在命令行交互中，获取用户输入，然后创建对应的代码文件
 
-  ```shell
-  npm init -y
-  yarn add ejs inquirer
-  ```
+```shell
+npm init -y
+yarn add ejs inquirer
+```
 
-  
+```js
+#!/usr/bin/env node
+//读取模板文件
+const fs = require('fs')
+const path = require('path')
+const inquirer = require('inquirer')
+const ejs = require('ejs')
+
+inquirer.prompt([
+  {
+    type: 'input',
+    name: 'name',
+    message: 'enter your project-name'
+  }
+]).then(res => {
+  //模板路径
+  const tmpDir = path.join(__dirname, 'templates')
+  //目标文件夹
+  const destDir = process.cwd()
+  //读取文件夹文件
+  fs.readdir(tmpDir, (err, files) => {
+    if(err) throw err
+
+    files.forEach(file => {
+      ejs.renderFile(path.join(tmpDir, file), res, (error, result) => {
+        if(error) throw error
+        fs.writeFileSync(path.join(destDir, file), result)
+      })
+    })
+  })
+})
+```
+
+插播：nodejs关于路径的处理
+
+```js
+const path = require('path')
+console.log(__dirname) //c:\Users\知因\Desktop\YY
+console.log(path.resolve('aaa', 'test')) //c:\Users\知因\Desktop\YY\aaa\test
+console.log(path.join('aaa', 'ok'))//拼接路径  aaa\ok
+```
+
+#### 3.npm scripts
+
+npm 允许在package.json文件中，使用scripts字段定义脚本命令
+
+package.json
+
+```json
+{
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+   	"strat": "node index.js",
+    "style": "lessc index.less main.css && minify main.css > main.mini.css"
+  }
+}
+```
 
 
 
+执行方式有2种：
 
+- 串行-series
+
+  > 任务1&&任务2
+  >
+  > 任务之间有先后顺序，先执行前一个任务，后执行下一个
+
+- 并行-parallel
+
+  > 任务1 & 任务2
+  >
+  > 任务之间没有先后顺序，同时执行可以提高执行效率
+
+例如：1.less转化为css
+
+​			2.压缩css
+
+```shell
+npm install minify less -g
+
+#1.less转换为css
+lessc index.less main.css
+#2.压缩css文件
+minify main.css > main.mini.css
+```
+
+`grunt` `gulp` `fis`
+
+#### 4.手写loader
+
+在webpack中使用
+
+新建`markdown-loader.js`
+
+```js
+const marked = require('marked')
+module.exports = (source) => {
+  const html = marked(source)
+  //结果要转成js代码
+  // const code = `module.exports=${JSON.stringify(html)}`
+  // return code
+  return html
+}
+//在webpack.config.js中加入html-loader
+module: {
+    rules: [
+      {
+        test: /\.md$/,
+        use: ['html-loader', './markdown-loader.js']
+      }
+    ]
+  }
+```
+
+#### 5.vite
+
+新一代构建工具
+
+```shell
+npm init @vitejs app-name
+```
+
+不需要打包
+
+vite支持http2.0
 
 
 
