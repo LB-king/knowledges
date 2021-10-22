@@ -1511,6 +1511,16 @@ npm init @vitejs app-name
 
 vite支持http2.0
 
+使用公司内部的npm库
+
+在项目根目录添加`.npmrc`
+
+```shell
+registry = http://192.168.1.1:9999/repository/npm/
+```
+
+
+
 
 
 

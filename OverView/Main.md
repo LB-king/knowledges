@@ -197,6 +197,27 @@ p:not(:last-child) {
 
 ### Vue2
 
+#### 1.Object.defineProperty
+
+```js
+Object.defineProperty(obj, 'name', {
+  // writable: true, //是否可写
+  // enumerable: true, //是否可以枚举,默认是false
+  // configurable: true, //可以被配置delete
+  get() {
+    console.log('正在访问obj的name属性')
+    return temp
+  },
+  set(value) {
+    console.log('你正在设置name的属性值为： ' + value)
+    temp = value
+  }
+})
+//getter和setter需要一个变量周转才能正常赋值和读取
+```
+
+
+
 ### Vue3
 
 ### React
