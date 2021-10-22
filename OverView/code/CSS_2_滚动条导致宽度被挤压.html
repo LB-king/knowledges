@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>滚动条导致宽度的问题</title>
+    <style>
+      * {
+        margin: 0;
+      }
+      /* 5.直接vw也可以实现 */
+      body {
+        width: 100vw;
+      }
+      /* 4.利用绝对定位 */
+      /* :root {
+        overflow-y: auto;
+        overflow-x: hidden;
+      }
+      :root body {
+        position: absolute;
+      }
+      body {
+        width: 100vw;
+        overflow: hidden;
+      } */
+      /* 1.设置滚动条 */
+      /* html {
+        overflow-y: scroll;
+      } */
+      /* 2.overlay属性 */
+      /* html {
+        overflow-y: overlay;
+      } */
+
+      h3 {
+        background-color: #bfb;
+        text-align: center;
+      }
+      .long {
+        background-color: #ccc;
+        height: 600px;
+        /* 3.vw和calc实现 */
+        /* margin-right: calc(100% - 100vw); */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="long" id="long">
+      <h3>居中标题</h3>
+    </div>
+    <script>
+      var long = document.getElementById('long')
+      var count = 1
+      //为了IE，我也是拼了
+      long.onclick = function (e) {
+        count++
+        if (count % 2 === 0) {
+          long.style.height = 1300 + 'px'
+        } else {
+          long.style.height = 600 + 'px'
+        }
+        console.log(window.innerWidth)
+        console.log(document.body.clientWidth)
+      }
+    </script>
+  </body>
+</html>
