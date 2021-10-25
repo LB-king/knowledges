@@ -214,6 +214,22 @@ Object.defineProperty(obj, 'name', {
   }
 })
 //getter和setter需要一个变量周转才能正常赋值和读取
+
+//所以定义一个监听函数,利用闭包使用value存值
+export default function defineReactive(obj, key, value) {
+  if(arguments.length === 2) value = obj[key]
+}
+Object.defineProperty(obj, key) {
+  enumarable: true,
+  configurable: true,
+  get() {
+    return value
+  },
+  set(newValue) {
+    if(value === newValue) return 
+    value = newValue
+  }
+}
 ```
 
 
