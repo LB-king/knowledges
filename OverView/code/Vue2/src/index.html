@@ -6,5 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>App</title>
   </head>
-  <body></body>
+  <body>
+    <div id="app">
+      <p>{{msg}}</p>
+      <p>{{ person.name }}---{{person.age}}</p>
+      <p v-html="htmlStr">我是v-html渲染的内容</p>
+      <p v-text="title"></p>
+      <p v-text="person.name"></p>
+      <button v-on:click="click">按钮on</button>
+      <button @click="click">按钮@</button>
+      <input type="text" v-model="title" placeholder="我绑定的是title" />
+      <input type="text" v-model="msg" placeholder="我绑定的是msg" />
+    </div>
+  </body>
 </html>
