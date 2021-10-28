@@ -13,26 +13,31 @@ let obj = {
 observe(obj)
 obj.arr.splice(1,1,8888)
 console.log(obj.arr) */
-import Vue from './mvvm/index'
+import {Vue} from './mvvm/index'
 const vm = new Vue({
   el: '#app',
   data() {
     return {
       msg: 'Hello Vue',
-      htmlStr: '<h3>这是一段文档片段,使用v-html解析</h3>',
+      htmlStr: 9999,
       title: 'v-text定义的title',
       person: {
         name: 'v-text定义的Garnett',
         age: 46
+      },
+      attr: {
+        color: 'red'
+      },
+      blue: {
+        color: 'blue',
+        fontSize: '20px'
       }
     }
   },
   methods: {
     click() {
-      console.log(this)
+      this.$data.htmlStr += 1
+      this.$data.msg += 1
     }
   }
 })
-
-
-

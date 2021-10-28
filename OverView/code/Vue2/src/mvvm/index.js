@@ -1,4 +1,6 @@
-const compileUtil = {
+import observe from '../js/observe'
+import Watcher from '../js/Watcher'
+export const compileUtil = {
   getValue(expr, vm) {
     return expr
       .trim()
@@ -7,46 +9,99 @@ const compileUtil = {
         return acc[cur]
       }, vm.$data)
   },
+  setValue(expr, vm, formValue) {
+    expr
+      .trim()
+      .split('.')
+      .reduce((acc, cur) => {
+        acc[cur] = formValue
+      }, vm.$data)
+  },
+  //将对象转成便签可识别的属性
+  /* 
+  {color:'red', fontSize: '20px'} => "color: red; fontSize: 20px"
+  */
+  transObj2Str(obj) {
+    let arr = []
+    Object.entries(obj).forEach(([key, value]) => {
+      arr.push(`${key}: ${value}`)
+    })
+    return arr.join(';')
+  },
   text(node, expr, vm) {
     let value
     if (expr.indexOf('{{') > -1) {
       value = expr.replace(/\{\{(.+?)\}\}/g, (...args) => {
+        new Watcher(vm, args[1], () => {
+          this.updater.textUpdater(node, this.getValue(args[1], vm))
+        })
         return this.getValue(args[1], vm)
       })
     } else {
       value = this.getValue(expr, vm)
+      new Watcher(vm, expr, () => {
+        this.updater.textUpdater(node, this.getValue(expr, vm))
+      })
     }
 
     this.updater.textUpdater(node, value)
   },
   html(node, expr, vm) {
     const value = this.getValue(expr, vm)
+    new Watcher(vm, expr, (newValue) => {
+      this.updater.htmlUpdater(node, newValue)
+    })
     this.updater.htmlUpdater(node, value)
   },
   model(node, expr, vm) {
     const value = this.getValue(expr, vm)
+    //数据->视图
+    new Watcher(vm, expr, (newValue) => {
+      this.updater.modelUpdater(node, newValue)
+    })
+    //视图->数据
+    node.addEventListener('input', (e) => {
+      this.setValue(expr, vm, e.target.value)
+    })
     this.updater.modelUpdater(node, value)
   },
   on(node, expr, vm, eventName) {
     let fn = vm.$options.methods.click
-    console.log(fn, eventName)
+    // console.log(fn, eventName)
     node.addEventListener(eventName, fn.bind(vm), false)
   },
+  bind(node, expr, vm, attrName) {
+    // console.log(attrName, vm.$data.attr)
+    node.setAttribute(attrName, this.transObj2Str(vm.$data[expr]))
+  },
+  //使用:bind   :style=xxxx
+  bindByColon(node, expr, vm, attrName) {
+    // console.log(this.transObj2Str(vm.$data[expr]))  //color: blue;fontSize: 20px
+    node.setAttribute(attrName, this.transObj2Str(vm.$data[expr]))
+  },
+
+  /* 
+  至此，实现v-html  v-text  v-model   v-bind  v-on:click  @click  :attrName 
+  的模板翻译工作
+  */
   //存储更新函数
   updater: {
+    //v-text
     textUpdater(node, value) {
       node.textContent = value
     },
+    //v-html
     htmlUpdater(node, value) {
       node.innerHTML = value
     },
+    //v-model
     modelUpdater(node, value) {
       node.value = value
     }
   }
 }
 
-export default class Vue {
+export const Vue = class {
   constructor(options) {
     // console.log('实例化vue啦~~')
     this.$el = options.el
@@ -54,9 +109,14 @@ export default class Vue {
     this.$options = options
     if (this.$el) {
       //1.实现一个数据观察者
+      observe(this.$data)
       //2.实现一个指令解析器
       new Compile(this.$el, this)
     }
+  }
+  //TODO
+  proxyData(data) {
+
   }
 }
 
@@ -103,11 +163,21 @@ class Compile {
         compileUtil[dirName](node, value, this.vm, eventName)
         //移除元素上的v-指令
         node.removeAttribute(`v-${directive}`)
-      } else if(this.isAtEvent(name)) {//判断是否是@click这样绑定的参数
+      } else if (this.isAtEvent(name)) {
+        //判断是否是@click这样绑定的参数
         let [, eventName] = name.split('@')
         compileUtil['on'](node, value, this.vm, eventName)
+        //移除元素上的@click属性
+        node.removeAttribute(`@${eventName}`)
+      } else if (this.isColonAttr(name)) {
+        let [, attrName] = name.split(':')
+        compileUtil['bindByColon'](node, value, this.vm, attrName)
       }
     })
+  }
+  //判断是否是:开头绑定的属性
+  isColonAttr(attrName) {
+    return attrName.startsWith(':')
   }
   //判断是否是@click这样的事件
   isAtEvent(attrName) {
