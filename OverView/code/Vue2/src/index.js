@@ -37,7 +37,9 @@ const vm = new Vue({
   methods: {
     click() {
       this.$data.htmlStr += 1
-      this.$data.msg += 1
+      this.person.age += 3
+      // this.$data.msg += 1
+      this.msg += 1
     }
   }
 })

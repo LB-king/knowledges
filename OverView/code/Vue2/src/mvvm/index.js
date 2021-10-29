@@ -112,11 +112,23 @@ export const Vue = class {
       observe(this.$data)
       //2.实现一个指令解析器
       new Compile(this.$el, this)
+      this.proxyData(this.$data)
     }
   }
   //TODO
   proxyData(data) {
-
+    for (let i in data) {
+      Object.defineProperty(this, i, {
+        // configurable: true,
+        // writable: true,
+        get() {
+          return data[i]
+        },
+        set(newValue) {
+          data[i] = newValue
+        }
+      })
+    }
   }
 }
 
