@@ -16,6 +16,7 @@ export default class Watcher {
   //比较新值和旧值
   update() {
     let newValue = compileUtil.getValue(this.expr, this.vm)
+    console.log('旧值，', this.oldValue)
     console.log('新值，', newValue)
     if(newValue !== this.oldValue) {
       this.cb(newValue)

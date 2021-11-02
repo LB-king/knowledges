@@ -1,5 +1,6 @@
 import observe from '../js/observe'
 import Watcher from '../js/Watcher'
+import {def} from '../utils/index'
 export const compileUtil = {
   getValue(expr, vm) {
     return expr
@@ -33,7 +34,11 @@ export const compileUtil = {
     if (expr.indexOf('{{') > -1) {
       value = expr.replace(/\{\{(.+?)\}\}/g, (...args) => {
         new Watcher(vm, args[1], () => {
-          this.updater.textUpdater(node, this.getValue(args[1], vm))
+          //注意：{{name}} --- {{age}} 这种情况
+          let n = args[3].replace(/\{\{(.+?)\}\}/g, (...args) => {
+            return this.getValue(args[1], vm)
+          })
+          this.updater.textUpdater(node, n)
         })
         return this.getValue(args[1], vm)
       })
@@ -118,16 +123,18 @@ export const Vue = class {
   //TODO
   proxyData(data) {
     for (let i in data) {
-      Object.defineProperty(this, i, {
-        // configurable: true,
-        // writable: true,
-        get() {
-          return data[i]
-        },
-        set(newValue) {
-          data[i] = newValue
-        }
-      })
+      def(this, i, data[i] ,true)
+      // Object.defineProperty(this, i, {
+      //   // configurable: true,
+      //   // writable: true,
+      //   get() {
+        
+      //     return data[i]
+      //   },
+      //   set(newValue) {
+      //     data[i] = newValue
+      //   }
+      // })
     }
   }
 }
