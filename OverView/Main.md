@@ -193,6 +193,68 @@ p:not(:last-child) {
 
 ### Javascript
 
+#### 1.类型检测
+
+- typeof
+
+  直接在计算机底层基于数据类型的值(二进制)进行检测
+
+  null的二进制存的值是000，而对象都是以000开头的二进制存储，所以typeof在进行数据类型检测的时候会将null识别成object。可以理解为计算机的一个bug
+
+  ```js
+  typeof null // 'object'
+  typeof undefined // 'undefined'
+  typeof NaN // 'number'
+  typeof [] // 'object'
+  typeof /.?/ // 'object'
+  typeof function(){} // 'function'
+  typeof 普通对象/数组对象/日期对象/正则对象  返回的都是 'object'
+  //不足之处
+  ```
+
+- instanceof
+
+  检测当前实例是否属于这个类
+
+  只要当前类出现在实例的原型链上，结果都是true 
+
+   缺点： 1.我们可以任意修改原型的指向，会导致判断很不准确
+
+  ​             2.不能检测基本类型
+
+  ```js
+  1 instanceof Number // false
+  'ui' instanceof String // false
+  function fn() {
+    this.x = 9
+  }
+  fn.prototype = Object.create(Array.prototype)
+  var f = new fn()
+  console.log(f instanceof Array) // true 
+  //手写一个instanceof
+  function myInstanceof(example, classObj) {
+    let classObjPrototype = classObj.prototype,
+        proto = Object.getPrototypeOf(example)
+    while(true) {
+      if(proto === null) {
+        //Object.prototype.__proto__ => null
+        return false
+      }
+      if(classObjPrototype === proto) {
+        return true
+      }
+      //1.获取proto的原型
+      proto = Object.getPrototypeOf(proto)
+    }
+  }
+  ```
+
+- constructor
+
+  
+
+- Object.prototype.toString.call([])
+
 ### TypeScript
 
 ### Vue2
