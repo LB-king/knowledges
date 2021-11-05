@@ -63,6 +63,29 @@
       console.log(arr.constructor === Object) // false
       console.log(num.constructor === Number) // true
       // 4.Object.prototype.toString.call
+      console.log(Object.prototype.toString.call('')) //[object String]
+      console.log(Object.prototype.toString.call(true)) //[object Boolean]
+      console.log(Object.prototype.toString.call(2)) //[object Number]
+      console.log(Object.prototype.toString.call({})) //[object Object]
+      console.log(Object.prototype.toString.call([])) //[object Array]
+      console.log(Object.prototype.toString.call(function(){})) //[object Function]
+      console.log(Object.prototype.toString.call(new Date())) //[object Date]
+      console.log(Object.prototype.toString.call(/.?/)) //[object RegExp]
+      console.log(Object.prototype.toString.call(Symbol(8))) //[object Symbol]
+      console.log('##################')
+      //写一个检测类型的公共方法
+      function toType(target) {
+        let res = ''
+        const arr = ['String', 'Boolean', 'Number', 'Object', 'Array', 'Function', 'Date', 'RegExp', 'Symbol', 'Undefined', 'Null']
+        arr.forEach(item => {
+          if (Object.prototype.toString.call(target) === `[object ${item}]`) {
+           res = item.toLowerCase()
+          }
+        })
+        return res
+      }
+
+      console.log(toType(9))
     </script>
   </body>
 </html>
