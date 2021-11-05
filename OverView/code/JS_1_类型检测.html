@@ -73,7 +73,7 @@
       console.log(Object.prototype.toString.call(/.?/)) //[object RegExp]
       console.log(Object.prototype.toString.call(Symbol(8))) //[object Symbol]
       console.log('##################')
-      //写一个检测类型的公共方法
+      // 1.写一个检测类型的公共方法
       function toType(target) {
         let res = ''
         const arr = ['String', 'Boolean', 'Number', 'Object', 'Array', 'Function', 'Date', 'RegExp', 'Symbol', 'Undefined', 'Null']
@@ -83,6 +83,15 @@
           }
         })
         return res
+      }
+      // 2.另一种写法
+      function toType1(target) {
+        let type2obj = {}
+        const arr = ['String', 'Boolean', 'Number', 'Object', 'Array', 'Function', 'Date', 'RegExp', 'Symbol', 'Undefined', 'Null']
+        arr.forEach(item => {
+          type2obj[`[object ${item}]`] = item.toLowerCase()
+        })
+        return type2obj[Object.prototype.toString.call(target)]
       }
 
       console.log(toType(9))

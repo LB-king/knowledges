@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>三种循环</title>
+  </head>
+  <body>
+    <script>
+      /* 
+      1.for循环
+        for循环是自己控制循环过程
+        01:基于var声明的时候，for循环和while循环性能差不多【不确定循环次数的时候可以使用while】
+        02:基于let声明的时候，for循环的性能更好【没有造成全局不释放的变量】
+        函数式编程forEach(直接交给函数处理，只关注结果,自己无法管控过程) 
+        命令式编程for循环(面向过程，可以随时控制操作)
+      */
+      var arr = new Array(9999999).fill(0)
+      console.time('FOR~')
+      for(let i = 0; i< arr.length; i++) {}
+      console.timeEnd('FOR~')
+
+      console.time('WHILE~')
+      let whileIndex = 0
+      while(whileIndex < arr.length) whileIndex++
+      console.timeEnd('WHILE~')
+
+      console.time('forEach~')
+      arr.forEach(i=>{})
+      console.timeEnd('forEach~')
+
+      // console.time('FON_IN~')
+      // for(let i in arr){}
+      // console.timeEnd('FON_IN~')
+    </script>
+  </body>
+</html>

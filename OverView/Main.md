@@ -231,19 +231,20 @@ p:not(:last-child) {
   fn.prototype = Object.create(Array.prototype)
   var f = new fn()
   console.log(f instanceof Array) // true 
-  //手写一个instanceof
-  function myInstanceof(example, classObj) {
-    let classObjPrototype = classObj.prototype,
-        proto = Object.getPrototypeOf(example)
+  ```
+
+  **手写instance**
+
+  ```js
+  function myInstance(target, classObj) {
+    let classPrototype = classObj.prototype
+    // target.__proto__某些浏览器不支持
+    let proto = Object.getPrototypeOf(target)
     while(true) {
-      if(proto === null) {
-        //Object.prototype.__proto__ => null
-        return false
-      }
-      if(classObjPrototype === proto) {
-        return true
-      }
-      //1.获取proto的原型
+      // 直到找到Object也没有找到Object->null
+      if(proto === null) return false
+      if(proto === classPrototype) return true
+      // 循环赋值
       proto = Object.getPrototypeOf(proto)
     }
   }
@@ -251,9 +252,35 @@ p:not(:last-child) {
 
 - constructor
 
-  
+  ```js
+  var arr = []
+  arr.constructor === Array // true
+  arr.constructor === Object // false
+  //constructor可以自定义，因此判断也不准确
+  Number.prototype.constructor = {a: 'XXX'}
+  var num = 9
+  num.constructor === Number //false
+  ```
 
-- Object.prototype.toString.call([])
+- Object.prototype.toString.call(target)
+
+  最准确，最推荐的方法
+
+  返回值是`[object Number]`
+
+  ```js
+  function getType(target) {
+    const types = ['Number', 'String', 'Boolean', 'Object', 'Array', 'Function', 'RegExp', 'Date', 'Symbol', 'Undefined', 'Null']
+    
+    let typeObj = {}
+    types.forEach(item => {
+      typeObj[`[object ${item}]`] = item.toLowerCase()
+    })
+    return typeObj[Object.prototype.toString.call(target)]
+  }
+  ```
+
+  
 
 ### TypeScript
 
