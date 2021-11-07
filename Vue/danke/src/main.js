@@ -7,10 +7,12 @@ import store from './store'
 import 'element-ui/lib/theme-chalk/index.css'
 // import 'element-ui/lib/theme-chalk/display.css'
 Vue.config.productionTip = false
-import { Button, Menu, MenuItem } from 'element-ui'
+import { Button, Menu, MenuItem, Table, TableColumn } from 'element-ui'
 Vue.use(Button)
 Vue.use(Menu)
 Vue.use(MenuItem)
+Vue.use(Table)
+Vue.use(TableColumn)
 new Vue({
   router,
   store,

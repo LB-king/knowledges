@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>手写系列</title>
+  </head>
+  <body>
+    <script>
+      /* 
+      1.手写一个数组的forEach方法
+        - forEach内部有一个回调函数，里面有3个参数[item, index, targetArr]
+        - 第二个参数是指定callback函数的this指向
+      */
+      var arr = [111, 22, 33]
+      Array.prototype.myForEach = function (callback, context) {
+        let self = this
+        context = context == null ? window : context
+        for (let i = 0, len = self.length; i < len; i++) {
+          callback.call(context, self[i], i, self)
+        }
+      }
+      arr.myForEach(function (item, index, target) {
+        console.log(item, index, target)
+      }, [])
+      
+      /* 
+      2.手写一个判断数据类型的方法
+        - 利用Object.toString.call()
+      */
+      function getType(target) {
+        const types = [
+          'Number',
+          'String',
+          'Boolean',
+          'Object',
+          'Array',
+          'Function',
+          'RegExp',
+          'Date',
+          'Symbol',
+          'Undefined',
+          'Null'
+        ]
+        let classObj = {}
+        types.forEach((type) => {
+          classObj[`[object ${type}]`] = type.toLowerCase()
+        })
+        return classObj[Object.prototype.toString.call(target)]
+      }
+      console.log(getType(88))
+
+      /* 
+      3.手写一个instanceof的方法
+        - 判断当前实例是否属于当前类
+        - 判断构造函数的prototype属性是否出现在当前实例的原型链上
+        - @param 
+          - target 实例
+          - classObj 当前类
+      */
+      function myInstanceof(target, classObj) {
+        let objPrototype = classObj.prototype
+        // let proto = target.__proto__
+        let proto = Object.getPrototypeOf(target)
+        while(1 > 0) {
+          if(proto === null) return false
+          if(proto === objPrototype) return true
+          proto = Object.getPrototypeOf(proto)
+        }
+      }
+      console.log(myInstanceof(1, Number))
+    </script>
+  </body>
+</html>
