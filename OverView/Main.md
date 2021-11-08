@@ -233,22 +233,22 @@ p:not(:last-child) {
   console.log(f instanceof Array) // true 
   ```
 
-  **手写instance**
+#### 1.1手写instance
 
-  ```js
-  function myInstance(target, classObj) {
-    let classPrototype = classObj.prototype
-    // target.__proto__某些浏览器不支持
-    let proto = Object.getPrototypeOf(target)
-    while(true) {
-      // 直到找到Object也没有找到Object->null
-      if(proto === null) return false
-      if(proto === classPrototype) return true
-      // 循环赋值
-      proto = Object.getPrototypeOf(proto)
-    }
+```js
+function myInstance(target, classObj) {
+  let classPrototype = classObj.prototype
+  // target.__proto__某些浏览器不支持
+  let proto = Object.getPrototypeOf(target)
+  while(true) {
+    // 直到找到Object也没有找到Object->null
+    if(proto === null) return false
+    if(proto === classPrototype) return true
+    // 循环赋值
+    proto = Object.getPrototypeOf(proto)
   }
-  ```
+}
+```
 
 - constructor
 
@@ -280,7 +280,66 @@ p:not(:last-child) {
   }
   ```
 
-  
+#### 2.几种循环
+
+1. for
+
+   > for循环自己控制循环过程
+   >
+   > 1.基于var声明的时候，for循环和while循环的性能差不多【不确定循环次数的情况可以用while】
+   >
+   > 2.基于let声明的时候，for循环的性能更好【没有造成全局不释放的变量】
+
+   ```js
+   var arr = new Array(999999).fill(0)
+   for(let i = 0; i < arr.length; i++) {} //10ms
+   for(let i = 0,len = arr.length; i < len; i++){} //3ms
+   ```
+
+   
+
+   函数式编程：forEach,map,reduce...直接交给函数处理，只关注结果，自己无法管控过程
+
+   命令式编程：for循环，面向过程，可以随时操作
+
+2. while
+
+   ```js
+   let i = 0
+   while(i < 10) {
+     i++
+     //do sth
+   }
+   ```
+
+3. forEach
+
+   > 第二个参数表示循环体内this的指向，注意：写成ES5的形式才会生效，ES6的写法，this始终指向window
+
+   ```js
+   [11,22,33].forEach(item=>{})
+   ```
+
+#### 2.1手写forEach
+
+```js
+Array.prototype.forEach = function(cb, context) {
+  //this指向=>arr
+  let _this = this,
+      i = 0,
+      len = _this.length
+  context = context == null ? window : context
+  for(; i < len; i++) {
+    typeof cb === 'function' ? cb.call(context, _this[i], i) : null
+  }
+}
+```
+
+1. 性能比较
+
+   for 优于 forEach
+
+   
 
 ### TypeScript
 

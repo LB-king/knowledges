@@ -15,21 +15,45 @@
         02:基于let声明的时候，for循环的性能更好【没有造成全局不释放的变量】
         函数式编程forEach(直接交给函数处理，只关注结果,自己无法管控过程) 
         命令式编程for循环(面向过程，可以随时控制操作)
+        for循环的性能>forEach
+        forEach的第二个参数表示循环体重this的指向，注意要写es5的形式，es6箭头函数会一直指向window
       */
+      /* var obb = {
+        a: 99
+      }
+
+      ![11, 22].forEach(function (item) {
+        console.log(item, this)
+      }, obb) */
       var arr = new Array(9999999).fill(0)
       console.time('FOR~')
-      for(let i = 0; i< arr.length; i++) {}
+      // for(let i = 0, len = arr.length; i< len; i++) {} //8ms左右
+      for (let i = 0; i < arr.length; i++) {} // 95ms
       console.timeEnd('FOR~')
 
       console.time('WHILE~')
       let whileIndex = 0
-      while(whileIndex < arr.length) whileIndex++
+      while (whileIndex < arr.length) whileIndex++
       console.timeEnd('WHILE~')
 
       console.time('forEach~')
-      arr.forEach(i=>{})
+      arr.forEach((i) => {})
       console.timeEnd('forEach~')
-
+      // 手写forEach
+      Array.prototype.forEach = function (callback, context) {
+        let _this = this,
+          len = _this.length,
+          i = 0
+        context = context == null ? window : context
+        for (; i < len; i++) {
+          typeof callback === 'function'
+            ? callback.call(context, _this[i], i)
+            : null
+        }
+      }
+      console.time('手写forEach~')
+      arr.forEach((i) => {})
+      console.timeEnd('手写forEach~')
       // console.time('FON_IN~')
       // for(let i in arr){}
       // console.timeEnd('FON_IN~')
