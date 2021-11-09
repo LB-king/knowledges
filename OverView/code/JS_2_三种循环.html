@@ -54,9 +54,55 @@
       console.time('手写forEach~')
       arr.forEach((i) => {})
       console.timeEnd('手写forEach~')
-      // console.time('FON_IN~')
+      // console.time('FOR_IN~')
       // for(let i in arr){}
-      // console.timeEnd('FON_IN~')
+      // console.timeEnd('FOR_IN~')
+      console.time('FOR_OF~')
+      for(let i of arr){}
+      console.timeEnd('FOR_OF~')
+
+      // Symbol.iterator()
+      //for of循环的原理是按照迭代器规范遍历的  数组/部分类数组/Set/Let  【对象没有实现】
+      arr = [11, 22, 33]
+      arr[Symbol.iterator] = function() {
+        let self = this,
+            index = 0
+        return {
+          //必须具备next方法,next执行一次next方法，拿到结构中的某一项的值
+          //done： true
+          //value 每一次获取的值
+          next() {
+            if(index > self.length - 1) {
+              return {
+                done: true,
+                value: undefined
+              }
+            }
+            return {
+              done: false,
+              value: self[index++]
+            }
+          }
+        }
+      }
+      // 1.let it = arr[Symbol.iterator]()
+      // 2.it.next()
+      // ...
+      for(let i of arr){
+        console.log(i)
+      }
+
+      //让对象可以使用forof循环
+      var obj = {
+        0: 100,
+        1: 200,
+        length: 2
+      }
+      obj[Symbol.iterator] = Array.prototype[Symbol.iterator]
+      for(let i of obj) {
+        console.log(i)
+      }
+
     </script>
   </body>
 </html>
