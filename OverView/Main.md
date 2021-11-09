@@ -320,6 +320,53 @@ function myInstance(target, classObj) {
    [11,22,33].forEach(item=>{})
    ```
 
+4. for in 性能最差
+
+   > 迭代当前对象中可枚举属性【私有属性大部分是可枚举的，公有属性(原型链上的属性)部分是可枚举的】
+   >
+   > 性能差的原因：会查找原型链
+
+   问题：
+
+   问题1：遍历的数据顺序会变，会以数字优先
+
+   问题2：Symbol属性无法遍历
+
+   ​	解决：
+
+   ​	Object.keys(obj) // ["0", "1", "name", "age"]
+
+   ​	Object.getOwnPropertySymbols(obj) // [Symbol(99)]
+
+   问题3：可以遍历到公有的可枚举的属性
+
+   ​	解决：`if(!obj.hasOwnProperty(i)) break`
+
+   ```js
+   Object.prototype.test = function() {}
+   var obj = {
+     name:'DB',
+     age: 18,
+     [Symbol(99)]: 99,
+     0:'000',
+     1:'111'
+   }
+   for(let i in obj) {
+     if(!obj.hasOwnProperty(i)) break
+     console.log(i)
+   }
+   //0 1 name age test
+   
+   var keys = Object.keys(obj)
+   if(typeof Symbol !== 'undefined') keys=keys.concat(Object.getOwnPropertySymbols(obj))
+   keys.forEach(item =>{
+     console.log('属性：', item)
+     console.log('属性值：', obj[item])
+   })
+   ```
+
+   
+
 #### 2.1手写forEach
 
 ```js
