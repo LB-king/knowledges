@@ -365,7 +365,11 @@ function myInstance(target, classObj) {
    })
    ```
 
-   
+5. for of
+
+   性能稍微比for in好一点
+
+   > for of 的原理是按照迭代器规范遍历的，支持 数组/部分类数组/Set/Map 【对象目前没有实现】
 
 #### 2.1手写forEach
 

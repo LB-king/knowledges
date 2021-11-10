@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>addEventLisnener</title>
+  </head>
+  <body>
+    <style>
+      #app {
+        background-color: #bdc;
+        height: 400px;
+        width: 400px;
+      }
+      #div1 {
+        height: 200px;
+        width: 200px;
+        background-color: #ccc;
+      }
+    </style>
+    <div id="app">
+      <div id="div1">
+        <button id="btn">按钮</button>
+      </div>
+    </div>
+    <script>
+      app.addEventListener('click', () => {
+        console.log('app被点击')
+      }, {passive: true})
+      div1.addEventListener('click', () => {
+        console.log('div1被点击')
+      }, {passive: true})
+      btn.addEventListener('click', () => {
+        console.log('btn被点击')
+      }, false)
+      //点击最里面的按钮，会触发三个事件
+      
+    </script>
+  </body>
+</html>
