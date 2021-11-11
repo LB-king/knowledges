@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>谈谈你对this的理解</title>
+    <style>
+      html,
+      body {
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body></body>
+</html>
+<script src="./utils/utils.js"></script>
+<script>
+  // 'use strict'
+  /*
+  「this的5种情况分析」
+    - this执行主体，谁把它执行的「和在哪创建&在哪执行都没有必然的联系」
+    Q1:函数执行，看方法前面是否有点,没有点this是window「严格模式下是undefined」，有点, 点前面是谁this就是谁
+    Q2:给当前元素的某个事件行为绑定方法，当事件行为触发，方法中的this是当前元素本身「排除attachEvent」,使用箭头函数则指向window
+    Q3:构造函数的this是当前类的实例
+    Q4:箭头函数中没有执行主体，所用到的this是其执行上下文的this
+    Q5:可以基于Function.protitype上的call/apply/bind去改变this指向
+
+ */
+  //Q1
+  /* let fn = function () {
+    console.log(this)
+  }
+  var obj = {
+    name: 'OB',
+    fn
+  }
+  fn() // window
+  obj.fn() // obj */
+
+  //Q2
+  /* document.body.addEventListener('click', function () {
+    console.log(this)
+  }) */
+  // Q3
+  /* function Person(name, age) {
+    this.name = name
+    this.age = age
+    console.log(this)
+  }
+  var p = new Person('PP', 18) */
+  // Q4
+  /*  var arrow = () => {
+    console.log(this) //window
+  } */
+
+  /*  let demo = {
+    name: 'DEMO',
+    fn() {
+      console.log(this)
+      setTimeout(function () {
+        console.log(this)
+      }, 1000)
+      setTimeout(() => {
+        console.log(this)
+      }, 1000)
+    }
+  }
+  demo.fn() //demo window demo */
+  //Q5
+
+  var obj = {
+    name: 'kb',
+    age: 18,
+    [Symbol(9)]: 'Symbol(9)'
+  }
+
+  console.log(Reflect.ownKeys(obj))
+  //1.手写call方法
+  Function.prototype.myCall = function (context, ...params) {
+    // 1.
+  }
+  function func(x, y) {
+    // console.log(this, x, y)
+  }
+  //func函数基于__proto__找到Function.prototype.call,把call方法执行 call(context, ...params)
+  // - 把func中的this改成obj
+  // - 并且把params接收的值当做实参传递给func函数
+  // - 并且让func函数立即执行
+  //call和apply的区别就是语法的区别，apply把所有参数都放在数组中
+  func.call(obj, 10, 20)
+  func.myCall(obj, 10, 20)
+  // func.apply(window, [33, 44])
+  // func函数基于__proto__找到Function.prototype.bind,把bind方法执行
+  //  在bind内部
+  //    和call/apply的区别：并没有把func立即执行
+  // - 把传递进来的obj/88/99等信息存储起来「闭包」
+  // - 执行bind返回一个新的函数，例如：proxy，把proxy绑定给元素的事件，当事件触发执行的是返回的proxy，在proxy内部，再去把func执行，把this和值都改变为之前存储的那些内容
+  // document.body.addEventListener('click', func.bind(obj, 88, 99))
+
+  var arr = [11, 22, 33, 44]
+  _.myEach(arr, function (item, indx, tar) {
+    console.log(item, indx, tar)
+    // console.log(this)
+  })
+
+
+
+</script>

@@ -233,23 +233,6 @@ p:not(:last-child) {
   console.log(f instanceof Array) // true 
   ```
 
-#### 1.1手写instance
-
-```js
-function myInstance(target, classObj) {
-  let classPrototype = classObj.prototype
-  // target.__proto__某些浏览器不支持
-  let proto = Object.getPrototypeOf(target)
-  while(true) {
-    // 直到找到Object也没有找到Object->null
-    if(proto === null) return false
-    if(proto === classPrototype) return true
-    // 循环赋值
-    proto = Object.getPrototypeOf(proto)
-  }
-}
-```
-
 - constructor
 
   ```js
@@ -370,8 +353,70 @@ function myInstance(target, classObj) {
    性能稍微比for in好一点
 
    > for of 的原理是按照迭代器规范遍历的，支持 数组/部分类数组/Set/Map 【对象目前没有实现】
+   >
+   > ES6中引入了Iterator，只有提供了Iterator接口的数据类型才可以使用for of来遍历，可以向一些数据类型添加Symbol.iterator属性，只要数据结构有这个属性，就会被视为有Iterator接口
 
-#### 2.1手写forEach
+   ```js
+   var obj = {
+     0: 'KB',
+     [Symbol(9)]: 'symbol属性1',
+     1: 44,
+     name: 'kb',
+     length: 2,
+     [Symbol(0)]: 'symbol属性2'
+   }
+   //Reflect.ownKeys(obj) => ["0", "1", "name", "length", Symbol(9), Symbol(0)]
+   obj[Symbol.iterator] = function* () {
+     let keys = Object.keys(this)
+     let symbolKeys = Object.getOwnPropertySymbols(this)
+     symbolKeys.pop()
+     keys = keys.concat(symbolKeys)
+     console.log(keys)
+     for(let i = 0, len = keys.length; i < len; i++) {
+       yield {
+         // key: keys[i],
+         // value: this[keys[i]]
+         [keys[i]]: this[keys[i]]
+       }
+     }
+   }
+    for(let i of obj) {
+      console.log(i)
+    }
+   ```
+
+   > 两种方法获取symbol属性
+   >
+   > 1.Reflect.ownKeys(obj)
+   >
+   > 2.Object.getOwnPropertySymbols(this)
+   >
+   > 问题：会把symbol属性排到后面
+
+6. Symbol
+
+   Symbol.for()
+
+   > 会被登记在全局环境中供搜索，不会每次调用都返回一个新的Symbol类型的值，而是会先检查给定的key，不存在才会新建。如Symbol.for('foo')调用30次，每次返回同一个Symbol值
+
+   Symbol()
+
+   > 如Symbol.for('foo')调用30次，会返回30个不同的Symbol值
+
+   Symbol.keyFor()
+
+   > 返回一个已经登记的Symbol类型值的key
+
+   ```js
+   var s1 = Symbol.for('foo')
+   console.log(Symbol.keyFor(s1)) // foo
+   ```
+
+   
+
+#### 手写系列
+
+##### 1.forEach
 
 ```js
 Array.prototype.forEach = function(cb, context) {
@@ -386,11 +431,34 @@ Array.prototype.forEach = function(cb, context) {
 }
 ```
 
-1. 性能比较
+##### 2.instanceof
 
-   for 优于 forEach
+```js
+function myInstance(target, classObj) {
+  let classPrototype = classObj.prototype
+  // target.__proto__某些浏览器不支持
+  let proto = Object.getPrototypeOf(target)
+  while(true) {
+    // 直到找到Object也没有找到Object->null
+    if(proto === null) return false
+    if(proto === classPrototype) return true
+    // 循环赋值
+    proto = Object.getPrototypeOf(proto)
+  }
+}
+```
 
-   
+
+
+**性能比较**
+
+> for 和 while 相当
+>
+> for 优于 forEach
+>
+> for of > for in
+>
+> for in 最差
 
 ### TypeScript
 

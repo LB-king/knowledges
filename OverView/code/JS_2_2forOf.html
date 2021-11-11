@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>for of循环</title>
+  </head>
+  <body>
+    <script>
+      // for of循环的原理是按照迭代器规范遍历的
+      var obj = {
+        0: 'KB',
+        [Symbol(9)]: 'symbol属性1',
+        1: 44,
+        name: 'kb',
+        length: 2,
+        [Symbol(0)]: 'symbol属性2'
+      }
+      // obj[Symbol.iterator] = Array.prototype[Symbol.iterator]
+      //注意这样写了，只能对下标是0，,1这样的对象起作用，像{name: 'jack'}，这样的就无法遍历识别
+
+      console.log(Reflect.ownKeys(obj)) // ["0", "1", "name", "length", Symbol(9), Symbol(0)]
+      obj[Symbol.iterator] = function* () {
+        let keys = Object.keys(this)
+        let symbolKeys = Object.getOwnPropertySymbols(this)
+        symbolKeys.pop()
+        keys = keys.concat(symbolKeys)
+        console.log(keys)
+        for (let i = 0, len = keys.length; i < len; i++) {
+          yield {
+            // key: keys[i],
+            // value: this[keys[i]]
+            [keys[i]]: this[keys[i]]
+          }
+        }
+      }
+      //不支持属性为Symbol的属性
+      for (let i of obj) {
+        console.log(i)
+      }
+
+      console.log('@@@@@@@@@@@@@@@@')
+      /* Symbol.for()  与 Symbol()  这两种写法，都会生成新的 Symbol。它们的区别是，前者会被登记
+在全局环境中供搜索，后者不会。 Symbol.for()  不会每次调用就返回一个新的 Symbol 类型的
+值，而是会先检查给定的 key  是否已经存在，如果不存在才会新建一个值。比如，如果你调
+用 Symbol.for("cat")  30 次，每次都会返回同一个 Symbol 值，但是调用 Symbol("cat")  30
+次，会返回 30 个不同的 Symbol 值 */
+      var s1 = Symbol('foo')
+      var s2 = Symbol.for('foo')
+      console.log(Symbol.keyFor(s1)) // undefined
+      console.log(Symbol.keyFor(s2)) // foo
+    </script>
+  </body>
+</html>

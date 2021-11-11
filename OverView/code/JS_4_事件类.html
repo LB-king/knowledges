@@ -25,17 +25,19 @@
       </div>
     </div>
     <script>
-      app.addEventListener('click', () => {
+      // addEventListener第三个参数的意思是useCapture 默认是false,即默认使用事件冒泡
+      app.addEventListener('click', (e) => {
         console.log('app被点击')
-      }, {passive: true})
-      div1.addEventListener('click', () => {
+      })
+      div1.addEventListener('click', (e) => {
+        e.stopPropagation() //阻止冒泡
         console.log('div1被点击')
-      }, {passive: true})
-      btn.addEventListener('click', () => {
+      })
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation()
         console.log('btn被点击')
-      }, false)
+      })
       //点击最里面的按钮，会触发三个事件
-      
     </script>
   </body>
 </html>
