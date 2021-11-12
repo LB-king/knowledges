@@ -490,6 +490,25 @@ function myInstance(target, classObj) {
 }
 ```
 
+##### 3.call
+
+```js
+Function.prototype.myCall = function(context, ...params) {
+  // 改变this为context 
+  context == null ? window : context
+  //不是对象或者函数，要转成对象，以便在其身上添加属性
+  !/^(function|object)$/.test(typeof context) ? context = Object(context) : context
+  let self = this,
+      key = Symbol() //唯一的属性值
+  //利用点判断this的机制来实现
+  //context.xxx = self  "obj.xxx=fn" obj.xxx():this就指向obj 
+  context[key] = self
+  let res = context[key](...params)
+  delete context[key]
+  return res
+}
+```
+
 
 
 **性能比较**

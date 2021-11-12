@@ -16,7 +16,7 @@
       var arr = [111, 22, 33]
       Array.prototype.myForEach = function (callback, context) {
         let self = this
-        context = context == null ? window : context
+        context == null ? (context = window) : context
         for (let i = 0, len = self.length; i < len; i++) {
           callback.call(context, self[i], i, self)
         }
@@ -78,19 +78,27 @@
         - 把参数传给函数，并且执行函数
       */
       Function.prototype.myCall = function (context, ...params) {
-        context = context == null ? window : context
+        context == null ? (context = window) : context
         //obj.xxx() this->obj
         let self = this,
           key = Symbol()
+        //如果contex不是对象，则需要将其变成对象即可，否则context[key]会报错
+        !/^(object|function)$/.test(getType(context))
+          ? (context = Object(context))
+          : null
         context[key] = self
         var res = context[key](...params)
+        delete context[key]
         return res
       }
 
-      function fn() {
+      function fn(...p) {
         console.log(this)
       }
-      fn.myCall({})
+      var obj = {
+        name: 'DEMO'
+      }
+      fn.myCall(obj, 11, 22)
     </script>
   </body>
 </html>
