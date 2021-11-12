@@ -412,7 +412,49 @@ p:not(:last-child) {
    console.log(Symbol.keyFor(s1)) // foo
    ```
 
-   
+
+#### 3.this的理解
+
+​	-- this执行主体，谁把它执行的「和在哪创建&在哪执行都没有必然的联系」
+
+Q1: 函数执行，看方法前面有没有点，没有点this是window「严格模式下是undefined」，有点，点前面是谁this就是谁
+
+Q2:给当前元素的某个事件行为绑定方法，当事件行为触发，方法中的this是当前元素本身「排除attachEvent」，使用箭头函数则指向window
+
+Q3:构造函数的this是当前类的实例
+
+Q4:箭头函数中没有执行主体，所用到的this是其执行上下文的this
+
+Q5:可以基于Function.prototype上的call&apply&bind去改变this的指向
+
+- call内部执行
+
+  1. fn函数基于`__proto__`找到Function.prototype.call方法，并执行call方法,其内部过程：
+
+     call(context, ...params)
+
+  2. 把fn函数中的this改为context
+
+  3. 并且把params接收的值当做实参传递给fn函数
+
+  4. fn立即执行
+
+  ```js
+  function fn() {
+    console.log(this)
+  }
+  var obj = {name: 'OBJ'}
+  document.body.addEventListener('click', fn.bind(obj, 11, 22))
+  ```
+
+- apply「基本与call一直，区别就是接收的参数形式不同,以数组的形式传参数」
+
+- fn函数基于`__proto__`找到Function.prototype.bind方法，并执行bind方法,其内部过程：
+
+  1. 和call和apply的区别：并没有立即执行
+  2. 把传进来的obj，params等信息存储起来「闭包」
+  3. 把bind方法**执行的结果**返回给当前元素绑定
+  4. 执行bind返回一个新的函数，例如proxy，把proxy绑定给元素的事件，当事件触发执行的是返回的proxy，在proxy内部，再去把fn执行，把this和params改变为之前存储的内容「预处理」
 
 #### 手写系列
 
