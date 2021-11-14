@@ -509,6 +509,17 @@ Function.prototype.myCall = function(context, ...params) {
 }
 ```
 
+##### 4.bind
+
+```js
+Function.prototype.myBind = function(obj, ...params) {
+  let _this = this
+  return function(ev) {
+    _this.call(obj, [ev].concat(...params))
+  }
+}
+```
+
 
 
 **性能比较**
