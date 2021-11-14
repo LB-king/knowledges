@@ -456,6 +456,56 @@ Q5:可以基于Function.prototype上的call&apply&bind去改变this的指向
   3. 把bind方法**执行的结果**返回给当前元素绑定
   4. 执行bind返回一个新的函数，例如proxy，把proxy绑定给元素的事件，当事件触发执行的是返回的proxy，在proxy内部，再去把fn执行，把this和params改变为之前存储的内容「预处理」
 
+#### 4.从输入URL到页面呈现
+
+##### 第一步：URL解析
+
+http://user:pass@www.qq.com:80/index.html?name=ok&age=18#video
+
+- 地址解析：
+
+  协议：http、https、ftp   (ftp传输一些大文件)  http-80 https-443 ftp-21
+
+  登录信息：user:pass
+
+  域名：www.qq.com
+
+  端口号：80「0-65535」
+
+  请求资源的文件路径：index.html
+
+  查询字符串：问号参数：?name=ok&age=18
+
+  片段标识符： HASH值
+
+  TCP/IP
+
+  TCP 传输通道  路
+
+  HTTP 传输信息 快递员
+
+- 编码：
+
+  ```js
+  //对整个URL的编码：处理空格/中文
+  //encodeURI | decodeURI
+  
+  //主要针对传递的参数信息编码
+  //encodeURIComponent | decodeURIComponent
+   var url = `http://www.baidu.com/?name=${encodeURI('一段中文')}&from=${encodeURIComponent('http://www.qq.com')}`
+   
+  //http://www.baidu.com/?name=%E4%B8%80%E6%AE%B5%E4%B8%AD%E6%96%87&from=http%3A%2F%2Fwww.qq.com
+  ```
+
+- URI/URL/URN的区别？
+
+##### 第二步 缓存检查
+
+缓存位置：
+
+- Memory Cache：内存缓存
+- Disk Cache：硬盘缓存
+
 #### 手写系列
 
 ##### 1.forEach
@@ -578,3 +628,61 @@ Object.defineProperty(obj, key) {
 ### React
 
 ### Webpack
+
+### 项目亮点/问题
+
+避免功能和也业务问题，如：
+
+单点登录
+
+权限的多维度管控
+
+多组件信息的复杂共享类问题
+
+数据埋点&性能监控
+
+产品安全解决策略
+
+。。。
+
+性能优化方案：
+
+- webpack层面
+
+- http层面
+
+- 页面渲染层面「包含代码渲染」
+
+- 骨架屏
+
+- 延迟/异步加载
+
+- 大数据渲染优化
+
+- 大文件传输处理
+
+  。。。
+
+插件组件封装：
+
+- 公共方法库
+
+- 插件/组件封装 二次封装 & 开源级插件组件的打造
+
+- Vue自定义指令
+
+  。。。
+
+  突出强调一下结果:如半个月的开发周期只需要7天
+
+也可以说一些新技术：
+
+- hybrid
+
+- uni-app
+
+- ts
+
+- node
+
+  。。。

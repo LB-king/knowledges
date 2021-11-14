@@ -79,9 +79,20 @@
   //1.手写call方法
   Function.prototype.myCall = function (context, ...params) {
     // 1.
+    context == null ? (context = window) : context
+    let self = this,
+      key = Symbol(), //唯一属性值
+      res
+    !/^(object|function)$/i.test(typeof context)
+      ? (context = Object(context))
+      : context
+    context[key] = self
+    res = context[key](...params)
+    return res
   }
-  function func(x, y) {
-    // console.log(this, x, y)
+  function func(...params) {
+    console.log(this)
+    console.log(params)
   }
   //func函数基于__proto__找到Function.prototype.call,把call方法执行 call(context, ...params)
   // - 把func中的this改成obj
@@ -98,9 +109,45 @@
   // - 执行bind返回一个新的函数，例如：proxy，把proxy绑定给元素的事件，当事件触发执行的是返回的proxy，在proxy内部，再去把func执行，把this和值都改变为之前存储的那些内容
   // document.body.addEventListener('click', func.bind(obj, 88, 99))
 
-  var arr = [11, 22, 33, 44]
-  _.myEach(arr, function (item, indx, tar) {
-    console.log(item, indx, tar)
-    // console.log(this)
-  })
+  /* 
+  2.手写bind,不会立即执行，而是会返回一个新的函数
+  柯里化编程思想
+*/
+  Function.prototype.myBind = function (context, ...params) {
+    //this/self -> func  context->obj  params->['AA', 'BBB']
+    let self = this
+    return function (...ev) {
+      //把func执行，并改变this
+      // self.call(context, ...params)
+      self.apply(context, ev.concat(params))
+    }
+  }
+  document.body.addEventListener('click', func.myBind(obj, 'AA', 'BBB'))
+
+  /* Array.prototype.slice = function () {
+    let res = []
+    for (let i = 0, len = this.length; i < len; i++) {
+      res.push(this[i])
+    }
+    return res
+  } */
+  function fn() {
+    console.log(arguments)
+    console.log(Array.from(arguments)) //arguments
+    console.log(getType(document.getElementsByTagName('body'))) //htmlcollection
+    //arguments是类数组，不能使用forEach等数组的方法,所以需要把类数组变成数组
+    //Array.from,[...arguments],slice
+    console.log(Array.prototype.slice.call(arguments))
+    // ![...arguments].forEach((item) => {
+    //   console.log(item)
+    // })
+    // let res = Array.prototype.slice.call(arguments)
+    // console.log(res)
+    // return res
+    // ![].forEach.call(arguments, item => {
+    //   console.log(item)
+    // })
+  }
+  fn(111, 222, 333)
+
 </script>

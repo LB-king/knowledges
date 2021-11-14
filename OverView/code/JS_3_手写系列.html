@@ -41,7 +41,9 @@
           'Date',
           'Symbol',
           'Undefined',
-          'Null'
+          'Null',
+          'Arguments',
+          'HTMLCollection'
         ]
         let classObj = {}
         types.forEach((type) => {
@@ -85,7 +87,7 @@
         //如果contex不是对象，则需要将其变成对象即可，否则context[key]会报错
         !/^(object|function)$/.test(getType(context))
           ? (context = Object(context))
-          : null
+          : context
         context[key] = self
         var res = context[key](...params)
         delete context[key]

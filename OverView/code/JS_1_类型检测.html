@@ -76,7 +76,7 @@
       // 1.写一个检测类型的公共方法
       function toType(target) {
         let res = ''
-        const arr = ['String', 'Boolean', 'Number', 'Object', 'Array', 'Function', 'Date', 'RegExp', 'Symbol', 'Undefined', 'Null']
+        const arr = ['String', 'Boolean', 'Number', 'Object', 'Array', 'Function', 'Date', 'RegExp', 'Symbol', 'Undefined', 'Null', 'Arguments', 'HTMLCollection']
         arr.forEach(item => {
           if (Object.prototype.toString.call(target) === `[object ${item}]`) {
            res = item.toLowerCase()

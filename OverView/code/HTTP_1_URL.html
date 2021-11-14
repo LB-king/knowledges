@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>http</title>
+  </head>
+  <body>
+    <script>
+      var url = `http://www.baidu.com/?name=${encodeURI('一段中文')}&from=${encodeURIComponent('http://www.qq.com')}`
+      //对整个URL的编码：处理空格/中文
+      // encodeURI | decodeURI
+
+      //主要针对传递的参数信息编码
+      // encodeURIComponent | decodeURIComponent
+      console.log(url)
+      //http://www.baidu.com/?name=%E4%B8%80%E6%AE%B5%E4%B8%AD%E6%96%87&from=http%3A%2F%2Fwww.qq.com
+    </script>
+  </body>
+</html>

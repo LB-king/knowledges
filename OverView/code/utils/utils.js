@@ -36,7 +36,9 @@ function getType(target) {
     'RegExp',
     'Symbol',
     'Undefined',
-    'Null'
+    'Null',
+    'Arguments',
+    'HTMLCollection'
   ]
   arr.forEach((item) => {
     type2obj[`[object ${item}]`] = item.toLowerCase()
