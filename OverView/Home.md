@@ -76,6 +76,25 @@ https://juejin.cn/user/958429872534056/posts
 
    bug管理工具https://pingcode.com/  `PingCode`
 
+### ftp传输文件
+
+```shell
+ftp 21.22.311.22
+#用户名：xxx
+#密码：xxx
+ftp> lcd D:\
+#目前的本地目录：D:\
+ftp> cd xxx
+#查看目录里的内容
+ftp> ls
+ftp> put 要发生的文件名.zip
+...
+Transfer complete
+
+```
+
+
+
 ### 继承、原型链
 
 1. `instanceof`

@@ -468,7 +468,13 @@ http://user:pass@www.qq.com:80/index.html?name=ok&age=18#video
 
 - 地址解析：
 
-  协议：http、https、ftp   (ftp传输一些大文件)  http-80 https-443 ftp-21
+  协议：http、https、ftp   (ftp传输一些大文件) 
+
+  > http - 80
+  >
+  > https - 443
+  >
+  > ftp - 21
 
   登录信息：user:pass
 
@@ -515,6 +521,46 @@ http://user:pass@www.qq.com:80/index.html?name=ok&age=18#video
 
 - Memory Cache：内存缓存
 - Disk Cache：硬盘缓存
+
+打开网页：查找disk cache中是否有匹配，如有则使用，没有则发送网络请求
+
+- 普通刷新(F5): 因为TAB没有关闭，因此Memory Cache是可用的，会被优先使用，其次才是disk cache
+
+- 强制刷新(Ctrl + F5): 浏览器不使用缓存，因此发送的请求头均带有Cache-control: no-cache,服务器直接返回200和最新内容
+
+**强缓存：Expires / Cache-Control**
+
+> 浏览器对于强缓存的处理：根据第一次请求资源时返回的响应头来确定的
+>
+> - Expires: 缓存过期时间，用来指定资源到期的时间(HTTP/1.0)
+> - Cache-Control: cache-control: max-age=2592000第一次拿到资源后的2592000秒内(30天)，再次发送请求的话，会读取缓存中的信息(HTTP1.1)
+> - 两者同时存在的话，Cache-Control的优先级高于Expires
+
+如果服务器文件更新了，本地也是有缓存的，这样就拿不到最新文件？
+
+解决方案：- HTML页面不做强缓存
+
+1)服务器更新资源的时候，资源名称和之前不一样
+
+2)当文件更新后，我们在html导入的时候。设置一个后缀(时间戳)
+
+```html
+<script src="index.js/?=39183918319"></script>
+```
+
+3)通过协商缓存来解决
+
+**协商缓存**
+
+总会和服务器协商的
+
+![](\img\协商缓存.png)
+
+last-modified 只能精确到秒
+
+etag 更精确
+
+不需要写代码，但是需要理解内部机制
 
 #### 5.数组扁平化
 
