@@ -279,7 +279,11 @@ p:not(:last-child) {
    for(let i = 0,len = arr.length; i < len; i++){} //3ms
    ```
 
-   
+   for循环中 break和continue的区别：
+
+   > break - 直接跳出循环
+   >
+   > continue - 满足条件的那一项做其他事情，循环会继续进行
 
    函数式编程：forEach,map,reduce...直接交给函数处理，只关注结果，自己无法管控过程
 
@@ -499,12 +503,50 @@ http://user:pass@www.qq.com:80/index.html?name=ok&age=18#video
 
 - URI/URL/URN的区别？
 
+  URI - (Uniform Resource Identifier) 统一资源标识符
+
+  URL - (Uniform Resource Location) 统一资源定位符，不仅标识了资源，还指定了操作或者获取方式，同时指出了主要访问机制和网络位置
+
+  URN - (Uniform Resource Name) 统一资源名称
+
 ##### 第二步 缓存检查
 
 缓存位置：
 
 - Memory Cache：内存缓存
 - Disk Cache：硬盘缓存
+
+#### 5.数组扁平化
+
+``` js
+var arr = [00, [11], [22, 33, [44, 55, [66, 77, [88, 99]]]]]
+//1.ES6的方法直接实现
+arr = arr.flat(Infinity)
+//2.转化为字符串
+arr = arr.toString().split(',').map(i => parseFloat(i))
+//2.1 转化为json格式的字符串
+arr = JSON.stringify(arr).replace(/(\[|\])/g, '').split(',').map(i => +i)
+//3.some
+while(arr.some(item => Array.isArray(arr))) {
+  arr = [].concat(...arr)
+}
+//4.递归
+function myFlat(arr = []) {
+  if (!arr.length) return arr
+  let res = []
+  function fn(arr) {
+    for (let i = 0, len = arr.length; i < len; i++) {
+      if (Array.isArray(arr[i])) {
+        fn(arr[i])
+        continue
+      }
+      res.push(arr[i])
+    }
+  }
+  fn(arr)
+  return res
+}
+```
 
 #### 手写系列
 
