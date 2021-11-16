@@ -682,7 +682,7 @@ http2.0和http1.x的区别
 - header压缩
 - 服务端推送(server push):  例如网页请求一个index.css文件，在客户端收到index.css的同时，服务器端会将index.js推送到客户端，当客户端尝试获取index.js的时候，就可以直接从缓存中获取到，不用再发请求了
 
-![](\img\HTTP_优化.png)
+
 
 #### 5.数组扁平化
 
@@ -840,6 +840,51 @@ Object.defineProperty(obj, key) {
 ### Webpack
 
 ### 优化
+
+#### 1.http层面
+
+1. 利用缓存
+
+   - 对于静态文件实现强缓存和协商缓存(question: 文件有更新，如何保证及时刷新？)
+   - 对于不经常更新的接口数据采用本地化存储做数据缓存(question: cookie / localStorage / vuex / redux)
+
+2. DNS优化
+
+   - 分服务器部署，增加http并发性(导致DNS解析变慢)
+
+   - DNS Prefetch
+
+     ```html
+     <link rel="dns-prefetch" href="//d.3.cn">
+     ```
+
+3. TCP的三次握手和四次挥手
+
+   - Connection: keep-alive
+
+4. 数据传输
+
+   - 减少数据传输的大小
+
+     - 内容或者数据压缩(webpack)
+     - 服务器端一定要开启GZIP压缩(一般能压缩60%左右)
+     - 大批量数据分批次请求(例如：下拉刷新或者分页，保证首次加载的数据少)
+
+   - 减少HTTP请求的次数
+
+     - 资源文件合并处理
+
+     - 字体图标
+
+     - 雪碧图 CSS-Sprite
+
+     - 图片base64压缩
+
+       ......
+
+5. CDN服务器"地域分布式"
+
+6. 采用HTTP2.0
 
 ### 项目亮点/问题
 

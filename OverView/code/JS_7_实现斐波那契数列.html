@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>斐波那契数列</title>
+  </head>
+  <body>
+    <script>
+      // 斐波那契数列为: [1,1,2,3,5,8,13,21...]
+      // fibonacci(0) -> 1
+      // fibonacci(5) -> 8
+      // fibonacci(n) -> ?
+      // max是索引
+      /* function fibonacci(max) {
+        if (max <= 1) return 1
+        let arr = [1, 1],
+          i = max + 1 - 2
+        while (i > 0) {
+          let a = arr[arr.length - 2],
+            b = arr[arr.length - 1]
+          arr.push(a + b)
+          i--
+        }
+        return arr[arr.length - 1]
+      } */
+      function fibonacci(max) {
+        function fn(max, cur = 1, next = 1) {
+          if (max == 0) {
+            return cur
+          } else {
+            return fn(max - 1, next, cur + next)
+          }
+        }
+        return fn(max)
+      }
+      //3.会卡死，50都计算的很卡
+      // function fibonacci(max) {
+      //   if (max - 2 >= 0) {
+      //     return fibonacci(max - 2) + fibonacci(max - 1)
+      //   } else {
+      //     return 1
+      //   }
+      // }
+      console.log(fibonacci(1))
+      console.log(fibonacci(3))
+      console.log(fibonacci(66))
+    </script>
+  </body>
+</html>
