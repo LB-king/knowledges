@@ -93,7 +93,9 @@ Transfer complete
 
 ```
 
+### 瀑布流的库
 
+https://github.com/lfyfly/vue-waterfall-easy/blob/master/README-CN.md
 
 ### 继承、原型链
 
@@ -774,6 +776,8 @@ res()
   - 地址栏访问：会触发浏览器缓存机制
   - F5刷新：浏览器会设置max-age=0,跳过强缓存，会进行协商缓存判断
   - ctrl+F5刷新：跳过强缓存和协商缓存，直接从服务器拉取资源
+
+
 
 ### with
 
