@@ -716,6 +716,62 @@ function myFlat(arr = []) {
 }
 ```
 
+#### 6.浅拷贝
+
+- 数组浅拷贝
+
+  ```js
+  var arr = [11, 22, [33, 44], [55, 66]]
+  // 1.es6展开运算符
+  var newArr = [...arr]
+  // 2.concat
+  newArr = arr.concat([])
+  // 3.slice
+  newArr = arr.slice()
+  ```
+
+- 对象浅拷贝
+
+  ```js
+  var obj = {
+    name: 'DEMO',
+    arr: [11, 22, [33, 44]],
+    person: {
+      name: 'zhangsan',
+      age: 18
+    },
+    [Symbol()]:'s1',
+    reg: /^op$/,
+    date: new Date(),
+    func: function() {}
+  }
+  
+  // 1.es6扩展运算符
+  var newObj = {...obj}
+  // 2.Object.assign
+  newObj = Object.assign({}, obj)
+  // 3.for in 循环
+  for(let i in obj) {
+    if(Object.hasOwnProperty(i)) {
+      newObj[i] = obj[i]
+    }
+  }
+  // 3.1优化版本，可以识别Symbol
+  /*
+    var keys = [
+    ...Object.keys(o1),
+    ...Object.getOwnPropertySymbols(o1)
+  
+    ]
+    for(let i = 0; i<keys.length;i++) {
+      o2[keys[i]] = o1[keys[i]]
+    }
+  */
+  // 注意：第三种方法无法获取Symbol属性
+  ```
+
+  
+
 #### 手写系列
 
 ##### 1.forEach

@@ -23,7 +23,7 @@
         sb: Symbol(),
         [Symbol(22)]: 'Symbol22'
       }
-      // 数组:
+      // (1)数组浅拷贝
       // 浅克隆只克隆第一层:
       // 1.展开运算符
       var newArr = [...arr] // arr[3] === newArr[3] 依然指向同一个内存地址，属于浅克隆
@@ -32,6 +32,38 @@
       // 3.concat一个空的数组
       newArr = arr.concat([])
 
+      // (2)对象的浅拷贝
+      // 1.展开运算符
+      var newObj = { ...obj }
+      // 2.Object.assign
+      newObj = Object.assign({}, obj)
+      // // 3.循环
+      var newObj = {}
+      myEach(obj, (item, key) => {
+        newObj[key] = item
+      })
+      //第三种循环不能处理Symbol()属性
+
+      // A.封装一个浅克隆的方法
+      function shallowClone(obj) {
+        var type = getType(obj),
+          oConstructor = obj.constructor
+        // Symbol/BigInt
+        if (/^(symbol|bigint)$/i.test(type)) return Object(obj)
+        // 数组/对象
+        if (/^(object|array)$/i.test(type)) {
+          var keys = [...Object.keys(obj), ...Object.getOwnPropertySymbols(obj)]
+          var res = new oConstructor()
+          myEach(keys, (key) => {
+            res[key] = obj[key]
+          })
+          return res
+          // 直接使用扩展运算符
+          // return type === 'array' ? [...obj] : { ...obj }
+        }
+        return obj
+      }
+      // B.封装一个深克隆的方法
       function deepClone(target) {
         const type = getType(target)
         //非数组或者对象直接返回传入的内容
@@ -48,10 +80,10 @@
           return arr
         }
         //遍历对象
-        if(/object/i.test(type)) {
+        if (/object/i.test(type)) {
           let obj = {}
           _.myEach(target, (item, index) => {
-            if(/object/i.test(type)) {
+            if (/object/i.test(type)) {
               obj[index] = deepClone(item)
             } else {
               obj[index] = item
@@ -61,18 +93,18 @@
         }
       }
 
-      var a1 = deepClone(arr)
+      // var a1 = deepClone(arr)
       // console.log(a1)
 
       // stringify会识别不了 RegExp, Function, Date, Symbol
       // var obj1 = JSON.parse(JSON.stringify(obj))
-      var obj1 = deepClone(obj)
+      // var obj1 = deepClone(obj)
       // console.log(obj)
       // console.log(obj1)
 
-      myEach(obj, (item, index) => {
+      /* myEach(obj, (item, index) => {
         console.log(item, index)
-      })
+      }) */
 
       // console.log(Object.entries(obj))  不能识别key是Symbol的值
     </script>
