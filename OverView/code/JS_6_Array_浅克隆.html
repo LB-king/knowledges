@@ -16,10 +16,12 @@
           type: 'ball',
           price: 22
         },
+        [Symbol(11)]: 'Symbol11',
         reg: /^$/,
         date: new Date(),
         fn: function () {},
-        sb: Symbol()
+        sb: Symbol(),
+        [Symbol(22)]: 'Symbol22'
       }
       // 数组:
       // 浅克隆只克隆第一层:
@@ -60,13 +62,19 @@
       }
 
       var a1 = deepClone(arr)
-      console.log(a1)
+      // console.log(a1)
 
       // stringify会识别不了 RegExp, Function, Date, Symbol
       // var obj1 = JSON.parse(JSON.stringify(obj))
       var obj1 = deepClone(obj)
-      console.log(obj)
-      console.log(obj1)
+      // console.log(obj)
+      // console.log(obj1)
+
+      myEach(obj, (item, index) => {
+        console.log(item, index)
+      })
+
+      // console.log(Object.entries(obj))  不能识别key是Symbol的值
     </script>
   </head>
   <body></body>

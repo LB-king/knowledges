@@ -253,7 +253,7 @@ p:not(:last-child) {
 
   ```js
   function getType(target) {
-    const types = ['Number', 'String', 'Boolean', 'Object', 'Array', 'Function', 'RegExp', 'Date', 'Symbol', 'Undefined', 'Null']
+    const types = ['Number', 'String', 'Boolean', 'Object', 'Array', 'Function', 'RegExp', 'Date', 'Symbol', 'Undefined', 'Null'，'Error', 'BigInt', 'Window']
     
     let typeObj = {}
     types.forEach(item => {

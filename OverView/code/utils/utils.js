@@ -9,7 +9,9 @@ function myEach(target, callback, context) {
   //遍历数组
   if (/^array$/.test(type)) {
     for (let i = 0, len = target.length; i < len; i++) {
-      callback.call(context, target[i], i, target)
+     var res =  callback.call(context, target[i], i, target)
+     //回调函数返回false的情况,可以终止循环
+     if(res === false) break
     }
   }
   //遍历对象
@@ -39,7 +41,10 @@ function getType(target) {
     'Undefined',
     'Null',
     'Arguments',
-    'HTMLCollection'
+    'HTMLCollection',
+    'Error',
+    'BigInt', //9007199254740991n
+    'Window'
   ]
   arr.forEach((item) => {
     type2obj[`[object ${item}]`] = item.toLowerCase()
