@@ -12,10 +12,11 @@ function myEach(target, callback, context) {
       callback.call(context, target[i], i, target)
     }
   }
+  //遍历对象
   if (/^object$/.test(type)) {
     var keys = Object.keys(target)
     for (let i = 0, len = keys.length; i < len; i++) {
-      callback.call(context, keys[i], target[keys[i]], target)
+      callback.call(context, target[keys[i]], keys[i], target)
     }
   }
 }
@@ -46,8 +47,9 @@ function getType(target) {
   return type2obj[Object.prototype.toString.call(target)]
 }
 
-if(window !== 'undefined') {
+if (window !== 'undefined') {
   window._ = {
+    getType,
     myEach
   }
 }

@@ -43,9 +43,20 @@
       //     return 1
       //   }
       // }
+
+      // [1,1,2,3,5,8,13,21,34....],这里参数n指的是index,日常复习
+      function fibonacci(n) {
+        let arr = [1, 1],
+            i = n + 1 - 2
+        while(i > 0) {
+          arr.push(arr[arr.length - 2] + arr[arr.length - 1])
+          i--
+        }
+        return arr[arr.length - 1]
+      }
       console.log(fibonacci(1))
       console.log(fibonacci(3))
-      console.log(fibonacci(66))
+      console.log(fibonacci(8))
     </script>
   </body>
 </html>

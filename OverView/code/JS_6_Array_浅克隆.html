@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>浅克隆</title>
+    <script src="./utils/utils.js"></script>
+    <script>
+      var arr = [11, 22, 33, [44, 55, [66, 77]]]
+      var obj = {
+        name: 'DEMO',
+        age: 18,
+        arr: [11, 22, 33, [44, 55]],
+        favs: {
+          type: 'ball',
+          price: 22
+        },
+        reg: /^$/,
+        date: new Date(),
+        fn: function () {},
+        sb: Symbol()
+      }
+      // 数组:
+      // 浅克隆只克隆第一层:
+      // 1.展开运算符
+      var newArr = [...arr] // arr[3] === newArr[3] 依然指向同一个内存地址，属于浅克隆
+      // 2.Array.prototype.slice
+      newArr = arr.slice()
+      // 3.concat一个空的数组
+      newArr = arr.concat([])
+
+      function deepClone(target) {
+        const type = getType(target)
+        //非数组或者对象直接返回传入的内容
+        if (!/^(object|array)$/i.test(type)) return target
+        if (/array/i.test(type)) {
+          let arr = []
+          _.myEach(target, (item, index) => {
+            if (Array.isArray(item)) {
+              arr[index] = deepClone(item)
+            } else {
+              arr[index] = item
+            }
+          })
+          return arr
+        }
+        //遍历对象
+        if(/object/i.test(type)) {
+          let obj = {}
+          _.myEach(target, (item, index) => {
+            if(/object/i.test(type)) {
+              obj[index] = deepClone(item)
+            } else {
+              obj[index] = item
+            }
+          })
+          return obj
+        }
+      }
+
+      var a1 = deepClone(arr)
+      console.log(a1)
+
+      // stringify会识别不了 RegExp, Function, Date, Symbol
+      // var obj1 = JSON.parse(JSON.stringify(obj))
+      var obj1 = deepClone(obj)
+      console.log(obj)
+      console.log(obj1)
+    </script>
+  </head>
+  <body></body>
+</html>
