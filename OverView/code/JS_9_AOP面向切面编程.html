@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AOP面向切面编程</title>
+  </head>
+  <body>
+    <script src="./utils/utils.js"></script>
+    <script>
+      /* 
+      POP: 面向过程
+      OOP: 面向对象
+      AOP(Aspect Oriented Programming): 面向切面编程，主要作用是把一些跟核心业务逻辑模块无关的功能抽离出来，这些跟业务逻辑无关的功能通常包括：日志统计、安全控制、异常处理等。把这些功能抽离出来之后，再通过"动态织入"的方式掺入业务逻辑模块中
+        + pv/uv上报
+          + pv(page view) - 页面访问量，具体是指网站的页面浏览量或者点击量
+          + uv(unique view) - 独立访客，访问您网站的一台电脑客户端为一个访客，根据IP地质来区分访客数，在一定时间内重复访问，也算是一个UV
+        + 性能监控
+      */
+      Function.prototype.before = function (callback) {
+        if (getType(callback) !== 'function')
+          throw new Error('callback must be function')
+        // self -> func
+        let self = this
+        return function (...params) {
+          // this 调用时才知道是谁
+          // 控制callback和func的执行顺序
+          callback.call(this, ...params)
+          return self.call(this, ...params)
+        }
+      }
+      Function.prototype.after = function (callback) {
+        if (getType(callback) !== 'function')
+          throw new Error('callback must be function')
+        // self -> func
+        let self = this
+        return function (...params) {
+          // this 调用时才知道是谁
+          // 控制callback和func的执行顺序
+          let res = self.call(this, ...params)
+          callback.call(this, ...params)
+          return res
+        }
+      }
+
+      function func() {
+        console.log('func')
+      }
+      func
+        .before(() => {
+          console.log('===before===')
+        })
+        .after(() => {
+          console.log('===after===')
+        })()
+    </script>
+  </body>
+</html>

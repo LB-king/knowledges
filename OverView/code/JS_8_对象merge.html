@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>对象merge合并方案</title>
+  </head>
+  <body>
+    <script src="./utils/utils.js"></script>
+    <script>
+      /* 
+      对象合并的需求太重要
+       + 封装组件：合并参数
+       + 请求数据：合并一起使用
+       ...
+      */
+      var options = {
+        url: '',
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        data: null,
+        arr: [10, 20, 30],
+        config: {
+          xhr: {
+            async: true,
+            cache: false
+          }
+        }
+      }
+      var params = {
+        url: 'http://www.api.com',
+        headers: {
+          'X-token': 'oxooooo12'
+        },
+        data: {
+          name: 'ok',
+          from: 'qq'
+        },
+        arr: [40, 50],
+        xx: 'newXXX',
+        config: {
+          xhr: {
+            cache: true
+          }
+        }
+      }
+      /* 
+      几种情况：
+        + A->obj中的key值，B->target中的key值
+        1. A&B都是简单类型：B替换A即可
+        2. A是对象&B是原始值，抛出异常
+        3. A是原始值&B是对象：B替换A即可
+        4. A&B都是对象：依次遍历B中的每一项，替换A中的内容
+      
+      */
+
+      function isObj(obj) {
+        return getType(obj) === 'object'
+      }
+      // target替换obj
+      function merge(obj, target = {}) {
+        myEach(target, (_, key) => {
+          let isOb1 = isObj(obj[key]),
+            isOb2 = isObj(target[key])
+          if (isOb1 && !isOb2) {
+            throw new Error(`${key} in target must be object`)
+          }
+          if (isOb1 && isOb2) {
+            obj[key] = merge(obj[key], target[key])
+            return
+          }
+          obj[key] = target[key]
+        })
+        return obj
+      }
+
+      console.log(merge(options, params))
+    </script>
+  </body>
+</html>

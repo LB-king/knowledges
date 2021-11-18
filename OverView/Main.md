@@ -791,6 +791,67 @@ function myFlat(arr = []) {
   // 注意：第三种方法无法获取Symbol属性
   ```
 
+  封装一个浅克隆的方法
+  
+  ```js
+  function shallowClone(obj) {
+    var type = getType(obj),
+        oConstructor = obj.constructor
+    // Symmbol | BigInt
+    if(/^(symbol|bigint)$/i.test(type)) return Object(obj)
+    // RegExp | Date
+    if(/^(regexp|date)$/i.test(type)) return new oConstructor(obj)
+    // Error
+    if(/^error$/i.test(type)) return new oConstructor(obj.message)
+    // Function
+    if(/^function/i.test(type)) {
+      return function() {
+        return obj.call(this, ...arguments)
+      }
+    }
+    // Object | Array
+    if(/^(object|array)$/i.test(type)) {
+      var keys = [
+        ...Object.keys(obj),
+        ...Object.getOwnPropertySymbols(obj)
+      ]
+      var res = new oConstructor()
+      myEach(keys, key => {
+        res[key] = obj[key]
+      })
+      return res
+    }
+    // 其他类型，直接返回
+    return obj
+  }
+  ```
+  
+  封装一个**深克隆**的方法
+  
+  ```js
+  function deepClone(obj, cache = new Set()) {
+    var type = getType(obj),
+        oConstructor = obj.constructor
+    if (!/^(object|array)$/i.test(type)) return shallowClone(obj)
+    if(cache.has(obj)) return obj
+    cache.add(obj)
+     var keys = [
+       ...Object.keys(obj),
+       ...Object.getOwnPropertySymbols(obj)
+     ]
+     var res = new oConstructor()
+     myEach(keys, (key) => {
+       res[key] = deepClone(obj[key], cache)
+     })
+    return res
+  }
+  
+  // 注意无限套娃
+  obj.xx = {
+    a: obj
+  }
+  ```
+  
   
 
 #### 手写系列
