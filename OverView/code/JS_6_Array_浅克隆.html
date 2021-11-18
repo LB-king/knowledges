@@ -31,13 +31,17 @@
       newArr = arr.slice()
       // 3.concat一个空的数组
       newArr = arr.concat([])
+      // 4.Array.of
+      newArr = Array.of(...arr)
+      // 5.new Array
+      newArr = new Array(...arr)
 
       // (2)对象的浅拷贝
       // 1.展开运算符
       var newObj = { ...obj }
       // 2.Object.assign
       newObj = Object.assign({}, obj)
-      // // 3.循环
+      // 3.循环
       var newObj = {}
       myEach(obj, (item, key) => {
         newObj[key] = item
@@ -50,6 +54,17 @@
           oConstructor = obj.constructor
         // Symbol/BigInt
         if (/^(symbol|bigint)$/i.test(type)) return Object(obj)
+        // RegExp/Date
+        if (/^(regexp|date)$/i.test(type)) return new oConstructor(obj)
+        // Error,错误对象要多取一层message
+        if (/^error$/i.test(type)) return new oConstructor(obj.message)
+        // Function
+        if (/^function$/i.test(type)) {
+          // 返回一个新的函数：新函数执行还是把原始函数执行
+          return function () {
+            return obj.call(this, ...arguments)
+          }
+        }
         // 数组/对象
         if (/^(object|array)$/i.test(type)) {
           var keys = [...Object.keys(obj), ...Object.getOwnPropertySymbols(obj)]
@@ -61,10 +76,30 @@
           // 直接使用扩展运算符
           // return type === 'array' ? [...obj] : { ...obj }
         }
+        // 基本类型直接返回
         return obj
       }
-      // B.封装一个深克隆的方法
-      function deepClone(target) {
+
+      // B.1.借助浅克隆函数，实现深克隆
+      function deepClone(obj, cache = new Set()) {
+        var type = getType(obj),
+          oConstructor = obj.constructor
+        if (!/^(object|array)$/i.test(type)) return shallowClone(obj)
+        if(cache.has(obj)) return obj
+        cache.add(obj)
+        var keys = [...Object.keys(obj), ...Object.getOwnPropertySymbols(obj)]
+        var res = new oConstructor()
+        myEach(keys, (key) => {
+          res[key] = deepClone(obj[key], cache)
+        })
+        return res
+      }
+      // 无限套娃,会导致栈内存溢出
+      obj.xx = {
+        a: obj
+      }
+      // B.2.封装一个深克隆的方法-不借助浅克隆方法
+      function myDeepClone(target) {
         const type = getType(target)
         //非数组或者对象直接返回传入的内容
         if (!/^(object|array)$/i.test(type)) return target
@@ -93,7 +128,7 @@
         }
       }
 
-      // var a1 = deepClone(arr)
+      var a1 = deepClone(arr)
       // console.log(a1)
 
       // stringify会识别不了 RegExp, Function, Date, Symbol

@@ -44,7 +44,8 @@ function getType(target) {
     'HTMLCollection',
     'Error',
     'BigInt', //9007199254740991n
-    'Window'
+    'Window',
+    'Set'
   ]
   arr.forEach((item) => {
     type2obj[`[object ${item}]`] = item.toLowerCase()

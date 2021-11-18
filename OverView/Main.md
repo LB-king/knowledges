@@ -252,9 +252,26 @@ p:not(:last-child) {
   返回值是`[object Number]`
 
   ```js
+  const types =  [
+      'String',
+      'Boolean',
+      'Number',
+      'Object',
+      'Array',
+      'Function',
+      'Date',
+      'RegExp',
+      'Symbol',
+      'Undefined',
+      'Null',
+      'Arguments',
+      'HTMLCollection',
+      'Error',
+      'BigInt', //9007199254740991n
+      'Window',
+      'Set'
+    ]
   function getType(target) {
-    const types = ['Number', 'String', 'Boolean', 'Object', 'Array', 'Function', 'RegExp', 'Date', 'Symbol', 'Undefined', 'Null'，'Error', 'BigInt', 'Window']
-    
     let typeObj = {}
     types.forEach(item => {
       typeObj[`[object ${item}]`] = item.toLowerCase()
@@ -728,6 +745,10 @@ function myFlat(arr = []) {
   newArr = arr.concat([])
   // 3.slice
   newArr = arr.slice()
+  // 4.Array.of
+  newArr = Array.of(...arr)
+  // 5.new Array
+  newArr = new Array(...arr)
   ```
 
 - 对象浅拷贝

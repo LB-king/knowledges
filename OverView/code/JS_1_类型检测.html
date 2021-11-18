@@ -74,27 +74,29 @@
       console.log(Object.prototype.toString.call(Symbol(8))) //[object Symbol]
       console.log('##################')
       // 1.写一个检测类型的公共方法
+
+      const types = [
+        'String',
+        'Boolean',
+        'Number',
+        'Object',
+        'Array',
+        'Function',
+        'Date',
+        'RegExp',
+        'Symbol',
+        'Undefined',
+        'Null',
+        'Arguments',
+        'HTMLCollection',
+        'Error',
+        'BigInt',
+        'Window',
+        'Set'
+      ]
       function toType(target) {
         let res = ''
-        const arr = [
-          'String',
-          'Boolean',
-          'Number',
-          'Object',
-          'Array',
-          'Function',
-          'Date',
-          'RegExp',
-          'Symbol',
-          'Undefined',
-          'Null',
-          'Arguments',
-          'HTMLCollection',
-          'Error',
-          'BigInt',
-          'Window'
-        ]
-        arr.forEach((item) => {
+        types.forEach((item) => {
           if (Object.prototype.toString.call(target) === `[object ${item}]`) {
             res = item.toLowerCase()
           }
@@ -104,28 +106,11 @@
       // 2.另一种写法
       function toType1(target) {
         let type2obj = {}
-        const arr = [
-          'String',
-          'Boolean',
-          'Number',
-          'Object',
-          'Array',
-          'Function',
-          'Date',
-          'RegExp',
-          'Symbol',
-          'Undefined',
-          'Null',
-          'Error',
-          'BigInt',
-          'Window'
-        ]
-        arr.forEach((item) => {
+        types.forEach((item) => {
           type2obj[`[object ${item}]`] = item.toLowerCase()
         })
         return type2obj[Object.prototype.toString.call(target)]
       }
-
       console.log(toType(9))
     </script>
   </body>
