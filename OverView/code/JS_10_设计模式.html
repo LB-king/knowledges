@@ -8,15 +8,16 @@
   </head>
   <body>
     <script>
-      /* 
-        Singleon单例模式 | Command命令模式,
-        单例设计模式：基于单独的实例，来管理某一个模块中的内容，实现模块之间的独立划分「但是也可以实现模块之间方法的相互调用」
-        早期的模块化编程：
-          + AMD 「require.js」
-          + CMD/CommonJS 「sea.js & Node」,commonjs规范
-          + ES6 Module
-          ......
-      */
+      /*
+         Singleon单例模式 | Command命令模式,
+         单例设计模式：基于单独的实例，来管理某一个模块中的内容，实现模块之间的独立划分「但是也可以实现模块之间方法的相互调用」
+         早期的模块化编程：
+           + AMD 「require.js」
+           + CMD/CommonJS 「sea.js & Node」,commonjs规范
+           + ES6 Module
+           ......
+       */
+      //  1.单例模式
       //模块A
       var aModule = (function () {
         var data = []
@@ -39,13 +40,352 @@
           // ....
         }
         //想使用A中的change方法,
-        //1.可以挂载到window上
+        //1.可以挂载到window上,变量多的话会造成全局变量的污染
         //2.把方法return出去,私有的还是私有的，需要给别人用的方法可以return出去
         aModule.change()
       })()
+      // 2.命令模式
+      let Command = (function () {
+        function First() {}
+        function Second() {}
+        function Third() {}
+        return {
+          //init 相当于大脑，可以控制谁先执行，谁后执行 「命令模式」
+          init() {
+            First()
+            Second()
+            Third()
+          }
+        }
+      })()
 
-      // Constructor构造器以及Factory模式
+      /*
+      var testModule = (function () {
+         var arr = []
+         function change(v) {
+           arr.push(v)
+           console.log(arr)
+         }
+         return {
+           change
+         }
+       })()
+       testModule.change(10) //[10]
+       testModule.change(20) //[10, 20] 上次运行的结果会存在于闭包中
+        */
+
+      /*
+         3.Constructor 构造器模式
+           + 类&实例
+           + 私有&公有属性
+           + 插件组件封装
+       */
+      class testModule {
+        constructor() {
+          // this->每一个类的实例
+          this.arr = []
+        }
+        change(v) {
+          this.arr.push(v)
+          console.log(this.arr)
+        }
+      }
+
+      var T1 = new testModule()
+      var T2 = new testModule()
+      T1.change(10)
+      T2.change(20)
+
+      /*
+         4.Factory模式
+           + 简单的工厂模式
+           + JQ中的工厂模式
+           + 数据库区分,根据用户的数据量级，要让产品切换调用到不同的数据中,
+           核心思想就是一个中转站
+       */
+      function Factory(options = {}) {
+        let { type, payload } = options
+        if (type === 'array') {
+          // 执行A操作
+          return
+        }
+        //执行B，其他的操作
+      }
+      Factory({ type: 'array', payload: 100 })
+      Factory({ type: 'object', payload: 'joke' })
+
       // Observe观察者以及Mediator中介者模式
+      /*
+        5.Observe观察者
+          目标:管理观察者，以及通知消息的能力
+          目标->观察者(每一个观察者都要具备update方法，用于在通知消息的时候进行相关的处理)
+      */
+      class Observer {
+        update(msg) {
+          //消息触达，通知update执行
+          console.log('消息接收', msg)
+        }
+      }
+      // 观察者管理函数
+      class ObserverList {
+        observerList = []
+        add(ob) {
+          this.observerList.push(ob)
+          return this
+        }
+        remove(ob) {
+          this.observerList = observerList.filter((item) => item !== ob)
+          return this
+        }
+        get(index) {
+          return this.observerList[index]
+        }
+        count() {
+          return this.observerList.length
+        }
+      }
+      class Subject {
+        observers = new ObserverList()
+        add(ob) {
+          this.observers.add(ob)
+        }
+        remove(op) {
+          this.observers.remove(ob)
+        }
+        notify(...params) {
+          for (let i = 0, len = this.observers.count(); i < len; i++) {
+            let item = this.observers.get(i)
+            item.update(...params)
+          }
+        }
+      }
+
+      var sub = new Subject()
+      sub.add(new Observer())
+      sub.add(new Observer())
+      sub.add(new Observer())
+      setTimeout(() => {
+        sub.notify('2s之后触发了通知操作')
+      }, 2000)
+
+      /*
+      6.中介者模式Mediator
+        组件A
+        组件B
+        实现A，B之间的通信
+      */
+
+      let mediator = (function () {
+        let events = {}
+        // 订阅：订阅组件A中的某个方法
+        let subscribe = function (event, callback) {
+          events[event] ? (events[event] = null) : []
+          events[event].push({
+            context: this,
+            callback
+          })
+        }
+        // 发布：B组件中到某个阶段，可以通知之前订阅的方法执行
+        let publish = function (event, ...params) {
+          if (!events[event]) return
+          events[event].forEach((item) => {
+            let { callback, context } = item
+            callback.call(context, ...params)
+          })
+        }
+        return {
+          subscribe,
+          publish
+        }
+      })()
+      /*
+        7.发布订阅者模式「自定义事件处理的一种方案」
+          灵感来源于：addEventListener DOM2级事件绑定
+            + 给当前的元素的某一个事件行为，绑定多个不同的方法「事件池机制」
+            + 事件行为触发，会一次通知事件池中的方法执行
+            + 支持内置事件{标准事件，如：click、dbclick}
+          DOM0: onclick,onmousemove...给元素对象的事件行为的私有属性赋值
+          DOM1:
+          DOM2: 事件池 -> 元素   事件行为  方法   阶段
+      */
+
+      // 缺点：pond只有一个事件池
+      /*  !(function () {
+        //创造事件池
+        let pond = []
+        function subscribe(func) {
+          if (!pond.includes(func)) {
+            pond.push(func)
+          }
+          //每一次执行，返回的方法是用来移除当前新增的这一项的
+          return function unsubscribe() {
+            pond = pond.filter((item) => item !== func)
+          }
+        }
+
+        subscribe.notify = function (...params) {
+          pond.forEach((item) => {
+            if (typeof item === 'function') item(...params)
+          })
+        }
+
+        window.subscribe = subscribe
+      })()
+
+      let unsubscribe1 = subscribe(function () {
+        console.log(1, arguments)
+      })
+
+      let unsubscribe2 = subscribe(function () {
+        console.log(2, arguments)
+        unsubscribe1()
+      })
+      subscribe(function () {
+        console.log(3, arguments)
+      })
+      subscribe(function () {
+        console.log(4, arguments)
+      })
+
+      setTimeout(() => {
+        subscribe.notify(8899)
+      }, 3000)
+      setTimeout(() => {
+        subscribe.notify(8899)
+      }, 3001) */
+
+      /*
+        需求：从服务器获取数据之后，要干很多事情
+        jquery中CallBacks
+          + 管理多个事件池 Sub
+            + 面向对象
+            + 每一个实例都有一个自己的私有事件池
+            + subscribe/unsubscribe/notify是公用的
+          + 一个事件池支持不同的自定义事件类型 Sub1
+            + 数据结构：
+              + 数组 [{type:'A',func:fn1},{type:'B', fn2}]
+              + 对象 {A:[fn1, fn2], B: [fn3,fn4]}
+      */
+      class Sub {
+        pond = []
+        // 原型上设置方法：向事件池订阅任务
+        subscribe(func) {
+          if (!this.pond.includes(func)) {
+            this.pond.push(func)
+          }
+        }
+        unsubscribe(func) {
+          this.pond = this.pond.filter((item) => item !== func)
+        }
+        notify(...params) {
+          this.pond.forEach((item) => {
+            if (typeof item === 'function') item(...params)
+          })
+        }
+      }
+
+      var sb1 = new Sub()
+      sb1.subscribe(function () {
+        console.log(1, arguments)
+      })
+      sb1.subscribe(function () {
+        console.log(2, arguments)
+      })
+      setTimeout(() => {
+        sb1.notify(10, 20)
+      }, 2001)
+      var sb2 = new Sub()
+      sb2.subscribe(function () {
+        console.log(3, arguments)
+      })
+      sb2.subscribe(function () {
+        console.log(4, arguments)
+      })
+      setTimeout(() => {
+        sb2.notify(30, 40)
+      }, 2001)
+
+      //Sub1
+      var Sub1 = (function () {
+        let pond = {}
+        //向事件池中追加自定义事件类型的方法
+        let on = function (type, func) {
+          // 检查是否存在，做一个去重处理
+          !Array.isArray(pond[type]) ? (pond[type] = []) : null
+          let arr = pond[type]
+          if (arr.includes(func)) return
+          arr.push(func)
+        }
+        //移除事件
+        let off = function (type, func) {
+          let arr = pond[type],
+            i = 0,
+            item = null
+          if (Array.isArray(arr) && arr.length > 0) {
+            for (; i < arr.length; i++) {
+              item = arr[i]
+              if (item === func) {
+                //使用splice会导致数组塌陷
+                // arr.splice(i , 1)
+                arr[i] = null
+                break
+              }
+            }
+          }
+        }
+        let emit = function (type, ...params) {
+          let arr = pond[type],
+            i = 0,
+            item = null
+          if (Array.isArray(arr) && arr.length > 0) {
+            for (; i < arr.length; i++) {
+              item = arr[i]
+              if (typeof item === 'function') {
+                item(...params)
+                continue
+              }
+              //不是函数都移除掉即可
+              arr.splice(i, 1)
+              i--
+            }
+          } else {
+            throw new Error(`${type} is not defined`)
+          }
+        }
+        return {
+          on,
+          off,
+          emit
+        }
+      })()
+
+      const f1 = () => console.log(1111)
+      const f2 = () => console.log(2222)
+      const f3 = () => {
+        console.log(3333)
+        Sub1.off('A', f1)
+        Sub1.off('A', f2)
+      }
+      const f4 = () => console.log(4444)
+      const f5 = () => console.log(5555)
+      const f6 = () => console.log(6666)
+      Sub1.on('A', f1)
+      Sub1.on('A', f2)
+      Sub1.on('A', f3)
+      Sub1.on('A', f4)
+      Sub1.on('A', f5)
+      Sub1.on('A', f6)
+
+      setTimeout(() => {
+        Sub1.emit('A')
+      }, 2000)
+      setTimeout(() => {
+        Sub1.emit('A')
+      }, 3000)
+      // setTimeout(() => {
+      //   Sub1.emit('B')
+      // }, 2001)
+      // 数组塌陷问题
       // 装饰器模式及ES7中的Decorator
     </script>
   </body>
