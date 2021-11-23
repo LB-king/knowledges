@@ -1,7 +1,7 @@
 var express = require('express')
 var router = express.Router()
 var users = require('../data/users.json')
-console.log(users)
+// console.log(users)
 /* GET login listing. */
 router.post('/', function (req, res, next) {
   res.header("Access-Control-Allow-Origin", '*');

@@ -852,7 +852,71 @@ function myFlat(arr = []) {
   }
   ```
   
-  
+
+#### 7.同源/跨域
+
+阶段1：服务器渲染
+
+阶段2：客户端渲染(同源策略)
+
+阶段3：客户端渲染(跨域方案)
+
+阶段4：半服务器渲染SSR
+
+问题1：你认为ajax的意义是啥？
+
+> 局部刷新->相对于全局刷新
+>
+> 一个页面只有局部小部分会更新，不需要全局更新
+
+问题2：ajax、$.ajax、axios、fetch
+
+> - ajax的核心操作
+> - $ajax的封装
+> - axios的封装(基于promise封装)
+> - axios的二次配置
+> - fetch的处理和封装
+
+原生写法：
+
+```js
+var xhr = new XMLHttpRequest
+xhr.open('get', 'http://127.0.0.1:3000')
+xhr.onreadystatechange = function() {
+  if(/^2\d{2}$/.test(xhr.status) && xhr.readyState === 4) {
+    console.log(xhr.responseText)
+  }
+}
+xhr.send()
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #### 手写系列
 

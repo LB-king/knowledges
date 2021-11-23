@@ -12,6 +12,7 @@ router.get('/', function (req, res, next) {
   //   { id: '002', name: 'Andriod' },
   //   { id: '003', name: 'IOS' }
   // ]
+  res.header('Access-Control-Allow-Origin', '*')
   res.send(data)
 })
 
