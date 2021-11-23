@@ -1,6 +1,6 @@
 import ajax from '../lib/ajax1'
 import ajaxPromise from '../lib/ajax.promise'
-
+import axios from '../lib/axios'
 btn.addEventListener('click', () => {
   ajax({
     url: 'http://127.0.0.1:5000/users/u1',
@@ -50,3 +50,23 @@ async function handleClick() {
 }
 //ajax串行，会行成回调地狱
 btn1.addEventListener('click', handleClick)
+
+//基于axios
+ async function handleClick1() {
+  let res = await F11()
+  console.log('111', res)
+  res = await F22()
+  console.log('222', res)
+  res = await F33()
+  console.log('333', res)
+}
+btn2.addEventListener('click', handleClick1)
+function F11() {
+  return axios.get('/users')
+}
+function F22() {
+  return axios.get('/users/u1')
+}
+function F33() {
+  return axios.get('/users/u2')
+}
