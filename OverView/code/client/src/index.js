@@ -92,7 +92,34 @@ function handleFetch() {
       console.log(err)
     }) */
 
-  request('users', { method: 'get' }).then((res) => {
+  // fetch中的参数放在body中
+  request('users', {
+    method: 'post',
+    body: qs.stringify({
+      account: 'user',
+      password: '123456'
+    })
+  }).then((res) => {
     console.log(res)
   })
 }
+window.fn = function (param) {
+  console.log(param)
+}
+// 5.JSONP实现跨域
+btn4.addEventListener('click', () => {
+  var script = document.createElement('script')
+  script.src = 'http://127.0.0.1:5000/users/jsonp?callback=fn'
+  document.body.appendChild(script)
+})
+
+// 测试proxy
+btn5.addEventListener('click', () => {
+  fetch('/users')
+    .then((res) => {
+      return res.json()
+    })
+    .then((r) => {
+      console.log(r)
+    })
+})

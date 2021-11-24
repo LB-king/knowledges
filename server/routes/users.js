@@ -14,7 +14,7 @@ router.get('/', function (req, res, next) {
   //   { id: '002', name: 'Andriod' },
   //   { id: '003', name: 'IOS' }
   // ]
-  
+
   res.send(data)
 })
 router.get('/u1', function (req, res, next) {
@@ -24,6 +24,14 @@ router.get('/u1', function (req, res, next) {
 router.get('/u2', function (req, res, next) {
   let data = [{ id: 'U2', name: 'U2' }]
   res.send(data)
+})
+//TODO
+router.get('/jsonp', function (req, res, next) {
+  let { callback } = req.query
+  let data = [{ id: 'jsonp', name: 'jsonp' }]
+  let senData = callback + '(' + JSON.stringify(data) + ')'
+  console.log(senData)
+  res.send(senData)
 })
 // post
 router.post('/', function (req, res, next) {

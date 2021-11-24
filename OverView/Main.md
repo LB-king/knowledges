@@ -863,6 +863,12 @@ function myFlat(arr = []) {
 
 阶段4：半服务器渲染SSR
 
+**串行：**请求是异步的额，需要等待上一个请求成功，才能执行下一个请求
+
+**并行：**同时发送多个请求「HTTP请求可以同时进行，但是JS的操作都是一步步来的，因为JS是单线程的,等待所有请求都成功，再去做某一件事情」
+
+
+
 问题1：你认为ajax的意义是啥？
 
 > 局部刷新->相对于全局刷新
@@ -890,7 +896,141 @@ xhr.onreadystatechange = function() {
 xhr.send()
 ```
 
+fetch:
 
+```js
+//get 
+fetch('http://127.0.0.1:5000/users')
+  .then((res) => {
+  return res.json()
+})
+  .then((res) => {
+  console.log(res)
+})
+  .catch((err) => {
+  console.log(err)
+})
+//post
+fetch('http://127.0.0.1:5000/users', {
+  method: 'post',
+  body: qs.stringify({name:'admin', pass: '123'})
+})
+  .then((res) => {
+  return res.json()
+})
+  .then((res) => {
+  console.log(res)
+})
+  .catch((err) => {
+  console.log(err)
+})
+```
+
+问题3：谈谈你对跨域的理解
+
+1. 跨域产生的原因和意义
+
+   - 服务器分离：web服务器、数据服务器、图谱服务器......
+
+   - 云信息共享：第三方API接口
+
+   - 有助于分离开发: 开发跨域、部署同源
+
+2. 修改本地HOST
+
+   > 修改本地host，DNS处理：先找本地->再找网络
+   >
+   > 服务器地址： xxx.api.cn:3000
+   >
+   > hosts文件修改为: 试一下没反应。。。待验证，原理就是：欺骗浏览器
+   >
+   > ```shell
+   > xxx.api.cn:3000   127.0.0.1:8000
+   > ```
+
+3. JSONP
+
+   > 利用js不存在跨域限制
+   >
+   > 需要前后端配合
+   >
+   > 缺点：只能GET请求
+
+   客户端代码：
+
+   ```js
+   window.fn = function (param) {
+     console.log(param)
+   }
+   // 5.JSONP实现跨域
+   function createJSONP() {
+     var script = document.createElement('script')
+     script.src = 'http://127.0.0.1:5000/users/jsonp?callback=fn'
+     document.body.appendChild(script)
+   }
+   ```
+
+   服务端代码：
+
+   ```js
+   router.get('/jsonp', function (req, res, next) {
+     let { callback } = req.query
+     let data = [{ id: 'jsonp', name: 'jsonp' }]
+     let senData = callback + '(' + JSON.stringify(data) + ')'
+     console.log(senData)
+     res.send(senData)
+   })
+   ```
+
+4. CORS-跨域资源共享
+
+   服务器端设置头部信息
+
+   ```js
+   res.header('Access-Control-Allow-Origin', ALLOW_ORIGIN)
+   ```
+
+   问题：很多源向同一个服务器发送请求
+
+   设置为星号，所有的请求都没法携带资源凭证token
+
+5. Proxy
+
+   原理：中层转换
+
+   ![](\img\Proxy_跨域.png)
+
+   基于node封装的，只要保证客户端和node服务处于同源，就能实现中间层数据代理
+
+   ```js
+   proxy: {
+     '/': {
+       	target: 'http://127.0.0.1:5000',
+         changeOrigin: true
+     }
+   }
+   ```
+
+   开发中使用webpack-dev-server,配置devServer proxy
+
+   生产使用nginx  appach node
+
+   nginx
+
+   ```
+   server {
+   	listen   80;
+   	server_name  192.168.1.1;
+   	
+   	location / {
+   		proxy_pass http://192.168.1.1:8888;
+   		root html;
+   		index index.html index.htm;
+   	}
+   }
+   ```
+
+6. postMessage   h5和app通信的时候
 
 
 

@@ -4,8 +4,14 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 module.exports = {
   mode: 'production',
   devServer: {
-    port: 9081,
-    hot: true
+    port: 9080,
+    hot: true,
+    proxy: {
+      '/': {
+        target: 'http://127.0.0.1:5000',
+        changeOrigin: true
+      }
+    }
   },
   entry:'./src/index.js',
 

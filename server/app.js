@@ -10,7 +10,7 @@ var loginRouter = require('./routes/login');
 
 var app = express();
 app.all('*', (req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Origin", "http://127.0.0.1:9081");
   res.header("Access-Control-Allow-Headers", "*");
   // res.header("Access-Control-Allow-Headers", "X-Requested-With");
   res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");

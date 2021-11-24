@@ -1,6 +1,6 @@
 import axios from 'axios'
 import qs from 'qs'
-axios.defaults.baseURL = 'http://127.0.0.1:5000/'
+// axios.defaults.baseURL = 'http://127.0.0.1:5000/'
 axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded'
 axios.defaults.transformRequest = (data) => qs.stringify(data)
 axios.defaults.timeout = 0
