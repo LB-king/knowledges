@@ -1114,6 +1114,16 @@ Object.defineProperty(obj, key) {
 
 6. 采用HTTP2.0
 
+### 问题记录
+
+1. 登陆之后的接口中添加token会报错
+
+   > 主要原因是自定义了request header中的参数
+   >
+   > 解决方案：
+   >
+   > ​	在后台代码配置：`res.header("Access-Control-Allow-Headers", "*");`
+
 ### 项目亮点/问题
 
 避免功能和也业务问题，如：

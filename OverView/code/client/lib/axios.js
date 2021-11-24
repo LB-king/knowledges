@@ -9,9 +9,9 @@ axios.defaults.withCredentials = false
 
 //请求拦截器
 axios.interceptors.request.use((config) => {
-  //带上token信息
+  //带上token信息,暂时注释掉，真实项目自行打开
   let token = localStorage.getItem('token')
-  token && (config.headers['Authorization'] = token)
+  token && (config.headers['token'] = token)
   return config
 })
 
