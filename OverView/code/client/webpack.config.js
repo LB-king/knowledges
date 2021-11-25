@@ -14,7 +14,7 @@ module.exports = {
     }
   },
   entry:'./src/index.js',
-
+  devtool: 'source-map',
   output: {
     filename: 'js/[name].[chunkhash:8].js', // 可以在文件名前加文件夹名称，配置chunkhash长度
     path: path.resolve(__dirname, 'dist')

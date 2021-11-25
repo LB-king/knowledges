@@ -2,6 +2,8 @@ import ajax from '../lib/ajax1'
 import ajaxPromise from '../lib/ajax.promise'
 import axios from '../lib/axios'
 import request from '../lib/fetch.request'
+import './serial'
+import './parallel'
 // 基于原生js
 btn.addEventListener('click', () => {
   ajax({
