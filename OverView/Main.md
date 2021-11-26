@@ -279,6 +279,65 @@ p:not(:last-child) {
     return typeObj[Object.prototype.toString.call(target)]
   }
   ```
+  
+  补充：隐式转换规则
+  
+  > + 强转换(基于底层机制转换) Number([value])
+  >   + 一些隐式转换都是基于Number完成的
+  >     - isNaN('12px') 先把其他类型转换为数字再检测
+  >     - 数学运算 '12px' + 20
+  >     - 字符串==数字  两个等号比较，先把其转化为数字
+  > + 弱转换(基于额外的方法)
+  >   - parseInt([value])
+  
+  **parseInt **处理的值是字符串，从字符串的左侧开始查找有效数字字符(遇到非有效数字)  ->如果处理的值不是字符串，则要先转化为字符串然后开始查找
+  
+  ```js
+  parseInt('') // NaN
+  parseInt(null) // NaN  parseInt('null')
+  parseInt(NaN) // NaN
+  parseInt(undefined) // NaN 
+  parseInt([]) // NaN
+  parseInt({}) // NaN
+  parseInt('KB001') // NaN 
+  parseInt('100KB') // 100
+  // 非字符串类型，或者转成字符串类型后左边开始第一位不是有效数字字符，都返回NaN
+  ```
+  
+  **Number** 直接调用浏览器最底层的数据类型检测机制来完成
+  
+  ```js
+  Number('') // 0
+  Number(true) // 1
+  Number(false) // 0
+  Number(null) // 0
+  Number(undefined) // NaN
+  Number({}) // NaN
+  Number([]) // 0
+  Number([111]) // 111 先将数组转换成字符串 [111] => '111'
+  Number([111, 222]) // NaN  [111, 222] => '111,222'
+  Number('100px') // NaN
+  Number(new Date()) // 1637917073791
+  
+  ```
+  
+  **isNaN** 判断不是一个有效数字 自身不等于自身  NaN == NaN   false
+  
+  ```js
+  isNaN('') // false  先把''转换为数字 (隐式 Number('') = 0) isNaN(0)
+  isNaN(null) // false null => Number(null) = 0  isNaN(0)
+  isNaN(undefined) // true undefined => Number(undefined) = NaN  isNaN(NaN)
+  isNaN([]) // false [] => Number([]) = 0 isNaN(0)
+  !NaN // true
+  ```
+  
+  两个==比较的时候
+  
+  > 对象 == 字符串 对象转换为字符串
+  >
+  > null == undefined
+  >
+  > 剩下两边不同都是转换为数字
 
 #### 2.几种循环
 
@@ -1033,6 +1092,18 @@ fetch('http://127.0.0.1:5000/users', {
 **并行：**同时发送多个请求「HTTP请求可以同时进行，但是JS的操作都是一步步来的，因为JS是单线程的,等待所有请求都成功，再去做某一件事情」
 
 
+
+
+
+
+
+#### 9.闭包
+
+> - 堆栈内存
+> - ECstack(Execution Context Stack) 和 EC(Excution Context)
+> - GO(Global Object)
+> - VO(Varibale Object)
+> - AO(Activation Object)
 
 
 

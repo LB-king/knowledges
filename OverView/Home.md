@@ -1558,6 +1558,66 @@ registry = http://192.168.1.1:9999/repository/npm/
 
 
 
+introduce yourself
+
+谈谈你对vuex的理解
+
+vuex数据太大如何解决
+
+模块化之后如何合并使用
+
+命名空间
+
+路由是如何处理的
+
+Vue-route
+
+路由懒加载  
+
+import的实现原理
+
+深刻的经历：插件组件的封装，element-ui 二次封装
+
+自己封装的有哪些
+
+做过脚手架开发吗
+
+loader和plugin有什么作用，自己开发过哪些？
+
+说说web如何实现CI/CD的？
+
+优化？
+
+强缓存和协商缓存的区别
+
+安全问题
+
+XSS攻击
+
+web安全相关
+
+TOC的优化：
+
+技术选型: 做SSR
+
+react和vue的区别
+
+Symbol接触多吗
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

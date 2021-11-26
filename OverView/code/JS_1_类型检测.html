@@ -8,7 +8,60 @@
   </head>
   <body>
     <script>
-      // 1.typeof  直接在计算机底层基于数据类型的值(二进制)进行检测
+      /* 
+      7+2
+      基本数据类型:
+        number|string|boolean|null|undefined|symbol|bigint
+      引用数据类型:
+        object
+          + 普通对象
+          + 数组对象
+          + 日期对象
+          + 正则对象
+          + Math数学函数对象
+          ......
+        function
+       */
+      // 1.typeof  直接在计算机底层基于数据类型的值(二进制)进行检测，对象一般是以000开头的
+      /* 
+        + 返回的结果都是字符串
+        + typeof null  => 'object'
+        + 不能细分对象
+      */
+      /* 
+      Number详解:
+        + NaN: 不是一个有效数字, NaN == NaN  //false
+        + Infinity: 无穷大的值
+        isNaN
+     */
+      /*  
+      补充:
+        把其他类型转换为数字类型
+         + 强转换(基于底层机制转换的) Number([value])
+          + 一些隐式转换都是基于Number完成的
+            + isNaN('12px') 先把他类型转化为数字再检测
+            + 数学运算 '12px' + 20
+            + 字符串==数字   两个等于号比较,很多时候要把其转化为数字
+         + 弱转换(基于额外的方法)
+            + parseInt([value])|parseFloat([value])
+
+    */
+
+      console.log(parseInt('')) // NaN
+      console.log(Number('')) // 0
+      console.log(isNaN('')) // false
+      console.log(parseInt(null)) // NaN
+      console.log(Number(null)) // 0
+      console.log(isNaN(null)) // false
+      console.log(parseInt('10px')) // 10
+      console.log(Number('10px')) // NaN
+      console.log(isNaN('10px')) // true
+      console.log(parseFloat('1.5px') + parseInt('2.5px') + typeof parseInt(null)) // '3.5number'
+      console.log(typeof !parseInt(null) + !isNaN(null)) // booleantrue
+      console.log(isNaN(Number(!!Number('0.8')))) // false
+      console.log(10 + true + undefined + [] + 'KB' + null + false + {}) //NaNKBnullfalse[object Object]
+
+      console.log('###############')
       console.log(typeof null) // 'object'
       console.log(typeof NaN) // 'number'
       console.log(typeof undefined) // 'undefined'
