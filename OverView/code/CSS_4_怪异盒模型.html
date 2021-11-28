@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>怪异盒子模型和标准盒模型的区别</title>
+</head>
+<body>
+  <style>
+    div {
+      height: 100px;
+      width: 100px;
+      border: 10px solid #ccc;
+      padding: 10px;
+      margin: 10px;
+    }
+    .box1 {
+      box-sizing: border-box;
+    }
+    .box2 {
+      box-sizing: content-box;
+    }
+  </style>
+
+  <h2>怪异盒模型:</h2>
+  <p>width = 100px</p>
+  <div class="box1"></div>
+  <h2>标准盒模型</h2>
+  <p>width =  borderLeft + paddingLeft  + contentWidth(100px) + paddingRight + borderRight</p>
+  <div class="box2"></div>
+  
+  <style>
+    .red {
+      height: 100px;
+      width: 100px;
+      background-color: red;
+      margin-bottom: 20px;
+    }
+    /* .blue {
+      height: 100px;
+      width: 100px;
+      background-color: blue;
+      margin-top: 40px;
+    } */
+    .blue_son {
+      height: 100px;
+      width: 100px;
+      background-color: blue;
+      margin-top: 40px;
+    }
+  </style>
+  <hr>
+
+  <section class="red"></section>
+  <section class="blue">
+    <section class="blue_son"></section>
+  </span>
+</body>
+</html>
