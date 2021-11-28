@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>堆栈内存</title>
+  </head>
+  <body>
+    <script>
+      /*
+        var a = { n: 12 }
+        var b = a
+        b['n'] = 13
+        console.log(a.n) // 13
+      -------------
+        var a = { n: 12 }
+        var b = a
+        b = { n: 13 }
+        console.log(a.n) // 12
+      -------------
+        var a = {},
+          b = '0',
+          c = 0
+        a[b] = '阿伦'
+        a[c] = '艾弗森'
+        console.log(a[b]) // '艾弗森'
+      -------------
+        var a = {},
+          b = Symbol('1'),
+          c = Symbol('1')
+        a[b] = '阿伦'
+        a[c] = '艾弗森'
+        console.log(a[b]) // 阿伦
+      */
+
+      var obj = {
+        name: 'DEMO',
+        fn: (function (x) {
+          return x
+        })(obj.name)
+      }
+
+      console.log(obj.fn) //Cannot read properties of undefined (reading 'name')
+    </script>
+  </body>
+</html>

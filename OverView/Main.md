@@ -333,11 +333,23 @@ p:not(:last-child) {
   
   两个==比较的时候
   
-  > 对象 == 字符串 对象转换为字符串
+  > 1.对象 == 字符串 对象转换为字符串
   >
-  > null == undefined
+  > 2.null == undefined 其他都不相等
   >
-  > 剩下两边不同都是转换为数字
+  > 3.NaN和谁都不相等
+  >
+  > 4.剩下两边不同都是转换为数字
+  
+  题目：
+  
+  > Str = 100 + true + 12.1 + null + undefined + 'haha' + [] + false + 9
+  >
+  > [] == false
+  >
+  > ![] == false   //把其他类型转为布尔类型的规则：只有0/null/undefined/NaN/'' 是false，其余都是 true
+  
+  
 
 #### 2.几种循环
 
@@ -1097,13 +1109,51 @@ npm i asyncpool
 
 并发限制，一般管控ajax请求
 
-#### 9.闭包
+#### 9.堆栈内存
 
-> - 堆栈内存
-> - ECstack(Execution Context Stack) 和 EC(Excution Context)
-> - GO(Global Object)
-> - VO(Varibale Object)
-> - AO(Activation Object)
+![](img/堆栈内存.png)
+
+- 堆栈内存
+
+  > + 浏览器会在计算机内分配一块内存，专门用来供代码执行的=>栈内存(Excution Context Stack)执行环境栈
+  > + 浏览器会提供很多供我们使用的方法，全局对象(GO)浏览器把 内置的属性方法放到一个单独的内存中，叫做堆内存(Heap)
+
+- EC(Excution Context) 执行上下文：代码执行所在的环境
+
+  - 全局执行上下文  EC(G)
+
+  - 函数中的代码都会在一个单独的私有执行上下文
+
+  - 块级执行上下文
+
+    ```
+    AST语法解析,词法解析
+    变量提升
+    作用域链
+    ...
+    ```
+
+    
+
+- ECstack(Execution Context Stack) 和 EC(Excution Context)
+
+- GO(Global Object)全局对象
+
+  >浏览器中是 window
+  >
+  >node中是global
+
+- VO(Varibale Object)变量对象
+
+  > 在当前的执行上下文中，用来存放创建的变量和值的地方，每一个执行上下文中都有一个自己的变量对象，只不过在函数私有上下文中叫AO(活动变量对象)，只是VO的一个分支
+
+- AO(Activation Object)活动变量对象
+
+对象转化为字符串：
+
+先调用valueOf获取原始值(一般都是基本类型值)
+
+则继续调用toString()
 
 
 
