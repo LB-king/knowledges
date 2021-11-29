@@ -34,6 +34,7 @@
         console.log(a[b]) // 阿伦
       */
 
+      /*   
       var obj = {
         name: 'DEMO',
         fn: (function (x) {
@@ -41,7 +42,14 @@
         })(obj.name)
       }
 
-      console.log(obj.fn) //Cannot read properties of undefined (reading 'name')
+      console.log(obj.fn) //Cannot read properties of undefined (reading 'name') 
+      */
+
+      var a = { n: 1 }
+      var b = a
+      a.x = a = { n: 2 }
+      console.log(a.x)
+      console.log(b)
     </script>
   </body>
 </html>

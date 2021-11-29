@@ -14,13 +14,13 @@
         }
         return this
       }
-      Foo.getName = function() {
+      Foo.getName = function () {
         console.log(2)
       }
-      Foo.prototype.getName = function() {
+      Foo.prototype.getName = function () {
         console.log(3)
       }
-      var getName = function() {
+      var getName = function () {
         console.log(4)
       }
       function getName() {
@@ -36,13 +36,26 @@
       new new Foo().getName()
 
       function fn() {
-        v = function() {
-          console.log('vv');
+        v = function () {
+          console.log('vv')
         }
         return this
       }
       fn()
-      console.log(v);
+      console.log(v)
+
+      /* 
+      new Foo.getName() //无参数new 19 ，所以先执行Foo.getName()
+      new Foo().getName() // 有参数new20，所以往右执行
+
+      1.new Foo() => xxx
+      2.xxx.getName() =>在原型上找
+      优先级：
+      成员访问：20
+      有参数new 20
+      无参数new 19
+      https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Operator_Precedence
+      */
     </script>
   </body>
 </html>

@@ -343,13 +343,61 @@ p:not(:last-child) {
   
   题目：
   
+  题1:
+  
   > Str = 100 + true + 12.1 + null + undefined + 'haha' + [] + false + 9
   >
   > [] == false
   >
   > ![] == false   //把其他类型转为布尔类型的规则：只有0/null/undefined/NaN/'' 是false，其余都是 true
+  >
+  > {} + 0 ? alert('ok') : alert('no')
+  >
+  > 0 + {} ? alert('ok') : alert('no')
   
+  ```
+  {} 可以是一个对象、代码块(块级作用域)
+  {} + 0:
+  	浏览器端： 0   认为{}是一个代码块
+  	node: [object Object]0
+  0 + {}:
+  	浏览器端： 0[object Object]
+  	node: 0[object Object]
+  	
+  {} + 0 + {}   //[object Object]0[object Object]
+  {}+0+[] // 0
+  {}+0+'88' // "088"
+  ```
   
+  大括号在运算符前面：
+  
+  1. 在没有使用圆括号处理优先级的情况下，不认为是数学运算，认为是代码块
+  2. 出现在运算符的后面，认为是数学运算 
+  
+  题2:
+  
+  ```js
+  var a = {}, b = 0, b = '0'
+  a[b] = 'BBB'
+  a[c] = 'CCC'
+  a[b] = ?
+  ```
+  
+  JS中的属性名是什么格式的？(可以是基本数据类型，如果是对象，则需要将对象转化为字符串)
+  
+  普通对象：
+  
+  题3:
+  
+  ```js
+  var a = { n: 1 }
+  var b = a
+  a.x = a = { n: 2 }
+  console.log(a.x)
+  console.log(b)
+  ```
+  
+  ![](\img\引用类型赋值问题.png)
 
 #### 2.几种循环
 
@@ -1155,6 +1203,21 @@ npm i asyncpool
 
 则继续调用toString()
 
+#### 10.成员访问的顺序
+
+https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Operator_Precedence
+
+```js
+new Foo.getName()  // 无参数new 19，所以先执行成员访问20 new (Foo.getName())
+new Foo().getName() // 有参数new20，所以先执行new  (new Foo()).getName()
+/*
+成员访问  20
+有参数new 20
+无参数new 19
+...
+*/
+```
+
 
 
 
@@ -1372,6 +1435,160 @@ Object.defineProperty(obj, key) {
 5. CDN服务器"地域分布式"
 
 6. 采用HTTP2.0
+
+### 安全问题
+
+#### 1.浏览器相关
+
+- XSS
+- CSRF
+- HTTPS
+- CSP(内容安全策略，可以禁止加载外域代码，禁止外域提交等等)
+- HSTS(强制客户端使用HTTPS与服务器端建立连接)
+- X-Frame-Options(控制当前页面是否可以被嵌入到iframe中)
+- SRI(subresource intergrity)子资源完整性，前端可以用webpack-subresource-integrity插件，在每个script上添加hash值，校验加载的资源是否和当时打包时生成的一致
+- Referrer-Policy(控制referer的携带策略)
+
+#### 2.服务端相关的安全问题
+
+- 本地文件操作相关
+- ReDOS
+- 时序攻击
+- ip origin referrer等request headers的校验(在做爬虫应用的)
+
+1.聊一聊XSS？
+
+Cross-site scripting,跨站脚本，通常称为XSS
+
+> 为什么叫XSS而不是CSS，因为CSS被认为是样式的称呼，cross意味着交叉，X正好符合这个含义，故简称为XSS
+
+就是攻击者想尽一切办法将可执行代码注入到网页中，而恶意代码未经过过滤，与网站的正常代码混在一起，浏览器无法区分哪些脚本是可信的，从而导致恶意脚本被执行
+
+攻击场景？
+
+1. 评论区植入js代码(可输入的地方植入js代码)
+
+2. url拼接js代码
+
+   不要认为url输入长度有限，攻击者可以通过引入外部脚本来实现复杂攻击的
+
+攻击类型？
+
+1. 存储型Server
+
+   场景：常见于带有用户保存数据的网站功能，攻击者通过可输入区域来注入恶意代码，如论坛发帖、商品评价、用户私信等
+
+   攻击步骤：
+
+   1. 攻击者将恶意代码提交到网站的数据库中
+   2. 用户打开目标网站时，服务端将恶意代码从数据库中提取出来，返回给前端页面(用户之间可以互相看到帖子、评论)
+   3. 用户浏览器在收到响应后解析执行，混在其中的恶意代码也同时被执行
+   4. 恶意代码窃取用户数据并发送到攻击者的网站，或者冒充用户行为，调用目标网站的接口执行一些指定的操作
+
+2. 反射型Server
+
+   与存储型的区别：反射型的恶意代码拼接在URL上
+
+   由于需要用户主动打开恶意的url才能生效，攻击者往往会结合多种手段诱导用户点击
+
+   场景：通过URL传递参数的功能，如网站搜索、跳转等
+
+   攻击步骤：
+
+   1. 攻击者构造出特殊的URL，其中包含恶意代码
+   2. 用户打开该URL，网站服务端将恶意代码从URL中取出，拼接在html中返回给浏览器
+   3. 用户浏览器接收到响应后解析执行，混在其中的恶意代码也会被执行
+   4. 恶意代码窃取用户数据并发送到攻击者的网站，或者冒充用户行为，调用目标网站的接口执行一些指定的操作
+
+3. Dom型 Browser
+
+   Dom型XSS攻击中，取出和执行恶意代码有浏览器端完成，属于前端JS自身的安全漏洞，而其他2种XSS都属于服务端的安全漏洞
+
+   攻击步骤：
+
+2.简单模拟一下Dom型XSS？
+
+```js
+var a = document.getElementsByTagName('a')[0]
+var queryObj = {}
+var search = window.location.search
+search.replace(
+  /([^&=?]+)=([^&]+)/g,
+  (m, $1, $2) => (queryObj[$1] = decodeURIComponent($2))
+)
+a.href = queryObj.redirectUrl
+```
+
+在浏览器端输入url
+
+/index.html?redirectUrl=javascript:alert(%27恭喜，你被攻击了%27)
+
+给重要的cookie设置了http-only，从而避免dom-xss攻击
+
+https://alf.nu/alert1
+
+如何防止XSS攻击：
+
+1. 对数据进行严格的输出编码:HTML,JS,CSS,URL编码
+
+   避免拼接HTML；Vue/React技术栈；避免使用v-html/dangerousSetInnerHTML
+
+2. CSP HTTP Header
+
+   1. 增加攻击难度，配置CSP(本质是建立白名单，由浏览器进行拦截)
+   2. Content-Security-Policy: default-src-'self'-所有内容均来自站点的同一个源
+   3. Content-Security-Policy: default-src-'self' `.*`.trusted.com 允许内容来自信任的域名
+   4. Content-Security-Policy: default-src https://xxx.cn 该服务器仅允许通过https方式，并仅从xxx.cn域名来访问文档
+
+3. 输入验证：常见的数字，电话，邮箱判断...
+
+4. 开启浏览器的XSS防御: Http Only Cookie,禁止js读取某些敏感Cookie
+
+5. 验证码
+
+3.说一下CSRF？
+
+Cross-site request forgery，跨站请求伪造
+
+
+
+
+
+​                
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ### 问题记录
 
