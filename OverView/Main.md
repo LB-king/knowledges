@@ -1440,8 +1440,8 @@ Object.defineProperty(obj, key) {
 
 #### 1.浏览器相关
 
-- XSS
-- CSRF
+- XSS(Cross Site Scripting,跨站脚本)
+- CSRF(Cross-site request forgery，跨站请求伪造)
 - HTTPS
 - CSP(内容安全策略，可以禁止加载外域代码，禁止外域提交等等)
 - HSTS(强制客户端使用HTTPS与服务器端建立连接)
@@ -1458,7 +1458,7 @@ Object.defineProperty(obj, key) {
 
 1.聊一聊XSS？
 
-Cross-site scripting,跨站脚本，通常称为XSS
+**Cross-site scripting,跨站脚本，通常称为XSS**
 
 > 为什么叫XSS而不是CSS，因为CSS被认为是样式的称呼，cross意味着交叉，X正好符合这个含义，故简称为XSS
 
@@ -1523,6 +1523,16 @@ a.href = queryObj.redirectUrl
 
 /index.html?redirectUrl=javascript:alert(%27恭喜，你被攻击了%27)
 
+案例2：
+
+浏览器输入`index.html?name=window.alert(1)`
+
+```js
+window.eval(queryObj.name)
+```
+
+
+
 给重要的cookie设置了http-only，从而避免dom-xss攻击
 
 https://alf.nu/alert1
@@ -1548,9 +1558,68 @@ https://alf.nu/alert1
 
 3.说一下CSRF？
 
-Cross-site request forgery，跨站请求伪造
+**Cross-site request forgery，跨站请求伪造**
 
+> 攻击者诱导受害者进入恶意网站，在第三方网站中，向被攻击网站发送跨站请求。利用受害者在被攻击网站已经获取的注册凭证，绕过后台的用户验证，达到冒充用户对被攻击的网站执行某项操作的目的。
 
+攻击步骤：
+
+1. 受害者登录a.cn，并保留了登录凭证(Cookie)
+
+2. 攻击者引诱受害者访问了b.cn
+
+3. b.cn 向 a.cn发送了一个请求: a.cn/act=xx 浏览器会默认携带a.cn
+
+   的Cookie
+
+4. a.cn接收到请求以后，对请求进行验证，并确认是受害者的凭证，误以为是受害者自己发送的请求
+
+5. a.cn以受害者的名义执行了act=xx
+
+6. 攻击完成，攻击者让受害者不知情的情况下，冒充受害者，让a.cn执行了自己的操作
+
+攻击类型：
+
+- GET型：如在⻚⾯的某个 img 中发起⼀个 get 请求
+
+  ```html
+  <img src="http://bk.example/withdraw?name=xx&age=xxx"/>
+  ```
+
+- POST型：通过⾃动提交表单到恶意⽹站
+
+  ```html
+  <form action="http://bank.example/withdraw" method=POST> <input type="hidden" name="account" value="lubai" />
+  <input type="hidden" name="amount" value="10000" />
+  <input type="hidden" name="for" value="hacker" />
+  </form> 
+  <script> document.forms[0].submit(); </script>
+  <a href="http://bank.example/withdraw?name=xxx&amount=xxxx" taget="_blank">
+  错过再等⼀点！！！快来看看
+  </a>
+  ```
+
+如何防范CSRF的攻击？
+
+⾸先咱们通过上⾯的举例可以知道, CSRF⼀般都是发⽣在第三⽅域名, 攻击者也⽆法获取到
+
+Cookie信息, 只是可以利⽤浏览器机制去使⽤Cookie.
+
+所以咱们可以针对这两点来看防范策略：
+
+1. Cookie SameSite
+
+   Cookie SameSite有3个值：
+
+   - Strict：浏览器会完全禁⽌第三⽅cookie。⽐如a.com的⻚⾯中访问 b.com 的资源，那么a.com中的cookie不会被发送到 b.com服务器，只有从b.com的站点去请求b.com的资源，才会带上这些Cookie
+
+   - Lax：在跨站点的情况下，从第三⽅站点链接打开和从第三⽅站点提交 Get⽅式的表单这两种⽅式都会携带Cookie。但如果在第三⽅站点中使⽤POST⽅法或者通过 img、Iframe等标签加载的URL，这些场景都不会携带Cookie
+
+   - None：任何情况下都会发送 Cookie数据
+
+2. 同源检测
+
+   通过检测request header中的origin referer等, 来确定发送请求的站点是否是⾃⼰期望中站点.
 
 
 
