@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ReDOS</title>
+  </head>
+  <body>
+    <script>
+      console.time('case-1')
+      // 能够匹配成功
+      ;/A(B|C+)+D/.test('ACCCCCCCCCCCCCCCCCCCCCCCCCCCCD')
+      console.timeEnd('case-1')
+      console.time('case-2')
+      // 不能匹配成功
+      ;/A(B|C+)+D/.test('ACCCCCCCCCCCCCCCCCCCCCCCCCCCCX')
+      console.timeEnd('case-2')
+      console.time('case-3')
+      // 不能匹配成功
+      ;/A(B|C+)+D/.test(`A${'C'.repeat(30)}X`)
+      console.timeEnd('case-3')
+    </script>
+  </body>
+</html>

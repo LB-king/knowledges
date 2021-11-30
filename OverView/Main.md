@@ -1218,6 +1218,19 @@ new Foo().getName() // 有参数new20，所以先执行new  (new Foo()).getName(
 */
 ```
 
+#### 11.事件循环
+
+1. 事件循环存在的意义是什么？
+2. 事件循环的基本概念？
+3. 浏览器和node环境的事件循环有什么区别？
+4. 代码题
+
+为什么有事件循环？
+
+单线程：
+
+​	JavaScript的主要用途是与用户互动，以及操作DOM。
+
 
 
 
@@ -1589,9 +1602,10 @@ https://alf.nu/alert1
 - POST型：通过⾃动提交表单到恶意⽹站
 
   ```html
-  <form action="http://bank.example/withdraw" method=POST> <input type="hidden" name="account" value="lubai" />
-  <input type="hidden" name="amount" value="10000" />
-  <input type="hidden" name="for" value="hacker" />
+  <form action="http://bank.example/withdraw" method=POST> 
+    <input type="hidden" name="account" value="lubai" />
+    <input type="hidden" name="amount" value="10000" />
+    <input type="hidden" name="for" value="hacker" />
   </form> 
   <script> document.forms[0].submit(); </script>
   <a href="http://bank.example/withdraw?name=xxx&amount=xxxx" taget="_blank">
@@ -1611,19 +1625,108 @@ Cookie信息, 只是可以利⽤浏览器机制去使⽤Cookie.
 
    Cookie SameSite有3个值：
 
-   - Strict：浏览器会完全禁⽌第三⽅cookie。⽐如a.com的⻚⾯中访问 b.com 的资源，那么a.com中的cookie不会被发送到 b.com服务器，只有从b.com的站点去请求b.com的资源，才会带上这些Cookie
+   - Strict：浏览器会完全禁⽌第三⽅cookie。⽐如a.com的⻚⾯中访问 b.com 的资源，那么a.com中的cookie不会被发送到 b.com服务器，只有从b.com的站点去请求b.com的资源，才会带上这些Cookie,会导致体验不好，例如跳到b.com每次都是未登录的状态
 
    - Lax：在跨站点的情况下，从第三⽅站点链接打开和从第三⽅站点提交 Get⽅式的表单这两种⽅式都会携带Cookie。但如果在第三⽅站点中使⽤POST⽅法或者通过 img、Iframe等标签加载的URL，这些场景都不会携带Cookie
 
-   - None：任何情况下都会发送 Cookie数据
+   - None：任何情况下都会发送 Cookie数据。生效的前提是要设置Secure属性(Cookie只能通过HTTPS协议发送)
+
+     ```shell
+     #以下设置无效
+     Set-Cookie: widget_session=abc123; SameSite=None
+     #以下设置有效
+     Set-Cookie: widget_session=abc123; SameSite=None; Secure
+     ```
 
 2. 同源检测
 
    通过检测request header中的origin referer等, 来确定发送请求的站点是否是⾃⼰期望中站点.
+   
+   - 同源的链接和引用，会发送Referer,referer值为Host不带Path
+   - 跨域则不带Referer
+   
+   https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Referrer-Policy
+   
+   ```js
+   Referrer-Policy: no-referrer  //整个referer首部会被移除
+   Referrer-Policy: no-referrer-when-downgrade //(默认值)
+   Referrer-Policy: origin //在任何情况下，仅发送文件的源作为引用地址
+   Referrer-Policy: origin-when-cross-origin //
+   Referrer-Policy: same-origin
+   Referrer-Policy: strict-origin
+   Referrer-Policy: strict-origin-when-cross-origin
+   Referrer-Policy: unsafe-url
+   ```
+   
+   HTML中使用：
+   
+   ```html
+   <meta name="referrer" content="origin">
+   <a href="http://example.com" referrerpolicy="origin">
+   <a href="http://example.com" rel="noreferrer">
+   ```
 
+CSRF Token
 
+双重Cookie(没有token安全)
 
-​                
+服务端相关的安全问题了解过吗？大概举几个例子？
+
+- 本地文件操作：
+
+  ⽐如我们提供⼀个静态服务, 通过请求的参数url来返回给⽤户或者前端想要的资源
+
+  node起一个本地服务：
+
+  代码：略
+
+  在服务文件夹新建文件`unsafe.md`
+
+  http://localhost:8080/?/../../unsafe.md
+
+  攻击者可以拼接相对路径，猜测你的项目目录，访问服务器资源
+
+  ......
+
+  解决办法：
+
+  框架限制：express.static  koa-static   
+
+  第三方包：resolve-path
+
+- 截图服务puppeteer-chromium-resolver
+
+  ......
+
+- 
+
+- ReDoS(Regular expression Denial of Service)，正则表达式拒绝服务攻击
+
+  ACCCX
+
+  会组合判断是否符合条件？
+
+  1. CCC
+  2. CC+C
+  3. C+CC
+  4. C+C+C+
+
+- 时序攻击
+
+  ```js
+  function compareArray(realArray, userInputArrary) {
+     for (let i = 0; i < realArray.length; i++) {
+     if (realArray[i] !== userInputArray[i]) {
+       return false;
+       }
+     }
+   return true
+  }
+  ```
+
+  这给攻击者提供了⼀种⽅式, 就是根据服务器的响应时间来碰撞出realArray的值
+
+  
 
 
 
