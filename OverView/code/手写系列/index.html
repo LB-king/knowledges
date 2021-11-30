@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>手写系列</title>
+    <style>
+      body {
+        height: 2000px;
+      }
+    </style>
+  </head>
+  <body>
+    <input type="text" id="btn"/>
+    <script src="../utils/utils.js"></script>
+    <script src="./1.call.js"></script>
+    <script src="./2.apply.js"></script>
+    <script src="./3.bind.js"></script>
+    <script src="./4.throttle.debounce.js"></script>
+    <script>
+      function add(a, b) {
+        console.log(this)
+        return a + b
+      }
+      var person = {
+        name: 'zs'
+      }
+      //1.call
+      console.log(call(add, 30, 40))
+      console.log('###################')
+
+      //2.apply
+      console.log(apply(add, [11, 22]))
+      console.log('###################')
+      //3.bind
+      var bFn = bind(add, {}, 10, 20)
+      console.log(bFn())
+      console.log('###################')
+      //4.函数节流
+      function fn(e) {
+        console.log(Date.now(), e)
+      }
+      window.addEventListener('scroll', throttle(fn, 500))
+      //5.函数防抖
+      btn.addEventListener('keydown', debounce(fn, 500))
+    </script>
+  </body>
+</html>
