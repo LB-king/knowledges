@@ -45,7 +45,8 @@ function getType(target) {
     'Error',
     'BigInt', //9007199254740991n
     'Window',
-    'Set'
+    'Set',
+    'Promise'
   ]
   arr.forEach((item) => {
     type2obj[`[object ${item}]`] = item.toLowerCase()

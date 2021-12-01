@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Class</title>
+  </head>
+  <body>
+    <script>
+      /* 
+      + 类中的构造器不是必须要写的，要对实例进行一些初始化的操作，如添加属性时才写
+      
+      */
+      class Animal {
+        constructor(name) {
+          this.name = name
+        }
+        speak() {
+          console.log(this.age)
+        }
+      }
+
+
+      class Cat extends Animal {
+        constructor(name, age) {
+          super(name, age)
+          this.age = age
+        }
+      }
+      var dog = new Animal('wangcai')
+      dog.speak()
+
+      var cat = new Cat('TOM', 17)
+      cat.speak()
+    </script>
+  </body>
+</html>

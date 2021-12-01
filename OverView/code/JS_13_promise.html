@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>promise</title>
+    <script src="./utils/utils.js"></script>
   </head>
   <body>
     <script>
@@ -38,6 +39,7 @@
             if (this.state === PENDING) {
               this.state = REJECTED
               this.reason = reason
+              this.onRejectedCallbacks.forEach((fn) => fn())
             }
           }
           //捕获代码运行时的错误-捕获同步代码的错误
@@ -47,18 +49,37 @@
             reject(err)
           }
         }
+        //then方法要保证能够链式调用!!!
         then(onFulfilled, onRejected) {
-          if (this.state === FULFILLED) {
-            onFulfilled(this.value)
-          }
-          if (this.state === REJECTED) {
-            onRejected(this.reason)
-          }
-          //异步才走这里
-          if (this.state === PENDING) {
-            this.onFulfilledCallbacks.push(() => onFulfilled(this.value))
-            this.onRejectedCallbacks.push(() => onRejected(this.reason))
-          }
+          var p2 = new MyPromise((resolve, reject) => {
+            let x
+            if (this.state === FULFILLED) {
+              x = onFulfilled(this.value)
+              //此处要判断x是promise还是普通的值
+              setTimeout(() => {
+                resolvePromise(p2, x, resolve, reject)
+              }, 0)
+            }
+            if (this.state === REJECTED) {
+              x = onRejected(this.reason)
+              // setTimeout(() => {
+              resolvePromise(p2, x, resolve, reject)
+              // }, 0)
+            }
+            //异步才走这里
+            if (this.state === PENDING) {
+              //先把要执行的函数存起来，为后面调用
+              this.onFulfilledCallbacks.push(() => {
+                x = onFulfilled(this.value)
+                resolvePromise(p2, x, resolve, reject)
+              })
+              this.onRejectedCallbacks.push(() => {
+                x = onRejected(this.reason)
+                resolvePromise(p2, x, resolve, reject)
+              })
+            }
+          })
+          return p2
         }
         // catch(onRejected) {
         //   if (this.state === REJECTED) {
@@ -66,23 +87,80 @@
         //   }
         // }
       }
+      //promise到此结束-----------
 
-      var m1 = new MyPromise((resolve, reject) => {
+      function resolvePromise(promise, x, resolve, reject) {
+        if (promise === x) throw new Error('type error')
+        //判断x是不是promise,检查是否有then属性
+        var type = getType(x)
+        // console.log(type)
+        if (/^(object|function|promise)$/i.test(type)) {
+          try {
+            let thenType = getType(x.then)
+            if (/^function$/i.test(thenType)) {
+              x.then(
+                (success) => {
+                  //递归调用
+                  resolvePromise(promise, success, resolve, reject)
+                },
+                (err) => {
+                  reject(err)
+                }
+              )
+            }
+          } catch (err) {
+            reject(err)
+          }
+        } else {
+          resolve(x)
+        }
+      }
+      var p1 = new MyPromise((resolve, reject) => {
+        // resolve('m111')
         setTimeout(() => {
-          resolve(999)
+          resolve(778899)
           // resolve(new MyPromise((r, j) => r(999)))
         }, 1000)
-
         // reject('failed')
       })
-      m1.then(
+      var p2 = p1.then(
         (res) => {
-          console.log(res)
+          //这里res拿到的原因，是m1 new MyPromise，resolve出来的
+          //1.返回普通值
+          // return 'oooo'
+          // console.log(res)
+          //2.返回promise
+          return new Promise((resolve, reject) => {
+            resolve(
+              new Promise((resolve, reject) => {
+                resolve('m333')
+              })
+            )
+          })
+          //3.返回thenable对象，对象有then属性，并调用resolve方法
+          // return {
+          //   then(resolve, reject) {
+          //     resolve(78910)
+          //   }
+          // }
         },
         (reason) => {
           console.log(reason)
         }
       )
+      var p3 = p2
+        .then(
+          (res) => {
+            console.log(res)
+            return 'OOOOPPPPP'
+          },
+          (reason) => {
+            console.log(reason)
+          }
+        )
+        .then((res) => {
+          console.log(res)
+        })
       /* var p1 = new Promise((resolve, reject) => {
         //这是主线程任务
         // setTimeout(() => {
