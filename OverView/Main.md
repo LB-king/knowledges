@@ -1280,7 +1280,26 @@ new Foo().getName() // 有参数new20，所以先执行new  (new Foo()).getName(
 
   ...需细细研究
 
+#### 12.Promise
 
+> promise对象用于表示一个异步操作的最终完成(或失败)及其结果值
+>
+> 一个promise必然处于以下几种状态之一：
+>
+> pending - 待定，初始状态
+>
+> fulfilled - 已兑现，意味着操作成功
+>
+> rejected - 已拒绝，意味着操作失败
+
+**promise源码：**
+
+```js
+```
+
+
+
+#### 13.class
 
 
 
@@ -1564,7 +1583,7 @@ Object.defineProperty(obj, key) {
 
 3. Dom型 Browser
 
-   Dom型XSS攻击中，取出和执行恶意代码有浏览器端完成，属于前端JS自身的安全漏洞，而其他2种XSS都属于服务端的安全漏洞
+   Dom型XSS攻击中，取出和执行恶意代码由浏览器端完成，属于前端JS自身的安全漏洞，而其他2种XSS都属于服务端的安全漏洞
 
    攻击步骤：
 
@@ -1658,7 +1677,7 @@ https://alf.nu/alert1
   </form> 
   <script> document.forms[0].submit(); </script>
   <a href="http://bank.example/withdraw?name=xxx&amount=xxxx" taget="_blank">
-  错过再等⼀点！！！快来看看
+  错过再等⼀年！！！快来看看
   </a>
   ```
 

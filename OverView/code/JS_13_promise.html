@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>promise</title>
+  </head>
+  <body>
+    <script>
+      /*
+        Promise对象用于表示一个异步操作的最终完成(或失败)及其结果值。
+        一个Promise必然处于以下几种状态之一:
+          + 待定(pending):初始状态，既没有被兑现，也没有被拒绝
+          + 已兑现(fulfilled):意味着操作成功完成
+          + 已拒绝(rejected):意味着操作失败
+          executor-执行
+      */
+      const PENDING = 'pending',
+        FULFILLED = 'fulfilled',
+        REJECTED = 'rejected'
+      class MyPromise {
+        constructor(executor) {
+          this.state = PENDING
+          this.value = undefined
+          this.reason = undefined
+          this.onFulfilledCallbacks = []
+          this.onRejectedCallbacks = []
+          let resolve = (value) => {
+            if (this.state === PENDING) {
+              this.state = FULFILLED
+              this.value = value
+              this.onFulfilledCallbacks.forEach((fn) => fn())
+            }
+          }
+
+          let reject = (reason) => {
+            if (this.state === PENDING) {
+              this.state = REJECTED
+              this.reason = reason
+            }
+          }
+          //捕获代码运行时的错误-捕获同步代码的错误
+          try {
+            executor(resolve, reject)
+          } catch (err) {
+            reject(err)
+          }
+        }
+        then(onFulfilled, onRejected) {
+          if (this.state === FULFILLED) {
+            onFulfilled(this.value)
+          }
+          if (this.state === REJECTED) {
+            onRejected(this.reason)
+          }
+          //异步才走这里
+          if (this.state === PENDING) {
+            this.onFulfilledCallbacks.push(() => onFulfilled(this.value))
+            this.onRejectedCallbacks.push(() => onRejected(this.reason))
+          }
+        }
+        // catch(onRejected) {
+        //   if (this.state === REJECTED) {
+        //     onRejected(this.reason)
+        //   }
+        // }
+      }
+
+      var m1 = new MyPromise((resolve, reject) => {
+        setTimeout(() => {
+          resolve(new MyPromise((r, j) => r(999)))
+        }, 1000)
+
+        // reject('failed')
+      })
+      m1.then(
+        (res) => {
+          console.log(res)
+        },
+        (reason) => {
+          console.log(reason)
+        }
+      )
+      /* var p1 = new Promise((resolve, reject) => {
+        //这是主线程任务
+        // setTimeout(() => {
+        //   console.log(3333)
+        // }, 1000)
+
+        resolve(1111)
+      })
+      p1.then((resolve, reject) => {
+        //这是微任务
+        //返回一个promise
+        // return new Promise((resolve, reject) => {
+        //   resolve(999)
+        // })
+        //返回普通值
+        return 9999
+      }).then((res) => {
+        console.log(res)
+      })
+      //这是主线程任务
+      console.log(2222) */
+    </script>
+  </body>
+</html>
