@@ -69,7 +69,8 @@
 
       var m1 = new MyPromise((resolve, reject) => {
         setTimeout(() => {
-          resolve(new MyPromise((r, j) => r(999)))
+          resolve(999)
+          // resolve(new MyPromise((r, j) => r(999)))
         }, 1000)
 
         // reject('failed')
