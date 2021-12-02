@@ -1301,6 +1301,54 @@ new Foo().getName() // 有参数new20，所以先执行new  (new Foo()).getName(
 
 #### 13.class
 
+#### 14.节流&防抖
+
+> 事件频繁触发可能造成的问题
+>
+> 	+ 一些浏览器的事件：onresize、mousemove、scroll触发的频率非常高，会造成页面卡顿
+> 	+ 如果向后台服务器发送请求，会增加服务器的压力
+
+解决方案：
+
+- 节流-throttle
+
+  > - 在函数需要频繁触发时: 函数执行一次后，只有大于设定的执行周期后才会执行第二次
+  > - 适合多次事件按时间做平均分配触发
+  >
+  > 场景：
+  >
+  > ​	resize
+  >
+  > ​	scroll
+
+  ```js
+  //用法: window.addeventListener('scroll', throttle(fn, 500))
+  function throttle(fn, wait) {
+    var start = 0
+    return function (e) {
+      var now = Date.now()
+      if(now - start > wait) {
+        fn.call(this, wait)
+        start = now
+      }
+    }
+  }
+  ```
+
+- 防抖-debounce
+
+  > - 在函数需要频繁触发时，在规定时间内，只有最后一次生效
+  >
+  > - 适合多次事件一次响应的情况
+
+  ```js
+  function debounce(callback, delay) {
+    
+  }
+  ```
+
+  
+
 
 
 
@@ -1473,7 +1521,13 @@ Object.defineProperty(obj, key) {
 
 ```html
 <div class='box'>
-  
+  <h3>
+    标题
+  </h3>
+  <ul>
+    <li>牛奶</li>
+    <li>咖啡</li>
+  </ul>
 </div>
 ```
 
@@ -1481,23 +1535,50 @@ Object.defineProperty(obj, key) {
 
 ```json
 {
-  "sel": "div"
+  "sel": "div",
+  "data": {
+    "class": { "box": true }
+  },
+  children: [
+    { sel: "h3", data: {}, text: "标题" },
+    {
+      sel: "ul",
+      data: {},
+      children: [
+        {sel:"li", data: {}, text: "牛奶"},
+        {sel:"li", data: {}, text: "咖啡"}
+      ]
+    }
+  ]
 }
 ```
 
+- snabbdom简介(瑞典语)
+
+  > 单词原意是 速度
+  >
+  > snabbdom是著名的虚拟dom库，是diff算法的鼻祖，vue源码借鉴了snabbdom
+  >
+  > github官网：https://github.com/snabbdom/snabbdom
+
+  ```shell
+  yarn add snabbdom
+  yarn add webpack webpack-cli webpack-dev-server
+  ```
+
+  
+
+- snabbdom的h函数如何工作
+
+- diff算法原理
+
+- 手写diff算法
 
 
 
 
 
 
-
-
-
-
-
-
-#### 
 
 ####3.AST语法解析
 
