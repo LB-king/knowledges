@@ -9,8 +9,11 @@
   <body>
     <script>
       /* 
-      + 类中的构造器不是必须要写的，要对实例进行一些初始化的操作，如添加属性时才写
-      
+        + 类中的构造器不是必须要写的，要对实例进行一些初始化的操作，如添加属性时才写
+        + 如果A类继承B类，且类中写了构造器，那么A类中的super是必须调用的
+        + 类中定义的方法，都放在了类的原型上，供实例去使用
+        + class中定义的方法，已经在局部开启了严格模式
+        + 自身添加属性
       */
       class Animal {
         constructor(name) {
@@ -21,11 +24,15 @@
         }
       }
 
-
       class Cat extends Animal {
         constructor(name, age) {
-          super(name, age)
+          super()
           this.age = age
+        }
+        score = 12
+        //类自身添加属性
+        static color = {
+          bg: 'red'
         }
       }
       var dog = new Animal('wangcai')

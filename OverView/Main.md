@@ -1043,7 +1043,7 @@ fetch('http://127.0.0.1:5000/users', {
 
 1. 跨域产生的原因和意义
 
-   - 服务器分离：web服务器、数据服务器、图谱服务器......
+   - 服务器分离：web服务器、数据服务器、图片服务器......
 
    - 云信息共享：第三方API接口
 
@@ -1461,6 +1461,114 @@ Object.defineProperty(obj, key) {
   }
 }
 ```
+
+
+#### 2.虚拟dom和diff算法
+
+> 家中的桌子重新摆一下，没有必要全屋推到重来，直接找到不同的地方，精准更新
+>
+> diff算法实现最小量更新
+
+**真实dom：**
+
+```html
+<div class='box'>
+  
+</div>
+```
+
+**虚拟dom：**
+
+```json
+{
+  "sel": "div"
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+#### 
+
+####3.AST语法解析
+
+> ATS(abstract syntax code) 抽象的语法code
+> 模板语法-> 抽象语法树AST(通过抽象语法树进行过渡，让编译工作变得简单) -> 正常的HTML语法
+>
+> 抽象语法树本质上就是JS对象
+
+```html
+<div class="box">
+  <h3 class='title'>
+    标题
+  </h3>
+  <ul>
+    <li v-for="item in arr" :key="item.id">{{item.name}}</li>
+  </ul>
+</div>
+```
+
+上面的代码会被解析为以下JS对象
+
+```js
+{
+  tag: 'div',
+  attrs: [{name: 'class', value: 'box'}],
+  type: 1,
+  chilren: [
+    {
+      tag: 'h3',
+      attrs: [{name: 'class', value: 'title'}],   
+      children: [{text: '标题',type: 3}]
+    },
+    {
+      tag: 'ul',
+      attrs: [],
+      type: 1,
+      children: [
+        {
+          tag: 'li',
+          for: 'arr',
+          key: 'item.id',
+          alias: 'item.name',
+          type: 1,
+          children: []
+        }
+      ]
+    }
+  ]
+}
+```
+
+抽象语法树和虚拟dom的区别：
+
+![](\img\VUE_抽象语法树.png)
+
+
+
+
+
+#### 4.h函数
+
+
+
+
+
+
+
+
+
+
+
 
 
 
