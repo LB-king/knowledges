@@ -1566,21 +1566,58 @@ Object.defineProperty(obj, key) {
   yarn add webpack webpack-cli webpack-dev-server
   ```
 
-  
-
 - snabbdom的h函数如何工作
 
 - diff算法原理
 
 - 手写diff算法
 
+- h函数
 
+  > h函数用来产生虚拟节点(vnode)
+  >
+  > 比如这样调用h函数:
+  >
+  > ```js
+  > h('a', {props: {href: 'http://www.baidu.com'}}, '百度')
+  > ```
+  >
+  > 将得到这样的虚拟节点:
+  >
+  > ```json
+  > {
+  >   sel: 'a',
+  >   data: {
+  >     props: {
+  >       href: 'http://www.baidu.com'
+  >     },
+  >     text: '百度'
+  >   }
+  > }
+  > ```
+  >
+  > 它标识真正的DOM节点：
+  >
+  > ```html
+  > <a href='http://www.baidu.com'>百度</a>
+  > ```
 
+  一个虚拟节点的属性：
 
+  ```js
+  {
+    children: undefined, //子元素
+    data:{}, //属性样式
+    elem: undefined,
+    key: undefined,
+    sel: 'a',
+    text: 'xxx'
+  }
+  ```
 
+  h函数可以嵌套
 
-
-####3.AST语法解析
+#### 3.AST语法解析
 
 > ATS(abstract syntax code) 抽象的语法code
 > 模板语法-> 抽象语法树AST(通过抽象语法树进行过渡，让编译工作变得简单) -> 正常的HTML语法
@@ -1633,12 +1670,6 @@ Object.defineProperty(obj, key) {
 抽象语法树和虚拟dom的区别：
 
 ![](\img\VUE_抽象语法树.png)
-
-
-
-
-
-#### 4.h函数
 
 
 
