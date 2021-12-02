@@ -26,7 +26,20 @@ var myVnode = h('ul', [
   h('li', '香蕉'),
   h('li', [
     h('p', 'AAA'),
-    h('p', 'BBB')
+    h('p', 'BBB'),
+    h(
+      'a',
+      {
+        props: {
+          href: 'http://www.baidu.com',
+          name: 'test-name'
+        },
+        class: {
+          'test-class': true
+        }
+      },
+      '链接'
+    )
   ])
 ])
 

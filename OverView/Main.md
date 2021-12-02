@@ -1579,7 +1579,10 @@ Object.defineProperty(obj, key) {
   > 比如这样调用h函数:
   >
   > ```js
-  > h('a', {props: {href: 'http://www.baidu.com'}}, '百度')
+  > h('a', {
+  >   props: {href: 'http://www.baidu.com'},
+  >   class: {'demo': true}
+  > }, '百度')
   > ```
   >
   > 将得到这样的虚拟节点:
@@ -1591,19 +1594,23 @@ Object.defineProperty(obj, key) {
   >     props: {
   >       href: 'http://www.baidu.com'
   >     },
-  >     text: '百度'
-  >   }
+  >     class: {
+  >       demo: true
+  >     }
+  >   },
+  >   elm: a.demo,
+  >   text: '百度'
   > }
   > ```
   >
   > 它标识真正的DOM节点：
   >
   > ```html
-  > <a href='http://www.baidu.com'>百度</a>
+  > <a class="demo" href='http://www.baidu.com'>百度</a>
   > ```
-
+  
   一个虚拟节点的属性：
-
+  
   ```js
   {
     children: undefined, //子元素
@@ -1614,7 +1621,7 @@ Object.defineProperty(obj, key) {
     text: 'xxx'
   }
   ```
-
+  
   h函数可以嵌套
 
 #### 3.AST语法解析
