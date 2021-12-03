@@ -1295,6 +1295,9 @@ new Foo().getName() // 有参数new20，所以先执行new  (new Foo()).getName(
 **promise源码：**
 
 ```js
+Promise.all
+Promise.race
+Promise.finally
 ```
 
 
@@ -1580,8 +1583,8 @@ Object.defineProperty(obj, key) {
   >
   > ```js
   > h('a', {
-  >   props: {href: 'http://www.baidu.com'},
-  >   class: {'demo': true}
+  >     props: {href: 'http://www.baidu.com'},
+  >     class: {'demo': true}
   > }, '百度')
   > ```
   >
@@ -1589,17 +1592,17 @@ Object.defineProperty(obj, key) {
   >
   > ```json
   > {
-  >   sel: 'a',
-  >   data: {
-  >     props: {
-  >       href: 'http://www.baidu.com'
+  >     sel: 'a',
+  >     data: {
+  >       props: {
+  >         href: 'http://www.baidu.com'
+  >       },
+  >       class: {
+  >         demo: true
+  >       }
   >     },
-  >     class: {
-  >       demo: true
-  >     }
-  >   },
-  >   elm: a.demo,
-  >   text: '百度'
+  >     elm: a.demo,
+  >     text: '百度'
   > }
   > ```
   >
@@ -1623,6 +1626,18 @@ Object.defineProperty(obj, key) {
   ```
   
   h函数可以嵌套
+  
+  手写h函数：参考diff代码
+
+- key是节点的唯一标识，告诉diff算法，在更改前后它们是同一个DOM节点
+
+- 只有是同一个虚拟节点，才进行精细化比较，否则就会暴力删除旧的，添加新的。
+
+  如何确定是同一个虚拟节点？  选择器相同且key相同。
+
+- 只会同层比较，不会跨层比较
+
+
 
 #### 3.AST语法解析
 

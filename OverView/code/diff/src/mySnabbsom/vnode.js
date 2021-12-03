@@ -1,4 +1,10 @@
 // vnode参数
-export default function (sel, data, elm, text, children) {
-  return { sel, data, elm, text, children }
+export default function (
+  sel,
+  data = {},
+  children = undefined,
+  text = undefined,
+  elm = undefined
+) {
+  return { sel, data, children, text, elm }
 }

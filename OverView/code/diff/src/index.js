@@ -1,26 +1,16 @@
-// import {
-// init,
-// classModule,
-// propsModule,
-// styleModule,
-// eventListenersModule,
-// h
-// } from './mySnabbdom'
-import {h} from 'snabbdom'
+import {
+  init,
+  classModule,
+  propsModule,
+  styleModule,
+  eventListenersModule,
+  h
+} from 'snabbdom'
 import { h as h1 } from './mySnabbsom/h'
-var myNode = h1(
-  'div',
-  {
-    props: {
-      style: 'color: red'
-    },
-    class: {
-      blue: true
-    }
-  },
-  'haha'
-)
+var myNode = h('a', { props: { href: 'http://www.baidu.com' } }, h('span'))
+var myNode1 = h1('a', { props: { href: 'http://www.baidu.com' } }, h1('span'))
 console.log(myNode)
+console.log(myNode1)
 /* var myVnode = h('ul', [
   h('li', '苹果'),
   h('li', '香蕉'),
@@ -55,3 +45,30 @@ const patch = init([
 
 //让虚拟节点上树
 patch(container, myVnode) */
+
+let node1 = h('ul', [
+  h('li', { key: 'A' }, 'AAA'),
+  h('li', { key: 'B' }, 'BBB'),
+  h('li', { key: 'C' }, 'CCC'),
+  h('li', { key: 'D' }, 'DDD')
+])
+let node2 = h('ul', [
+  h('li', { key: 'E' }, 'EEE'),
+  h('li', { key: 'A' }, 'AAA'),
+  h('li', { key: 'C' }, 'CCC'),
+  h('li', { key: 'B' }, 'BBB'),
+  
+  h('li', { key: 'D' }, 'DDD')
+])
+const patch = init([
+  classModule,
+  propsModule,
+  styleModule,
+  eventListenersModule
+])
+patch(container, node1)
+
+//key的作用是实现最小量更新的
+btn.addEventListener('click', () => {
+  patch(node1, node2)
+})
