@@ -1,27 +1,27 @@
-// import {
-// init,
-// classModule,
-// propsModule,
-// styleModule,
-// eventListenersModule,
-// h
-// } from './mySnabbdom'
-import {h} from 'snabbdom'
-import { h as h1 } from './mySnabbsom/h'
-var myNode = h1(
-  'div',
+import {
+  init,
+  classModule,
+  propsModule,
+  styleModule,
+  eventListenersModule,
+  h
+} from 'snabbdom'
+
+/* var myVnode = h(
+  'a',
   {
     props: {
-      style: 'color: red'
+      href: 'http://www.baidu.com',
+      target: '_blank',
     },
     class: {
-      blue: true
+      'alink': true
     }
   },
-  'haha'
-)
-console.log(myNode)
-/* var myVnode = h('ul', [
+  '百度'
+) */
+
+var myVnode = h('ul', [
   h('li', '苹果'),
   h('li', '香蕉'),
   h('li', [
@@ -54,4 +54,4 @@ const patch = init([
 ])
 
 //让虚拟节点上树
-patch(container, myVnode) */
+patch(container, myVnode)

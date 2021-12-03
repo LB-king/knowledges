@@ -6,20 +6,13 @@
 // eventListenersModule,
 // h
 // } from './mySnabbdom'
-import {h} from 'snabbdom'
-import { h as h1 } from './mySnabbsom/h'
-var myNode = h1(
-  'div',
-  {
-    props: {
-      style: 'color: red'
-    },
-    class: {
-      blue: true
-    }
-  },
-  'haha'
-)
+
+import { h } from 'snabbdom'
+var myNode = h('div', {
+  props: {
+    style: 'color: red'
+  }
+},'haha')
 console.log(myNode)
 /* var myVnode = h('ul', [
   h('li', '苹果'),

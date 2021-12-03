@@ -1744,6 +1744,33 @@ Object.defineProperty(obj, key) {
 
 6. 采用HTTP2.0
 
+#### 2.webpack层面
+
+1. 写工具库的时候，采用分别暴露的形式，而不是把所有方法挂载到一个对象，然后把对象暴露出去
+
+   ```js
+   //好味道-只使用a方法，就只会引进a方法
+   export const a = 'AAA'
+   export const b = 'BBB'
+   //坏味道-会把对象引入，并打包，会增加代码体积
+   var a = 'AAA',b='BBB'
+   export default {a , b}
+   ```
+
+   注意：`export default`和`export`的区别
+
+   ```js
+   export const utils = () => {}
+   //接收的时候要以对象解构的形式,可以加别名 {as}
+   import {utils as myName} from 'utils.js'
+   //````````````````````````````````````````
+   export default function utils() {}
+   //接收的时候以随意变量接收，因为他暴露出来的是一个整体
+   import anyName from 'utils.js'
+   ```
+
+   
+
 ### 安全问题
 
 #### 1.浏览器相关
