@@ -7,6 +7,7 @@ import {
   h
 } from 'snabbdom'
 import { h as h1 } from './mySnabbsom/h'
+import myPatch from './mySnabbsom/patch'
 var myNode = h('a', { props: { href: 'http://www.baidu.com' } }, h('span'))
 var myNode1 = h1('a', { props: { href: 'http://www.baidu.com' } }, h1('span'))
 console.log(myNode)
@@ -66,9 +67,9 @@ const patch = init([
   styleModule,
   eventListenersModule
 ])
-patch(container, node1)
+myPatch(container, node1)
 
 //key的作用是实现最小量更新的
-btn.addEventListener('click', () => {
-  patch(node1, node2)
-})
+// btn.addEventListener('click', () => {
+//   patch(node1, node2)
+// })

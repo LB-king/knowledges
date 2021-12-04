@@ -1637,6 +1637,18 @@ Object.defineProperty(obj, key) {
 
 - 只会同层比较，不会跨层比较
 
+![](img/diff_patch函数.png)
+
+如何定义同一个节点:
+
+旧节点的key和新节点的key相同，
+
+旧节点的选择器和新节点的选择器相同
+
+```JS
+vnode1.key === vnode2.key && vnode1.sel === vnode2.sel
+```
+
 
 
 #### 3.AST语法解析
