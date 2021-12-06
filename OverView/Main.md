@@ -1513,12 +1513,17 @@ Object.defineProperty(obj, key) {
 }
 ```
 
-
 #### 2.虚拟dom和diff算法
+
+什么是虚拟dom？
+
+就是把DOM数据化
 
 > 家中的桌子重新摆一下，没有必要全屋推到重来，直接找到不同的地方，精准更新
 >
 > diff算法实现最小量更新
+
+
 
 **真实dom：**
 
@@ -1555,6 +1560,8 @@ Object.defineProperty(obj, key) {
   ]
 }
 ```
+
+主流：snabdom和virtual dom
 
 - snabbdom简介(瑞典语)
 
@@ -1611,22 +1618,22 @@ Object.defineProperty(obj, key) {
   > ```html
   > <a class="demo" href='http://www.baidu.com'>百度</a>
   > ```
-  
+
   一个虚拟节点的属性：
-  
+
   ```js
   {
     children: undefined, //子元素
     data:{}, //属性样式
-    elem: undefined,
+    elm: undefined,
     key: undefined,
     sel: 'a',
     text: 'xxx'
   }
   ```
-  
+
   h函数可以嵌套
-  
+
   手写h函数：参考diff代码
 
 - key是节点的唯一标识，告诉diff算法，在更改前后它们是同一个DOM节点
@@ -1649,7 +1656,10 @@ Object.defineProperty(obj, key) {
 vnode1.key === vnode2.key && vnode1.sel === vnode2.sel
 ```
 
+新老节点替换的规则：
 
+> - 如果新老节点不是同一个节点名称，那么暴力删除旧的节点，创建插入新的节点
+> - 只能同级比较，不能跨层比较
 
 #### 3.AST语法解析
 
@@ -1717,8 +1727,73 @@ vnode1.key === vnode2.key && vnode1.sel === vnode2.sel
 
 
 
-
 ### Vue3
+
+### V2和V3区别
+
+`.env.development`
+
+V2:
+
+定义：
+
+```
+#要以VUE_APP开头
+VUE_APP_MY_TITLE=PLUS-DEVELOPMENT
+```
+
+获取：
+
+```js
+console.log(process.env)
+```
+
+V3:
+
+定义:
+
+```
+#必须要用VITE_开头
+VITE_SOME_KEY=开发环境
+```
+
+获取：
+
+```js
+console.log(import.meta.env)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ### React
 

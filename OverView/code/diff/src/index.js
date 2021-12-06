@@ -73,3 +73,23 @@ myPatch(container, node1)
 // btn.addEventListener('click', () => {
 //   patch(node1, node2)
 // })
+
+/* 
+  修改真实dom: 159.724853515625ms
+  修改虚拟dom: 0.379150390625ms
+  测试直接修改虚拟dom(直接修改数据)和修改dom的区别
+  可以看到渲染效率相差很大,使用数据会提升效率
+
+  console.time('修改真实dom')
+  for (let i = 0; i < 9999; i++) {
+    btn.innerHTML = i
+  }
+  console.timeEnd('修改真实dom')
+  console.time('修改虚拟dom')
+  let s = 0
+  for (let i = 0; i < 9999; i++) {
+    s = i
+  }
+  btn1.innerHTML = s
+  console.timeEnd('修改虚拟dom')
+*/

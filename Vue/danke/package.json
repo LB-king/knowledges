@@ -5,6 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "build:uat": "vue-cli-service build --mode UATBuild",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
     "analyz": "cross-env NODE_ENV=production npm_config_report=true npm run build"
