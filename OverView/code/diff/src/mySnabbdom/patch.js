@@ -11,6 +11,8 @@ export default function patch(oldVnode, newVnode) {
   //2.判断oldVnode和newVnode是否是同一个节点
   if (oldVnode.key === newVnode.key && oldVnode.sel === newVnode.sel) {
     console.log('UI_LOG', '是同一个节点')
+    //此处比较复杂。。。
+    
   } else {
     console.log('UI_LOG', '不是同一个节点，需要暴力删除')
     var newElm = createElement(newVnode)
@@ -18,7 +20,7 @@ export default function patch(oldVnode, newVnode) {
     if (oldVnode.elm && newElm) {
       oldVnode.elm.parentNode.insertBefore(newElm, oldVnode.elm)
       //插入之后删除标杆容器dom
-      oldVnode.elm && oldVnode.elm.parentNode.removeChild(oldVnode.elm)
+      oldVnode.elm.parentNode.removeChild(oldVnode.elm)
     }
   }
 }
