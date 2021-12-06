@@ -6,8 +6,8 @@ import {
   eventListenersModule,
   h
 } from 'snabbdom'
-import { h as h1 } from './mySnabbsom/h'
-import myPatch from './mySnabbsom/patch'
+import { h as h1 } from './mySnabbdom/h'
+import myPatch from './mySnabbdom/patch'
 var myNode = h('a', { props: { href: 'http://www.baidu.com' } }, h('span'))
 var myNode1 = h1('a', { props: { href: 'http://www.baidu.com' } }, h1('span'))
 console.log(myNode)
