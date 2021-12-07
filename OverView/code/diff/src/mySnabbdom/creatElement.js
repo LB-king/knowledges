@@ -10,11 +10,10 @@ export default function createElement(vnode) {
     console.log('UI_LOG', '孤儿节点上树', vnode)
     node.innerText = vnode.text
 
-    var props = vnode.data.props
+    var props = (vnode.data && vnode.data.props) || {}
     for (let i in props) {
       node.setAttribute(i, props[i])
     }
-    
   } else if (Array.isArray(vnode.children) && vnode.children.length > 0) {
     //子节点是数组就需要递归
     var children = vnode.children

@@ -1727,6 +1727,12 @@ vnode1.key === vnode2.key && vnode1.sel === vnode2.sel
 
 
 
+
+
+
+
+
+
 ### Vue3
 
 ### V2和V3区别

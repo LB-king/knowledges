@@ -8,13 +8,42 @@
 } from 'snabbdom' */
 import { h as h1 } from './mySnabbdom/h'
 import myPatch from './mySnabbdom/patch'
-var myNode1 = h1('ul', [h1('li', 'AAA'), h1('li', 'BBB'), h1('li', 'CCC')])
-var myNode2 = h1('h3', { props: { id: 'my-h3', name: 'hello' } }, 'H3')
+var myNode1 = h1('ul', [
+  h1('li', { key: 'A' }, 'AAA'),
+  h1('li', { key: 'B' }, 'BBB'),
+  h1('li', { key: 'C' }, 'CCC')
+])
+// var myNode1 = h1('h3', { props: { id: 'my-h3', name: 'hello' } }, '我是一段文字')
+var myNode2 = h1('ul', [
+  h1('li', { key: 'A' }, 'AAA'),
+  h1('li', { key: 'B' }, 'BBB'),
+  h1('li', { key: 'C' }, 'CCC'),
+  h1('li', { key: 'M' }, 'MMM'),
+  h1('li', { key: 'N' }, 'NNN'),
+  h1('li', { key: 'D' }, 'DDD')
+])
+// var myNode2 = h1('h3', { props: { id: 'my-h3', name: 'hello' } }, [
+//   h1('p', 'PPP1'),
+//   h1('p', [
+//     h1('ul',[
+//       h1('li','li111'),
+//       h1('li','li112'),
+//     ])
+//   ]),
+// ])
 myPatch(container, myNode1)
 
 btn.onclick = () => {
   myPatch(myNode1, myNode2)
 }
+
+/* 
+container1.innerText = 'xxx'
+var a = document.createElement('a')
+a.text = 'aaaaaa'
+container1.appendChild(a) 
+appendChild并不会清空节点之前的text内容
+*/
 /* var myVnode = h('ul', [
   h('li', '苹果'),
   h('li', '香蕉'),
