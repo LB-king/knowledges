@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>requestAnimationFrame</title>
+    <style>
+      div {
+        height: 20px;
+        background-color: red;
+        margin-bottom: 15px;
+        width: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="bar1">0%</div>
+    <div id="bar2">0%</div>
+    <div id="bar3">0%</div>
+    <script>
+      bar1.onclick = () => {
+        var num = 0
+        var timer = setInterval(() => {
+          if (num < 300) {
+            num += 3
+            bar1.style.width = num + 'px'
+            bar1.innerHTML = num / 3 + '%'
+          } else {
+            clearInterval(timer)
+          }
+        }, 17)
+      }
+      bar2.onclick = () => {
+        var num = 0
+        var timer = setTimeout(function fn() {
+          if (num < 300) {
+            num += 3
+            bar2.style.width = num + 'px'
+            bar2.innerHTML = num / 3 + '%'
+            setTimeout(fn, 17)
+          } else {
+            clearTimeout(timer)
+          }
+        }, 17)
+      }
+      bar3.onclick = () => {
+        var num = 0
+        var timer = requestAnimationFrame(function fn() {
+          if (num < 300) {
+            num += 3
+            bar3.style.width = num + 'px'
+            bar3.innerHTML = num / 3 + '%'
+            requestAnimationFrame(fn)
+          } else {
+            cancelAnimationFrame(timer)
+          }
+        })
+      }
+      /* 
+        requestAnimationFrame与setTimeout效果一样，都属于宏任务
+        优点：
+          + 窗口切换的时候，即document.visibilityState hidden|visible,为hidden时会清除计时器
+          + 视觉上更符合人眼的刷新频率
+      
+      */
+    </script>
+  </body>
+</html>
