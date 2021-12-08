@@ -15,12 +15,11 @@ var myNode1 = h1('ul', [
 ])
 // var myNode1 = h1('h3', { props: { id: 'my-h3', name: 'hello' } }, '我是一段文字')
 var myNode2 = h1('ul', [
-  h1('li', { key: 'A' }, 'AAA'),
+  h1('li', { key: 'A1' }, 'AAA'),
   h1('li', { key: 'B' }, 'BBB'),
   h1('li', { key: 'C' }, 'CCC'),
-  h1('li', { key: 'M' }, 'MMM'),
-  h1('li', { key: 'N' }, 'NNN'),
-  h1('li', { key: 'D' }, 'DDD')
+  // h1('li', { key: 'N' }, 'NNN'),
+  // h1('li', { key: 'D' }, 'DDD')
 ])
 // var myNode2 = h1('h3', { props: { id: 'my-h3', name: 'hello' } }, [
 //   h1('p', 'PPP1'),

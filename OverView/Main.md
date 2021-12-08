@@ -1661,6 +1661,31 @@ vnode1.key === vnode2.key && vnode1.sel === vnode2.sel
 > - 如果新老节点不是同一个节点名称，那么暴力删除旧的节点，创建插入新的节点
 > - 只能同级比较，不能跨层比较
 
+**经典diff算法优化策略**
+
+> 四种命中查找：
+>
+> 1. 新前与旧前
+> 2. 新后与旧后
+> 3. 新后与旧前
+> 4. 新前与旧后
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #### 3.AST语法解析
 
 > ATS(abstract syntax code) 抽象的语法code
@@ -1714,6 +1739,10 @@ vnode1.key === vnode2.key && vnode1.sel === vnode2.sel
 抽象语法树和虚拟dom的区别：
 
 ![](\img\VUE_抽象语法树.png)
+
+
+
+
 
 
 

@@ -1,5 +1,5 @@
 import createElement from './creatElement'
-
+import updateChildren from './updateChildren'
 export default function patchVnode(oldVnode, newVnode) {
   //2.1判断新旧节点是否完全相同
   if (oldVnode === newVnode) return
@@ -13,11 +13,12 @@ export default function patchVnode(oldVnode, newVnode) {
     if (newVnode.text !== oldVnode.text) oldVnode.elm.innerText = newVnode.text
   } else {
     //新节点有children，老节点是文本内容
-    console.log('UI_LOG', 'newVnode没有text属性')
+    // console.log('UI_LOG', 'newVnode没有text属性')
     //判断老节点有没有children,有则新老节点都有children
     if (oldVnode.children && oldVnode.children.length > 0) {
-      console.log('UI_LOG', '新老节点都有children')
-      //1.新增的情况,末尾新增？中间新增？开头新增
+      // console.log('UI_LOG', '新老节点都有children')
+      updateChildren(oldVnode.elm, oldVnode.children, newVnode.children)
+      /* //1.新增的情况,末尾新增？中间新增？开头新增
       //新增的节点插入到所有未处理的节点之前，而不是所有已处理的节点之后
       //没处理的oldVnode的索引
       let un = 0
@@ -42,7 +43,7 @@ export default function patchVnode(oldVnode, newVnode) {
           //顺序改变，情况就非常复杂
           un++
         }
-      }
+      } */
     } else {
       //老节点没有children，新节点有children
       //1.删除旧的text

@@ -7,7 +7,7 @@ export default function createElement(vnode) {
     (vnode.children === undefined || vnode.length === 0)
   ) {
     //内部是文字
-    console.log('UI_LOG', '孤儿节点上树', vnode)
+    // console.log('UI_LOG', '孤儿节点上树', vnode)
     node.innerText = vnode.text
 
     var props = (vnode.data && vnode.data.props) || {}
