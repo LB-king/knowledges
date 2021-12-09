@@ -50,7 +50,7 @@ function debounce(callback, time) {
     //启动定时器
     timer = setTimeout(() => {
       callback(this, e)
-      clearTimeout(timer)
+      // clearTimeout(timer) //此处可删除
     }, time)
   }
 }

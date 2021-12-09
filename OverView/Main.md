@@ -1346,17 +1346,34 @@ Promise.finally
 
   ```js
   function debounce(callback, delay) {
-    
+    let timer = null
+    return function(e) {
+      if(timer) clearTimeout(timer)
+      setTimeout(() => {
+        callback(this, e)
+      }, delay)
+    }
   }
   ```
-
   
 
+#### 15.rAF
 
+**requestAnimationFrame**
 
+> window.requestAnimationFrame()-告诉浏览器，你希望执行一个动画，并且要求浏览器在下次重绘之前调用指定的回调函数更新该动画
 
+特点：当requestAnimationFrame()运行在后台标签页或者隐藏的iframe里，requestAnimationFrame会被暂停调用，以提升性能和电池寿命
 
+采用系统时间间隔，保持最佳绘制效率，不会过度绘制也不会因为间隔时间长导致动画卡顿
 
+setTimeout:
+
+- 执行时间不确定，一旦队列中有一个任务阻塞，其执行就会延迟
+
+- 刷新频率受到分辨率和设备性能影响较大，而其只能设置固定的时间间隔，这个时间间隔可能与屏幕刷新间隔不一样
+
+  以上会导致setTimeout的执行步调和屏幕的刷新步调不一致，从而引起丢帧的现象。
 
 
 

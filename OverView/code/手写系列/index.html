@@ -82,7 +82,10 @@
       //   }
       // })
       */
-
+      function fn(e) {
+        console.log(Date.now(), e)
+      }
+      btn.addEventListener('keydown', debounce(fn, 500))
       //7.2.filter
       var arr = [11, 22, 11, 44, 55, 22, 55, 44]
       //8.数组去重
