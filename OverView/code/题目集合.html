@@ -13,6 +13,7 @@
       var y = {
         x: 3,
         z: (function (x) {
+          //this -> window
           this.x *= x
           x += 2
           return function (n) {

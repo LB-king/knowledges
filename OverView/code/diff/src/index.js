@@ -9,15 +9,16 @@
 import { h as h1 } from './mySnabbdom/h'
 import myPatch from './mySnabbdom/patch'
 var myNode1 = h1('ul', [
-  h1('li', { key: 'A' }, 'AAA'),
-  h1('li', { key: 'B' }, 'BBB'),
-  h1('li', { key: 'C' }, 'CCC')
+  h1('li', { key: 'A' }, 'A'),
+  h1('li', { key: 'B' }, 'B'),
+  h1('li', { key: 'C' }, 'C')
 ])
 // var myNode1 = h1('h3', { props: { id: 'my-h3', name: 'hello' } }, '我是一段文字')
 var myNode2 = h1('ul', [
-  h1('li', { key: 'A1' }, 'AAA'),
-  h1('li', { key: 'B' }, 'BBB'),
-  h1('li', { key: 'C' }, 'CCC'),
+ 
+  h1('li', { key: 'B' }, 'B'),
+  h1('li', { key: 'C' }, 'C'),
+  h1('li', { key: 'A' }, 'A'),
   // h1('li', { key: 'N' }, 'NNN'),
   // h1('li', { key: 'D' }, 'DDD')
 ])

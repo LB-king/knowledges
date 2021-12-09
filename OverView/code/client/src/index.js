@@ -77,7 +77,7 @@ function F33() {
 }
 
 /* 
-  4. 基于fetch，fetch是浏览器内置的函数，基于fetch可以向服务器发送请求，核心原理和ajax(XMLHtppRequest)不一致,天生基于promise管理的
+  4. 基于fetch，fetch是浏览器内置的函数，基于fetch可以向服务器发送请求，核心原理和ajax(XMLHttpRequest)不一致,天生基于promise管理的
     + 不论服务器返回的状态码是多少，都按照PROMISE成功来算，只有断网，才算失败
   */
 
