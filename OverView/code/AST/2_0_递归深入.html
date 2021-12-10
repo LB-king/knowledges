@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>递归深入</title>
+  </head>
+  <body>
+    <script>
+      /* 
+      1, 1, 2, 3, 5, 8, 13, 21, 34, 55...
+      后一项等于前2项之和
+    */
+      function fib(n) {
+        if (n <= 1) return 1
+        return fib(n - 2) + fib(n - 1)
+      }
+
+      //有大量的重复计算
+      //优化：cache思想，把计算过的结果存起来
+      var cache = {}
+      function fib1(n) {
+        if (cache.hasOwnProperty(n)) {
+          return cache[n]
+        }
+        var r = n <= 1 ? 1 : fib1(n - 2) + fib1(n - 1)
+        cache[n] = r
+        return r
+      }
+
+      console.time('未优化')
+      console.log(fib(40))
+      console.timeEnd('未优化')
+      console.time('加缓存')
+      console.log(fib1(40))
+      console.timeEnd('加缓存')
+    </script>
+  </body>
+</html>

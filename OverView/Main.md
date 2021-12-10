@@ -1774,6 +1774,50 @@ vnode1.key === vnode2.key && vnode1.sel === vnode2.sel
 
 ![](\img\VUE_抽象语法树.png)
 
+知识储备：
+
+指针思想：下标位置
+
+```js
+var str = 'aaaaaaabbccccccddddd'
+```
+
+判断连续出现次数最多的字符？
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

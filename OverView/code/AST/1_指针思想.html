@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>指针思想</title>
+  </head>
+  <body>
+    <script>
+      //找出字符串中连续相等次数最多的字符
+      /* 
+       i = 0,
+       j = 1
+        + 如果i和j指向的字一样，那么i不动j后移
+        + 如果i和j指向的字不一样，那么说明他们之间的字都是连续相同的，让i追上j，j继续增加
+    */
+      var str = 'aaaaabaabbbbcccdddfdddddjdd'
+      function getMostLetter(str) {
+        var len = str.length,
+          i = 0,
+          j = 1,
+          maxRepeatCount = 0,
+          maxRepeatChar = ''
+        while (i < len - 1) {
+          if (str[i] !== str[j]) {
+            if (j - i > maxRepeatCount) {
+              maxRepeatCount = j - i
+              maxRepeatChar = str[i]
+            }
+            i = j
+          }
+          j++
+        }
+        return {
+          [maxRepeatChar]: maxRepeatCount
+        }
+      }
+
+      console.log(getMostLetter(str))
+    </script>
+  </body>
+</html>

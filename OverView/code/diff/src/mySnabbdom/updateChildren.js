@@ -76,7 +76,7 @@ export default function updateChildren(elm, oldCh, newCh) {
         let moveNode = oldCh[idxInOld]
 
         patchVnode(moveNode, newStartNode)
-        //旧节点中药赋值为undefined
+        //旧节点中要赋值为undefined
         oldCh[idxInOld] = undefined
         elm.insertBefore(moveNode.elm, oldStartNode.elm)
       } else {
