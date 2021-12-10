@@ -1706,7 +1706,7 @@ vnode1.key === vnode2.key && vnode1.sel === vnode2.sel
 
 4种都查不到：
 
-
+![](\img\diff_4种都没找到.png)
 
 
 
