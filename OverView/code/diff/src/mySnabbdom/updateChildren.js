@@ -22,35 +22,48 @@ export default function updateChildren(elm, oldCh, newCh) {
   //新后节点
   let newEndNode = newCh[newEndIdx]
   while (oldStartIdx <= oldEndIdx && newStartIdx <= newEndIdx) {
-    //1.新前与旧前
     if (isSameNode(oldStartNode, newStartNode)) {
+      //1.新前与旧前
       console.log('1.新前和旧前命中')
       patchVnode(oldStartNode, newStartNode)
-      if(newStartNode) newStartNode.elm = oldStartNode?.elm
+      // if(newStartNode) newStartNode.elm = oldStartNode?.elm
       oldStartNode = oldCh[++oldStartIdx]
       newStartNode = newCh[++newStartIdx]
-      //2.新后与旧后
     } else if (isSameNode(oldEndNode, newEndNode)) {
+      //2.新后与旧后
       console.log('2.新后和旧后命中')
       patchVnode(oldEndNode, newEndNode)
-      if(newEndNode) newEndNode.elm = oldEndNode?.elm
+      //在后面插入节点有用，不在末尾插入，只在中间插入
+      if (newEndNode) newEndNode.elm = oldEndNode?.elm
       oldEndNode = oldCh[--oldEndIdx]
       newEndNode = newCh[--newEndIdx]
+    } else if (isSameNode(oldStartNode, newEndNode)) {
       //3.新后与旧前
-    } else if (isSameNode(newEndNode, oldStartNode)) {
       console.log('3.新后和旧前命中')
       patchVnode(oldStartNode, newEndNode)
-      if(newEndNode) newEndNode.elm = oldStartNode?.elm
+      //此时要把新后放到旧后的后面,此时新后===旧前,下面用oldStartNode或
       elm.insertBefore(oldStartNode.elm, oldEndNode.elm.nextSibling)
       oldStartNode = oldCh[++oldStartIdx]
       newEndNode = newCh[--newEndIdx]
+    } else if (isSameNode(oldEndNode, newStartNode)) {
       //4.新前与旧后
-    }else if(isSameNode(newEndNode, oldStartNode)) {
       console.log('4.新前与旧后命中')
-      
+      patchVnode(oldEndNode, newStartNode)
+      //此时要把新前插入到旧前的前面,此时新前===旧后，下面用oldEndNode
+      elm.insertBefore(oldEndNode.elm, oldStartNode.elm)
+      oldEndNode = oldCh[--oldEndIdx]
+      newStartNode = newCh[++newStartIdx]
+    } else {
       //5.以上不满足
-    }else {
-
+      console.log('5.以上情况都不满足')
     }
+  }
+  //while循环走完，有新增的节点
+  if (newStartIdx <= newEndIdx) {
+    console.log('有新的节点')
+    // let before = newCh[newEndIdx + 1] == null ? null : newCh[newEndIdx + 1].elm
+    // for (let i = newStartIdx; i <= newEndIdx; i++) {
+    //   elm.insertBefore(newCh[i].elm, before)
+    // }
   }
 }
