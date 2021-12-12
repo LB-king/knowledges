@@ -26,12 +26,40 @@
         }
       
       */
-      var arr = [1, 2, [3, 4, [5]], 6]
-      var obj = {}
-      function arrToObj(arr) {
-        
+      function isArray(value) {
+        return Array.isArray(value)
       }
-      var r = arrToObj(arr)
+      var arr = [1, 2, [3, 4, [5]], 6]
+      function arrToObj(arr) {
+        let len = arr.length
+        let res = []
+        for (let i = 0; i < len; i++) {
+          let item = arr[i]
+          if (isArray(item)) {
+            res.push({
+              children: arrToObj(item)
+            })
+          } else {
+            res.push({ value: item })
+          }
+        }
+        return {
+          children: res
+        }
+      }
+      //使用map语法,递归次数较多
+      function arrToObj1(value) {
+        if (isArray(value)) {
+          return {
+            children: value.map((_value) => arrToObj1(_value))
+          }
+        } else {
+          return {
+            value
+          }
+        }
+      }
+      var r = arrToObj1(arr)
       console.log(r)
     </script>
   </body>
