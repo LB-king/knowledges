@@ -8,11 +8,19 @@
   </head>
   <body>
     <script>
-      var str = '2[2[a]3[b]2[c]]'
-
-      var reg = /owwp/
-
-      console.log(reg.test('op'))
+      //1.replace
+      var s1 = 'abcd45efg77'
+      //去除字符串的数字
+      console.log(s1.replace(/\d/g, ''))
+      //2.search-匹配到的第一个结果的下标,加g也是一样
+      console.log(s1.search(/\d/))
+      //3.match-不加g，返回一个数组；加g能匹配所有的数字
+      console.log(s1.match(/\d/g)) //['4', '5', '7', '7']
+      var s2 = '12[abc]'
+      //()有捕获的作用  分组
+      console.log(s2.match(/^(\d+)\[/))
+      //4.test
+      console.log(/he/.test('hello'))
     </script>
   </body>
 </html>

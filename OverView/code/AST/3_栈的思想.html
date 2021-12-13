@@ -15,24 +15,55 @@
         2[2[a]3[b]2[c]] => aabbbccaabbbcc
         忽略非法情况
         2[a3[b]] -> 2[1[a]3[b]]
+        方法：
+          + 如果这个字符是数字，那么就把数字压栈1，把空字符串压栈2
+          + 如果这个字符是字母，那么此时就把栈顶2这项改为这个字母
+          + 如果这个字符是],那么就将数字弹栈1，把栈2字符串的元素重复刚刚弹出栈的数字次数，并且弹栈，拼接到新栈顶上
       */
-      var str = '2[2[a]3[b]2[c]]'
+      
 
       function smartRepeat(templateStr) {
         //指针
         var index = 0
         //首先准备两个栈
-        var [stackNumber, stackString] = [[], []]
+        var [stack1, stack2] = [[], []]
         //剩余部分
         var rest = templateStr
-        
-        while (index < str.length - 1) {
-          index++
-          rest = rest.substring(index)
-          console.log(rest)
-        }
-      }
 
+        while (index < templateStr.length - 1) {
+          
+
+          rest = templateStr.substring(index)
+          if (/^\d+\[/.test(rest)) {
+            // console.log('以数字开头')
+            //得到这个数字1和11
+            var times = rest.match(/^(\d+)\[/)[1]
+            // console.log(times)
+            //+1是把[算进去了
+            index += times.length + 1
+            stack1.push(+times)
+            stack2.push('')
+          } else if (/^\w+\]/.test(rest)) {
+            //遇到字母的操作
+            let word = rest.match(/^(\w+)\]/)[1]
+            stack2[stack2.length - 1] = word
+            index += word.length
+          } else if (rest[0] === ']') {
+            //如果这个字符是],那么就将statck1弹栈，stack2弹栈，把字符串栈的新栈顶的元素重复刚刚弹栈的指定次数，并且拼接到新的栈顶上
+            // console.log(rest)
+            let times = stack1.pop()
+            let word = stack2.pop()
+            //'a'.repeat(3)
+            stack2[stack2.length - 1] += word.repeat(times)
+            index++
+          } else {
+            index++
+          }
+          // console.log(index, stack1, stack2)
+        }
+        return stack2[0].repeat(stack1[0])
+      }
+      var str = '2[2[a]3[b]1[ck]]'
       var r = smartRepeat(str)
       console.log('结果：', r)
     </script>
