@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>栈的数据结构</title>
+  </head>
+  <body>
+    <script>
+      /* 
+        词法分析的时候需要用到栈数据结构
+        可以用数据进行模拟，只能在一端进行push 和 pop,不能shift和unshift
+        栈：
+        2[2[a]3[b]2[c]] => aabbbccaabbbcc
+        忽略非法情况
+        2[a3[b]] -> 2[1[a]3[b]]
+      */
+      var str = '2[2[a]3[b]2[c]]'
+
+      function smartRepeat(templateStr) {
+        //指针
+        var index = 0
+        //首先准备两个栈
+        var [stackNumber, stackString] = [[], []]
+        //剩余部分
+        var rest = templateStr
+        
+        while (index < str.length - 1) {
+          index++
+          rest = rest.substring(index)
+          console.log(rest)
+        }
+      }
+
+      var r = smartRepeat(str)
+      console.log('结果：', r)
+    </script>
+  </body>
+</html>

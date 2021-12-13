@@ -1984,7 +1984,6 @@ console.log(import.meta.env)
    import anyName from 'utils.js'
    ```
 
-   
 
 ### 安全问题
 
@@ -2366,3 +2365,12 @@ CSRF Token
 - node
 
   。。。
+
+
+
+### 常问题目
+
+#### 1.说一下dns 预解析的过程？
+
+
+

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>实现移动端1物理像素的问题</title>
+  </head>
+  <body>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      .box {
+        height:200px;
+        width: 200px;
+        background-color: antiquewhite;
+        border-bottom: 1px solid #bbb;
+      }
+    </style>
+    <!-- 
+      像素比为dpi
+      dpi = 物理像素 / CSS像素
+      实现0.5像素边框
+     -->
+    <div id="box" class="box">
+      main
+    </div>
+    
+  </body>
+</html>
+<script>
+  window.onload = function () {
+    //设备像素
+    var dpr = window.devicePixelRatio
+    //缩放比例
+    var scale = 1 / dpr
+    //屏幕宽度
+    var width = document.documentElement.clientWidth
+    //设置标签meta，使content变成动态的
+    var metaNode = document.querySelector('meta[name="viewport"]')
+    //设置content
+    metaNode.setAttribute(
+      'content',
+      `width=device-width, initial-scale=${scale}`
+    )
+    //设置根节点的fontSize
+    var htmlNode = document.querySelector('html')
+    htmlNode.style.fontSize = width * dpr + 'px'
+  }
+</script>

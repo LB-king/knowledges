@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BFC</title>
+  </head>
+  <body>
+    <!-- 
+      什么是BFC？ (Block Formatting Context)块级格式化上下文
+        + 它是一个独立的渲染区域，它规定了内部的Block-level的盒子如何布局，并且与这个区域的外部不相干 
+        + 具体布局规则有：
+          1.内部的Box会在垂直方向一个接一个的放置
+          2.Box垂直方向的距离由margin决定。属于同一个BFC的两个相邻Box的margin会发生重叠(按照最大margin值计算)
+          3.每个元素的margin box的左边，与包含块border box的左边相接触
+          4.BFC的区域不会与float box重叠
+          5.BFC就是页面上的一个隔离的独立容器，容器里的子元素不会影响到外面的元素。
+          6.计算BFC的高度时，浮动元素也参与计算
+        + 以下情形会触发BFC
+          1.float属性不为none
+          2.position设置为fixed或者absolute
+          3.display设置为inline-block/inline-flex/inline-grid/inline-table/table/table-cell等
+          4.overflow不为visible
+     -->
+
+    <style>
+      .box {
+        height: 20px;
+        margin-bottom: 10px;
+        background-color: #ccc;
+      }
+      .float {
+        border: 1px solid #bfb;
+        /* overflow: hidden; */
+        /* position: absolute; */
+        /* position: fixed; */
+        display: flex;
+      }
+      .f1 {
+        height: 30px;
+        width: 30px;
+        background-color: aqua;
+        float: left;
+      }
+    </style>
+    <div class="bfc">
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+    </div>
+    <div class="float">
+      <div class="f1"></div>
+    </div>
+    <hr />
+    <!-- 处理magin重叠的问题 -->
+    <style>
+      .m1,
+      .m2 {
+        height: 30px;
+      }
+      .m1 {
+        background-color: red;
+        margin-bottom: 20px;
+      }
+      .m2 {
+        background-color: blue;
+        margin-top: 10px;
+      }
+
+      .father {
+        margin-top: 20px;
+        width: 50%;
+      }
+      .son {
+        margin-top: 30px;
+        height: 50px;
+        background-color: #bfb;
+      }
+    </style>
+    <section>
+      <div class="m1"></div>
+      <div class="m2"></div>
+    </section>
+    <hr>
+    <section class="father">
+      <div class="son"></div>
+    </section>
+  </body>
+</html>
