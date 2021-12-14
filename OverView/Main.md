@@ -1844,6 +1844,8 @@ var str = 'aaaaaaabbccccccddddd'
 
 ### V2和V3区别
 
+#### 1.环境变量
+
 `.env.development`
 
 V2:
@@ -2372,5 +2374,6 @@ CSRF Token
 
 #### 1.说一下dns 预解析的过程？
 
+#### 2.WeakMap 和 Map 了解吗? 说下他们的区别？
 
-
+#### 3.Lighthouse用过吗？

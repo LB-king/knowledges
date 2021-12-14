@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>statck</title>
+  </head>
+  <body>
+    <script>
+      var str = '2[1[K]2[WE]2[DC]]'
+      function repeat(str) {
+        //定义一个指针
+        var index = 0
+        //准备2个栈
+        var stack1 = []
+        var stack2 = []
+
+        while (index < str.length - 1) {
+          var rest = str.substring(index)
+          if (/^\d+\[/.test(rest)) {
+            // console.log('rest', '遇到数字', rest)
+            //遇到数字就把数字push到stack1
+            var times = rest.match(/^(\d+)\[/)[1]
+            stack1.push(+times)
+            stack2.push('')
+            index += times.length + 1
+          } else if (/^\w+\]/.test(rest)) {
+            // console.log('rest', '遇到字母', rest)
+            var word = rest.match(/^(\w+)\]/)[1]
+            stack2[stack2.length - 1] = word
+            // console.log(word)
+            index += word.length
+          } else if (/^\]/.test(rest)) {
+            console.log('rest', '遇到]', rest)
+            //遇到]，把栈2的栈顶重复栈1栈顶次数，出栈，并且拼到上一项,注意+=
+            var word = stack2.pop()
+            var times = stack1.pop()
+            stack2[stack2.length - 1] += word.repeat(times)
+            index++
+          } else {
+            index++
+          }
+
+        }
+        console.log(stack1, stack2)
+        return stack2[0].repeat(stack1[0])
+      }
+
+      console.log(repeat(str))
+    </script>
+  </body>
+</html>

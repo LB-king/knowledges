@@ -10,7 +10,7 @@
     <script>
       /* 
         词法分析的时候需要用到栈数据结构
-        可以用数据进行模拟，只能在一端进行push 和 pop,不能shift和unshift
+        可以用数组进行模拟，只能在一端进行push 和 pop,不能shift和unshift
         栈：
         2[2[a]3[b]2[c]] => aabbbccaabbbcc
         忽略非法情况
@@ -20,7 +20,6 @@
           + 如果这个字符是字母，那么此时就把栈顶2这项改为这个字母
           + 如果这个字符是],那么就将数字弹栈1，把栈2字符串的元素重复刚刚弹出栈的数字次数，并且弹栈，拼接到新栈顶上
       */
-      
 
       function smartRepeat(templateStr) {
         //指针
@@ -29,10 +28,7 @@
         var [stack1, stack2] = [[], []]
         //剩余部分
         var rest = templateStr
-
         while (index < templateStr.length - 1) {
-          
-
           rest = templateStr.substring(index)
           if (/^\d+\[/.test(rest)) {
             // console.log('以数字开头')
