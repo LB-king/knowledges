@@ -1712,14 +1712,6 @@ vnode1.key === vnode2.key && vnode1.sel === vnode2.sel
 
 
 
-
-
-
-
-
-
-
-
 #### 3.AST语法解析
 
 > ATS(abstract syntax code) 抽象的语法code
@@ -1785,6 +1777,45 @@ var str = 'aaaaaaabbccccccddddd'
 判断连续出现次数最多的字符？
 
 
+
+#### 4.render
+
+```js
+import Vue from 'vue' //这种方式引入的是dist/vue.runtime.esm.js，在vue源码根目录的package.json配置的module字段
+```
+
+页面生效的条件：
+
+1.不使用render函数,引入完整版的vue 
+
+```js
+import Vue from 'vue/dist/vue'
+new Vue({
+  template: `<h1>你好</h1>`
+}).$mount('#app')
+```
+
+2.使用render函数
+
+```js
+//h就是createElement函数
+render(h) {  
+  return h('h2', '你好')
+}
+```
+
+Vue.js与vue.runtime.xxx.js区别？
+
+> 1. **vue.runtime.xxx.js**是精简版的vue 不包含模板解析器
+> 2. vue.js是是完整版vue。包含核心功能+模板解析器
+>
+> vue: 344KB
+>
+> vue.runtime.esm.js:  229KB
+>
+> 由于vue.runtime.xx.js没有模板解析器，所以不能使用template配置项，需要使用render函数接收到的createElement函数去指定具体内容
+>
+> 模板语法->抽象语法树AST->渲染函数(h函数)->虚拟dom->UI
 
 
 

@@ -1,4 +1,4 @@
-### 1.postman
+### postman
 
 - 打开manage enviroments
 
@@ -30,7 +30,15 @@
   | Content-Type | application/json |
   
 
-### 2.vue.config.js
+### 初始化项目
+
+```shell
+npm install @vue/cli -g
+```
+
+
+
+### vue.config.js
 
 ```javascript
 module.exports = {
@@ -49,7 +57,7 @@ module.exports = {
 }
 ```
 
-### 3.引入element-ui
+### 引入element-ui
 
 ```shell
 npm i element-ui -S
@@ -136,7 +144,7 @@ Vue.use(ElementUI, { size: 'small', zIndex: 3000 })
   this.$refs.autoComplete.activated = true;
   ```
 
-### 4.pug
+### pug
 
 ```powershell
 npm install pug pug-loader pug-plain-loader -D
@@ -152,7 +160,7 @@ npm install pug pug-loader pug-plain-loader -D
 </template>
 ```
 
-### 5.全局scss
+### 全局scss
 
 1. 在`vue.config.js`中配置(见标题2)
 
@@ -162,7 +170,7 @@ npm install pug pug-loader pug-plain-loader -D
    @import "~@/styles/common.scss";
    ```
 
-### 6.常用utils
+### 常用utils
 
 ```javascript
 '123456'.replace(/(?=(?!\b)(\d{3})+$)/g,',') // '123,456'
@@ -183,7 +191,7 @@ SEO
 
 SSR(服务端渲染) vue-server-render - renderToString方法
 
-### 7.d3.js
+### d3.js
 
 https://www.d3js.org.cn/document/d3-hierarchy/
 
@@ -515,11 +523,11 @@ d3.select('#trs')
 
    直接文档：https://www.it1352.com/OnLineTutorial/d3js/d3js_animation.html
 
-### 8.lodash
+### lodash
 
 https://www.lodashjs.com/docs/lodash
 
-### 9.vue3
+### vue3
 
 ```powershell
 npm install vue/@next
