@@ -187,6 +187,25 @@ p:not(:last-child) {
 
 - inherit-继承的属性
 
+#### 5.BFC
+
+(block formate context) 块级格式化上下文
+
+> + 它是一个独立的渲染区域，它规定了内部的block-level的盒子如何布局,并且与这个区域的外部不相干
+> + 具体的布局规则有:
+>   1. 内部的Box会在垂直方向一个接一个的放置
+>   2. Box垂直方向的距离由margin决定。属于同一个BFC的相邻的两个Box margin会发生重叠(按照最大的margin计算)
+>   3. 每个元素的margin box左边, 与包含块border box左边相接触
+>   4. BFC的区域不会与float box重叠
+>   5. BFC就是页面上的一个隔离的独立容器,容器里的子元素不会影响到外面的元素。
+
+以下情形会触发BFC:
+
+- float属性不为none
+- position设置为fixed或者absolute
+- display属性设置为inline-block/flex/inline-grid/inline-table/table...
+- overflow不为visible
+
 
 
 ### H5
@@ -2404,6 +2423,47 @@ CSRF Token
 ### 常问题目
 
 #### 1.说一下dns 预解析的过程？
+
+- DNS(Domain Name System) 域名系统,是域名和IP相互映射的一个分布式数据库。DNS查询就是把对应的域名转换为IP的过程
+
+- 当浏览器访问一个域名的时候，需要解析一次DNS,获得对应的IP。在解析过程中按照:
+
+  浏览器缓存->系统缓存->路由器缓存->运营商缓存->根域名服务器、顶级域名服务器、主域名服务器的顺序，逐步读取缓存，直到拿到IP地址
+
+前端优化：
+
+> DNS Prefetch,即DNS解析就是根据浏览器的规则，提前解析之后可能会用到的域名，使解析结果缓存到系统缓存中,缩短DNS解析时间，提高网站访问速度
+>
+> DNS的优化有2点：
+>
+> 1.减少DNS请求次数
+>
+> 2.DNS预解析
+>
+> - 隐式DNS Prefetch
+>
+>   > 当前页面中不在当前域名的其他域进行预获取，并且缓存结果
+>   >
+>   > 如下是https开启隐式DNS Prefetch
+>   >
+>   > ```html
+>   > <meta http-equiv="x-dns-prefetch-control" content="on">
+>   > <!-- 关闭
+>   > <meta http-equiv="x-dns-prefetch-control" content="off">
+>   > -->
+>   > ```
+>   >
+>   > 
+>
+> - 显式DNS Prefetch
+>
+>   > 当前页面没有出现的其他域，如下
+>
+> ```html
+> <link rel="dns-prefetch" href="//img.xxxx.com">
+> ```
+>
+> 
 
 #### 2.WeakMap 和 Map 了解吗? 说下他们的区别？
 
