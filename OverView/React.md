@@ -545,6 +545,26 @@ ReactDOM.render(<Com/>, app) 之后发生了什么
 
 2. 组件被称为"状态机"，通过更新组件的state来更新对应的页面显示(重新渲染组件)
 
+3. state不可直接更改
+
+   > this.state.name='xxx'
+   >
+   > 应该改为：
+   >
+   > this.setState({
+   >
+   > ​	name: 'xxx'
+   >
+   > })
+
+   注意：
+
+   1. 组件中render函数中的this为组件实例对象
+   2. 组件自定义方法中的this为undefined，如何解决？
+      - 强制绑定this
+      - 箭头函数
+   3. 状态数据需要用setState修改
+
    ```jsx
    class Weather extends React.Component {
      // 构造器调用1次
@@ -579,6 +599,24 @@ ReactDOM.render(<Com/>, app) 之后发生了什么
    ```
 
 ##### 4.3.2props
+
+原生展开运算符是不能展开对象的，
+
+直接(...obj)会报错 //o is not iterable
+
+包裹一对{}就能实现克隆对象 var b =  {...obj} 语法结构
+
+react+babel做了处理 可以使用...obj,仅用于标签中传值
+
+```js
+ let p = { name: 'kobe', age: 45 }
+ ReactDOM.render(<Com {...p} speak={speak}/>, app)
+ 
+ //赋值的时候会修改
+ var person = {name:'aaa',age:9}
+ //合并的动作
+ var p1 = {...person, name: 'bbb'} //{name: 'bbb', age: 9}
+```
 
 解释：
 

@@ -45,6 +45,7 @@
       }
       // ReactDOM.render(<Com name="kobe" age="45" />, app)
       let p = { name: 'kobe', age: 45 }
+      //标签属性
       ReactDOM.render(<Com {...p} speak={speak}/>, app)
       // react + babel可以允许...p这种写法
       function speak() {
