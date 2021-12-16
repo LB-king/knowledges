@@ -8,14 +8,15 @@
   </head>
   <body>
     <script>
-      //找出字符串中连续相等次数最多的字符
       /* 
+      1.找出字符串中连续相等次数最多的字符
+      AABBSDDJDJDJDJCCCC ->C4
        i = 0,
        j = 1
         + 如果i和j指向的字一样，那么i不动j后移
         + 如果i和j指向的字不一样，那么说明他们之间的字都是连续相同的，让i追上j，j继续增加
     */
-      var str = 'aaaaabaabbbbcccdddfdddddjdd'
+      var str = 'AABBSDDJDJDJDJCCCC'
       function getMostLetter(str) {
         var len = str.length,
           i = 0,
@@ -38,6 +39,25 @@
       }
 
       console.log(getMostLetter(str))
+      /* 
+        2.压缩字符串'AAABBCCC' => 'a6b5c4a1'
+      */
+      function compressStr(str) {
+        var i = 0,
+          j = 1
+        var res = ''
+        while (j <= str.length) {
+          if (str[i] !== str[j]) {
+            res += str[i] + (j - i)
+            i = j
+          } else {
+            j++
+          }
+        }
+        return res
+      }
+
+      console.log(compressStr('AAABBCCC'))
     </script>
   </body>
 </html>
