@@ -2458,12 +2458,11 @@ CSRF Token
 > - 显式DNS Prefetch
 >
 >   > 当前页面没有出现的其他域，如下
+>   
+>   ```html
+>   <link rel="dns-prefetch" href="//img.xxxx.com">
+>   ```
 >
-> ```html
-> <link rel="dns-prefetch" href="//img.xxxx.com">
-> ```
->
-> 
 
 #### 2.WeakMap 和 Map 了解吗? 说下他们的区别？
 
