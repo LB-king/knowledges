@@ -16,6 +16,7 @@
     <div id="app">
       <div id="demo"></div>
     </div>
+    <!-- 此处一定写babel -->
     <script type="text/babel">
       const name = 'baseName'
       const list = ['React', 'Vue', 'Angular']
@@ -24,6 +25,7 @@
         age: 9
       }
       // 此处 不要加引号
+      //1.创建虚拟dom的方式一，JSX让编码人员更加便捷的创建虚拟dom
       const VDOM = (
         <div>
           <h1 id="main">hello react</h1>
@@ -33,7 +35,9 @@
           </h4>
           <h4>列表渲染</h4>
           <ul>
-            <li>{list}</li>
+            {list.map(item => {
+              return <li key={item}>{item}</li>
+            })}
           </ul>
         </div>
       )
@@ -43,6 +47,7 @@
       ReactDOM.render(VDOM, document.getElementById('app'))
     </script>
     <!-- <script type="text/javascript">
+     //2.创建虚拟dom的方式二
     var VDOM = React.createElement('h1', {
       id: 'title',
     }, 'hello,react')

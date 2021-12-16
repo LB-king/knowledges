@@ -326,7 +326,7 @@ vscode中jsx语法标签自动闭合：
 
 3. babel.min.js  下载地址：  https://github.com/babel/babel-standalone/releases
 
-   作用：
+   babel的作用：
 
    > 1. es6 => es5
    > 2. jsx => js
@@ -388,14 +388,14 @@ vscode中jsx语法标签自动闭合：
 - jsx的语法规则：
 
   - 定义虚拟dom时，不要加引号
-  - 标签中混入js表达式时要加{}
-  - 样式的类名不要用class，要用className
-  - 内联样式要用对象的写法 `style={{color: 'red'}}`
+  - 标签中混入js表达式时要加`{}`
+  - 样式的类名不要用`class`，要用`className`
+  - 内联样式要用对象的写法 `style={{color: 'red',fontSize:'30px'}}`
   - 只有一个根标签
   - 标签必须闭合
   - 标签首字母
-    - 小写字母：将标签转化为html同名元素，若html中无该标签对应的同名标签，则报错
-    - 大写：react就去渲染对应的组件，若无则报错
+    - 小写字母：将标签转化为`html`同名元素，若`html`中无该标签对应的同名标签，则报错
+    - 大写：`react`就去渲染对应的组件，若无则报错
 
   ```jsx
   const VDOM = (<div>
@@ -476,6 +476,7 @@ ReactDOM.render(<Com/>, app) 之后发生了什么
 
 ```jsx
 class MyCom extends React.Component {
+  //render放在哪里？--类MyCom的原型对象上，供实例使用
   render() {
     //this ->组件实例对象  props  refs  state
     return <h3>类组件</h3>
@@ -509,6 +510,10 @@ ReactDOM.render(<Com/>, app) 之后发生了什么
     constructor(name) {
       this.name = name
     }
+    // 一般方法-放在类的原型对象上，供实例使用
+    run() { 
+      console.log(this.name)
+    }
     // 给car的实例对象添加一个属性，名a 值333
     a = 333
     // 类自身添加属性
@@ -516,9 +521,20 @@ ReactDOM.render(<Com/>, app) 之后发生了什么
     	bg: 'red'
     }
   }
-  
+  //创建一个Car1类继承Car
+  class Car1 extends Car {
+    //如果A类继承B类，且A类中写了构造器，那么A类中的**super**是必须调用的
+    constructor(name, age) {
+      super(name)
+      this.age = age
+    }
+    //重写父类的run方法
+    run() { 
+      console.log(this.name)
+    }
+  }
   ```
-
+  
   
 
 #### 4.3组件三大核心属性

@@ -1839,7 +1839,7 @@ Vue.js与vue.runtime.xxx.js区别？
 >
 > 模板语法->抽象语法树AST->渲染函数(h函数)->虚拟dom->UI
 
-
+#### 5.this.$set和Vue.set的理解
 
 
 
