@@ -17,7 +17,7 @@
     <script type="text/babel">
       class Count extends React.Component {
         constructor(props) {
-          console.log('Count-constructor')
+          console.log('1---Count-constructor')
           super(props)
           this.state = {
             count: 0
@@ -39,11 +39,11 @@
         }
         //组件即将挂载
         componentWillMount() {
-          console.log('Count-componentWillMount')
+          console.log('2---Count-componentWillMount')
         }
         //组价挂载完
         componentDidMount() {
-          console.log('Count-componentDidMount')
+          console.log('4---Count-componentDidMount')
         }
         //组件卸载之前
         componentWillUnmount() {
@@ -51,19 +51,19 @@
         }
         //控制组件更新的阀门,默认返回值为true
         shouldComponentUpdate() {
-          console.log('Count-shouldComponentUpdate')
+          console.log('update---1---Count-shouldComponentUpdate')
           return true
         }
         //组件将要更新
         componentWillUpdate() {
-          console.log('Count-componentWillUpdate')
+          console.log('update---2---Count-componentWillUpdate')
         }
         //组件更新完毕
         componentDidUpdate() {
-          console.log('Count-componentDidUpdate')
+          console.log('update---3---Count-componentDidUpdate')
         }
         render() {
-          console.log('Count-render')
+          console.log('3---Count-render')
           let { count } = this.state
           return (
             <div>

@@ -798,9 +798,11 @@ ReactDOM.render(<Com />, app)
 >
 > 1.组件从创建到销毁会经历一些特定的阶段
 >
-> 2.react组件中包含一系列钩子函数(生命周期函数)，会在特定的时间调3.用
+> 2.react组件中包含一系列钩子函数(生命周期函数)，会在特定的时间调用
 >
-> 我们在定义组件时，会在特定的生命周期回调函数中做特定的事
+> 3.我们在定义组件时，会在特定的生命周期回调函数中做特定的事
+>
+> 目前接触的钩子执行顺序:**render->componentDidMount->componentWillUnmount**
 
 ```jsx
 class Life extends React.Component {
@@ -829,7 +831,7 @@ class Life extends React.Component {
 
 - forceUpdate: 强制更新会触发  
 
-  componentWillUpdate->render->omponentDidUpdate
+  componentWillUpdate->render->componentDidUpdate
 
   ```jsx
   this.forceUpdate()
@@ -920,6 +922,10 @@ ReactDOM.render(<AAA />, app)
 
   以上钩子需要加`UNSAFE_`
 
+  react团队在设计异步渲染-过时的组件生命周期往往会带来不安全的编码实践。
+  
+  > 这3个生命周期钩子经常被误解和滥用；此外，他们预计，在异步渲染中，它们潜在的误用可能更大。因此在最近的版本中为这些生命周期钩子加了`UNSAFE_`前缀，并不是指安全性，而是表示在react的未来版本中更有可能出现bug
+  
   ![](/img/react-生命周期(新).png)
 
 和旧的钩子区别：
