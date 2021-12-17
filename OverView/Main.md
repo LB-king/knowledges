@@ -1425,7 +1425,28 @@ setTimeout:
 
 ![](\img\变量提升.png)
 
+创建变量有6种方式：`var let const class function import`
 
+##### 1.let/const/var的区别？
+
+> 1. let和const不存在变量提升机制，只有var和function存在
+>
+> 2. 带var和不带var的区别？(在全局作用域下)
+>
+>    带var：全局作用域下声明变量a,但是在全局下声明变量，也相当于给window增加了一个对应的属性(只有在全局作用域才具备这个特点)
+>
+>    不带var：相当于给全局对象window添加一个属性
+>
+>    a = 10 // window.a = 10
+>
+>    
+
+```js
+console.log(a)
+let a = 9 // Uncaught ReferenceError: Cannot access 'a' before 
+var a = 9 // undefined
+a = 9 // Uncaught ReferenceError: a is not defined
+```
 
 
 
