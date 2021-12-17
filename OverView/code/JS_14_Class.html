@@ -15,31 +15,42 @@
         + class中定义的方法，已经在局部开启了严格模式
         + 自身添加属性
       */
-      class Animal {
-        constructor(name) {
-          this.name = name
-        }
-        speak() {
-          console.log(this.age)
-        }
-      }
-
-      class Cat extends Animal {
+      class Person {
         constructor(name, age) {
-          super()
+          this.name = name
           this.age = age
+          // this.speak = function () {
+          //   console.log('我是直接挂载到实例对象', this.name, this.age)
+          // }
         }
-        score = 12
-        //类自身添加属性
-        static color = {
-          bg: 'red'
+        //这种也是挂载到实例对象，和在constructor内部定义的效果一样
+        speak = () => {
+          console.log('我是直接挂载到实例对象', this.name, this.age)
+        }
+        //这个方法是挂载到实例对象的原型上
+        speak() {
+          console.log('我是挂载到原型上的方法', this.name, this.age)
         }
       }
-      var dog = new Animal('wangcai')
-      dog.speak()
-
-      var cat = new Cat('TOM', 17)
-      cat.speak()
+      class Student extends Person {
+        //如果写了构造器，则需要添加super，否则会报错
+        constructor(...p) {
+          super(...p)
+        }
+        //这个属性直接挂载到实例对象
+        newP = 'xxx'
+        //类自身添加属性
+        static staticValue = 'xyz'
+      }
+      //类自身添加属性,可以用static的方式去写
+      Student.defValue = 'UUU'
+      var stu = new Student('学生A', 16)
+      stu.speak()
+      console.dir(Student)
+      console.log(stu)
+      /*  var p1 = new Person('jerry', 33)
+      console.log(p1)
+      p1.speak() */
     </script>
   </body>
 </html>

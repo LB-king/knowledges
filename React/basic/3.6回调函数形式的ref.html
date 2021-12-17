@@ -14,39 +14,55 @@
 
   <body>
     <div id="app"></div>
+    <!-- 实现一个小案例，使用回调ref的形式 -->
+
     <script type="text/babel">
       class Demo extends React.Component {
         state = {
-          list: ['AAA', 'BBB', 'CCC']
+          name: '123'
         }
-        showData = () => {
-          let { input1 } = this.state
-          console.log(input1.value)
+        show = () => {
+          // alert(110)
+          //在更新页面的时候，内联形式的ref会调用2次，第一次传入的是null，第二次才是dom
+          this.setState({
+            name: 'xxx'
+          })
         }
-        blurData = () => {
-          let { input1, input2 } = this.state
-          input1.value = ''
-          console.log(input2.value)
+
+        getLeftInput = () => {
+          console.log('前面的输入框的值是:', this.input1.value)
+        }
+        getRightInput = () => {
+          console.log('前面的输入框的值是:', this.input2.value)
+        }
+        getInput2 = (v) => {
+          console.log('###',v)
+          this.input2 = v
         }
         render() {
-          let ul = this.state.list.map((item, index) => {
-            return <li key={index}>{item}</li>
-          })
+          console.log('render', this)
+          let { name } = this.state
           return (
             <div>
+              <p>{name}</p>
+              <button onClick={this.show}>点击修改页面的name</button> &nbsp;
+              {/*调用了后面的函数, node就是这个ref绑定的元素,这种内联回调的形式在更新过程中会执行2次*/}
               <input
-                ref={(currentNode) => (this.state.input1 = currentNode)}
                 type="text"
                 placeholder="请输入"
+                ref={(node) => {
+                  console.log('@@', node)
+                  this.input1 = node
+                }}
               />
-              <button onClick={this.showData}>点击提示左侧数据</button>
-              <input
-                ref={(currentNode) => (this.state.input2 = currentNode)}
-                onBlur={this.blurData}
-                type="text"
-                placeholder="失去焦点触发"
-              />
-              <ul>{ul}</ul>
+              &nbsp;
+              <button onClick={this.getLeftInput}>
+                点击获取前面输入框的内容
+              </button>
+              <input type="text" placeholder="请输入" ref={this.getInput2}/>
+              <button onClick={this.getRightInput}>
+                点击获取前面输入框的内容
+              </button>
             </div>
           )
         }
