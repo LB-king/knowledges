@@ -1560,7 +1560,7 @@ Function.prototype.myBind = function(obj, ...params) {
 
 ### Vue2
 
-#### 1.Object.defineProperty
+#### Object.defineProperty
 
 ```js
 Object.defineProperty(obj, 'name', {
@@ -1595,7 +1595,11 @@ Object.defineProperty(obj, key) {
 }
 ```
 
-#### 2.虚拟dom和diff算法
+#### mustachhe模板引擎
+
+数据变为视图最优雅的解决方案
+
+#### 虚拟dom和diff算法
 
 什么是虚拟dom？
 
@@ -1777,7 +1781,7 @@ vnode1.key === vnode2.key && vnode1.sel === vnode2.sel
 
 
 
-#### 3.AST语法解析
+#### AST语法解析
 
 > ATS(abstract syntax code) 抽象的语法code
 > 模板语法-> 抽象语法树AST(通过抽象语法树进行过渡，让编译工作变得简单) -> 正常的HTML语法
@@ -1843,7 +1847,7 @@ var str = 'aaaaaaabbccccccddddd'
 
 
 
-#### 4.render
+#### render
 
 ```js
 import Vue from 'vue' //这种方式引入的是dist/vue.runtime.esm.js，在vue源码根目录的package.json配置的module字段
@@ -1882,7 +1886,7 @@ Vue.js与vue.runtime.xxx.js区别？
 >
 > 模板语法->抽象语法树AST->渲染函数(h函数)->虚拟dom->UI
 
-#### 5.this.$set和Vue.set的理解
+#### this.$set和Vue.set的理解
 
 
 
@@ -2531,7 +2535,7 @@ CSRF Token
 
 #### 5.谈谈闭包？
 
-#### 6.AMD和CMD区别？
+#### 6.AMD和CMD和UMD？
 
 
 
