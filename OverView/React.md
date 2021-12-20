@@ -825,7 +825,7 @@ class Life extends React.Component {
 
 #### 6.1生命周期流程图(旧)
 
-![](/img/react-生命周期(旧).png)
+![](\img\React_生命周期(旧).png)
 
 - setState: 更新状态
 
@@ -926,7 +926,7 @@ ReactDOM.render(<AAA />, app)
   
   > 这3个生命周期钩子经常被误解和滥用；此外，他们预计，在异步渲染中，它们潜在的误用可能更大。因此在最近的版本中为这些生命周期钩子加了`UNSAFE_`前缀，并不是指安全性，而是表示在react的未来版本中更有可能出现bug
   
-  ![](img/react-生命周期(新).png)
+  ![](\img\React_生命周期(新).png)
 
 和旧的钩子区别：
 
@@ -949,7 +949,7 @@ ReactDOM.render(<AAA />, app)
 
 2. 更新阶段
 
-   - getDerivesStateFromProps()
+   - getDerivesStateFromProps()
    - shouldComponentUpdate()
    - render()
    - getSnapshotBeforeUpadate()
@@ -988,7 +988,7 @@ ReactDOM.render(<AAA />, app)
   
   ```
 
-  ![](E:/codeSpace/knowledges/OverView/img/不用index作为key.png)
+  ![](/img/不用index作为key.png)
 
 ### 	8.react脚手架
 
@@ -1025,7 +1025,7 @@ ReactDOM.render(<AAA />, app)
 
 2. 样式的模块化
 
-   ![react_组件](img/react_组件.png)
+   ![React_组件](img/React_组件.png)
 
 - 可以将样式名称改为：`index.module.css`
 
@@ -1788,7 +1788,7 @@ module.exports = override(
 
 图片示意
 
-![redux-原理](img/redux-原理.png)
+![redux-原理](img/Redux_原理.png)
 
 reducer初始化状态&加工状态
 
@@ -1903,7 +1903,7 @@ https://blog.csdn.net/Sitaigu/article/details/119223742
 
 #### 16.5完整案例
 
-![redux完整版](/img/redux完整版.png)
+![redux完整版](/img/Redux完整版.png)
 
 constant.js
 
@@ -1972,7 +1972,7 @@ action:
 
 ### 17.react-redux
 
-![](E:\codeSpace\knowledges\OverView\img\react-redux模型图.png)
+![](\img\React_redux模型图.png)
 
 #### 17.1基本使用
 

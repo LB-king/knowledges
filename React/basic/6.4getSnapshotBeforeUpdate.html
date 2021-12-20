@@ -50,7 +50,13 @@
           return this.listDom.scrollHeight
         }
         componentDidUpdate(preProps, preState, height) {
-          this.listDom.scrollTop += this.listDom.scrollHeight - height
+          // this.listDom.scrollTop += this.listDom.scrollHeight - height
+          //原先的滚动高度
+          let h1 = this.listDom.scrollTop
+          //新的高度-更新之前的高度=增加的滚动高度
+          let scrollH = this.listDom.scrollHeight - height
+          //重新设置scrollTop的值
+          this.listDom.scrollTop = h1 + scrollH
         }
         getList = (list) => {
           this.listDom = list
