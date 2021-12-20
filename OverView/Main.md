@@ -1431,7 +1431,7 @@ setTimeout:
 
 > 1. let和const不存在变量提升机制，只有var和function存在
 >
-> 2. 带var和不带var的区别？(在全局作用域下)
+>    (在全局作用域下)
 >
 >    带var：全局作用域下声明变量a,但是在全局下声明变量，也相当于给window增加了一个对应的属性(只有在全局作用域才具备这个特点)
 >
@@ -1439,7 +1439,35 @@ setTimeout:
 >
 >    a = 10 // window.a = 10
 >
->    
+> 2. var可以重复声明变量,let和const不行
+>
+>    浏览器会校验当前作用域中是否已经存在这个变量了，如果存在了,则再次基于let重新声明就会报错
+
+**在浏览器开辟栈内存供代码自上而下执行之前，不仅有变量提升的操作，还有很多其他的操作=>"词法解析"或者"词法检查"(就是检查当前即将要执行的代码是否会出现语法错误,如果出现错误，代码将不会再执行)**
+
+说出以下代码的执行结果？？
+
+```js
+console.log(a)
+let a = 12
+console.log(a)
+let a = 13
+console.log(a)
+//Uncaught SyntaxError: Identifier 'a' has already been declared
+//直接报语法错误
+```
+
+SyntaxError===>语法错误
+
+ReferenceError===>引用错误
+
+```js
+console.log(1) //1
+console.log(a) //Uncaught Ref
+
+```
+
+
 
 ```js
 console.log(a)
