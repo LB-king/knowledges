@@ -1319,6 +1319,16 @@ Promise.race
 Promise.finally
 ```
 
+```js
+class myPromise {
+  
+}
+var p1 = newPromise()
+p1.then((resolve, reject) => {
+  
+})
+```
+
 
 
 #### 13.class
@@ -1463,8 +1473,8 @@ ReferenceError===>引用错误
 
 ```js
 console.log(1) //1
-console.log(a) //Uncaught Ref
-
+console.log(a) //Uncaught ReferenceError: a is not defined
+let a = 9
 ```
 
 
@@ -1474,6 +1484,21 @@ console.log(a)
 let a = 9 // Uncaught ReferenceError: Cannot access 'a' before 
 var a = 9 // undefined
 a = 9 // Uncaught ReferenceError: a is not defined
+```
+
+题目:
+
+```js
+fn()
+function fn() {console.log(1)}
+fn()
+function fn() {console.log(2)}
+var fn = function() {console.log(3)}
+fn()
+function fn() {console.log(4)}
+fn()
+function fn() {console.log(5)}
+fn()
 ```
 
 
@@ -2565,7 +2590,7 @@ CSRF Token
 
 #### 6.AMD和CMD和UMD？
 
-
+应用加壳
 
 
 

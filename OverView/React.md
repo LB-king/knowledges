@@ -989,6 +989,14 @@ ReactDOM.render(<AAA />, app)
   ```
 
   ![](/img/不用index作为key.png)
+  
+  使用index作为key可能会引发的问题：
+  
+  ①对数据进行逆序添加、逆序删除等破坏顺序的操作，会产生没必要的真实dom更新
+  
+  ②如果结构中有输入类的元素：会产生错误的更新
+  
+  ③不涉及数据操作，没有逆序添加的额，使用index作为唯一标识还是可以的
 
 ### 	8.react脚手架
 
@@ -1015,7 +1023,7 @@ ReactDOM.render(<AAA />, app)
    <!-- %PUBLIC_URL% 代表public文件夹的路径 -->
    <link rel="icon" href="%PUBLIC_URL%favicon.ico"/>
    <!-- 用于配置浏览器页签 + 地址栏的颜色(仅支持安卓手机浏览器) -->
-   <meta name="them-color" content="#ccc" />
+   <meta name="theme-color" content="#ccc" />
    <!--  用于指定网页添加到手机主屏幕的图标-->
    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png"/>
    <!--  应用加壳时的配置文件 -->
