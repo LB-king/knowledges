@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>变量提升</title>
+  </head>
+  <body>
+    <script>
+      // console.log(a)
+      // var a =10
+      //let a = 10  //Uncaught ReferenceError: Cannot access 'a' before initialization
+      //a = 10 // Uncaught ReferenceError: a is not defined 给window添加属性=>window.a = 10
+
+      // var b = 99
+      // console.log(b)
+      // console.log(window.b)
+
+      /*
+       * 全局作用域
+       *   + 变量提升
+       *   + 无论条件成不成立，都会进行变量提升
+       *   var a;
+       *  connsole.log(a)
+       *   条件不陈立
+       *   connsole.log(a)
+       *
+       */
+      console.log(a) //undefined
+      if (!'a' in window) {
+        var a = 13
+      }
+      console.log(a) //undefined
+
+      /*
+       * 全局作用域
+       *   1.变量提升(函数有特殊性：虽然在老版本的浏览器中,无论条件成立与否,函数都会提前声明或者定义的；但是在新版本的浏览器中只会提前声明,当条件成立时，会优先把函数赋值，然后执行条件中的代码)
+       *     var fn;
+       *   2.代码执行
+       */
+      /* 
+        fn() //fn is not a function
+        if('fn' in window) {
+          function fn() {
+            console.log('BLOCK')
+          }
+        }
+        fn() 
+      */
+
+      /* 
+        自执行函数：
+          +function(){}{}
+          ~function(){}{}
+          -function(){}{}
+          !function(){}{}
+        自执行函数本身不会执行变量提升(没名字)
+
+      */
+      f = function () {
+        return true
+      } //window.f=function...
+      g = function () {
+        return false
+      } //window.g=function...
+      ~(function () {
+        //私有作用域
+        //内部进行变量提升.函数g提升了，但是还没赋值，因此报错了额 : g is not a function
+        if (g() && [] == ![]) {
+          f = function () {
+            return false
+          }
+          function g() {
+            return true
+          }
+        }
+      })()
+
+      console.log(f())
+      console.log(g())
+    </script>
+  </body>
+</html>

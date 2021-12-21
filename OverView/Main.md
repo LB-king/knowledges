@@ -1452,6 +1452,8 @@ setTimeout:
 > 2. var可以重复声明变量,let和const不行
 >
 >    浏览器会校验当前作用域中是否已经存在这个变量了，如果存在了,则再次基于let重新声明就会报错
+>    
+> 3. let能解决typeof 出现的暂时性死区的问题
 
 **在浏览器开辟栈内存供代码自上而下执行之前，不仅有变量提升的操作，还有很多其他的操作=>"词法解析"或者"词法检查"(就是检查当前即将要执行的代码是否会出现语法错误,如果出现错误，代码将不会再执行)**
 
@@ -1499,6 +1501,46 @@ function fn() {console.log(4)}
 fn()
 function fn() {console.log(5)}
 fn()
+```
+
+```js
+fn() 
+if('fn' in window) {
+  function fn() {
+    console.log('BLOCK')
+  }
+}
+fn() 
+```
+
+```js
+f = function () { return true } 
+g = function () { return false }
+~(function () {
+  if (g() && [] == ![]) {
+    f = function () {
+      return false
+    }
+    function g() {
+      return true
+    }
+  }
+})()
+console.log(f())
+console.log(g())
+```
+
+##### 2.暂时性死区
+
+```js
+//console.log(a) //Uncaught ReferenceError: a is not defined
+//console.log(typeof a) //undefined 浏览器的bug，暂时性死区，本应该是报错的
+```
+
+```js
+console.log(typeof a) // Uncaught ReferenceError: Cannot access 'a' before initialization
+let a
+//通过词法解析，修改了这个bug
 ```
 
 
