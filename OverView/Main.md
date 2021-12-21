@@ -1568,11 +1568,13 @@ var a = 12,
 function fn() {
   console.log(a, b)
   var a = b = 13
-  cconsole.log(a, b)
+  console.log(a, b)
 }
 fn()
 console.log(a, b)
 ```
+
+![](\img\JS_变量提升与作用域.png)
 
 题目:
 

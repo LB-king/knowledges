@@ -10,8 +10,38 @@
     <script>
       //console.log(a) //Uncaught ReferenceError: a is not defined
       //console.log(typeof a) //undefined 浏览器的bug，暂时性死区，本应该是报错的
-      console.log(typeof a) // Uncaught ReferenceError: Cannot access 'a' before initialization
-      let a
+      // console.log(typeof a) // Uncaught ReferenceError: Cannot access 'a' before initialization
+      // let a
+
+      /* console.log(a, b)
+      var a = 12,
+        b = 12
+      function fn() {
+        console.log(a, b)
+        var a = (b = 13)
+        console.log(a, b)
+      }
+      fn()
+      console.log(a, b) */
+
+      console.log(a, b, c)
+      var a = 12,
+        b = 13,
+        c = 14
+      function fn(a) {
+        console.log(a, b, c)
+        a = 100
+        c = 200
+        console.log(a, b, c)
+      }
+      b = fn(10)//会把函数先执行，结果再赋值给b
+      console.log(a, b, c)
+      /* 
+        undefined undefined undefined
+        10 13 14
+        100 13 200
+        12 undefined 200
+      */
     </script>
   </body>
 </html>
