@@ -1543,6 +1543,54 @@ let a
 //通过词法解析，修改了这个bug
 ```
 
+##### 3.私有栈内存中的变量处理
+
+```js
+var a = 10,
+    b = 20
+//等价于
+var a = 10;
+var b = 20;
+//=======================
+var m = n = 10;
+//等价于
+var m = 10;
+n = 10;//n不带var
+
+```
+
+题目：
+
+```js
+console.log(a, b)
+var a = 12,
+    b =12;
+function fn() {
+  console.log(a, b)
+  var a = b = 13
+  cconsole.log(a, b)
+}
+fn()
+console.log(a, b)
+```
+
+题目:
+
+```js
+console.log(a, b, c)
+var a = 12,
+    b = 13,
+    c = 14;
+function fn(a) {
+  console.log(a, b, c)
+  a = 100;
+  c = 200
+  console.log(a, b, c)
+}
+b = fn(10) 
+console.log(a, b, c)
+```
+
 
 
 

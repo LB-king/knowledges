@@ -1034,6 +1034,24 @@ ReactDOM.render(<AAA />, app)
 2. 样式的模块化
 
    ![React_组件](img/React_组件.png)
+   
+3. 根目录下的index.js(入口文件)
+
+   StrictMode:用来检查react中的语法
+
+   ```jsx
+   <React.StrictMode>
+   	<App></App>
+   </React.StrictMode>
+   ```
+
+4. 根目录 reportWebVitals
+
+   ```
+   reportWebVitals记录页面性能
+   ```
+
+   
 
 - 可以将样式名称改为：`index.module.css`
 
