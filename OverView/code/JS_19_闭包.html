@@ -12,6 +12,7 @@
       函数执行形成的私有栈内存，会把内存中所有的私有变量保护起来，和外面没有任何的关系=>函数的这种保护机制就是闭包。
       
       */
+      /* 
      var i = 5
      function fn(i) {
        return function (n) {
@@ -25,6 +26,21 @@
      fn(5)(6)
      f(7)
      console.log(i)
+      */
+      var i = 20
+      function fn() {
+        i -= 2
+        return function (n) {
+          console.log(++i - n)
+        }
+      }
+      var f = fn()
+      f(1)
+      f(2)
+      fn()(3)
+      fn()(4)
+      f(5)
+      console.log(i)
     </script>
   </body>
 </html>
