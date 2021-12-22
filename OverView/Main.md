@@ -1593,6 +1593,25 @@ b = fn(10)
 console.log(a, b, c)
 ```
 
+```js
+var n = 8
+function fn() {
+  var n = 6
+  function f() {
+    n--
+    console.log(n)
+  }
+  f()
+  return f
+}
+var x = fn()
+x()
+console.log(n)
+
+```
+
+
+
 #### 17.引出闭包
 
 函数执行形成的私有栈内存，会把内存中所有的私有变量保护起来，和外面没有任何的关系=>函数的这种保护机制就是闭包。
@@ -2035,7 +2054,21 @@ Vue.js与vue.runtime.xxx.js区别？
 
 #### this.$set和Vue.set的理解
 
+背景: 
 
+1.对象动态添加的属性并不会立即和视图关联
+
+```js
+this.$set(this.obj, 'name', 'xxxx')
+```
+
+2.数组通过下标改变数组内容，
+
+```js
+this.$set(this.arr, [0], 'xxxx')
+```
+
+原因：对象新增的属性或者数组下标修改的数据，并没有响应式处理
 
 
 
@@ -2630,7 +2663,7 @@ CSRF Token
 
 ### 常问题目
 
-#### 1.说一下dns 预解析的过程？
+#### 说一下dns 预解析的过程？
 
 - DNS(Domain Name System) 域名系统,是域名和IP相互映射的一个分布式数据库。DNS查询就是把对应的域名转换为IP的过程
 
@@ -2672,17 +2705,19 @@ CSRF Token
 >   ```
 >
 
-#### 2.WeakMap 和 Map 了解吗? 说下他们的区别？
+#### WeakMap 和 Map 了解吗? 说下他们的区别？
 
-#### 3.Lighthouse用过吗？
-
-#### 4.http1.0&1.1&2区别？
+#### Lighthouse用过吗？
 
 
 
-#### 5.谈谈闭包？
+#### http1.0&1.1&2区别？
 
-#### 6.AMD和CMD和UMD？
+
+
+#### 谈谈闭包？
+
+#### AMD和CMD和UMD？
 
 应用加壳
 
