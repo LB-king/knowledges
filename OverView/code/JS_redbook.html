@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>延时打印</title>
+  </head>
+  <body>
+    <script>
+      /* 
+      上来直接打印A
+      console.log('A') 2s
+      console.log('B') 2.5s
+      console.log('C') 3s
+      console.log('D') 4s
+    */
+      const task = [
+        { name: 'A', time: 1000 },
+        { name: 'B', time: 1500 },
+        { name: 'C', time: 3000 },
+        { name: 'D', time: 2000 }
+      ]
+      function loop(task, i = 0, j = 0) {
+        if (j === 0) {
+          console.log(task[0]['name'])
+        }
+        setTimeout(() => {
+          console.log(task[i]['name'])
+          i++
+          j++
+          if (i > 3) i = 0
+          loop(task, i, j)
+        }, task[i]['time'])
+      }
+
+      loop(task, 0, 0)
+    </script>
+  </body>
+</html>
