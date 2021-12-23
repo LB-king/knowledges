@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>promise</title>
+    <script src="./utils/utils.js"></script>
+  </head>
+  <body>
+    <script>
+      const PENDING = 'pending',
+        FULFILLED = 'fulfilled',
+        REJECTED = 'rejected'
+
+      class Promise1 {
+        constructor(excutor) {
+          //初始化状态
+          this.state = PENDING
+          //初始化正确的值
+          this.value = undefined
+          //原因也初始化一个
+          this.reason = undefined
+          let resolve = (value) => {
+            if (this.state === PENDING) {
+              this.state = FULFILLED
+              this.value = value
+            }
+          }
+
+          let rejected = (reason) => {
+            this.state = REJECTED
+            this.reason = reason
+          }
+          try {
+            excutor(resolve, rejected)
+          } catch (err) {
+            //可以抛出错误，也可以reject
+            throw new Error(err)
+          }
+        }
+        then(onFulfilled, onRejected) {
+          if (this.state === FULFILLED) {
+            onFulfilled(this.value)
+          }
+          //防错设置，保证onRejected有值
+          if (this.state === REJECTED && onRejected) {
+            onRejected(this.reason)
+          }
+        }
+      }
+      function fn() {
+        return new Promise1((resolve, reject) => {
+          resolve(10)
+        })
+      }
+      var p1 = fn()
+      p1.then(
+        (res) => {
+          console.log(res)
+        },
+        (err) => {
+          console.log(err)
+        }
+      )
+      // promise支持嵌套以及链式调用
+      /*  p1.then((res) => {
+        console.log(res)
+        return new Promise((resolve, reject) => {
+          resolve(
+            new Promise((resolve, reject) => {
+              resolve(
+                new Promise((resolve, reject) => {
+                  resolve(4444)
+                })
+              )
+            })
+          )
+        })
+      }).then((res) => {
+        console.log(res)
+      }) */
+    </script>
+  </body>
+</html>
