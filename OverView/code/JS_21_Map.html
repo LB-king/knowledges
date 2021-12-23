@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>map</title>
+  </head>
+  <body>
+    <script>
+      var myMap = new Map()
+      var myMap1 = new Map()
+      function fn() {
+        console.log(999)
+      }
+      var obKey = { ob: 'key' }
+      var obKey1 = { ob: 'key1' }
+      var flag = true
+      //普通对象的键值是对象的话，都转换成[object Object]
+      //数字会转换成字符串
+      var obj = {
+        1:'11',
+        '1':'1111',
+        name: 'kb',
+        [fn]: 'function',
+        [flag]: 'true',
+        [obKey]: 'obKey',
+        [obKey1]: 'obKey1'
+      }
+
+
+      
+      myMap.set('a', 'AAA')
+      myMap.set(true, 'BBB')
+      myMap.set(obj, 'obj')
+      myMap.set(fn, 'function')
+      console.log('obj', obj)
+      /*  Object.defineProperty(myMap, 'size', {
+        value: myMap['size'],
+        writable: true,
+        configurable: true,
+        // enumerable: true,
+      }) */
+      // myMap.delete('a') //删除a属性
+      console.log(myMap.has('a')) //true
+      console.log('myMap', myMap)
+      myMap1['a'] = 'AAA'
+      myMap1['b'] = 'BBB'
+      myMap1['c'] = 'CCC'
+
+
+      for(let i of myMap) {
+        console.log('myMap----key',i)
+      }
+      console.log(myMap1.has('a'))
+      console.log('myMap1', myMap1) //size是0
+
+      /* 
+        map和普通对象的区别？
+          + 键值的类型:任意值
+        普通对象：
+          + 一个Object 的键必须是一个 String 或是Symbol
+      */
+    </script>
+  </body>
+</html>

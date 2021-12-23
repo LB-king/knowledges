@@ -1702,8 +1702,27 @@ console.log(n)
    1. 保护-(私有变量和外界没有必然联系)
    2. 保存-(形成不销毁的栈内存，里面的私有变量等信息保存下来了)
 
-   题目：
+   应用：
 
+   1. jQuery-经典的类库
+   
+      为了防止全局变量污染(导入jq后，它里面有大量的方法，如果这些方法不保护起来，很容易和用户编写的方法产生冲突)
+   
+      ```js
+      $(function() {
+        //...为了减少全局的变量
+      })
+      ~function() {
+        //...
+        //window.xxx = xxx
+        return xxx 
+      }()
+      ```
+   
+      
+
+   题目：
+   
    ```js
    var i = 20
    function fn() {
@@ -1720,7 +1739,7 @@ console.log(n)
    f(5)
    console.log(i)
    ```
-
+   
    画图解题
 
 #### 手写系列
@@ -1836,7 +1855,7 @@ Function.prototype.myBind = function(obj, ...params) {
 ```js
 Object.defineProperty(obj, 'name', {
   // writable: true, //是否可写
-  // enumerable: true, //是否可以枚举,默认是false
+  // enumerable: true, //是否可以枚举,默认是false,设置为true的话，在控制台打印该属性会高亮
   // configurable: true, //可以被配置delete
   get() {
     console.log('正在访问obj的name属性')
