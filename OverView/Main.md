@@ -1301,7 +1301,18 @@ new Foo().getName() // 有参数new20，所以先执行new  (new Foo()).getName(
 
 #### 12.Promise
 
-> promise对象用于表示一个异步操作的最终完成(或失败)及其结果值
+> promise对象用于表示一个异步操作的最终完成(或失败)及其结果值-承诺模式-遗嘱模式
+>
+> new Promise([executor]):第一个执行函数必须传递，
+>
+> 1.new promise的时候就会把executor执行，创建一个promise实例。(executor是promise的一个回调函数，promise内部会把它执行)
+>
+> 2.不仅执行，还给executor传递2个参数(2个参数也是函数)
+>
+> 	+ resolve :它执行代表promise处理异步事件是成功的，把promise状态改成fulfilled
+> 	+ reject :它执行代表promise处理异步事件是失败的，把promise状态改成rejected
+>
+> 3.executor执行异步操作，任务成功执行resolve，任务失败执行reject
 >
 > 一个promise必然处于以下几种状态之一：
 >
@@ -1311,7 +1322,81 @@ new Foo().getName() // 有参数new20，所以先执行new  (new Foo()).getName(
 >
 > rejected - 已拒绝，意味着操作失败
 
-**promise源码：**
+**promise的三个方法：**
+
+1. then：向事件池中设置执行成功或者失败的方法
+
+   ```
+   p.then([success], [rejected])
+   p.then([success])
+   p.then(null,  [rejected])
+   ```
+
+2. catch：设置失败后执行的方法
+
+3. finally：设置不论成功还是失败都会执行的方法
+
+   参考try catch finally
+
+   ```js
+   try {
+     console.log(a)
+   } catch (e) {
+     console.log(e)
+   } finally {
+     console.log('try catch 中的finally')
+   }
+   ```
+
+执行THEN/CATCH/FINALLY返回的结果是一个全新的PROMISE实例，所以可以链式写下去，下一个THEN中哪个方法会执行，由上一个then中某个方法执行的结果来决定
+
+上一个THEN的返回值会传给下一个THEN的某个方法中
+
+```js
+let p2 = p1.then(
+  (res) => {
+    console.log('p2', res)
+    return res //THEN中return的结果相当于把这个新的PROMISE的VALUE值改为这个res
+  },
+  (err) => {
+    console.log('p2', err)
+    return err
+  }
+)
+let p3 = p2.then(
+  (res) => {
+    console.log('p3', res)
+  },
+  (err) => {
+    console.log('p3', err)
+  }
+)
+```
+
+r如果当前PROMISE实例的状态确定后，都会到对应的THEN中找方法，如果THEN中没有对应的这个方法，则会向下顺延
+
+```js
+new Promise((resolve, reject) => {
+    reject(-100)
+  }).then(res => {
+    console.log(res)
+  }).catch(err => {
+    console.log(err)
+  })
+```
+
+如果THEN中方法报错，catch也会捕获这个错误:执行报错，让.THEN创建的PROMISE实例变为失败状态，并且把报错信息修改为此PROMISE的VALUE值。
+
+```js
+.then(res => {
+    console.log(res1111)
+  }).catch(err => {
+    console.log(err) //ReferenceError: res1111 is not defined
+  })
+
+```
+
+
 
 ```js
 Promise.all

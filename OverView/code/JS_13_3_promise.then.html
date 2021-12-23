@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>promise.then基本使用</title>
+    <script src="./utils/utils.js"></script>
+  </head>
+  <body>
+    <script>
+      /*  var p1 = new Promise((resolve, reject) => {
+        setTimeout(() => {
+          var num = Math.random()
+          num < 0.5 ? reject('失败 =>' + num) : resolve('成功 =>' + num)
+        }, 0)
+      })
+      //then(onResolve, onReject)
+      let p2 = p1.then(
+        (res) => {
+          console.log('p2-res', res)
+          return res
+        },
+        (err) => {
+          console.log('p2-err', err)
+          return err
+        }
+      )
+      let p3 = p2.then(
+        (res) => {
+          console.log('p3-res', res)
+        },
+        (err) => {
+          console.log('p3-err', err)
+        }
+      )
+      console.log(p1)
+      console.log(p2) */
+      new Promise((resolve, reject) => {
+        // resolve(100)
+        reject(-100)
+      })
+        .then((res) => {
+          console.log(res)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+
+      new Promise((resolve, reject) => {
+        resolve(100)
+      })
+        .then((res) => {
+          console.log(res1111)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+
+      new Promise((resolve, reject) => {
+        resolve()
+      })
+        .then()
+        .catch((x) => {
+          console.log(1)
+        })
+        .then((x) => {
+          console.log(2)
+        })
+        .then((x) => {
+          console.log(3)
+        })
+        .catch((x) => {
+          console.log(4)
+        })
+        .then((a) => {
+          console.log('aaa')
+          console.log(aaa)
+        })
+        .catch()
+        .then(null, (x) => {
+          console.log(5)
+        })
+    </script>
+  </body>
+</html>

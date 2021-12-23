@@ -17,9 +17,41 @@
             =>reject函数：它执行代表promise处理的异步事件是失败的，把promise状态改为 rejected
       */
       var p1 = new Promise((resolve, reject) => {
-
+        setTimeout(() => {
+          var num = Math.random()
+          num < 0.5 ? reject('失败 =>' + num) : resolve('成功 =>' + num)
+        }, 0)
       })
-      console.log(p1)
+      console.log(p1) //PromiseState=>rejected    PromiseResult=>随机数小于0.5
+      //1.then方法--就是在异步任务执行的时候，把异步返回的结果先定义好
+      // 事件池:  成功的方法A  和失败的方法B
+      //当resolve和reject函数执行后，会通知事件池执行相应的操作。
+      p1.then(
+        (res) => {
+          //代表状态为fulfilled的res => [[PromiseResult]]
+          console.log(res)
+        },
+        (err) => {
+          //状态为rejected时执行
+          console.log(err)
+        }
+      )
+      //then里面不写第二个函数，可以使用catch捕获错误
+     /*  p1.catch((err) => {
+        console.log(err)
+      })
+
+      p1.finally(() => {
+        console.log('finally')
+      }) */
+
+      /* try {
+        console.log(a)
+      } catch (e) {
+        console.log(e)
+      } finally {
+        console.log('try catch 中的finally')
+      } */
     </script>
   </body>
 </html>
