@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>手写PROMISE</title>
+    <script src="./utils/utils.js"></script>
+  </head>
+  <body>
+    <script>
+      //定义三个状态
+      const PENDING = 'pending',
+        FULFILLED = 'fulfilled',
+        REJECTED = 'rejected'
+      class myPromise {
+        constructor(executor) {
+          //设置初始状态
+          this.status = PENDING
+          this.value = undefined
+          this.reason = undefined
+          //定义事件池
+          this.onFulfilledCallbacks = []
+          this.onRejectedCallbacks = []
+          //new PROMISE实例的时候会执行executor函数
+          const resolve = (value) => {
+            if (this.status === PENDING) {
+              this.status = FULFILLED
+              this.value = value
+              this.onFulfilledCallbacks.forEach((fn) => fn())
+            }
+          }
+          const reject = (reason) => {
+            if (this.status === PENDING) {
+              this.status = REJECTED
+              this.reason = reason
+              this.onRejectedCallbacks.forEach((fn) => fn())
+            }
+          }
+          //注意：原生promise源码并没有对异步的语法错误进行捕获
+          try {
+            executor(resolve, reject)
+          } catch (err) {
+            reject(err.message)
+          }
+        }
+        //then接收2个参数onFulfilled, onRejected,支持链式调用,则then返回的也是一个PROMISE
+        then(onFulfilled, onRejected) {
+          var p2 = new myPromise((resolve, reject) => {
+            let x
+            if (this.status === FULFILLED) {
+              x = onFulfilled(this.value)
+              //在这里需要判断X是普通值还是PROMISE,如果是普通值,直接resolve
+              
+            }
+            if (this.status === REJECTED) {
+              onRejected(this.reason)
+            }
+            //异步的时候，PROMISE的状态是PENDING,并不会等待,而是添加事件池，让PROMISE成功或者失败的时候执行
+            if (this.status === PENDING) {
+              this.onFulfilledCallbacks.push(() => {
+                onFulfilled(this.value)
+              })
+              this.onRejectedCallbacks.push(() => {
+                onRejected(this.reason)
+              })
+            }
+          })
+
+          return p2
+        }
+      }
+
+      var p1 = new myPromise((resolve, reject) => {
+        resolve('Resolve Success')
+        // resolve(a)
+        setTimeout(() => {
+          // resolve(a) 这种错误无法捕获
+          // resolve('Resolve Success after 1s')
+          // reject('Reject Success after 1s')
+        }, 10)
+      })
+      var p2 = p1.then(
+        (res) => {
+          console.log('p2---resolve: ', res)
+          // return new myPromise((r, j) => r(8888))
+          return 8888
+        },
+        (err) => {
+          console.log('p2---reject: ', err)
+        }
+      )
+      var p3 = p2.then(
+        (res) => {
+          console.log('p3---resolve: ', res)
+        },
+        (err) => {
+          console.log('p3---reject: ', err)
+        }
+      )
+    </script>
+  </body>
+</html>

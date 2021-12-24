@@ -1373,7 +1373,7 @@ let p3 = p2.then(
 )
 ```
 
-r如果当前PROMISE实例的状态确定后，都会到对应的THEN中找方法，如果THEN中没有对应的这个方法，则会向下顺延
+如果当前PROMISE实例的状态确定后，都会到对应的THEN中找方法，如果THEN中没有对应的这个方法，则会向下顺延
 
 ```js
 new Promise((resolve, reject) => {
@@ -1395,6 +1395,36 @@ new Promise((resolve, reject) => {
   })
 
 ```
+
+手写：
+
+> 1. 定义三个状态PENDING/FULFILLED/REJECTED
+>
+> 2. new Promise的时候执行executor函数，其中里面有2个参数(都是函数resolve, reject)
+>
+> 3. 定义resolve reject函数，只有在PROMISE状态是PENDING的时候才能走到这里，此时，将PROMISE的status改为 FULFILLED 或者 REJECTED
+>
+> 4. 定义THEN方法，里面接收2个函数，向事件池中添加处理成功或者失败的方法，当PROMISE的状态是FULFILLED => onFulfilled
+>
+>    REJECTED => onRejected
+>
+> 5. 考虑PROMISE中的异步，不会立即执行resolve或者reject，此时在then中也不闲着，定义两个事件池，收集事件：
+>
+>    onFulfilledCallbacks.push(() => onFulfilled(this.value))
+>
+>    onRejectedCallbacks.push(() => onRejectd(this.reason))
+>
+> 6. 等异步时机到了，触发resolve或者reject，此时调用事件池收集的方法
+>
+>    this.onFulfilledCallbacks.forEach((fn) => fn())
+>
+>    this.onRejectedCallbacks.forEach((fn) => fn())
+>
+> 7. **THEN可以链式调用，说明THEN返回的也是一个PROMISE,因此需要判断THEN里面2个方法执行的返回结果的类型，如果是PROMISE则返回，是普通值则需要把其包装成PROMISE**
+
+
+
+
 
 
 
