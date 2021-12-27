@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>valueOf和toString</title>
+  </head>
+  <body>
+    <script>
+      /* 
+        valueOf方法返回对象的原始值
+      */
+      // var arr = ['aa', 'bb', 'cc']
+      // console.log(arr.toString())
+      // console.log(arr.valueOf())
+      var obj = {
+        toString: function () {
+          console.log('调用了 obj.toString')
+          return 'kk'
+        },
+        valueOf: function () {
+          console.log('调用了 obj.valueOf')
+          return {}
+        }
+      }
+
+      /* 
+        转化规则: 如果这两个方法都改写了,优先查询valueOf方法,在valueOf()返回的是非原始值的情况下再去查询toString(),如果toAtring()返回的也不是原始值，那么就会报错
+      */
+      console.log(obj + 1)
+    </script>
+  </body>
+</html>

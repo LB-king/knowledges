@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>实现链式调用</title>
+  </head>
+  <body>
+    <script>
+      /* 
+        如何实现链式调用？
+        类似： p1.then().then().then()
+        add(1)(2)(3)
+      */
+      class Fn {
+        then() {
+          console.log('then被调用了')
+          console.log(this)
+          return this
+        }
+      }
+      var f = new Fn()
+      f.then().then()
+
+      console.log('----------')
+      class Fn1 {
+        then() {
+          console.log('then被调用了')
+          return new Fn1()
+        }
+      }
+      var f1 = new Fn1()
+      f1.then().then()
+
+      console.log('---------')
+      //实现add(1)(2)(3) => 6
+      function add() {
+        var args = Array.prototype.slice.call(arguments)
+        console.log(args)
+        
+      }
+      var s1 = add(1)
+      console.log(s1)
+    </script>
+  </body>
+</html>
