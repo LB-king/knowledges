@@ -1449,14 +1449,37 @@ p1.then((resolve, reject) => {
 #### 13.class
 
 - 类中的构造器不是必须要写的，要对实例进行一些初始化的操作，如添加指定属性时才写
+
 - 如果A类继承B类，且A类中写了构造器，那么A类中的**super**是必须调用的
+
+  ```js
+  class A extends B {
+    constructor(...p) {
+      super(...p)
+    }
+  }
+  ```
+
+  
+
 - 类中所定义的方法，都放在了类的原型对象上，供实例去使用
+
 - class中定义的方法，已经在局部开启了严格模式
+
 - 类中可以直接写赋值语句
+
 - 类自身添加属性
 
 ```js
 class Car {
+  constructor() {
+    //1.定义在类上的方法
+    this.t1 = () => {}
+  }
+  //1.定义在类上的方法
+  t2 = () => {}
+  //2.定义在类的原型上
+  t3() {}
   //类中可以直接写赋值语句，下面代码的含义是：给Car的实例对象添加一个属性，名为wheel，值是4
   wheel = 4
 //类自身添加属性
@@ -2431,7 +2454,119 @@ console.log(import.meta.env)
 
 ### React
 
+### Vite
+
+vue3+ts
+
+react+ts
+
 ### Webpack
+
+### Jest
+
+TDD 测试驱动开发
+
+1. 安装`jest`
+
+   ```shell
+   yarn add --dev jest
+   ```
+
+2. 安装babel
+
+   ```shell
+   yarn add --dev babel-jest @babel/core @babel/preset-env
+   ```
+
+3. 项目根目录创建`babel.config.js`
+
+   ```js
+   module.exports = {
+     presets: [['@babel/preset-env', {targets: {node: 'current'}}]],
+   };
+   ```
+
+4. 使用TS
+
+   ```shell
+   yarn add --dev @babel/preset-typescript
+   ```
+
+   `babel.config.js`添加如下配置
+
+   ```js
+   module.exports = {
+     presets: [
+       ['@babel/preset-env', {targets: {node: 'current'}}],
+       '@babel/preset-typescript',
+     ],
+   };
+   ```
+
+   **创建一个新的文件touch xx.txt**
+
+`index.test.js`
+
+```js
+test('1.PROMISE 参数函数会立即执行', () => {
+  var string
+  new myPromise(() => {
+    string = 'foo'
+  })
+  expect(string).toBe('foo')
+}, 500)
+it('2.PROMISE 在THEN的回调函数可以拿到resolve的数据', () => {
+  var str = 'foo'
+  var p = new myPromise((resolve) => {
+    setTimeout(() => {
+      resolve(str)
+    }, 10)
+  })
+  p.then((res) => {
+    expect(res).toBe(str)
+    done()
+  })
+}, 500)
+```
+
+`jest.config.js`
+
+```js
+module.exports = {
+  collectCoverage: true //生成分析界面
+}
+```
+
+`package.json`
+
+```json
+{
+  "scripts": {
+    "test": "jest",
+    "start": "jest --watchAll"
+  },
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ### 优化
 

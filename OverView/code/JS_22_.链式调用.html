@@ -12,6 +12,10 @@
         如何实现链式调用？
         类似： p1.then().then().then()
         add(1)(2)(3)
+        思路：1.返回this,使其有then方法
+              2.返回一个类似的对象, new xxx
+
+
       */
       class Fn {
         then() {
@@ -36,12 +40,28 @@
       console.log('---------')
       //实现add(1)(2)(3) => 6
       function add() {
+        console.log('进入add函数')
         var args = Array.prototype.slice.call(arguments)
-        console.log(args)
-        
+        var fn = function () {
+          var args1 = Array.prototype.slice.call(arguments)
+          var nArgs = args.concat(args1)
+          return add.apply(null, nArgs)
+        }
+        //注意:这里使用valueOf不会生效
+        fn.toString = function () {
+          console.log('调用fn.toString方法')
+          // console.log('调用了toString')
+          var s =  args.reduce((m, n) => m + n)
+          console.log(s)
+          return args.reduce((m, n) => m + n)
+        }
+        return fn
       }
-      var s1 = add(1)
+      
+      var s1 = add(1)(2)(3, 4)
       console.log(s1)
+      console.log(typeof s1)
+      //console.log(add) //直接打印函数，会调用函数的valueOf()方法。
     </script>
   </body>
 </html>
