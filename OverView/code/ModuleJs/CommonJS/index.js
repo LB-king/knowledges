@@ -5,6 +5,10 @@
  CommonJS采用同步加载模块，在浏览器端，受制于网络等原因，更合理的方案应该使用异步加载
  *
  */
-const name = require('./a')
-a = 9
-console.log(name)
+const { name, age } = require('./a')
+setTimeout(() => {
+  console.log(age)
+  console.log(require('./a').age)
+}, 100)
+// a = 9
+// console.log(name)

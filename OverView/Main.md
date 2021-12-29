@@ -1974,6 +1974,10 @@ Function.prototype.myBind = function(obj, ...params) {
    // 后者把暴露的obj要挂载到obj1对象上
    ```
 
+   > 1.COMMONJS模块中require引入模块的位置不同会对输出结果产生影响，并且会生成值的拷贝
+   >
+   > 2.模块重复引入并不会重复执行，再次获取模块只会获得之前取到的模块的缓存
+
 2. AMD-(Asynchoronous Module Define)
 
    > 异步模块定义，采用异步方式加载模块，不影响后面同步代码的运行。所以依赖这个模块的语句，都定义在一个回调函数中。**requirejs**是最佳实践者
@@ -2059,7 +2063,85 @@ Function.prototype.myBind = function(obj, ...params) {
 
 5. ES Modules - 是js官方的标准化模块系统
 
+   ```js
+   //main.js
+   export function name() {
+     return 'NAME';
+   }
+   export const FOO = 'FOO'
+   ```
+
+   `index.html`,注意需要使用http协议打开html文件才生效
+
+   ```html
+   <h2 id="box"></h2>
+   <script type="module">
+     import {name} from './main.js'
+     var box = document.getElementById('box')
+     box.innerText = name()
+   </script>
+   ```
+
    https://zhuanlan.zhihu.com/p/108217164
+
+   ESModule和commonjs的区别？
+
+   ESModule -> 值的引用
+
+   commonjs -> 值的拷贝
+
+   **import优先执行**
+
+   ```js
+   console.log('index.js中的内容')
+   //这里a.js中的内容会优先执行
+   import {age} from './a.js'
+   ```
+
+   **注意：export会有变量提升的效果**
+
+   ESModule之所以能**tree-shaking**，主要原因是：
+
+   1. `import` 只能作为模块顶层的语句出现，不能出现在function或者if里面
+   2. `import`的模块名只能是字符串常量
+   3. `import`在模块初始化的时候所有`import`都必须已经导入完成
+   4. `import binding`是`immutable`的，类似const
+
+   **Tree-Shaking**的副作用
+
+   ```js
+   // effect.js
+   console.log(demo())
+   export function demo() {
+     console.log(1)
+   }
+   // index.js
+   import { demo } from './effect'
+   console.log('index')
+   ```
+
+   运行命令:`npx rollup index.js --file bundle.js`
+
+   打包的结果：
+
+   ```js
+   console.log(demo());
+   function demo() {
+     console.log(1);
+   }
+   
+   console.log('index');
+   ```
+
+   运行命令(指定没有副作用)：`npx rollup index.js --file bundle-no-effect.js --no-treeshake.moduleSideEffects`
+
+   结果:
+
+   ```js
+   console.log('index');
+   ```
+
+   
 
 ### 算法
 
@@ -2566,6 +2648,8 @@ vue3+ts
 react+ts
 
 ### Webpack
+
+https://zhuanlan.zhihu.com/p/44438844
 
 ### Jest
 

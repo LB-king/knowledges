@@ -6,3 +6,16 @@
   4.ESModule输出的是值的引用，输出接口动态绑定，而commonjs输出的是值的拷贝
   5.ESModule模块编译时执行，而commonjs模块总是在运行时加载
 */
+
+console.log('index.js中的内容')
+//这里a.js中的内容会优先执行
+import {age} from './a.js'
+
+export function name() {
+  return 'NAME'
+}
+
+export let FOO = 'FOO'
+setTimeout(() => {
+  FOO = 'FOO-改变了'
+}, 20)
