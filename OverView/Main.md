@@ -1956,6 +1956,111 @@ Function.prototype.myBind = function(obj, ...params) {
 >
 > for in 最差
 
+### 模块化
+
+1. COMMONJS
+
+   > 主要运行于服务器端，该规范指出，一个单独的文件就是一个模块。NodeJS为主要的实践者，它有4个重要的环境变量为模块化的实现提供支持：
+   >
+   > module  exports  require  global
+   >
+   > 其中module.exports === exports
+
+   ```js
+   module.exports = obj
+   // exports.obj1 = obj
+   // 两种写法都能暴露模块js中的内容，
+   // 前者默认暴露obj，
+   // 后者把暴露的obj要挂载到obj1对象上
+   ```
+
+2. AMD-(Asynchoronous Module Define)
+
+   > 异步模块定义，采用异步方式加载模块，不影响后面同步代码的运行。所以依赖这个模块的语句，都定义在一个回调函数中。**requirejs**是最佳实践者
+   >
+   > 主要有4个命令：
+   >
+   > define(id?, dependencies? factory) - 全局函数，用来定义模块
+   >
+   > require - 用来输入其他模块提供的功能
+   >
+   > return - 用来规范模块对外的接口
+   >
+   > define-amd - 有这个属性则表示函数遵循AMD规范
+
+   ```js
+   //module1.js
+   define(function () {
+     console.log('module1 文件')
+     return {
+       say: function () {
+         return 'module1'
+       }
+     }
+   });
+   //module2.js
+   define(function () {
+     console.log('module2 文件')
+     return {
+       say: function () {
+         return 'module2'
+       }
+     }
+   });
+   
+   //index.js
+   define(function (require) {
+     var m1 = require('./module1')
+     console.log(m1.say())
+     var m2 = require('./module2')
+     console.log(m2.say())
+   });
+   //结果:
+   //module1 文件
+   //module2 文件
+   //module1
+   //module2
+   ```
+
+3. CMD - (Common Module Define) 通用模块定义，一个文件就是一个模块，可以像Node.js一般书写模块代码。主要在浏览器中运行，当然也可以在Node.js中运行。
+
+   是在**sea.js**的推广中行成的
+
+   它与AMD最大的区别是：
+
+   ​	AMD-依赖前置、提前执行
+
+   ​	CMD-依赖就近、延迟执行
+
+   总结：CMD虽然凉了。但是CMD更加接近于CommonJS的写法，AMD更加接近于浏览器的异步执行方式
+
+4. UMD - (Universal Module Define) 通用模块定义.该模式主要解决Commonjs模式和AMD模式代码不能通用的问题，并且支持老式的全局变量规范。
+
+   ```js
+   !(function (global, factory) {
+     /* 
+       1.判断是否是commonjs规范
+       2.判断define是不是函数,是否存在define.amd，判断是不是AMD规范
+       3.都不满足，则设置为原始的代码规范
+     */
+     typeof exports === 'object' && typeof module !== 'undefined'
+       ? (module.exports = factory())
+       : typeof define === 'function' && define.amd
+       ? define(factory)
+       : ((global = global || self), (global.myFunc = factory()))
+   })(this, function () {
+     'use strict'
+     var main = () => {
+       return 'UMD'
+     }
+     return main
+   })
+   ```
+
+5. ES Modules - 是js官方的标准化模块系统
+
+   https://zhuanlan.zhihu.com/p/108217164
+
 ### 算法
 
 时间维度：是指执行当前算法所消耗的时间，通常用「时间复杂度」来描述
