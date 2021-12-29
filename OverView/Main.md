@@ -2521,23 +2521,28 @@ this.$set(this.arr, [0], 'xxxx')
 
 
 
+#### 自定义指令
 
+一个指令对象可以提供如下几个钩子函数
 
+- `bind`: 只调用一次，指令第一次绑定到元素时调用。这里可以进行初始化的设置。
+- `inserted`: 被绑定元素插入父节点时调用(保证父节点存在，但不一定已被插入文档中)
+- `update`: 所在组件的VNode更新时调用
+- `componentUpdated`: 指令所在组件的VNode及其VNode全部更新后调用
+- `unbind`: 只调用一次，指令与元素解绑时调用
 
+指令钩子函数会被传入以下参数：
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+> - `el` - 指令所绑定的元素，可以直接操作dom
+> - `binding` - 一个对象，包含多个属性
+>   - name - 指令名
+>   - value - 指令的绑定值
+>   - oldValue - 指令绑定的前一个值
+>   - expression - 字符串形式的指令表达式
+>   - arg - 传给指令的参数
+>   - modifiers - 一个包含修饰符的对象 `v-my-directive.foo.bar`,修饰对象为`{foo:true, bar:true}`
+> - `vnode`
+> - `oldVnode`
 
 
 
@@ -2646,6 +2651,22 @@ console.log(import.meta.env)
 vue3+ts
 
 react+ts
+
+```
+# npm 6.x
+npm init vite@latest my-vue-app --template vue
+
+# npm 7+, 需要额外的双横线：
+npm init vite@latest my-vue-app -- --template vue
+
+# yarn
+yarn create vite my-vue-app --template vue
+
+# pnpm
+pnpm create vite my-vue-app -- --template vue
+```
+
+模板选项：`vanilla`，`vanilla-ts`，`vue`，`vue-ts`，`react`，`react-ts`，`preact`，`preact-ts`，`lit`，`lit-ts`，`svelte`，`svelte-ts`
 
 ### Webpack
 
