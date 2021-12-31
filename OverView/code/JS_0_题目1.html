@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>习题1</title>
+  </head>
+  <body>
+    <button id="btn">按钮</button>
+    <script>
+      const btn = document.getElementById('btn')
+      /*
+        一、call和apply有什么区别？哪个性能更好？
+          call和apply都是Function原型上的方法,每一个函数作为Function的实例,都可以调用这2个方法,作用是让函数执行并且改变函数中this的指向
+          区别：传参的形式不一样
+            call 一个个传递
+            apply 作为数组存储
+            bind 会预先改变this的指向，不会立即执行
+            相当于:
+            return function() {
+              return fn.call(obj, ...params)
+            }
+          https://jsperf.com/call-apply-segu 测试性能:call比apply好？有待商榷
+          经过本人测试: call的性能不如apply 如下代码
+       */
+      /* var obj = {
+        name: 'DEMO'
+      }
+      function fn() {
+        console.log(this)
+        console.log(arguments)
+      }
+      fn.call(obj, 11, 22, 33)
+      fn.apply(obj, [44, 55, 66])
+      btn.addEventListener('click', fn.bind(obj, 77, 88, 99)) */
+      var bigParam = new Array(100000).fill(0)
+      function fn() {
+        console.log(arguments)
+      }
+      var t1 = new Date().getTime()
+      // console.time('CALL')
+      // fn.call(null, ...bigParam)
+      // console.timeEnd('CALL')
+      
+     
+      console.time('APPLY')
+      fn.call(null, bigParam)
+      console.timeEnd('APPLY')
+      var t2 = new Date().getTime()
+      console.log(t2 - t1)
+      console.log('-----------------------------')
+      /* 
+        二、实现  (3).add(2).minus(4) = 1
+        分析: 数字的原型上得有add和minus方法
+        arr是Array的实例，可以调用Array.prototype上的方法,而push是prototype中其中一个方法
+      */
+      Number.prototype.add = function (n) {
+        return this + n
+      }
+      Number.prototype.minus = function (n) {
+        return this - n
+      }
+      console.dir((3).add(2).minus(4))
+      console.log('-----------------------------')
+    </script>
+  </body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>完美数</title>
+  </head>
+  <body>
+    <script>
+      /* 
+      完美数:一个数的所有正因子之和,6 => 1,2,3  1+2+3=6
+      28: 1,2,4,7,14 1+2+4+7+14=28
+     */
+      function perfectNum(n) {
+        if (isNaN(n)) return '请输入数字'
+        var arr = []
+        for (let i = 1; i <= n / 2; i++) {
+          if (n % i === 0 && arr.indexOf(i) === -1) {
+            if (i === 1) {
+              arr.push(i)
+            } else {
+              arr.push(i, n / i)
+            }
+          }
+        }
+        //取出所有结果再去重，不够优化
+        // var nArr = Array.from(new Set(arr))
+        if (arr.reduce((acc, cur) => acc + cur, 0) === n) {
+          return true
+        }
+        return false
+      }
+
+      console.log(perfectNum(14))
+    </script>
+  </body>
+</html>
