@@ -2214,6 +2214,77 @@ Object.defineProperty(obj, key) {
 
 数据变为视图最优雅的解决方案
 
+历史中的方案：
+
+1. 纯DOM
+
+   ```js
+   for(let i = 0 ; i< data.length; i++) {
+     let oli = document.createElement('li')
+     oli.innerText = data[i].name
+     list.appendChild(oli)
+   }
+   ```
+
+2. 数组join
+
+   ```js
+   //让结构有层次感
+   for (let i = 0; i < data.length; i++) {
+     list.innerHTML += [
+       '<li>'+ data[i].name + '</li>',
+       '<li>',
+       ' <p>'+ data[i].price + '</p>', 
+       '</li>'
+       ].join('')
+   }
+   ```
+
+3. ES6反引号-支持换行
+
+   ```js
+   for(let i = 0; i < data.length; i++) {
+     list.innerHTML += `
+       <p>名字:${data[i].name}</p>
+       <p>价格:${data[i].price}</p>
+     `
+   }
+   ```
+
+4. 模板引擎-mustache **Logic-less**
+
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #### 虚拟dom和diff算法
 
 什么是虚拟dom？
