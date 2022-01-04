@@ -2253,9 +2253,124 @@ Object.defineProperty(obj, key) {
 
 4. 模板引擎-mustache **Logic-less**
 
-   
+   https://github.com/janl/mustache.js
 
+   基本使用:
 
+   - 循环
+
+     {{#arr}}---循环开始
+
+     {{/arr}}---循环结束
+
+     简单数组，直接用{{.}}
+
+   - 支持嵌套
+
+   - 变量直接使用
+
+   - 布尔值
+
+   - 可以把以下模板字符串的内容写在script标签中
+
+     ```html
+     <script type="text/template" id="tm">
+     	<h1>{{name}}</h1>
+     	...
+     </script>
+     <script>
+     	document.getElementById('tm').innerHTML
+     </script>
+     ```
+
+     
+
+   ```js
+   var str = `
+      <h1>{{name}}</h1>
+     <ul>
+       {{#data}}
+         <li>
+           <div>{{name}}的详情：</div>
+           <p>名字：{{name}}</p>
+           <p>价格：{{price}}</p>
+           <p>颜色有：</p>
+           <ul>
+             {{#colors}}
+               <li>{{.}}</li>
+             {{/colors}}
+           </ul>
+         </li>
+       {{/data}}
+     </ul>
+     {{#show}}
+       <h1>好</h1>
+     {{/show}}
+     `
+   var dataObj = {
+     name: 'KB',
+     data,
+     fruits: ['香蕉', '苹果', '梨子']
+   }
+   var domStr = mustache.render(str, dataObj)
+   document.getElementById('mustache').innerHTML = domStr
+   ```
+
+   实现机理：
+
+   > 模板字符串 (编译)-> TOKENS (解析，结合数据)->DOM字符串
+
+​		tokens:代号，符号
+
+- tokens是一个`JS的嵌套数组`，就是模板字符串的JS表示
+
+- 它是"抽象语法树"、"虚拟节点"的开山鼻祖
+
+  简单---模板字符串： `<h3>今天是{{thing}},我心情{{feel}}</h3>`
+
+  tokens: 每一项是一个token
+
+  ```
+  [
+  	["text": "<h1>今天是"],
+  	["name": "thing"],
+  	["text": ",我心情"],
+  	["name": "feel"]
+  	["text": "</h1>"]
+  ]
+  ```
+
+  数组---模板字符串：
+
+  ```html
+  <ul>
+    <#arr>
+      <li>{{.}}</li>
+    </arr>
+  </ul>
+  ```
+
+  tokens:
+
+  ```
+  [
+  	["text": "<ul>"],
+  	["#", "arr", [
+  		["text", "<li>"],
+  		["name", "."],
+  		["text", "</li>"]
+  	]],
+  	["text", "</ul>"]
+  ]
+  ```
+
+  嵌套---数组循环...
+
+​	mustache底层重点做2个事情：
+
+​	①将模板字符串编译为tokens形式
+
+​	②将tokens结合数据，解析为dom字符串
 
 
 

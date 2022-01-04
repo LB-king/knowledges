@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>探索mustache</title>
+  </head>
+  <body>
+    <div id="container"></div>
+  </body>
+</html>
+<script type="text/template" id="tmp">
+  <h1>{{name}}</h1>
+  <ul>
+    {{#data}}
+      <li>
+        <div>{{name}}的详情：</div>
+        <p>名字：{{name}}</p>
+        <p>价格：{{price}}</p>
+        <p>颜色有：</p>
+        <ul>
+          {{#colors}}
+            <li>{{.}}</li>
+          {{/colors}}
+        </ul>
+      </li>
+    {{/data}}
+  </ul>
+  {{#show}}
+    <h1>好</h1>
+  {{/show}}
+</script>
+<script src="./mustache.js" type="text/javascript"></script>
+<script>
+  var tmp = document.getElementById('tmp').innerHTML
+  var container = document.getElementById('container')
+  var objData = {
+    name: 'MUSTACHE语法测试',
+    data: [
+      {name: '奔驰', price: 99, colors: ['red', 'blue']},
+      {name: '宝马', price: 78, colors: ['yellow', 'pink']},
+      {name: '奥迪', price: 90},
+    ],
+    show: true
+  }
+  // console.log(Mustache.render(tmp, objData))
+  container.innerHTML = Mustache.render(tmp, objData)
+</script>
