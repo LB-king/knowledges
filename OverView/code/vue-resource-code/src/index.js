@@ -1,4 +1,5 @@
-import mustache from 'mustache'
+// import mustache from 'mustache'
+import mustache from './js/myMustache'
 var tmpStr = document.getElementById('tmp').innerHTML
 var box = document.getElementById('box')
 var objData = {
@@ -11,4 +12,5 @@ var objData = {
   show: true
 }
 var htmlStr = mustache.render(tmpStr, objData)
+
 box.innerHTML = htmlStr
