@@ -8,17 +8,30 @@
   </head>
   <body>
     <div id="app">
-      <p>{{msg}}</p>
-      <p>静态文字:{{msg}}--- {{ person.name }}---{{person.age}}</p>
-      <p v-html="htmlStr">我是v-html渲染的内容</p>
-      <p v-text="title"></p>
-      <p v-text="person.name"></p>
-      <button v-on:click="click">按钮on</button>
-      <button @click="click">按钮@</button>
-      <input type="text" v-model="title" placeholder="我绑定的是title" />
-      <input type="text" v-model="msg" placeholder="我绑定的是msg" />
-      <div v-bind:style="attr">v-bind设置</div>
-      <div :style="blue">v-bind,使用: 设置</div>
+      <h3>1.实现mustache模板解析</h3>
+      <div class="mustache_box" id="box"></div>
     </div>
   </body>
+
+  <script type="text/template" id="tmp">
+    <h1>{{name}}</h1>
+    <ul>
+      {{#data}}
+        <li>
+          <div>{{name}}的详情：</div>
+          <p>名字：{{name}}</p>
+          <p>价格：{{price}}</p>
+          <p>颜色有：</p>
+          <ul>
+            {{#colors}}
+              <li>{{.}}</li>
+            {{/colors}}
+          </ul>
+        </li>
+      {{/data}}
+    </ul>
+    {{#show}}
+      <h1>好</h1>
+    {{/show}}
+  </script>
 </html>

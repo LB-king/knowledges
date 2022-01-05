@@ -1,45 +1,14 @@
-/* import observe from './js/observe'
-
-let obj = {
-  a: {
-    m: {
-      n: 'NBA'
-    }
-  },
-  b: 12,
-  arr: [1,2]
+import mustache from 'mustache'
+var tmpStr = document.getElementById('tmp').innerHTML
+var box = document.getElementById('box')
+var objData = {
+  name: 'MUSTACHE语法测试',
+  data: [
+    { name: '奔驰', price: 99, colors: ['red', 'blue'] },
+    { name: '宝马', price: 78, colors: ['yellow', 'pink'] },
+    { name: '奥迪', price: 90 }
+  ],
+  show: true
 }
-
-observe(obj)
-obj.arr.splice(1,1,8888)
-console.log(obj.arr) */
-import {Vue} from './mvvm/index'
-const vm = new Vue({
-  el: '#app',
-  data() {
-    return {
-      msg: 'Hello Vue',
-      htmlStr: 9999,
-      title: 'v-text定义的title',
-      person: {
-        name: 'v-text定义的Garnett',
-        age: 46
-      },
-      attr: {
-        color: 'red'
-      },
-      blue: {
-        color: 'blue',
-        fontSize: '20px'
-      }
-    }
-  },
-  methods: {
-    click() {
-      // this.$data.htmlStr += 1
-      this.person.age += 3
-      // this.$data.msg += 1
-      // this.msg += 1
-    }
-  }
-})
+var htmlStr = mustache.render(tmpStr, objData)
+box.innerHTML = htmlStr
