@@ -2766,9 +2766,11 @@ this.$set(this.arr, [0], 'xxxx')
 
 #### 1.环境变量
 
+这里主要是因为构建工具的区别webpack和vite，与vue版本关系不大
+
 `.env.development`
 
-V2:
+V2(webpack):
 
 定义：
 
@@ -2783,7 +2785,7 @@ VUE_APP_MY_TITLE=PLUS-DEVELOPMENT
 console.log(process.env)
 ```
 
-V3:
+V3(vite):
 
 定义:
 
@@ -2857,6 +2859,50 @@ pnpm create vite my-vue-app -- --template vue
 ### Webpack
 
 https://zhuanlan.zhihu.com/p/44438844
+
+### Rollup
+
+官网:https://www.rollupjs.com
+
+命令行：
+
+```shell
+rollup main.js --file bundle.js --format umd --name "myBundle"
+rollup src/main.js -o bundle.js -f cjs
+```
+
+rollup.config.js
+
+```js
+export default {
+  input: 'main.js',
+  output: {
+    file: 'bundle.js',
+    format: 'umd'
+  }
+}
+```
+
+配置config.js文件之后，在命令行输入`rollup -c`默认会找`rollup.config.js`
+
+也可以指定rollup.config.js
+
+```shell
+rollup -c my.config.js
+```
+
+> `-f/--output.format`	指定所创建的bundle.js的类型: 
+>
+> - amd--异步模块定义-RequireJS
+> - cjs--CommonJS-nodejs
+> - esm--将软件包保存为ES模块文件，在现代浏览器中可以通过`<script type="module"></script>`标签引入
+> - iife--自动执行
+> - umd--通用模块，以amd、cjs、iife为一体
+> - system--SystemJS加载器格式
+>
+> `-w/--watch`	监听源文件是否有变化
+>
+> `-c/--config`	使用配置文件
 
 ### Jest
 
