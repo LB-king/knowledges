@@ -4,6 +4,8 @@ var tmpStr = document.getElementById('tmp').innerHTML
 var box = document.getElementById('box')
 var objData = {
   name: 'MUSTACHE语法测试',
+  good: '火箭',
+  mood: '非常好',
   data: [
     { name: '奔驰', price: 99, colors: ['red', 'blue'] },
     { name: '宝马', price: 78, colors: ['yellow', 'pink'] },
