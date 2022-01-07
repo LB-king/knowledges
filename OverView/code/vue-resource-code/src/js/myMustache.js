@@ -10,6 +10,6 @@ export default {
     //把tokens数组变成dom字符串
     var domStr = renderTemplate(res, data)
     console.log(domStr)
-    return res
+    return domStr
   }
 }
