@@ -14,7 +14,29 @@
   </body>
 
   <script type="text/template" id="tmp">
-    <div>我买了一个{{good}},心情{{mood}}---测试.{{a.b}}</div>
+    <div>我买了一个{{good}},心情{{mood}}---测试.{{ a.b}}</div>
+    <ul>
+      {{#cars}}
+        <li>
+          <div>{{name}}的详情：</div>
+          <p>名字：{{name}}</p>
+          <p>价格：{{price}}</p>
+          <p>颜色有：</p>
+          <ol>
+            {{#colors}}
+              <li>{{.}}</li>
+            {{/colors}}
+          </ol>
+        </li>
+      {{/cars}}
+    </ul>
+    <ul>
+      {{#animals}}
+        <li>
+          {{.}}
+        </li>
+      {{/animals}}
+    </ul>
   </script>
   <!-- <h1>{{name}}</h1>
     <ul>

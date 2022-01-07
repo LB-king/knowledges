@@ -2477,7 +2477,47 @@ Object.defineProperty(obj, key) {
 
    ![](\img\VUE_mustache_tokens.png)
 
-4. 
+4. 把tokens数组结合数据生成dom字符串
+
+   ```js
+   import lookup from './lookup'
+   import parseToken from './parseToken'
+   export default function renderTemplate(tokens, data) {
+     // console.log(tokens)
+     let resStr = ''
+     for (let i = 0, len = tokens.length; i < len; i++) {
+       let token = tokens[i]
+       if (token[0] === 'text') {
+         resStr += token[1]
+       } else if (token[0] === 'name') {
+         resStr += lookup(data, token[1])
+       } else if (token[0] === '#') {
+         //#的处理,获取数组中循环的数组
+         resStr += parseToken(token, data)
+       }
+     }
+     return resStr
+   }
+   ```
+
+   遇到#,则要写个方法`parseToken`去处理这种情况
+
+   ```js
+   import renderTemplate from './renderTemplate'
+   import lookup from './lookup'
+   export default function parseToken(token, data) {
+     var resStr = ''
+     var arr = lookup(data, token[1])
+     // console.log(arr)
+     for (let i in arr) {
+       resStr += renderTemplate(token[2], arr[i])
+     }
+     // console.log(resStr)
+     return resStr
+   }
+   ```
+
+   `lookup`用来处理 `a.b.c`对象读取不了这种字符串的问题，注意`{{.}}`这种情况
 
 
 
