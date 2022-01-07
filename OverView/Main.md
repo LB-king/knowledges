@@ -2372,9 +2372,112 @@ Object.defineProperty(obj, key) {
 
 ​	②将tokens结合数据，解析为dom字符串
 
+**具体实现:**
 
+1. 定义扫描器类
 
+   定义scan scanUntil方法，移动指针，把{{}}前后的内容抽离出来
 
+   ```js
+   export default class Scanner {
+     constructor(templateStr) {
+       //模板字符串定义到实例上
+       this.templateStr = templateStr
+       //指针
+       this.pos = 0
+       //尾巴-模板字符串的剩余部分
+       this.tail = templateStr
+     }
+     //扫描方法：移动指针
+     scan(tag) {
+       if (this.tail.indexOf(tag) === 0) {
+         this.pos += tag.length
+         this.tail = this.templateStr.substring(this.pos)
+       }
+     }
+     //让指针进行扫描，遇到指定内容结束，并且能够返回之前扫描的内容
+     scanUntil(endTag) {
+       let startPos = this.pos
+       //当尾巴的开头不是endTag的时候，说明没有扫描到endTag
+       while (!this.eos() && this.tail.indexOf(endTag) != 0) {
+         this.pos++
+         //尾巴是剩余字符串
+         this.tail = this.templateStr.substring(this.pos)
+       }
+       return this.templateStr.substring(startPos, this.pos)
+     }
+     //返回布尔值  endOfString,判断指针是否到头
+     eos() {
+       return this.pos >= this.templateStr.length
+     }
+   }
+   ```
+
+2. 定义转换方法，**parseTemplateToTokens**
+
+   ```js
+   var scanner = new Scanner(templateStr)
+   var words
+   //让扫描器开始工作
+   while (!scanner.eos()) {
+     //收集开始标记之前的内容
+     words = scanner.scanUntil('{{')
+     scanner.scan('{{')
+     // console.log(words)
+     words && tokens.push(['text', words])
+     //收集标记之间的内容
+     words = scanner.scanUntil('}}')
+     scanner.scan('}}')
+     // console.log(words)
+     if (words) {
+       if (words.startsWith('#')) {
+         tokens.push(['#', words.substring(1)])
+       } else if (words.startsWith('/')) {
+         tokens.push(['/', words.substring(1)])
+       } else {
+         tokens.push(['name', words])
+       }
+     }
+   ```
+
+3. 折叠tokens
+
+   ```js
+   let res = []
+     //定义一个栈，用来存储#的内容
+     let stack = []
+     //定义一个收集器,让他指向res目标结果
+     let collector = res
+     let i = 0
+     while (i < tokens.length) {
+       let token = tokens[i]
+       switch (token[0]) {
+         case '#':
+           //入栈
+           stack.push(token)
+           //收集器收集token
+           collector.push(token)
+           //收集器改变指针的内存地址,指向token[2],并且开始收集下面的token
+           collector = token[2] = []
+           break
+         case '/':
+           //出栈
+           stack.pop()
+           //重新改变收集器的指向
+           collector = stack.length > 0 ? stack[stack.length - 1][2] : res
+           break
+         default:
+           collector.push(token)
+       }
+       i++
+     }
+   ```
+
+   此时的tokens是
+
+   ![](\img\VUE_mustache_tokens.png)
+
+4. 
 
 
 
