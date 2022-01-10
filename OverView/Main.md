@@ -2177,6 +2177,13 @@ Function.prototype.myBind = function(obj, ...params) {
 
 #### Object.defineProperty
 
+属性：
+
+- `value`默认是`undefined`
+- `writable`默认是 `false` (是否可写)
+- `enumerable`默认是`false`(是否可以枚举，为true时，在控制台打印不会是灰色的，只有为true的时候，才能被for in枚举)
+- `configurable`默认是`false`(是否可被配置，只有值是true,该属性的描述符才能被改变)
+
 ```js
 Object.defineProperty(obj, 'name', {
   // writable: true, //是否可写
@@ -2209,6 +2216,8 @@ Object.defineProperty(obj, key) {
   }
 }
 ```
+
+
 
 #### mustachhe模板引擎
 
@@ -2518,6 +2527,64 @@ Object.defineProperty(obj, key) {
    ```
 
    `lookup`用来处理 `a.b.c`对象读取不了这种字符串的问题，注意`{{.}}`这种情况
+
+
+
+#### 响应式原理
+
+- `defineReactive` - 劫持对象的属性
+
+- `Observer` - 该类将一个正常的`object`转换为每一个层级的属性都是响应式的
+
+- `observe` - 该方法给obj添加`__ob__`属性(该属性就是`new `出来的`Observer`)
+
+- `def` - 把对象变成响应式的，接收4个参数
+
+- 添加对数组的监听-改写了数组的7个方法
+
+  > - push
+  > - pop
+  > - shift
+  > - unshift
+  > - splice
+  > - sort
+  > - reverse
+
+  步骤：
+
+  > 1.有一个对象`obj`
+  >
+  > 2.使用`observe`包装`obj`,给obj添加`__ob__`属性(`new `出来的`Observer`)
+  >
+  > 3.会调用`defineReactive`函数，使对象的属性都会被劫持
+  >
+  > 4.在`defineReactive`中，会调用``observe``方法，包装其`val` 第三个参数，如果不是对象则不处理;记得在`setter`中也加一个`observe`，预防设置值为一个新的对象，对这个对象也需要监听
+  >
+  > 5.至此完成对`obj`属性深层次的监听
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -2976,6 +3043,8 @@ console.log(import.meta.env)
 
 
 ### React
+
+### Solidjs
 
 ### Vite
 
@@ -3670,6 +3739,8 @@ CSRF Token
 
 #### promise为什么可以连续调用then
 #### 超长列表的优化
+
+https://juejin.cn/post/6966179727329460232
 
 #### http1.0&1.1&2区别？
 
