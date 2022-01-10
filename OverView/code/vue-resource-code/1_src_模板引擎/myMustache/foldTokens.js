@@ -7,6 +7,7 @@
  * @returns
  */
 export default function foldTokens(tokens) {
+  console.log(tokens)
   let res = []
   //定义一个栈，用来存储#的内容
   let stack = []
