@@ -3,7 +3,8 @@
  */
 import Observer from './Observer'
 export default function observe(obj) {
-  if (Object.prototype.toString.call(obj) !== '[object Object]') return
+  let type = Object.prototype.toString.call(obj)
+  if ( ['[object Object]', '[object Array]'].indexOf(type) === -1) return
   let ob
   if (typeof obj.__ob__ === 'undefined') {
     ob = new Observer(obj)

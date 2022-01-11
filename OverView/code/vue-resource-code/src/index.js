@@ -6,8 +6,8 @@ var obj = {
     }
   },
   m: 'mm',
-  arr: []
+  arr: [11, 22, 33]
 }
 observe(obj)
 
-obj.arr.push(99)
+

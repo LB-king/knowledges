@@ -2550,17 +2550,58 @@ Object.defineProperty(obj, key) {
   > - sort
   > - reverse
 
-  步骤：
+- 这里有几个注意点：
 
-  > 1.有一个对象`obj`
+  ```js
+  //1.暴露arrayMethods
+  export const = arrayMethods = Object.craete(Object.craete(Array.prototype))
+  arrays = [...]
+  arrays.forEach(name => {
+      //备份原始的方法
+      //def arrayMethods的属性
+      //def 过程中取出__ob__,并对push、unshift、splice可能添加元素的方法，做响应式处理
+      //函数中的arguments是类数组，记得转换一下
+      //实际调用原始的方法，并改变其this指向
+  })
+  //在Observer中，强制改变数组的原型  Object.setPrototypeOf(o, arrayMethods)
+  ```
+
+- 依赖收集
+
+  > 需要用到数据的地方，成为依赖
   >
-  > 2.使用`observe`包装`obj`,给obj添加`__ob__`属性(`new `出来的`Observer`)
+  > 在getter中收集依赖，在setter中触发依赖
   >
-  > 3.会调用`defineReactive`函数，使对象的属性都会被劫持
-  >
-  > 4.在`defineReactive`中，会调用``observe``方法，包装其`val` 第三个参数，如果不是对象则不处理;记得在`setter`中也加一个`observe`，预防设置值为一个新的对象，对这个对象也需要监听
-  >
-  > 5.至此完成对`obj`属性深层次的监听
+  > - 把依赖收集的代码封装成一个`Dep`类，他专门用来管理依赖，每一个`Observer`的实例，成员中都有一个`Dep`的实例
+  > - `Watcher`是一个中介，数据发生变化时通知`Watcher`中转，通知组件
+
+  
+
+- Dep 类和Watcher类
+
+  > - 依赖就是`Watcher`。只有`Watcher`触发的`getter`才会收集依赖，哪个`Watcher`触发了`getter`，就把哪个`Watcher`收集到`Dep`中
+  > - `Dep`使用发布订阅模式，当数据发生变化时，会循环依赖列表，把所有的Watcher都通知一遍
+  > - **`Watcher`把自己设置到全局的一个指定位置，然后读取数据，因为读取了数据，所以会触发这个数据的`getter`。在`getter`中就能得到当前正在读取数据Watcher，并把这个Watcher收集到Dep中**
+
+- Dep
+
+  每一个Observer实例身上都有一个Dep实例
+
+步骤：
+
+> 1.有一个对象`obj`
+>
+> 2.使用`observe`包装`obj`,给obj添加`__ob__`属性(`new `出来的`Observer`)
+>
+> 3.会调用`defineReactive`函数，使对象的属性都会被劫持
+>
+> 4.在`defineReactive`中，会调用``observe``方法，包装其`val` 第三个参数，如果不是对象则不处理;记得在`setter`中也加一个`observe`，预防设置值为一个新的对象，对这个对象也需要监听
+>
+> 5.至此完成对`obj`属性深层次的监听
+>
+> 6.处理数组的情况，完成7种方法的改写
+>
+> 7.依赖收集 Watcher Dep
 
 
 
