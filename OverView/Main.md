@@ -3732,6 +3732,14 @@ CSRF Token
 
 ### 常问题目
 
+
+
+
+
+#### 关注分离
+
+> 是一种思想(Separation of Concerns)
+
 #### 说一下dns 预解析的过程？
 
 - DNS(Domain Name System) 域名系统,是域名和IP相互映射的一个分布式数据库。DNS查询就是把对应的域名转换为IP的过程

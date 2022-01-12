@@ -1284,7 +1284,26 @@ api网站：https://api.github.com/search/users?q=xxx
 
 - fetch (原生函数)
 
+  > 联系上了服务器就是成功，
+  >
+  > 只有在断网的时候，才会在then的第二个参数告知联系服务器失败
+  
   ```jsx
+  fetch(url).then(
+  	res => {
+      return res.json()
+    },
+    err => {
+      //这里失败的话，应该终端promise，否则会传导下一个then的成功里面,最优写法直接在catch里面
+      return new Promise(()=>{})
+    }
+  ).then(
+  	res => {
+      //这里拿到返回值
+    }
+  )
+  
+  //优化
   search = async()=> {
     try {
       let res = await fetch('xxx')

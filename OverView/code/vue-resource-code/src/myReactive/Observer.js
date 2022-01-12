@@ -8,7 +8,9 @@ import Dep from './Dep'
  */
 export default class Observer {
   constructor(obj) {
+    //dep是挂在new出来的实例的__ob__属性上的
     this.dep = new Dep()
+    //this指向new出来的实例
     def(obj, '__ob__', this, false)
     let type = Object.prototype.toString.call(obj)
     if (type === '[object Array]') {

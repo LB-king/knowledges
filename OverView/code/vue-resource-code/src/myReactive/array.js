@@ -27,6 +27,8 @@ arrays.forEach((methodName) => {
       }
       console.log('触发def数组~~~')
       inserted.length > 0 && ob.observeArr(inserted)
+      //数组也需要通知改变
+      ob.dep.notify()
       //this指向数组
       original.apply(this, arguments)
       // return res

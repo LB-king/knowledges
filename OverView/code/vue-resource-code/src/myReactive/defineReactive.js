@@ -1,5 +1,7 @@
 import observe from './observe'
+import Dep from './Dep'
 export default function defineReactive(obj, key, value) {
+  let dep = new Dep()
   if (arguments.length == 2) {
     value = obj[key]
   }
@@ -18,6 +20,7 @@ export default function defineReactive(obj, key, value) {
         value = newValue
         //修改的值可能也是对象，因此需要监听
         observe(value)
+        dep.notify()
       }
     }
   })
