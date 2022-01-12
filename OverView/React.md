@@ -1344,12 +1344,28 @@ api网站：https://api.github.com/search/users?q=xxx
 
 1. history.js操作bom的history
 
+   浏览器的历史历史记录是一个**栈**的结构:
+
+   push - 操作 - 栈顶推入
+
+   replace - 操作 - 栈顶被替换
+
    ```js
    var history = History.createBrowserHistory() // 直接使用H5推出的history身上的API
-   var history = History.createHashHistory() //hash值(锚点),会有#兼容性极佳
+   var history = History.createHashHistory() // hash值(锚点),会有#兼容性极佳
    ```
 
-2. react-router-dom(web native  any)
+   react-touter有3个版本：
+
+   `web` - 前端开发使用
+
+   `native` - 原生使用
+
+   `any`
+
+   https://react-router.docschina.org/web/guides/philosophy
+
+2. `react-router-dom`(web native  any)
 
    - react的一个插件库
    - 专门用来实现一个SPA应用
@@ -1359,6 +1375,16 @@ api网站：https://api.github.com/search/users?q=xxx
 
    router-路由器
 
+   内置组件：
+
+   - <BrowserRouter>
+   - <HashRouter>
+   - <Router>
+   - <Redirect>
+   - <Link>
+   - <NavLink>
+   - <Switch>
+
    安装：
 
    ```shell
@@ -1366,15 +1392,15 @@ api网站：https://api.github.com/search/users?q=xxx
    ```
 
    路由的基本使用：
-
+   
    1. 明确好界面中的导航区、展示区
-
+   
    2. 导航区的a标签改写为Link标签
 
       使用NavLink实现高亮：给标签添加一个active属性
 
       使用activeClassName 可以自定义类名
-
+   
       ```jsx
       <Link to="/home">home</Link>
       <Link to="/about">about</Link>
@@ -1382,13 +1408,13 @@ api网站：https://api.github.com/search/users?q=xxx
       ```
 
    3. 展示区写Route标签进行路径的匹配
-
+   
       ```jsx
       <Route path="/home" component={Home}></Route>
       ```
-
+   
    4. <App/>的最外层包裹了一个<BrowserRouter>或<HashRouter>
-
+   
       直接在入口js修改：
 
       ```js
@@ -1402,15 +1428,15 @@ api网站：https://api.github.com/search/users?q=xxx
       ```
 
    5. 路由组件和非路由组件
-
+   
       1. 写法不同
-
+   
       2. 存放位置-路由组件一般放在 pages 目录中
-
+   
       3. 接收到的props不同
-
+   
          路由组件的props信息：
-
+   
       > history:
       >   go: *ƒ go(n)*
       >   goBack: *ƒ goBack()*
