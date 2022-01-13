@@ -1,5 +1,5 @@
 import babel from 'rollup-plugin-babel'
-import server from 'rollup-plugin-server'
+import serve from 'rollup-plugin-serve'
 console.log(process.env.ENV)
 export default {
   input: './src/index.js', //以哪个文件作为打包的入口
@@ -14,11 +14,11 @@ export default {
       exclude: 'node_modules/**'
     }),
     process.env.ENV === 'development'
-      ? server({
+      ? serve({
           open: true,
           openPage: '/public/index.html', //默认打开html的路径
           port: 3000,
-          contentBase: 'public'
+          contentBase: ''
         })
       : null
   ]

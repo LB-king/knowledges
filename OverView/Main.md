@@ -3160,12 +3160,38 @@ rollup -c my.config.js
 rollup起一个服务：
 
 ```shell
-npm install rollup @babel/core @babel/preset-env rollup-plugin-babel rollup-plugin-server cross-env -D
+npm install rollup @babel/core @babel/preset-env rollup-plugin-babel rollup-plugin-serve cross-env -D
 ```
 
 1. 新建配置文件`rollup.config.js`
 
    ```js
+   import babel from 'rollup-plugin-babel'
+   import serve from 'rollup-plugin-serve'
+   console.log(process.env.ENV)
+   export default {
+     input: './src/index.js', //以哪个文件作为打包的入口
+     output: {
+       file: 'dist/mvvm/Vue.js', //出口路径
+       name: 'Vue', //指定打包后全局变量的名字
+       format: 'umd', //统一模块规范
+       sourcemap: true //打开源码的调试
+     },
+     plugins: [
+       babel({
+         exclude: 'node_modules/**'
+       }),
+       process.env.ENV === 'development'
+         ? serve({
+             open: true,
+             openPage: '/public/index.html', //默认打开html的路径
+             port: 3000,
+             contentBase: ''
+           })
+         : null
+     ]
+   }
+   
    ```
 
    
