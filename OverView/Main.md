@@ -3157,6 +3157,19 @@ rollup -c my.config.js
 >
 > `-c/--config`	使用配置文件
 
+rollup起一个服务：
+
+```shell
+npm install rollup @babel/core @babel/preset-env rollup-plugin-babel rollup-plugin-server cross-env -D
+```
+
+1. 新建配置文件`rollup.config.js`
+
+   ```js
+   ```
+
+   
+
 ### Jest
 
 TDD 测试驱动开发
