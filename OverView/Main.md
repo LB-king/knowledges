@@ -3168,6 +3168,7 @@ npm install rollup @babel/core @babel/preset-env rollup-plugin-babel rollup-plug
    ```js
    import babel from 'rollup-plugin-babel'
    import serve from 'rollup-plugin-serve'
+   import livereload from 'rollup-plugin-livereload'
    console.log(process.env.ENV)
    export default {
      input: './src/index.js', //以哪个文件作为打包的入口
@@ -3188,10 +3189,29 @@ npm install rollup @babel/core @babel/preset-env rollup-plugin-babel rollup-plug
              port: 3000,
              contentBase: ''
            })
-         : null
+         : null,
+       livereload()
      ]
    }
    
+   ```
+   
+   package.json
+   
+   ```json
+   { 
+     "scripts": {
+       "start": "cross-env ENV=development rollup -c -w",
+       "build": "rollup -c",
+     }
+   }
+   
+   ```
+   
+2. 开启热更新
+
+   ```shell
+   npm install rollup-plugin-livereload -D
    ```
 
    

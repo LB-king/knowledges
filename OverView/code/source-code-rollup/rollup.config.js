@@ -1,5 +1,6 @@
 import babel from 'rollup-plugin-babel'
 import serve from 'rollup-plugin-serve'
+import livereload from 'rollup-plugin-livereload'
 console.log(process.env.ENV)
 export default {
   input: './src/index.js', //以哪个文件作为打包的入口
@@ -20,6 +21,7 @@ export default {
           port: 3000,
           contentBase: ''
         })
-      : null
+      : null,
+    livereload()
   ]
 }
