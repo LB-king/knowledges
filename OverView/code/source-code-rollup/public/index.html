@@ -10,9 +10,19 @@
     <p>hello111</p>
     <script src="/dist/mvvm/Vue.js"></script>
     <script>
-      // var VM = new Vue({
-      //   el: '#appa'
-      // })
+      var VM = new Vue({
+        el: '#app',
+        data() {
+          return {
+            baseName: '自定义Vue'
+          }
+        },
+        methods: {
+          hanleClick() {
+            console.log('点击事件')
+          }
+        }
+      })
     </script>
   </body>
 </html>
