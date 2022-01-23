@@ -8,6 +8,7 @@ import xigua from '@/views/xigua/index.vue'
 import Header from '../views/Header.vue'
 import Hierarchy from '../views/Hierarchy/index.vue'
 import jsPdf from '../views/jsPdf/index.vue'
+import echartsComponent from '../views/echartsComponent/index.vue'
 
 Vue.use(VueRouter)
 
@@ -66,6 +67,14 @@ const routes = [
     components: {
       header: Header,
       default: jsPdf
+    }
+  },
+  {
+    path: '/echarts',
+    name: 'echarts',
+    components: {
+      header: Header,
+      default: echartsComponent
     }
   }
 ]

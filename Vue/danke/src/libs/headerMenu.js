@@ -5,5 +5,6 @@ export const headMenus =  [
   {path:'/d3Tree', name:'d3Tree'},
   {path:'/xigua', name:'西瓜视频'},
   {path:'/hierarchy', name:'股权架构'},
-  {path:'/jsPdf', name:'jsPdf'}
+  {path:'/jsPdf', name:'jsPdf'},
+  {path:'/echarts', name:'echarts'},
 ]
