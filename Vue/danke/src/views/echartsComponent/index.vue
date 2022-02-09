@@ -1,6 +1,6 @@
 <template lang="pug">
-  .xigua
-    .bar-chart(ref="box")
+.xigua
+  .bar-chart(ref='box')
 </template>
 
 <script>
@@ -43,7 +43,7 @@ export default {
               },
               label: {
                 show: true,
-                formatter: function() {
+                formatter: function () {
                   return '预警线'
                 }
               }
@@ -110,7 +110,7 @@ export default {
           //   stack: 'total',
           //   label: {
           //     show: true,
-             
+
           //   },
           //   emphasis: {
           //     focus: 'series'
@@ -129,7 +129,19 @@ export default {
               // focus: 'series'
             },
             markLine,
-            data: d1
+            data: d1,
+            test: [
+              {
+                name: '预警线',
+                type: 'warn',
+                position: '30-40'
+              },
+              {
+                name: '观察线',
+                type: 'observe',
+                position: '60-70'
+              }
+            ]
           },
           {
             name: '一般',
@@ -148,8 +160,7 @@ export default {
               focus: 'series'
             },
             data: d2
-          },
-          
+          }
         ]
       }
       this.chart = echarts.init(container)
@@ -165,7 +176,7 @@ export default {
         console.log(this.$refs.box.clientWidth)
         // let w = this.chart.getWidth()
         let w = this.$refs.box.clientWidth
-        let x = (w * 0.8) / 6 + 20 + w * 0.1
+        let x = (w * 0.8) / 6 * 2 + 20 + w * 0.1
         let op = this.chart.getOption()
         op.color = ['#bfc', '#bfb']
         op.series[0].markLine.data[0][0].x = x
