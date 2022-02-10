@@ -3304,20 +3304,38 @@ module.exports = {
 
 
 
-### 持续集成/持续部署
+### CI/CD
 
 - 提高软件质量
 - 效率迭代
 - 便捷部署
 - 快速交付、便于管理
 
-1. 什么是CI/CD? (integration-集成   deploy-部署)
+1. 什么是CI/CD? (integration-集成   delivery-交付  deplyment-部署)
 2. 介绍CI/CD流程
 3. 前端项目：结合CI/CD流程，实现快速迭代
 4. Docker的使用，Jenkins+gitlab+nodejs自动化项目
 5. 持续集成工具的介绍：Jenkins、Travis CI、Circle CI
 
+#### 持续集成的组成要素
 
+一个最小化的持续集成系统需要包含以下几个要素
+
+1. **版本管理系统**： 一般用git
+2. **构建脚本&工具**：可通过命令行自动执行，(编译、静态扫描、运行测试、样式检查、打包、发布等活动串起来)
+3. **CI服务器**：可以检测项目中代码变动，并及时的通过构建机器运行构建脚本，并将集成结果通过某种方式反馈给团队成员。
+
+devOps 开发运维
+
+**高效率、高质量、高产出**
+
+用到的工具：
+
+Jenkins
+
+Travis CI
+
+Circle CI
 
 
 
