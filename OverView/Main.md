@@ -3304,6 +3304,23 @@ module.exports = {
 
 
 
+### 持续集成/持续部署
+
+- 提高软件质量
+- 效率迭代
+- 便捷部署
+- 快速交付、便于管理
+
+1. 什么是CI/CD? (integration-集成   deploy-部署)
+2. 介绍CI/CD流程
+3. 前端项目：结合CI/CD流程，实现快速迭代
+4. Docker的使用，Jenkins+gitlab+nodejs自动化项目
+5. 持续集成工具的介绍：Jenkins、Travis CI、Circle CI
+
+
+
+
+
 
 
 
