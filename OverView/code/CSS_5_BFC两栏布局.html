@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>两栏布局</title>
+  <style>
+    .main {
+      height: 100px;
+    }
+    .left {
+      height: 100%;
+      width: 200px;
+      background-color: aquamarine;
+      float: left;
+    }
+    .right {
+      height: 100%;
+      background-color: blue;
+      overflow: auto;
+    }
+  </style>
+</head>
+<body>
+  <!-- overflow: auto 触发BFC，BFC不与浮动元素重叠的特性实现 -->
+  <div class="main">
+    <div class="left"></div>
+    <div class="right"></div>
+  </div>
+</body>
+</html>

@@ -217,9 +217,86 @@ p:not(:last-child) {
 
 #### 6.重排和重绘
 
+reflow：重排
+
+repaint：重绘
+
 https://juejin.cn/post/7061588533214969892
 
+浏览器渲染过程：
+
+1. 解析`HTML`,生成`DOM树`，解析`CSS`，生成`CSSOM树`
+2. 将DOM树和CSSOM树结合，生成`渲染树(Render Tree)`
+3. `Layout(回流)`：根据生成的渲染树，进行回流(layout)，得到节点的几何信息(位置，大小)
+4. `Painting(重绘)`：根据渲染树以及回流得到的几何信息，得到节点的绝对像素
+5. `Display`：将像素发送给GPU,展示在页面上
+
+为了构建渲染树，浏览器主要完成了以下工作：
+
+1. 从DOM树的根节点开始遍历每个可见节点
+
+   > 不可见节点：
+   >
+   > 一些不会渲染输出的节点：如 script meta link
+   >
+   > 一些通过css进行隐藏的点。如display：none。但是用visibility和opacity隐藏的点，还是会显示在渲染树上的
+
+2. 对于每个可见的节点，找到CSSOM树中对应的规则，并应用它们
+
+3. 根据每个可见节点以及其对应的样式，组合生成渲染树
+
+**回流/重排：** 将可见dom节点以及它们对应的样式结合起来，可是我们还需要计算它们在设备视口(viewport)内的确切位置和大小，这个计算的阶段就是回流
+
+**重绘：**我们通过构造渲染树和回流阶段，知道了哪些节点是可见的，以及可见节点的样式和具体的几何信息(位置、大小)，那么我们就可以将渲染树的每个节点都转换为屏幕上的实际像素，这个阶段就叫做重绘节点
+
+何时会发生重排/回流？
+
+> 添加或者删除可见的DOM元素
+>
+> 元素的位置发生变化
+>
+> 元素的尺寸发生变化(包括外边距、内边框、边框大小、高度和宽度等)
+>
+> 内容发生变化，比如文本变化或者图片被其他不同尺寸的图片代替
+>
+> 页面开始渲染的时候
+>
+> 浏览器窗口尺寸改变(回流是根据视口的大小来计算元素的位置和大小的)
+
+**注意：回流一定会触发重绘，而重绘不一定会回流。**
+
+如何减少回流和重绘？
+
+> - 最小化重绘和重排，比如样式集中改变，使用添加新样式类名
+>
+>   ```js
+>   //1.修改cssText
+>   el.style.width='1px'
+>   el.style.color='#ccc'
+>   //good
+>   el.style.cssText += 'width: 1px; color: #ccc;'
+>   
+>   //2.修改CSS的class
+>   el.className += ' active'
+>   ```
+>
+> - 批量操作dom，比如用临时变量存储某个元素的`offsetWidth`;使用文档碎片来添加要被添加的节点，处理完成再插入到实际的dom中
+>
+> - 使用`absolute`和`fixed`使元素脱离文档流
+>
+> - 开启GPU加速，利用CSS的transform,opacity,fiters会触发
+
 https://juejin.cn/post/6844903779700047885
+
+
+
+
+
+
+
+
+
+
 
 ### H5
 
@@ -1912,6 +1989,41 @@ console.log(n)
   > defer表示延迟，当浏览器遇到带有defer属性的script时，获取该脚本的网络请求也是异步的，不会阻塞浏览器解析HTML,一旦网络请求回来之后，如果此时HTML还没有解析完，浏览器不会暂停解析并执行JS代码，而是等待HTML解析完毕后再执行js代码
   >
   > 如果出现多个带有defer属性的script，浏览器会保证它们按照在HTML中出现的顺序执行，不会破坏JS脚本之间的依赖关系
+
+#### 19.0.1+0.2
+
+`0.1 + 0.2 !== 0.3`
+
+https://juejin.cn/post/6844903680362151950
+
+#### 20.new
+
+> 1. 首先创建一个新的空对象
+> 2. 根据原型链，设置空对象的`__proto__`为构造函数的`prototype`
+> 3. 构造函数的this指向这个对象，执行构造函数的代码(为这个新对象添加属性)
+> 4. 判断函数的返回值类型，如果是引用类型，就返回这个引用类型的对象
+
+```js
+function myNew(context) {
+  //首先创建一个新的空对象
+  var newObj = new Object()
+  //设置空对象的__proto__为构造函数的prototype
+  Object.setPrototypeOf(newObj, context.prototype)
+  //执行这个函数
+  // let res = context.call(newObj, ...[...arguments].slice(1))
+  let res = context.apply(newObj, [...arguments].slice(1))
+  //如果执行结果是对象，则返回这个对象，否则返回新建的这个对象newObj
+  return typeof res === 'object' ? res : newObj
+}
+
+function Person(name, age) {
+  this.name = name
+  this.age = age
+}
+var n1 = myNew(Person, 'xx', 12)
+```
+
+
 
 #### 手写系列
 
