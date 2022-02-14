@@ -103,6 +103,15 @@
 
 #### 3.选择器权重
 
+​	优先级是由ABCD的值来确定的：优先级的计算规则如下
+
+- 如果存在内联样式，那么A=1,否则A=0
+- B的值等于`ID选择器(#id)`出现的次数
+- C的值等于`类选择器(.class)`和`属性选择器(a[href="http.xx.com"])`和`伪类(:first-child)`出现的总次数
+- D的值等于`标签选择器(div,a,p)`和`伪元素(::before, ::after)`出现的总次数
+
+`内联样式中写important是要杜绝的`
+
 ​	!important(最高)
 
 ​	内联样式(1000)
@@ -206,7 +215,11 @@ p:not(:last-child) {
 - display属性设置为inline-block/flex/inline-grid/inline-table/table...
 - overflow不为visible
 
+#### 6.重排和重绘
 
+https://juejin.cn/post/7061588533214969892
+
+https://juejin.cn/post/6844903779700047885
 
 ### H5
 
@@ -1879,6 +1892,26 @@ console.log(n)
    ```
    
    画图解题
+
+#### 18.标签
+
+- `script`
+
+  > 浏览器在解析html的时候，如果遇到没有任何属性的script标签，就会暂停解析，先发送网络请求获取该JS脚本的代码内容，然后让JS引擎执行该代码
+  >
+  > 阻塞html解析
+
+- `async script`
+
+  > 当浏览器遇到带有async属性的script标签时，该脚本的网络请求是异步的，不会阻塞浏览器解析HTML，一旦网络请求回来之后，如果此时HTML还没有解析完，浏览器会暂停解析，先让js代码执行
+  >
+  > 如果遇到多个带有async属性的script标签，它们之间的执行顺序是不确定的
+
+- `defer script`
+
+  > defer表示延迟，当浏览器遇到带有defer属性的script时，获取该脚本的网络请求也是异步的，不会阻塞浏览器解析HTML,一旦网络请求回来之后，如果此时HTML还没有解析完，浏览器不会暂停解析并执行JS代码，而是等待HTML解析完毕后再执行js代码
+  >
+  > 如果出现多个带有defer属性的script，浏览器会保证它们按照在HTML中出现的顺序执行，不会破坏JS脚本之间的依赖关系
 
 #### 手写系列
 
