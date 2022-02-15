@@ -3230,6 +3230,26 @@ console.log(import.meta.env)
 
 ### React
 
+使用vite初始化一个项目
+
+```shel
+yarn create vite my-react-ts --template react-ts
+```
+
+
+
+```js
+ReactDOM.render(
+  //进行 strict mode 检查
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById('root')
+)
+```
+
+
+
 ### Solidjs
 
 ### Vite
@@ -3249,7 +3269,7 @@ npm init vite@latest my-vue-app -- --template vue
 yarn create vite my-vue-app --template vue
 
 # pnpm
-pnpm create vite my-vue-app -- --template vue
+pnpm create vite my-vue-app --template vue
 ```
 
 模板选项：`vanilla`，`vanilla-ts`，`vue`，`vue-ts`，`react`，`react-ts`，`preact`，`preact-ts`，`lit`，`lit-ts`，`svelte`，`svelte-ts`
@@ -4028,7 +4048,9 @@ CSRF Token
 #### promise为什么可以连续调用then
 #### 超长列表的优化
 
-https://juejin.cn/post/6966179727329460232
+https://juejin.cn/post/6995334008603148295
+
+https://juejin.cn/post/6844903982742110216
 
 #### http1.0&1.1&2区别？
 
@@ -4036,7 +4058,7 @@ https://juejin.cn/post/6966179727329460232
 
 #### 谈谈闭包？
 
-#### 长列表100W条数据？渲染问题？
+#### 
 
 #### promise的all怎么实现的？
 
