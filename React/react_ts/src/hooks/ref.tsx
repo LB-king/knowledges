@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 /**
  * 副作用  组件挂载完毕，组件更新完成， 组件即将卸载
  */
@@ -14,8 +14,10 @@ interface AInterface {
  */
 function Input(props: AInterface) {
   let { content, setContent, setFlag } = props
+  let Iref: HTMLElement | any = useRef(null)
   function toScroll() {
-    let tBox = document.getElementById('text')
+    // let tBox = document.getElementById('text')
+    let tBox: HTMLElement | any = Iref.current
     if (!tBox) return
     //窗口滚动的高度
     let y = window.scrollY
@@ -24,12 +26,12 @@ function Input(props: AInterface) {
     if (y >= tTop) tBox.style.transform = `translateY(${y - tTop}px)`
   }
   useEffect(() => {
-    console.log('input组件挂载|更新')
     //返回的回调相当于componentWillUnmount
-
+    //默认获取输入框的焦点
+    // Iref.current && Iref.current?.select()
+    Iref.current && Iref.current?.focus()
     document.addEventListener('scroll', toScroll)
     return () => {
-      console.log('input组件卸载')
       document.removeEventListener('scroll', () => {})
     }
   }, []) //指定的是[],回调函数只在第一次render的时候执行,也可以指定content，仅在 content 更改时更新
@@ -38,6 +40,7 @@ function Input(props: AInterface) {
       type="text"
       value={content}
       id="text"
+      ref={Iref}
       onChange={(e) => {
         setContent(e.target.value)
       }}
@@ -47,7 +50,7 @@ function Input(props: AInterface) {
     />
   )
 }
-function Effect() {
+function Ref() {
   let [content, setContent] = useState('请输入文字内容')
   let [edit, setFlag] = useState(false)
   return (
@@ -74,4 +77,4 @@ function Effect() {
     </div>
   )
 }
-export default Effect
+export default Ref

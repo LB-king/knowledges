@@ -2367,10 +2367,10 @@ let About = lazy(() => import('./pages/About'))
         clearInterval(timer)
       }
     }, []) //如果指定的是[],回调函数只会在第一次render()后执行
-  
+  	//[count] 仅在 count 更改时更新
   ```
 
-- 可以把 useEffect hook看做一下3个函数的组合
+- 可以把 useEffect hook看做以下3个函数的组合
 
   - componentDidMount
   - componentDidUpdate
