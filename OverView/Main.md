@@ -3230,13 +3230,11 @@ console.log(import.meta.env)
 
 ### React
 
-使用vite初始化一个项目
+使用**vite**初始化一个项目
 
 ```shel
 yarn create vite my-react-ts --template react-ts
 ```
-
-
 
 ```js
 ReactDOM.render(

@@ -1,5 +1,9 @@
 import { useState, useEffect } from 'react'
-export default function Header(props) {
+interface IProps {
+  addTodo: Function
+}
+export default function Header(props: IProps) {
+  const { addTodo } = props
   let [content, setContent] = useState('')
   return (
     <div>
@@ -12,14 +16,8 @@ export default function Header(props) {
           setContent(e.target.value)
         }}
         onKeyDown={(e) => {
-          if (e.keyCode === 13) {
-            console.log(props)
-            let {addTodo} = props
-            let newTodo = {
-              name: 'xxx',
-              id: 9
-            }
-            addTodo(newTodo)
+          if (e.keyCode === 13 && content) {
+            addTodo(content)
             //按下enter的时候触发
             setContent('')
           }

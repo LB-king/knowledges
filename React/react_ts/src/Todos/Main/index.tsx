@@ -1,7 +1,14 @@
 import './index.css'
 import Item from './Item'
-export default function Main(props: { todos: any }) {
-  let {todos} = props
+interface ITodo {
+  id: string
+  name: string
+}
+interface IItem {
+  todos: Array<ITodo>
+}
+export default function Main(props: IItem) {
+  let { todos } = props
   return (
     <div>
       <ul>

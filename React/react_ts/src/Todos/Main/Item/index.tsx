@@ -1,9 +1,14 @@
-export default function Item(props) {
-  let {item} = props
+interface ITodo {
+  id: string
+  name: string
+}
+export default function Item(props: { item: ITodo }) {
+  let { item } = props
   return (
     <li>
       <label>
-        <input type="checkbox"/>{item.name}
+        <input type="checkbox" />
+        {item.name}
       </label>
     </li>
   )
