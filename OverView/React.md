@@ -2314,7 +2314,7 @@ let About = lazy(() => import('./pages/About'))
 >
 > Ref Hook:React.useRef()
 
-##### 3.3State Hook
+##### 3.3 useState Hook
 
 - state hook让函数组件也可以有state状态，并进行状态数据的读写操作
 
@@ -2343,7 +2343,7 @@ let About = lazy(() => import('./pages/About'))
   
   ```
 
-##### 3.4Effect Hook
+##### 3.4 useEffect
 
 - Effect Hook 可以让你在函数组件中执行副作用操作(用于模拟类组件中的生命周期钩子)
 
@@ -2376,7 +2376,7 @@ let About = lazy(() => import('./pages/About'))
   - componentDidUpdate
   - componentWillUnmount
 
-##### 3.5ref hook
+##### 3.5 useRef
 
 - ref hook可以在函数组件中存储/查找组件内的标签或其他数据
 
@@ -2393,6 +2393,34 @@ let About = lazy(() => import('./pages/About'))
   <input type="text" ref={myRef} onKeyUp={show}/>
   
   ```
+
+##### 3.6 useMemo
+
+- 记忆计算结果
+- 有助于避免在每次渲染时都进行高开销的计算
+- 可以把useMemo作为性能优化的手段，但是不要把它当做语义上的保证
+
+```js
+let isAdult = useMemo(() => {
+    console.log(1)
+    return age > 18 ? '成年' : '未成年'
+  }, [age <= 18])
+```
+
+##### 3.7 useCallback
+
+- 是useMemo的升级版本
+
+```js
+const memoizedCallback = useCallback(
+  () => {
+    doSomething(a, b);
+  },
+  [a, b],
+)
+```
+
+
 
 #### 4.Fragment
 

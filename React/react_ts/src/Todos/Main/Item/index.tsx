@@ -1,7 +1,4 @@
-interface ITodo {
-  id: string
-  name: string
-}
+import { ITodo } from '@/Interfaces'
 export default function Item(props: { item: ITodo }) {
   let { item } = props
   return (

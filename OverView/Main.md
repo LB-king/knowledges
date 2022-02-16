@@ -3246,6 +3246,55 @@ ReactDOM.render(
 )
 ```
 
+#### 1.把interface抽离到一个文件
+
+新建`index.ts`
+
+```typescript
+export interface Icommom {
+  name: string,
+  age: number
+}
+```
+
+#### 2.创建别名@
+
+在`vite.config.ts`中配置
+
+```ts
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+const path = require('path')
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [react()],
+  resolve: {
+    alias: [
+      {
+        find: '@',
+        replacement: path.resolve(__dirname, 'src')
+      }
+    ]
+  }
+})
+```
+
+配置完之后，在项目中使用别名会有红波浪线提示，消除提示，按如下步骤：
+
+在`tsconfig.json`配置中添加如下配置
+
+```json
+{
+  "compilerOptions": {
+    ...
+    "baseUrl": "./src",
+    "paths": {
+      "@/*": ["./*"]
+    }
+  }
+}
+```
+
 
 
 ### Solidjs
