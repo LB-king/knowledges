@@ -2330,7 +2330,7 @@ tsc --init #生成配置文件
 
 `终端`->`运行任务`->`typescript`
 
-vscode报错无法执行的问题
+**vscode报错无法执行的问题**
 
 ```
 无法加载文件 D:\nodejs\node_global\tsc.ps1，因为在此系统上禁止运行脚本…
@@ -2343,6 +2343,94 @@ vscode报错无法执行的问题
 > 3.再执行：`set-ExecutionPolicy RemoteSigned`，就显示`RemoteSigned`
 >
 > 4.执行1，会发现状态已改变，此时可以了
+
+#### 2.数组的定义
+
+第一种
+
+```ts
+let arr: number[] = [1, 2, 3]
+let arr: [number, string] = [11, 'ui']
+```
+
+第二种
+
+```ts
+let arr: Array<number> = [1, 2, 3]
+let arr: Array<number | string> = [11, 'ui']
+```
+
+第三种
+
+```ts
+let arr: any = [11, 33, 'hello']
+```
+
+元祖类型(tuple)-固定长度的数组
+
+```ts
+let arr: [number, string, boolean] = [11, 'str', true]
+```
+
+#### 3.any
+
+```ts
+let box: any = document.getElementById('box');
+box.style.color = 'red';
+```
+
+#### 4.枚举类型
+
+```ts
+enum colors {
+  red,
+  blue = 99,
+  green
+}
+console.log(colors.green) //100,没有赋值则返回索引值
+//如果blue不是数值，则其后面的green也需要赋值，否则报错
+
+```
+
+#### 5.void
+
+- 表示没有任何类型，一般用于定义方法的时候方法没有返回值
+
+```ts
+function fn(): void {
+  console.log('fn')
+}
+fn()
+```
+
+- 有返回值,则需要定义返回值的类型
+
+```ts
+function fn(): string {
+  console.log('fn')
+  return 'str'
+}
+fn()
+```
+
+#### 6.never
+
+```ts
+function fn():never {
+  throw new Error('报错')
+}
+//永远不会返回结果
+```
+
+
+
+
+
+
+
+
+
+
 
 ### Vue2
 
