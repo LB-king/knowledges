@@ -1,16 +1,15 @@
 import { Component, createContext } from 'react'
-
-
-
 let { Provider, Consumer } = createContext()
 interface IProps {
   info: string
 }
+
 class Child extends Component {
   render() {
     return (
       <Consumer>
         {(context) => {
+          console.log(context)
           return <h4>这是child组件，祖父组件的信息是：{context.info}</h4>
         }}
       </Consumer>

@@ -17,5 +17,5 @@ let num:number = 18
 
 // strictNullChecks:true 检查可能为null
 var box = document.getElementById('kk')
-box.style.color = 'red'
+if (box) box.style.color = 'red'
 

@@ -2318,6 +2318,32 @@ Function.prototype.myBind = function(obj, ...params) {
 
 ### TypeScript
 
+#### 1.安装
+
+```shell
+npm install typescript -g
+tsc -v #查看是否安装成功
+tsc --init #生成配置文件
+```
+
+在vscode中自动编译生成js
+
+`终端`->`运行任务`->`typescript`
+
+vscode报错无法执行的问题
+
+```
+无法加载文件 D:\nodejs\node_global\tsc.ps1，因为在此系统上禁止运行脚本…
+```
+
+> 1.以管理员身份运行vscode
+>
+> 2.`get-ExecutionPolicy`,显示`Restricted`，表示状态是禁止的
+>
+> 3.再执行：`set-ExecutionPolicy RemoteSigned`，就显示`RemoteSigned`
+>
+> 4.执行1，会发现状态已改变，此时可以了
+
 ### Vue2
 
 #### Object.defineProperty

@@ -29,7 +29,7 @@ function Void() {
 Void();
 function getInfo(name, age) {
     if (age === void 0) { age = 88; }
-    return name + "---" + age;
+    return "".concat(name, "---").concat(age);
 }
 console.log(getInfo('KG'));
 var un;
