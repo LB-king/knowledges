@@ -2422,6 +2422,109 @@ function fn():never {
 //永远不会返回结果
 ```
 
+#### 7.函数
+
+可选参数(可选参数放后面)
+
+```ts
+function getInfo(name: string, age?: number): string {
+  if (age === undefined) return name + '年龄保密'
+  return name + age
+}
+```
+
+默认参数
+
+```ts
+function getInfo(name: string, age: number = 12): string {
+  if (age === undefined) return name + '年龄保密'
+  return name + age
+}
+```
+
+剩余参数
+
+```ts
+function sum(...res: number[]) {
+  return res.reduce((cur, acc) => cur + acc)
+}
+console.log(sum(1, 2, 3, 4, 88))
+```
+
+函数重载
+
+> java中方法的重载：指的是两个或者两个以上同名函数，但是它们的参数不一样，这时会出现函数重载的情况
+>
+> ts中的重载：通过为同一个函数提供多个函数类型定义来试下多种功能的目的
+
+```ts
+function run(name: string): string
+function run(age: number): number
+function run(str: any): any {
+  if (typeof str === 'string') {
+    return `传入的是字符串：${str}`
+  } else {
+    return `传入的是数值：${str}`
+  }
+}
+```
+
+#### 8.类
+
+ts中定义类
+
+```js
+class Person {
+  name: string
+  run():void {
+    console.log('run')
+  }
+  constructor(name: string) {
+    this.name = name
+  }
+}
+
+let p = new Person('花满楼')
+p.run()
+```
+
+继承
+
+```ts
+class Person {
+  name: string
+  run(): void {
+    console.log(`${this.name}在跑步~~~`)
+  }
+  constructor(name: string) {
+    this.name = name
+  }
+}
+//使用extends和super实现
+class Man extends Person {
+  constructor(name: string) {
+    super(name)
+  }
+}
+
+let m = new Man('man')
+m.run()
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
