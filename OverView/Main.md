@@ -2615,11 +2615,31 @@ class Dog extends Animal {
 }
 ```
 
+#### 9.接口
 
+接口的作用：在面向对象的编程中，接口是一种规范的定义，它定义了行为和动作的规范，在程序设计里面，接口起到一种限制和规范的作用
 
+1. 属性接口
 
+```ts
+interface IFullName {
+  firstName: string
+  lastName: string
+  //可选属性
+  age?: number
+}
 
-
+function getInfo(nameObj: IFullName) {
+  if(nameObj.age === undefined) return 'no age'
+  return (nameObj.firstName + nameObj.lastName)
+}
+let n = {
+  firstName: 'FIRST',
+  lastName: 'LAST',
+  // age: 99
+}
+console.log(getInfo(n))
+```
 
 
 

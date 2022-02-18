@@ -162,3 +162,14 @@ git branch --track remotes/origin/ding # 切换远程分支
 cat .git/HEAD
 ```
 
+#### 14.忽略已经提交过的文件
+
+这里就是忽略js这个文件夹
+
+```shell
+git rm -r --cached OverView/code/js/
+git add .
+git commit -m"xxx"
+git push origin master
+```
+
