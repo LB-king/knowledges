@@ -2619,7 +2619,7 @@ class Dog extends Animal {
 
 接口的作用：在面向对象的编程中，接口是一种规范的定义，它定义了行为和动作的规范，在程序设计里面，接口起到一种限制和规范的作用
 
-1. 属性接口
+##### 1.属性接口
 
 ```ts
 interface IFullName {
@@ -2641,9 +2641,139 @@ let n = {
 console.log(getInfo(n))
 ```
 
+##### 2.函数类型接口
 
+对方法传入的参数以及返回值进行约束
 
+```ts
+interface encrypt {
+  (key: string, value: string): string
+}
 
+let md5: encrypt = function (key: string, value: string) {
+  return key + value
+}
+console.log(md5('name', '犀牛'))
+
+let sha1: encrypt = function (key: string, value: string) {
+  return key + value + 'xxxx'
+}
+console.log(sha1('name', '犀牛'))
+```
+
+##### 3.可索引接口
+
+对数组和对象的约束
+
+```ts
+//约束数组
+interface UserArr {
+  [index: number]: string
+}
+let arr: UserArr = ['AAA', 'BBB']
+//约束对象
+interface UserObj {
+  [index: string]: string
+}
+let arr1:UserObj = {
+  name: 'xx',
+  favs: 'ball'
+}
+```
+
+##### 4.类类型接口
+
+注意`implements`执行 关键字
+
+```ts
+interface IAnimal {
+  name: string
+  eat(str: string): void
+}
+class Dog implements IAnimal {
+  name: string
+  constructor(name: string) {
+    this.name = name
+  }
+  eat() {
+    console.log(this.name)
+  }
+}
+var d = new Dog('旺财')
+d.eat()
+```
+
+##### 5.接口继承
+
+```ts
+interface IAnimal {
+  eat(): void
+}
+interface IPerson extends IAnimal {
+  work(): void
+}
+class Person {
+  run() {
+    console.log('run')
+  }
+}
+//extends-类继承    implements-接口继承
+class Man extends Person implements IPerson {
+  eat() {
+    console.log('eat')
+  }
+  work() {
+    console.log('work')
+  }
+}
+let m = new Man()
+m.eat()
+m.work()
+m.run()
+```
+
+#### 10.泛型
+
+软件工程中，我们不仅要创建一致的定义良好的API,同时也要考虑可重用性。组件不仅能够支持当前数据类型，同时也能支持未来的数据类型，这在创建大型系统时为你提供了十分灵活的功能
+
+`泛型就是解决类接口方法的重用性，以及对不确定数据类型的支持`
+
+T表示泛型，具体什么类型是调用这个方法的时候决定的,这个大写的T可以用其他任意大写字母代替
+
+```ts
+function getData<T>(value: T): T {
+  return value
+}
+console.log(getData<string>('hooks'))
+console.log(getData<number>(9))
+```
+
+```ts
+class MinClass<T> {
+  list: T[] = []
+  add(n: T): void {
+    this.list.push(n)
+  }
+  min(): T {
+    let res = this.list[0]
+    this.list.forEach((item) => {
+      if (item < res) res = item
+    })
+    return res
+  }
+}
+var m1 = new MinClass<number>()
+m1.add(1)
+m1.add(4)
+m1.add(44)
+console.log(m1.min())
+var m2 = new MinClass<string>()
+m2.add('AA')
+m2.add('BB')
+m2.add('CC')
+console.log(m2.min())
+
+```
 
 
 

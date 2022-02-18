@@ -1,47 +1,41 @@
-// interface IFullName {
-//   firstName: string
-//   lastName: string
-//   //可选属性
-//   age?: number
+//只能返回string
+// function getData(value: string): string {
+//   return value
 // }
 
-// function getInfo(nameObj: IFullName) {
-//   if(nameObj.age === undefined) return 'no age'
-//   return (nameObj.firstName + nameObj.lastName)
+//同时返回string和number,不考虑any
+//传number返回number   传string返回string
+//泛型支持不特定的数据类型
+//T表示泛型，具体什么类型是调用这个方法的时候决定的,这个大写的T可以用其他任意大写字母代替
+// function getData<T>(value: T): T {
+//   return value
 // }
-// let n = {
-//   firstName: 'FIRST',
-//   lastName: 'LAST',
-//   // age: 99
-// }
-// console.log(getInfo(n))
 
-//封装一个简易版本的ajax
-interface Config {
-  method: string
-  url: string
-  data?: string
-  // dataType: string
-}
+// console.log(getData<string>('hooks'))
+// console.log(getData<number>(9))
 
-function Ajax(config: Config) {
-  let xhr = new XMLHttpRequest()
-  xhr.open(config.method, config.url)
- 
-
-  xhr.onreadystatechange = function () {
-    if (xhr.readyState === 4 && xhr.status === 200) {
-      console.log('success')
-      console.log(xhr.responseText)
-    }
+//泛型类
+class MinClass<T> {
+  list: T[] = []
+  add(n: T): void {
+    this.list.push(n)
   }
-  xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
-  xhr.send(config.data)
+  min(): T {
+    let res = this.list[0]
+    this.list.forEach((item) => {
+      if (item < res) res = item
+    })
+    return res
+  }
 }
-//此处可封装data
-Ajax({
-  method: 'get',
-  url: `https://api.github.com/search/users?q=ok`,
-  // data: 'q=kk',
-  // dataType: 'javascript/json'
-})
+
+var m1 = new MinClass<number>()
+m1.add(1)
+m1.add(4)
+m1.add(44)
+console.log(m1.min())
+var m2 = new MinClass<string>()
+m2.add('AA')
+m2.add('BB')
+m2.add('CC')
+console.log(m2.min())
