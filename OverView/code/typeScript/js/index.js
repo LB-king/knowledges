@@ -44,26 +44,81 @@ var __extends = (this && this.__extends) || (function () {
 // }
 // let m = new Man('man')
 // m.run()
-//类中的修饰符 
+//类中的修饰符
 // public  公有，在类里面 子类，类外面都可以访问
 // protected 保护类型 在类里面，子类里可以访问，在类外部没法访问
 // private  私有  在类里面可以访问，子类 类外面没法访问
 // 不加修饰符，则默认public
-var Person = /** @class */ (function () {
-    function Person(name) {
+// class Person {
+//   private name: string
+//   run(): void {
+//     console.log(`${this.name}在跑步~~~`)
+//   }
+//   constructor(name: string) {
+//     this.name = name
+//   }
+// }
+// let p = new Person('xx')
+// console.log(p.name)
+// //Man是Person的子类
+// class Man extends Person {
+//   constructor(name: string) {
+//     super(name)
+//   }
+//   say() {
+//     console.log(this.name)
+//   }
+// }
+// let m = new Man('man')
+// console.log(m.name)
+//静态方法&实例方法
+//es5
+//ts静态方法
+// function Person() {}
+// Person.say = function () {}
+// class Person {
+//   name: string
+//   constructor(name: string) {
+//     this.name = name
+//   }
+//   static speak() {
+//     console.log('静态方法')
+//   }
+//   run(): void {
+//     console.log(`${this.name}在跑步~~~`)
+//   }
+// }
+// let p = new Person('xx')
+// Person.speak()
+//多态
+var Animal = /** @class */ (function () {
+    function Animal(name) {
         this.name = name;
     }
-    Person.prototype.run = function () {
-        console.log(this.name + "\u5728\u8DD1\u6B65~~~");
-    };
-    return Person;
+    Animal.prototype.eat = function () { };
+    return Animal;
 }());
-var Man = /** @class */ (function (_super) {
-    __extends(Man, _super);
-    function Man(name) {
+var Dog = /** @class */ (function (_super) {
+    __extends(Dog, _super);
+    function Dog(name) {
         return _super.call(this, name) || this;
     }
-    return Man;
-}(Person));
-var m = new Man('man');
-m.run();
+    Dog.prototype.eat = function () {
+        return this.name + '喜欢吃肉';
+    };
+    return Dog;
+}(Animal));
+var d = new Dog('旺财');
+console.log(d.eat());
+var Cat = /** @class */ (function (_super) {
+    __extends(Cat, _super);
+    function Cat(name) {
+        return _super.call(this, name) || this;
+    }
+    Cat.prototype.eat = function () {
+        return this.name + '喜欢吃鱼';
+    };
+    return Cat;
+}(Animal));
+var c = new Cat('花花');
+console.log(c.eat());

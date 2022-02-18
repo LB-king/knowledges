@@ -36,26 +36,85 @@
 // let m = new Man('man')
 // m.run()
 
-//类中的修饰符 
+//类中的修饰符
 // public  公有，在类里面 子类，类外面都可以访问
 // protected 保护类型 在类里面，子类里可以访问，在类外部没法访问
 // private  私有  在类里面可以访问，子类 类外面没法访问
 // 不加修饰符，则默认public
-class Person {
-  public name: string
-  run(): void {
-    console.log(`${this.name}在跑步~~~`)
-  }
+// class Person {
+//   private name: string
+//   run(): void {
+//     console.log(`${this.name}在跑步~~~`)
+//   }
+//   constructor(name: string) {
+//     this.name = name
+//   }
+// }
+// let p = new Person('xx')
+// console.log(p.name)
+// //Man是Person的子类
+// class Man extends Person {
+//   constructor(name: string) {
+//     super(name)
+//   }
+//   say() {
+//     console.log(this.name)
+//   }
+// }
+
+// let m = new Man('man')
+// console.log(m.name)
+
+//静态方法&实例方法
+//es5
+//ts静态方法
+// function Person() {}
+// Person.say = function () {}
+// class Person {
+//   name: string
+//   constructor(name: string) {
+//     this.name = name
+//   }
+//   static speak() {
+//     console.log('静态方法')
+//   }
+//   run(): void {
+//     console.log(`${this.name}在跑步~~~`)
+//   }
+// }
+
+// let p = new Person('xx')
+// Person.speak()
+
+//多态
+class Animal {
+  name: string
   constructor(name: string) {
     this.name = name
   }
+  eat() {}
 }
 
-class Man extends Person {
+class Dog extends Animal {
   constructor(name: string) {
     super(name)
   }
+  eat() {
+    return this.name + '喜欢吃肉'
+  }
 }
 
-let m = new Man('man')
-m.run()
+let d = new Dog('旺财')
+console.log(d.eat())
+
+class Cat extends Animal {
+  constructor(name: string) {
+    super(name)
+  }
+  eat() {
+    return this.name + '喜欢吃鱼'
+  }
+}
+
+let c = new Cat('花花')
+console.log(c.eat())

@@ -2471,7 +2471,7 @@ function run(str: any): any {
 
 #### 8.类
 
-ts中定义类
+##### 8.1 ts中定义类
 
 ```js
 class Person {
@@ -2488,7 +2488,7 @@ let p = new Person('花满楼')
 p.run()
 ```
 
-继承
+##### 8.2 继承
 
 ```ts
 class Person {
@@ -2511,9 +2511,85 @@ let m = new Man('man')
 m.run()
 ```
 
+##### 8.3 类中的修饰符
 
+- `public` 默认的，公有属性：类自身，子类，类外面可以访问
 
+- `protected`  保护类型：在类里面，子类可以访问，在类外部没法访问
 
+  ```ts
+  class Person{
+    protected name: string
+  }
+  var p = new Person //此处为类的外部，访问name会报错
+  //Person的子类是Man
+  class Man extends Person{} //Man是Persn的子类，可以访问name
+  ```
+
+- `private`  私有属性：在类里面可以访问，子类和类外面没法访问
+
+  ```ts
+  class Person{
+    private name: string
+  }
+  var p = new Person //此处为类的外部，访问name会报错
+  //Person的子类是Man
+  class Man extends Person{} //Man是Persn的子类，访问name也会报错
+  ```
+
+##### 8.4 静态方法
+
+在类的实例方法前添加`static`关键字
+
+```ts
+class Person {
+  static speak() {
+    console.log('静态方法')
+  }
+}
+
+Person.speak()
+```
+
+##### 8.5 多态
+
+父类定义一个方法不去实现，让继承它的子类去实现，每一个子类有不同的表现
+
+是继承的表现
+
+```ts
+class Animal {
+  name: string
+  constructor(name: string) {
+    this.name = name
+  }
+  eat() {}
+}
+
+class Dog extends Animal {
+  constructor(name: string) {
+    super(name)
+  }
+  eat() {
+    return this.name + '喜欢吃肉'
+  }
+}
+
+let d = new Dog('旺财')
+console.log(d.eat())
+
+class Cat extends Animal {
+  constructor(name: string) {
+    super(name)
+  }
+  eat() {
+    return this.name + '喜欢吃鱼'
+  }
+}
+
+let c = new Cat('花花')
+console.log(c.eat())
+```
 
 
 
