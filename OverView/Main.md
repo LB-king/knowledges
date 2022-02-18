@@ -2591,6 +2591,36 @@ let c = new Cat('花花')
 console.log(c.eat())
 ```
 
+##### 8.6抽象类
+
+它是提供其他类继承的基类，不能直接被实例化
+
+用`abstract`关键字定义抽象类和抽象方法，抽象类中的抽象方法不包含具体实现并且必须在派生类中实现
+
+抽象方法只能放在抽象方法中
+
+**抽象类的子类中必须实现抽象类里面的抽象方法，就是eat必须有**
+
+```ts
+abstract class Animal {
+  //抽象方法
+  abstract eat(): any
+}
+// let a = new Animal() // 无法创建抽象类的实例
+class Dog extends Animal {
+  //抽象类的子类中必须实现抽象类里面的抽象方法，就是eat必须有
+  eat() {
+    console.log('eat')
+  }
+}
+```
+
+
+
+
+
+
+
 
 
 

@@ -1,4 +1,3 @@
-"use strict";
 //类
 //es5---使用构造函数,静态方法，实例方法，原型链方法
 // class Person {
@@ -10,21 +9,10 @@
 //     this.name = name
 //   }
 // }
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
+
 // let p = new Person('花满楼')
 // p.run()
+
 //2.ts中实现继承 extends   super
 // class Person {
 //   name: string
@@ -35,15 +23,19 @@ var __extends = (this && this.__extends) || (function () {
 //     this.name = name
 //   }
 // }
+
 // let p = new Person('路西法')
 // p.run()
+
 // class Man extends Person {
 //   constructor(name: string) {
 //     super(name)
 //   }
 // }
+
 // let m = new Man('man')
 // m.run()
+
 //类中的修饰符
 // public  公有，在类里面 子类，类外面都可以访问
 // protected 保护类型 在类里面，子类里可以访问，在类外部没法访问
@@ -69,8 +61,10 @@ var __extends = (this && this.__extends) || (function () {
 //     console.log(this.name)
 //   }
 // }
+
 // let m = new Man('man')
 // console.log(m.name)
+
 //静态方法&实例方法
 //es5
 //ts静态方法
@@ -88,37 +82,52 @@ var __extends = (this && this.__extends) || (function () {
 //     console.log(`${this.name}在跑步~~~`)
 //   }
 // }
+
 // let p = new Person('xx')
 // Person.speak()
+
 //多态
-var Animal = /** @class */ (function () {
-    function Animal(name) {
-        this.name = name;
-    }
-    Animal.prototype.eat = function () { };
-    return Animal;
-}());
-var Dog = /** @class */ (function (_super) {
-    __extends(Dog, _super);
-    function Dog(name) {
-        return _super.call(this, name) || this;
-    }
-    Dog.prototype.eat = function () {
-        return this.name + '喜欢吃肉';
-    };
-    return Dog;
-}(Animal));
-var d = new Dog('旺财');
-console.log(d.eat());
-var Cat = /** @class */ (function (_super) {
-    __extends(Cat, _super);
-    function Cat(name) {
-        return _super.call(this, name) || this;
-    }
-    Cat.prototype.eat = function () {
-        return this.name + '喜欢吃鱼';
-    };
-    return Cat;
-}(Animal));
-var c = new Cat('花花');
-console.log(c.eat());
+// class Animal {
+//   name: string
+//   constructor(name: string) {
+//     this.name = name
+//   }
+//   eat() {}
+// }
+
+// class Dog extends Animal {
+//   constructor(name: string) {
+//     super(name)
+//   }
+//   eat() {
+//     return this.name + '喜欢吃肉'
+//   }
+// }
+
+// let d = new Dog('旺财')
+// console.log(d.eat())
+
+// class Cat extends Animal {
+//   constructor(name: string) {
+//     super(name)
+//   }
+//   eat() {
+//     return this.name + '喜欢吃鱼'
+//   }
+// }
+
+// let c = new Cat('花花')
+// console.log(c.eat())
+
+//抽象类
+// abstract class Animal {
+//   //抽象方法
+//   abstract eat(): any
+// }
+// // let a = new Animal() // 无法创建抽象类的实例
+// class Dog extends Animal {
+//   //抽象类的子类中必须实现抽象类里面的抽象方法，就是eat必须有
+//   eat() {
+//     console.log('eat')
+//   }
+// }
