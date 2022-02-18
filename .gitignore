@@ -1,7 +1,7 @@
 .DS_Store
 node_modules
 */dist
-*/OverView/code/typeScript/js
+OverView/code/typeScript/js
 
 # local env files
 .env.local
