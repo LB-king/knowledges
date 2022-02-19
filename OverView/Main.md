@@ -4114,6 +4114,66 @@ Circle CI
    import anyName from 'utils.js'
    ```
 
+#### 3.首屏优化 
+
+首屏加载时间，指的是浏览器从响应用户输入网址，到首屏内容渲染完成的时间，此时整个网页不一定全部渲染完成，但是要展示当前视窗需要的内容，首屏加载是用户体验的重要环节。
+
+问题：如何获取首屏加载的时间？
+
+```js
+(performance.timing.domComplete - performance.timing.navigationStart)/1000   //单位是ms
+```
+
+解决方案：
+
+1. 减少入口文件体积，常用的手段是**路由懒加载**，只有在解析路由的时候才会加载组件
+
+   ```js
+   component: () => import('./componets/xxx.js')
+   ```
+
+2. 静态资源本地存储
+
+   > - 后端资源返回：采用HTTP缓存
+   >
+   > - 前端合理利用localStorage
+   >
+   > - CDN静态资源缓存
+   >
+   >   react ，react-dom，axios
+   >
+   >   在index.html中使用link&script引入。对应的文件也要做一些修改
+
+3. UI框架按需加载
+
+4. 避免组件重复打包
+
+   假设A.js文件是一个常用的库，现在有多个路由使用A.js，这样就造成了重复下载。
+
+   解决方案：在webpack的配置中，修改CommonsChunkPlugin的配置minChunks：2
+
+   minChunks会把使用2次以上的包抽离出来，放进公共依赖文件中，避免了重复加载组件 
+
+5. 图片资源压缩，对于icon可以使用字体库，或者雪碧图，将众多小图标合并到一张图上，减轻http请求的压力
+
+6. 开启GZip压缩
+
+   拆完包之后再用gzip压缩一下，安装`compression-webpack-plugin`
+
+   ```js
+   const GZIP = require('compression-webpack-plugin')
+   const GzipExtensions = ['js', 'css']
+   ...
+   new GZIP({
+     algorithm: 'gzip',
+     test: new RegExp('\\.('+GzipExtensions.join('|')+')$'),
+     threshold: 10240,
+     minRatio: 0.8
+   })
+   ```
+
+   
+
 
 ### 安全问题
 
