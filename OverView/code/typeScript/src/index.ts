@@ -41,15 +41,39 @@
 // console.log(m2.min())
 
 //函数类型接口
-interface IConfigFn {
-  (name: string, age: number): string
-}
-
-// function getInfo(name: string, age: number): string {
-//   return name + age
+// interface IConfigFn {
+//   (name: string, age: number): string
 // }
 
-var getInfo: IConfigFn = function (name: string, age: number): string {
-  return name + age
+// // function getInfo(name: string, age: number): string {
+// //   return name + age
+// // }
+
+// var getInfo: IConfigFn = function (name: string, age: number): string {
+//   return name + age
+// }
+// console.log(getInfo('牛犇', 1))
+
+//泛型接口-1
+// interface configFn {
+//   <T>(value: T): T
+// }
+
+// let getData: configFn = function <T>(value: T): T {
+//   return value
+// }
+
+// console.log(getData<string>('xxx'))
+// console.log(getData<number>(18))
+
+//泛型接口-2
+interface ConfigFn<T> {
+  (value: T): T
 }
-console.log(getInfo('牛犇', 8))
+
+function getData<T>(value: T): T {
+  return value
+}
+
+let myGetData: ConfigFn<string> = getData
+console.log(myGetData('hello'))
