@@ -2775,6 +2775,59 @@ console.log(m2.min())
 
 ```
 
+```ts
+class User {
+  name: string | undefined
+  pass: string | undefined
+  constructor(name: string, pass: string) {
+    this.name = name
+    this.pass = pass
+  }
+}
+let u = new User('admin', '123456')
+//泛型类
+class MySql<T> {
+  add(user: T): boolean {
+    return true
+  }
+}
+let DB = new MySql<User>()
+DB.add(u)
+```
+
+#### 11.命名空间
+
+命名空间：内部模块，主要用于组织代码，避免命名冲突
+
+模块：ts的外部模块的简称，侧重代码的复用，一个模块里可能会有多个命名空间
+
+```ts
+//a.ts
+export namespace A {
+  class Animal {...}
+} 
+
+//index.ts
+import { A } from './a.ts'
+A.Animal()
+```
+
+#### 12.装饰器
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
