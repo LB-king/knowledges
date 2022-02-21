@@ -1,3 +1,4 @@
+//泛型
 //只能返回string
 // function getData(value: string): string {
 //   return value

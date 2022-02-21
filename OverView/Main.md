@@ -2318,6 +2318,33 @@ Function.prototype.myBind = function(obj, ...params) {
 
 ### TypeScript
 
+#### 项目配置
+
+`tsconfig.json`
+
+```json
+{
+  "compilerOptions": {
+    /* Basic Options */
+    // "incremental": true,                   /* Enable incremental compilation */
+    "target": "es5",                          /* Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018', 'ES2019', 'ES2020', or 'ESNEXT'. */
+    "module": "commonjs",                     /* Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', 'es2020', or 'ESNext'. */
+    "outDir": "./js",                        /* Redirect output structure to the directory. */
+    /* Strict Type-Checking Options */
+    "strict": true,                           /* Enable all strict type-checking options. */
+  
+    "esModuleInterop": true,                  /* Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects for all imports. Implies 'allowSyntheticDefaultImports'. */
+    /* Experimental Options */
+     "experimentalDecorators": true,        /* 支持装饰器 Enables experimental support for ES7 decorators. */
+   
+    "forceConsistentCasingInFileNames": true  /* Disallow inconsistently-cased references to the same file. */
+  }
+}
+
+```
+
+
+
 #### 1.安装
 
 ```shell
@@ -2814,9 +2841,58 @@ A.Animal()
 
 #### 12.装饰器
 
+装饰器是一种特殊类型的声明，它能够被附加到类声明，方法，属性或参数上，可以修改类的行为
 
+> 通俗的讲，装饰器就是一个方法，可以注入到类，方法，属性参数上来扩展类，属性，方法参数的功能
+>
+> 常见装饰器：`类装饰器`、`属性装饰器`、`方法装饰器`、`参数装饰器`
+>
+> 装饰器的写法：`普通装饰器(无法传参)`,`装饰器工厂(可传参)`
 
+普通装饰器(无法传参)
 
+```ts
+function logClass(params: any) {
+  console.log(params) //params就是HttpClient这个类,所以可以在params上扩展这个类的属性和方法
+  params.prototype.apiURL = 'xxx'
+  params.prototype.run = function (): void {
+    console.log('RUN')
+  }
+}
+
+@logClass
+class HttpClient {
+  constructor() {}
+  getData() {}
+}
+
+let h: any = new HttpClient()
+console.log(h.apiURL)
+h.run()
+```
+
+装饰器工厂(可传参)
+
+```ts
+function logClass(params: any) {
+  console.log(params) //params就是HttpClient这个类,所以可以在params上扩展这个类的属性和方法
+  return function (target: any) {
+    console.log(target)
+    target.prototype.run = function () {
+      console.log('RUN~~~')
+    }
+  }
+}
+//注意2种写法的区别
+@logClass('工厂参数')
+class HttpClient {
+  constructor() {}
+  getData() {}
+}
+
+let h: any = new HttpClient()
+h.run()
+```
 
 
 
