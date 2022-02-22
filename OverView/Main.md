@@ -2849,54 +2849,163 @@ A.Animal()
 >
 > 装饰器的写法：`普通装饰器(无法传参)`,`装饰器工厂(可传参)`
 
-普通装饰器(无法传参)
+##### 1.1类装饰器-普通装饰器(不传参数)
 
 ```ts
 function logClass(params: any) {
-  console.log(params) //params就是HttpClient这个类,所以可以在params上扩展这个类的属性和方法
-  params.prototype.apiURL = 'xxx'
-  params.prototype.run = function (): void {
-    console.log('RUN')
+  //params就是Animal类，所以可以在其原型上扩展属性和方法
+  params.prototype.say = () => {}
+}
+@logClass
+class Animal {
+  name: string
+  constructor(name: string) {
+    this.name = name
   }
 }
-
-@logClass
-class HttpClient {
-  constructor() {}
-  getData() {}
-}
-
-let h: any = new HttpClient()
-console.log(h.apiURL)
-h.run()
+var a: any = new Animal('犀牛')
+a.say()
 ```
 
-装饰器工厂(可传参)
+##### 1.2类装饰器-装饰器工厂(传参)
+
+```ts
+function logClass(params: string) { //params指的是传入的参数
+  return function(target) {//target指的是Animal这个类
+    target.prototype.content = params
+  }
+}
+@logClass('我是装饰器的参数')
+class Animal {
+  name: string
+  constructor(name) {
+    this.name = name
+  }
+}
+var a = new Animal('犀牛')
+console.log(a.content)
+```
+
+##### 1.3类装饰器重载
+
+就是重新定义类中的属性和方法
 
 ```ts
 function logClass(params: any) {
-  console.log(params) //params就是HttpClient这个类,所以可以在params上扩展这个类的属性和方法
-  return function (target: any) {
-    console.log(target)
-    target.prototype.run = function () {
-      console.log('RUN~~~')
+  return class extends params {
+    name: string
+    constructor() {
+      super()
+      this.name = '修改后的名字'
+    }
+    walk() {
+      console.log(this.name + 'xxxxxx')
     }
   }
 }
-//注意2种写法的区别
-@logClass('工厂参数')
-class HttpClient {
-  constructor() {}
-  getData() {}
+@logClass
+class Animal {
+  name: string
+  constructor(name: string) {
+    this.name = name
+  }
+  walk() {
+    console.log(this.name)
+  }
 }
+var a = new Animal('犀牛')
+a.walk()
+```
 
-let h: any = new HttpClient()
-h.run()
+##### 2.1属性装饰器
+
+属性装饰器会在运行时当做函数被调用，并传入2个参数：
+
+> 1.对于静态成员来说是类的构造函数|对于实力成员来说是类的原型对象
+>
+> 2.成员的名字
+
+```ts
+function logClass(params: any) {
+  //params就是Animal类，所以可以在其原型上扩展属性和方法
+  params.prototype.say = () => {}
+}
+//属性装饰器
+function logProps(params: any) {
+  return function (target: any, propName: any) {
+    console.log(params) //属性装饰器传递的参数
+    console.log(target) //类的构造函数
+    console.log(propName) //属性名称
+    target[propName] = params //在这里可以修改属性的值了
+  }
+}
+@logClass
+class Animal {
+  name: string
+  @logProps('www.baidu.com')
+  propsTest: string | undefined
+  constructor(name: string) {
+    this.name = name
+  }
+  getData() {
+    console.log(this.propsTest)
+  }
+}
+var a: any = new Animal('犀牛')
+a.getData()
 ```
 
 
 
+##### 3.方法装饰器
 
+有3个参数
+
+> 1.对于静态成员来说是类的构造函数，对于实例成员是类的原型对象
+>
+> 2.成员的名字
+>
+> 3.成员的属性描述符
+
+```ts
+function logMethods(params: any) {
+  return function (target: any, attrName: any, desc: any) {
+    //  console.log(target)
+    //  console.log(attrName)
+    //  console.log(desc)
+    //添加属性
+    target.url = 'http://www.baidu.com'
+    //添加方法
+    target.run = function () {
+      console.log(this.name + 'RUNING')
+    }
+    //修改方法,即修改desc.value
+    //保存原来的方法
+    let oMethod = desc.value
+    desc.value = function (...args: any[]) {
+      //原来的方法也会执行，参数会传递过去
+      oMethod.apply(this, args)
+      //全部转换为字符串
+      return [...args].map((item) => `str-${item}`)
+    }
+  }
+}
+class Animal {
+  name: string
+  constructor(name: string) {
+    this.name = name
+  }
+  @logMethods('COOL')
+  getData() {
+    console.log('我是getData内部的方法', this.name)
+  }
+}
+var a: any = new Animal('犀牛')
+// console.log(a.url)
+a.run()
+console.log(a.getData(999, 'xxx'))
+
+```
 
 
 
