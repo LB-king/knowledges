@@ -101,39 +101,58 @@
 // a.getData()
 
 // 3.方法装饰器-有3个参数
-function logMethods(params: any) {
-  return function (target: any, attrName: any, desc: any) {
-    //  console.log(target)
-    //  console.log(attrName)
-    //  console.log(desc)
-    //添加属性
-    target.url = 'http://www.baidu.com'
-    //添加方法
-    target.run = function () {
-      console.log(this.name + 'RUNING')
-    }
-    //修改方法,即修改desc.value
-    //保存原来的方法
-    let oMethod = desc.value
-    desc.value = function (...args: any[]) {
-      //原来的方法也会执行，参数会传递过去
-      oMethod.apply(this, args)
-      //全部转换为字符串
-      return [...args].map((item) => `str-${item}`)
-    }
+// function logMethods(params: any) {
+//   return function (target: any, attrName: any, desc: any) {
+//     //  console.log(target)
+//     //  console.log(attrName)
+//     //  console.log(desc)
+//     //添加属性
+//     target.url = 'http://www.baidu.com'
+//     //添加方法
+//     target.run = function () {
+//       console.log(this.name + 'RUNING')
+//     }
+//     //修改方法,即修改desc.value
+//     //保存原来的方法
+//     let oMethod = desc.value
+//     desc.value = function (...args: any[]) {
+//       //原来的方法也会执行，参数会传递过去
+//       oMethod.apply(this, args)
+//       //全部转换为字符串
+//       return [...args].map((item) => `str-${item}`)
+//     }
+//   }
+// }
+// class Animal {
+//   name: string
+//   constructor(name: string) {
+//     this.name = name
+//   }
+//   @logMethods('COOL')
+//   getData() {
+//     console.log('我是getData内部的方法', this.name)
+//   }
+// }
+// var a: any = new Animal('犀牛')
+// // console.log(a.url)
+// a.run()
+// console.log(a.getData(999, 'xxx'))
+
+// 4.参数装饰器
+function logParams(params: any) {
+  return function (target: any, paramName: any, paramIndex: any) {
+    console.log(target)
+    console.log(paramName)
+    console.log(paramIndex)
+    target.apiUrl = params
   }
 }
+
 class Animal {
-  name: string
-  constructor(name: string) {
-    this.name = name
-  }
-  @logMethods('COOL')
-  getData() {
-    console.log('我是getData内部的方法', this.name)
+  h() {}
+  getData(@logParams('pk') id: string) {
+    console.log('getData内部的方法')
   }
 }
-var a: any = new Animal('犀牛')
-// console.log(a.url)
-a.run()
-console.log(a.getData(999, 'xxx'))
+var a: any = new Animal()
+console.log(a.apiUrl)

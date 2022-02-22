@@ -8,6 +8,7 @@
     <component :is="currentCom"></component>
   </keep-alive>
   <!-- <TodoList></TodoList> -->
+  <div data-mygod="haha" data-one="one" @click="getProps($event),one(),two()">自定义属性</div>
 </template>
 
 <script>
@@ -44,12 +45,25 @@ export default {
       console.log(import.meta.env)
       currentCom.value = item
     }
+    //获取自定义属性
+    function getProps(p) {
+      console.log(p.srcElement.dataset)
+    }
+    function one() {
+      console.log('one')
+    }
+    function two() {
+      console.log('two')
+    }
     let result = {
       count,
       navs,
       currentCom,
       myFn,
-      handleClick
+      handleClick,
+      getProps,
+      one,
+      two,
     }
     return { ...result }
   },

@@ -250,6 +250,36 @@
 
 6. `Custom Render API`
 
+#### 修饰符
+
+1. prevent 阻止默认行为
+
+   ```vue
+   <a href="xx" @click.prevent="handleClick">
+   ```
+
+2. stop 阻止冒泡
+
+3. capture
+
+4. self
+
+5. once
+
+6. passive
+
+#### 按键修饰符
+
+- `.enter`
+- `delete` 返回和删除都可以捕获
+- `.tab`
+- `.esc`
+- `.space`
+- `.up`
+- `down`
+- `left`
+- `right`
+
 #### pug语法
 
 直接安装包就行了

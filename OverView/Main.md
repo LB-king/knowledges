@@ -3007,9 +3007,47 @@ console.log(a.getData(999, 'xxx'))
 
 ```
 
+##### 4.参数装饰器
 
+有三个参数
 
+> 1. 对于静态成员来说是类的构造函数，对于实例成员是类的原型对象
+> 2. 方法的名字
+> 3. 参数在函数列表中的索引
 
+```ts
+function logParams(params: any) {
+  return function (target: any, paramName: any, paramIndex: any) {
+    console.log(target)
+    console.log(paramName)
+    console.log(paramIndex)
+    target.apiUrl = params
+  }
+}
+
+class Animal {
+  h() {}
+  getData(@logParams('pk') id: string) {
+    console.log('getData内部的方法')
+  }
+}
+var a: any = new Animal()
+console.log(a.apiUrl)
+```
+
+##### 5.装饰器的执行顺序
+
+> 属性装饰器
+>
+> 方法装饰器
+>
+> 方法参数装饰器2
+>
+> 方法参数装饰器1
+>
+> 类装饰器2
+>
+> 类装饰器1
 
 
 
