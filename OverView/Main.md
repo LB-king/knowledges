@@ -4032,6 +4032,53 @@ vue组件中使用
 
 使用`Volar`插件支持script 标签中 setup语法糖
 
+#### Teleport
+
+Vue3.x中的组件模板属于该组件，有时候我们想把模板的内容移动到当前组件之外的DOM中，这个时候就可以使用 Teleport。
+
+例如模态框组件
+
+```vue
+<!-- <teleport to="#app"> -->
+<teleport to="body">
+  <div class="modal-wrapper" v-show="visible">
+    <div class="modal-content">
+      <h3>模态框</h3>
+      <button @click="close">点击关闭</button>
+    </div>
+  </div>
+</teleport>
+```
+
+#### 单文件组件
+
+`<script setup>`是在单文件组件 (SFC) 中使用`组合式API`的编译时语法糖，相比于普通的`script`语法，它具有更多优势：
+
+- 更少的样板内容，更简洁的代码
+- 能够使用纯TS声明props和抛出事件
+- 更好的运行时性能
+
+```vue
+<script setup lang="ts">
+  //引入组件后无需注册，直接使用
+  import Modal from './modal.vue'
+  // 变量
+	const msg = 'Hello!'
+  const props = defineProps({
+    visible: Boolean
+  })
+  const emit = defineEmits(['close'])
+  function close() {
+    emit('close')
+  }
+</script>
+
+<template>
+	<p>{{ msg }}</p>
+  <Modal :visible="isShow" @close="close"></Modal>
+</template>
+```
+
 
 
 

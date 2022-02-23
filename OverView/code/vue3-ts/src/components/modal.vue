@@ -1,15 +1,22 @@
 <template>
-  <div class="modal-wrapper">
-    <div class="modal-content">
-      <h3>模态框</h3>
-      <button @click="close">点击关闭</button>
+  <teleport to="body">
+    <div class="modal-wrapper" v-show="visible">
+      <div class="modal-content">
+        <h3>模态框</h3>
+        <button @click="close">点击关闭</button>
+      </div>
     </div>
-  </div>
+  </teleport>
 </template>
 
 <script setup lang="ts">
+const props = defineProps({
+  visible: Boolean
+})
+const emit = defineEmits(['close'])
 function close() {
   console.log('close')
+  emit('close')
 }
 </script>
 
