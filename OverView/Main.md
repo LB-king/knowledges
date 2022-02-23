@@ -3907,6 +3907,155 @@ this.$set(this.arr, [0], 'xxxx')
 
 ### Vue3
 
+#### 搭建项目
+
+```shell
+npm init vite-app <project-name>
+cd <project-name>
+npm install
+npm run dev # 启动项目
+# or use yarn
+yarn create vite-app <project-name>
+cd <project-name>
+yarn
+yarn dev
+```
+
+
+
+#### 属性继承
+
+如果不希望组件的根元素继承 attribute，你可以在组件的选项中设置 `inheritAttrs: false`
+
+子组件
+
+```vue
+<input v-bind="$attrs" />
+```
+
+#### $nextTick
+
+视图完成更新之后才能获取
+
+```js
+{
+  mounted() {
+    let o1 = document.querySelector('#box')
+    o1.innerHtml // old msg
+    this.msg = 'new msg'
+    let o2 = document.querySelector('#box')
+    o2.innerHtml // old msg
+    this.$nextTik(() => {
+       let o3 = document.querySelector('#box')
+    	 o3.innerHtml // new msg
+    })
+  }
+}
+```
+
+#### 全局挂载属性
+
+```js
+import { creatApp } from 'vue'
+import Axios from 'axios'
+import App from './App'
+
+const app = createApp(App)
+app.config.globalProperties.Axios = Axios //其他组件就可以直接this.Axios使用了
+app.mount('#app')
+```
+
+
+
+#### mitt
+
+安装
+
+```shell
+npm install mitt
+```
+
+使用[`model/event.js`]
+
+```js
+import mitt from 'mitt'
+export default mitt()
+```
+
+```js
+import event from './model/event.js'
+//发送、广播
+event.emit('自定义事件名称', '数据')
+//接收信息
+event.on('自定义事件名称', data => {
+  console.log(data) //接收到的数据
+})
+event.off('自定义事件名称')
+```
+
+#### 百度接口：
+
+https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=ui
+
+jsonp形式要加 cb
+
+https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=ui&cb=xxx
+
+#### less
+
+```shell
+yarn add less-loader less --save-dev
+```
+
+新建一个`common.less`
+
+```less
+div {
+  background-color: #bfc;
+}
+// 定义变量
+@base-color: #006fd1;
+```
+
+vue组件中使用
+
+```vue
+<style lang="less">
+@import url(test.less);
+.home {
+  h3 {
+    color: @base-color;
+  }
+}
+</style>
+```
+
+使用`Volar`插件支持script 标签中 setup语法糖
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ### V2和V3区别
 
 #### 1.环境变量
@@ -4059,7 +4208,7 @@ react+ts
 npm init vite@latest my-vue-app --template vue
 
 # npm 7+, 需要额外的双横线：
-npm init vite@latest my-vue-app -- --template vue
+npm init vite@latest my-vue-app --template vue
 
 # yarn
 yarn create vite my-vue-app --template vue
