@@ -1,3 +1,9 @@
+### VSCODE
+
+插件系列
+
+- `Auto Rename Tag` 自动闭合标签
+
 ### CSS
 
 #### 1.清除浮动
@@ -4079,7 +4085,86 @@ Vue3.x中的组件模板属于该组件，有时候我们想把模板的内容�
 </template>
 ```
 
+#### 组合式API
 
+composition-api提供了以下几个函数
+
+- setup
+
+- ref
+
+  > `ref`实现对简单值的监听，其底层的本质是`reactive`,
+  >
+  > `ref(xx) -> reactive({value:xx})`
+  >
+  > 在template模板中直接使用变量名即可
+  >
+  > 在js代码中需要使用**`变量名.value`**
+  >
+  > **Vue解析数据之前，会自动判断这个数据是不是ref类型。会根据数据中的`__v_ref`属性来判断的。也可以根据Vue中封装好的方法来判断 `isRef`  `isReactive`来判断**
+
+- reactive
+
+  参数是对象/数组
+
+  ```vue
+   setup(props) {
+      let title = ref('犀牛')
+      let info = reactive(['AAA'])
+      function handle1() {
+        console.log(title.value)
+        title.value += '+'
+      }
+      function handle2() {
+        console.log(info)
+        info.push('+')
+      }
+      return {
+        title,
+        info,
+        handle1,
+        handle2
+      }
+    }
+  ```
+
+  
+
+- watchEffect
+
+- watch
+
+- computed
+
+- toRefs
+
+  将某个对象的多个属性变成响应式的数据
+
+  结构reactive定义的对象的属性
+
+  ```js
+  import { toRefs } from 'vue'
+  //...
+  export default {
+    setup() {
+      let msg = reactive({
+        desc: '描述信息',
+        num: 99
+      })
+      return {
+        ...toRefs(msg)
+      }
+    }
+  }
+  ```
+
+  ```vue
+  {{ desc }} -- {{ num }}
+  ```
+
+  
+
+- 生命周期的hooks
 
 
 
