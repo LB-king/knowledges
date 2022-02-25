@@ -4136,6 +4136,19 @@ composition-api提供了以下几个函数
 
 - computed
 
+  ```js
+  import { computed } from 'vue'
+  let msg = reactive({
+    firstName: '',
+    lastName: ''
+  })
+  let fullName = computed(() => {
+    return msg.firstName + '--' + msg.lastName
+  })
+  ```
+
+  
+
 - toRefs
 
   将某个对象的多个属性变成响应式的数据
