@@ -3,6 +3,9 @@
 插件系列
 
 - `Auto Rename Tag` 自动闭合标签
+- `Code Runner`
+- `Live Server` 热启动
+- `open in browser` 浏览器打开文件
 
 ### CSS
 
@@ -3883,6 +3886,61 @@ this.$set(this.arr, [0], 'xxxx')
 
 
 
+#### provide/inject传值问题
+
+不是响应的
+
+解决1:传递this
+
+```js
+//祖先
+export default {
+  data() {
+    return {
+      title: 'xxx'
+    }
+  },
+  provide() {
+    return {
+      t1: this
+    }
+  }
+}
+
+//子
+export default {
+  // inject: ['t1']
+  inject: {
+    t1: {
+      default: () => {}
+    }
+  } 
+}
+ 
+//<p>{{t1.title}}</p>
+```
+
+解决2：使用Vue.observeable
+
+```js
+import Vue from 'vue'
+export default {
+  methods: {
+    change() {
+      this.t1.title += '@@'
+    }
+  },
+  provide() {
+    this.t1 = Vue.observable({
+      title: this.title
+    })
+    return {
+      t1: this.t1
+    }
+  },
+}
+```
+
 
 
 
@@ -4132,7 +4190,25 @@ composition-api提供了以下几个函数
 
 - watchEffect
 
+  ```js
+  import { watchEffect, reactive } from 'vue'
+  let data = reactive({
+    count: 0
+  })
+  watchEffect(() => {
+    console.log('count改变了', data.count)
+  })
+  watch(data, (newVal, oldVal) => {
+    console.log('newVal', newVal)
+    console.log('oldVal', oldVal)
+  })
+  ```
+
 - watch
+
+  > - 懒执行，也就是说仅在侦听的源变更时才执行回调
+  > - 更明确哪些状态的改变会触发侦听器重新运行
+  > - 访问侦听状态变化前后的值
 
 - computed
 
@@ -4178,6 +4254,96 @@ composition-api提供了以下几个函数
   
 
 - 生命周期的hooks
+
+​		没有了`created 和 beforeCreate`钩子，因为setup就是在这两个状态直接执行的
+
+>`onBeforeMount
+>onMounted
+>onBeforeUpdate
+>onUpdated
+>onBeforeUnmount
+>onUnmounted`
+
+#### provide/inject
+
+解决多层嵌套组件之间的传值问题
+
+1. setup语法糖形式的写法
+
+   App.vue
+
+   ```vue
+   <script setup lang="ts">
+   	import { provide } from 'vue'
+     provide('title', 'App组件的标题')
+     provide('info', {
+       name: 'APP',
+       age: '18'
+     })
+   </script>
+   ```
+
+   Son.vue
+
+   ```vue
+   <script setup lang="ts">
+   import { inject } from 'vue'
+   let title = inject('title')
+   </script>
+   <template>
+     <h3>SON...</h3>
+     <p>{{ title }}</p>
+   </template>
+   ```
+
+2. 组合式API
+
+   ```js
+   import { provide } from 'vue'
+   export default {
+     setup() {
+       provide('title', 'App组件的标题')
+     }
+   }
+   ```
+
+   ```js
+   import { inject } from 'vue'
+   export default {
+     setup() {
+       let title = inject('title')
+       return { title }
+     }
+   }
+   ```
+
+   
+
+3. 非组合式API 
+
+   ```js
+   export default {
+     provide() {
+       return {
+         title: 'App组件的标题'
+       }
+     }
+   }
+   ```
+
+   ```js
+   export default {
+     inject: ['title']
+   }
+   ```
+
+   注意：如果在`setup`和`methods`中都定义了一个方法`test`，那么`methods`中的test会替换`setup`中的`test`方法
+
+
+
+
+
+
 
 
 
