@@ -4725,6 +4725,57 @@ module.exports = {
 
 
 
+### MockJS
+
+```shell
+npm install mockjs
+```
+
+```js
+var Mock = require('mockjs')
+var data = Mock.mock({
+    // 属性 list 的值是一个数组，其中含有 1 到 10 个元素
+    'list|1-10': [{
+        // 属性 id 是一个自增数，起始值为 1，每次增 1
+        'id|+1': 1,
+      	'ctitle': '@ctitle(2, 4)',
+        //中文名称
+        'cname': "@cname",
+        //中文语句 长度是10-15之间
+        'cword': '@cword(10, 15)',
+        //中文段落
+        'csentence': '@csentence(5, 16)',
+        'cparagraph': '@cparagraph',
+        //取1-5之间的数值
+        'number|1-5': 1,
+        //自增
+        'increment': '@increment',
+        //生成id
+        'idCard': '@id()',
+        //true表示也生成省
+        'city': '@city(false)'
+    }]
+})
+// 输出结果
+console.log(JSON.stringify(data, null, 4))
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ### CI/CD
 
 - 提高软件质量
