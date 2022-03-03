@@ -2003,7 +2003,57 @@ console.log(n)
 
 `0.1 + 0.2 !== 0.3`
 
+2.22 + 0.1
+
+2.22 * 100
+
 https://juejin.cn/post/6844903680362151950
+
+js使用Number类型表示数字，遵循`IEEE 754`标准 通过64位来表示一个数字
+
+![](img\JS_数值表达式_IEEE_754.png)
+
+- 第0位：符号位，0表示正数，1表示负数(s)
+- 第1位到第11位：存储指数部分(e)
+- 第12位到第63位：存储小数部分(即有效数字) f
+
+> 计算机无法无法直接对十进制的数字进行计算，这是硬件物理特性已经决定的，因此运算就分成了2个部分：
+>
+> **先按照IEEE754转换成相应的二进制**，**然后对接运算**
+
+0.1+0.2的过程：
+
+1. 进制转换
+
+   0.1和0.2转换成二进制后会无限循环
+
+   https://babbage.cs.qc.cuny.edu/IEEE-754.old/Decimal.html
+
+   由于**IEEE754**尾数位数限制，需要将多余的位截掉(参考以上网站)，这样在进制之间的转换中精度已经丢失
+
+   标准中规定尾数f的固定长度是52位，再加上省略的一位，这53位是JS精度范围。他最大可以表示2^53(9007199254740992)。长度是16，所以可以使用toPrecision
+
+2. 对阶运算
+
+   由于指数位数不同，运算时需要对接运算 这部分也可能产生精度丢失
+
+   因此
+
+   **精度丢失可能出现在进制转换和对阶运算**
+
+   **精度丢失可能出现在进制转换和对阶运算**
+
+   **精度丢失可能出现在进制转换和对阶运算**
+
+3. 解决方案
+
+   > 1.将数字转换成整数
+   >
+   > 2.三方库
+   >
+   > ​	math.js  https://mathjs.org
+   >
+   > ​	big.js http://mikemcl.github.io/big.js/
 
 #### 20.new
 
@@ -4759,6 +4809,86 @@ var data = Mock.mock({
 // 输出结果
 console.log(JSON.stringify(data, null, 4))
 ```
+
+
+
+### SSO(单点登录)
+
+**Single Sign On**
+
+企业业务整合方案，在企业多个系统中，用户只需要登录一次就可以访问所有相互信任的应用系统。
+
+
+
+
+
+### 方法库
+
+#### 1.下载流文件
+
+```js
+function downloadStream (response, filename, includeSuffix = false) {
+  if (response.config.responseType !== "blob") return;
+  let blob = new Blob([response.data], {
+    type: "application/octet-stream",
+  });
+  let index = response["headers"]["content-disposition"].lastIndexOf(".");
+  let suffix = response["headers"]["content-disposition"].substring(index);
+	let finalName = includeSuffix ? filename : filename + suffix;
+
+  if (typeof window.navigator.msSaveBlob !== "undefined") {
+    window.navigator.msSaveBlob(blob, finalName);
+  } else {
+    let blobURL = window.URL.createObjectURL(blob);
+    let link = document.createElement("a");
+    link.style.display = "none";
+    link.href = blobURL;
+    link.setAttribute("download", finalName);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(blobURL);
+  }
+}
+```
+
+#### 2.浮点精度以及千分位
+
+```js
+/* 
+      @param 
+      num 需要处理的数据
+      cent 保留的位数
+      isThousand 是否千分位
+      22334455.998877->22,334,455.9989
+      */
+function numFormatter(num, cent, isThousand) {
+  if (isEmpty(num) || isNaN(num)) return 0
+  let numSource = num
+  // 将num中的$ ,符号剔除
+  num = num.toString().replace(/\$|\,/g, '')
+  console.log(typeof(99,889))
+  if (num < 0) num = num * -1
+  num = Math.floor(num * Math.pow(10, cent) + 0.50000000001)
+  let cents = num % Math.pow(10, cent)
+  num = Math.floor(num / Math.pow(10, cent)).toString()
+  cents = cents.toString()
+  while (cents.length < cent) cents = '0' + cents
+  if (isThousand) {
+    num = num.toString().replace(/(?=(?!\b)(\d{3})+$)/g, ',')
+  }
+  if (numSource < 0) num = `-${num}`
+  return cent > 0 ? `${num}.${cents}` : `${num}`
+}
+```
+
+
+
+
+
+
+
+
 
 
 
