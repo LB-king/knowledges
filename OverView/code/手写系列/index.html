@@ -1,96 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>手写系列</title>
-    <style>
-      body {
-        height: 1200px;
-      }
-    </style>
-  </head>
-  <body>
-    <input type="text" id="btn" />
-    <script src="../utils/utils.js"></script>
-    <script src="./1.call.js"></script>
-    <script src="./2.apply.js"></script>
-    <script src="./3.bind.js"></script>
-    <script src="./4.throttle.debounce.js"></script>
-    <script src="./5.map.js"></script>
-    <script src="./6.reduce.js"></script>
-    <script src="./7.filter.js"></script>
-    <script src="./8.unique.js"></script>
-    <script>
-      /*  
-      
-      function add(a, b) {
-        console.log(this)
-        return a + b
-      }
-      var person = {
-        name: 'zs'
-      }
-      //1.call
-      console.log(call(add, 30, 40))
-      console.log('###################')
 
-      //2.apply
-      console.log(apply(add, [11, 22]))
-      console.log('###################')
-      //3.bind
-      var bFn = bind(add, {}, 10, 20)
-      console.log(bFn())
-      console.log('###################')
-      //4.函数节流
-      function fn(e) {
-        console.log(Date.now(), e)
-      }
-      window.addEventListener('scroll', throttle(fn, 500))
-      //5.函数防抖
-      btn.addEventListener('keydown', debounce(fn, 500)) 
-      //6.map
-      var arr = [11, 22, 33]
-      var r = myMap(arr, (item, index) => {
-        console.log(item, index)
-        return item * 2
-      })
-       //7.reduce
-      var arr = [11, 22, 33, 44, 55]
-      arr.reduce((a,c,i) => {
-        console.log(a,c,i)
-      },99)
-      var r = myReduce(arr, (acc, cur, index) => {
-        console.log(acc, cur, index)
-        return acc + cur
-      },99)
-      console.log(r)
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>手写系列</title>
+  <style>
+    body {
+      height: 1200px;
+    }
+  </style>
+</head>
+
+<body>
+  <input type="text" id="btn" />
+  <script src="../utils/utils.js"></script>
+  <script src="./1.call.js"></script>
+  <script src="./2.apply.js"></script>
+  <script src="./3.bind.js"></script>
+  <script src="./4.throttle.debounce.js"></script>
+  <script src="./5.map.js"></script>
+  <script src="./6.reduce.js"></script>
+  <script src="./7.filter.js"></script>
+  <script src="./8.unique.js"></script>
+  <script src="./10.forEach.js"></script>
+  <script>
+    /*  
+    
+    function add(a, b) {
+      console.log(this)
+      return a + b
+    }
+    var person = {
+      name: 'zs'
+    }
+    //1.call
+    console.log(call(add, 30, 40))
+    console.log('###################')
+
+    //2.apply
+    console.log(apply(add, [11, 22]))
+    console.log('###################')
+    //3.bind
+    var bFn = bind(add, {}, 10, 20)
+    console.log(bFn())
+    console.log('###################')
+    //4.函数节流
+    function fn(e) {
+      console.log(Date.now(), e)
+    }
+    window.addEventListener('scroll', throttle(fn, 500))
+    //5.函数防抖
+    btn.addEventListener('keydown', debounce(fn, 500)) 
+    //6.map
+    var arr = [11, 22, 33]
+    var r = myMap(arr, (item, index) => {
+      console.log(item, index)
+      return item * 2
+    })
+     //7.reduce
+    var arr = [11, 22, 33, 44, 55]
+    arr.reduce((a,c,i) => {
+      console.log(a,c,i)
+    },99)
+    var r = myReduce(arr, (acc, cur, index) => {
+      console.log(acc, cur, index)
+      return acc + cur
+    },99)
+    console.log(r)
 
 
-      // var r = arr.filter((item, index) => {
-      //   if (item === 33) {
-      //     return true
-      //   }
-      // })
-      // var r = myFilter(arr, (item, index) => item % 2 === 0)
-      //7.1find
-      // var r = arr.find((item, index) => {
-      //   console.log(item, index)
-      //   if (item % 2 === 1) {
-      //     return true
-      //   }
-      // })
-      */
-      function fn(e) {
-        console.log(Date.now(), e)
-      }
-      btn.addEventListener('keydown', debounce(fn, 500))
-      //7.2.filter
-      var arr = [11, 22, 11, 44, 55, 22, 55, 44]
-      //8.数组去重
-      var r = unique3(arr)
-      console.log(r)
-    </script>
-  </body>
+    // var r = arr.filter((item, index) => {
+    //   if (item === 33) {
+    //     return true
+    //   }
+    // })
+    // var r = myFilter(arr, (item, index) => item % 2 === 0)
+    //7.1find
+    // var r = arr.find((item, index) => {
+    //   console.log(item, index)
+    //   if (item % 2 === 1) {
+    //     return true
+    //   }
+    // })
+    */
+    // function fn(e) {
+    //   console.log(Date.now(), e)
+    // }
+    // btn.addEventListener('keydown', debounce(fn, 500))
+    //7.2.filter
+    // var arr = [11, 22, 11, 44, 55, 22, 55, 44]
+    //8.数组去重
+    // var r = unique3(arr)
+    // console.log(r)
+
+    //10.myForEach
+    ['a', 'b', 'c'].myForEach((item, index) => {
+      console.log('item', item)
+      console.log('index', index)
+    })
+  </script>
+</body>
+
 </html>

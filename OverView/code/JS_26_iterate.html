@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>iterator迭代器</title>
+</head>
+
+<body>
+  <script>
+    //手写forEach
+    // [11,22].myForEach((item, index) => {}, context)
+    Array.prototype.myForEach = function (fn, context) {
+      //备份一个this,这个this是被循环的数组
+      let _this = this,
+        len = _this.length,
+        i = 0
+      context = context | globalThis
+      for (; i < len; i++) {
+        fn.call(context, _this[i], i)
+      }
+    }
+      ;[11, 22, 33].myForEach((item, index) => {
+        console.log(item + '---' + index, this)
+      })
+  </script>
+</body>
+
+</html>

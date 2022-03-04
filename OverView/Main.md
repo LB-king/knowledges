@@ -511,8 +511,11 @@ https://juejin.cn/post/6844903779700047885
   var a = { n: 1 }
   var b = a
   a.x = a = { n: 2 }
-  console.log(a.x)
-  console.log(b)
+  console.log('a', a) //{n:2}
+  console.log('a.x', a.x)//undefined
+  console.log('b', b) // {n:1,x:{n:2}}
+  //1.a.x 有点的优先级高,所以在a指向的内存001中添加属性x:{n:2}该对象的内存地址是002,即此时001为 {n:1,x:{n:2}}
+  //2.再执行a={n=2} 此对象的内存地址是002
   ```
   
   ![](\img\引用类型赋值问题.png)
