@@ -5541,6 +5541,38 @@ CSRF Token
 
 
 
+#### vue-组件通信
+
+1. props
+
+   父：
+
+   ```vue
+   <Son :title="title"></Son>
+   ```
+
+   子：
+
+   ```vue
+   <p>{{ title }}</p>
+   export default {
+     props: {
+       title: ''
+     }
+   }
+   //props的值可以是数组，也可以是对象(对象支持类型限制，必要性等操作)
+   ```
+
+   
+
+2. 
+
+
+
+
+
+
+
 #### 关注分离
 
 > 是一种思想(Separation of Concerns)

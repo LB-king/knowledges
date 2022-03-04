@@ -1,35 +1,26 @@
 <template>
-  <h3>SON...</h3>
-  <p>{{ title }}</p>
+  <div class="son">
+    <h3>SON...</h3>
+    <p>{{ title }}</p>
+    <GrandSon></GrandSon>
+  </div>
 </template>
 <script>
-import { inject } from 'vue'
+import GrandSon from './grandSon.vue'
 export default {
-  inject: ['title']
-}
-</script>
-<!--
-1.组合式API语法糖写法
-<script setup lang="ts">
-import { inject } from 'vue'
-let title = inject('title')
-</script>
-
-2.组合式API
-import { inject } from 'vue'
-export default {
-  setup() {
-    let title = inject('title')
-    return { title }
+  props: {
+    title: {
+      default: 'son默认标题'
+    }
+  },
+  components: {
+    GrandSon
   }
 }
-
-
-3.非组合式API
-<script>
-export default {
-  inject: ['title']
-}
 </script>
-
--->
+<style scoped>
+.son {
+  padding: 5px;
+  border: 1px dashed #ccc;
+}
+</style>
