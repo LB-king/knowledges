@@ -23,7 +23,7 @@
   pm.globals.set("token", token)
   ```
 
-- 在其他接口中 **Hearder**中加入token即可
+- 在其他接口中 **Header**中加入token即可
   | KEY          | VALUE            |
   | :----------- | :--------------- |
   | token        | {{token}}        |

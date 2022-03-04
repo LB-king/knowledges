@@ -25,6 +25,7 @@
   <script src="./7.filter.js"></script>
   <script src="./8.unique.js"></script>
   <script src="./10.forEach.js"></script>
+  <script src="./11.generate.js"></script>
   <script>
     /*  
     
@@ -96,10 +97,25 @@
     // console.log(r)
 
     //10.myForEach
-    ['a', 'b', 'c'].myForEach((item, index) => {
-      console.log('item', item)
-      console.log('index', index)
-    })
+    // ['a', 'b', 'c'].myForEach((item, index) => {
+    //   console.log('item', item)
+    //   console.log('index', index)
+    // })
+
+    //11.generator 生成器函数  function*
+    var g = generator(50)
+    var g1 = g.next().value
+    var g2 = g.next().value
+    console.log('g1', g1)
+    console.log('g2', g2)
+
+    var id = idMaker()
+    var id1 = id.next().value
+    var id2 = id.next().value
+    var id3 = id.next().value
+    console.log('id1', id1)
+    console.log('id2', id2)
+    console.log('id3', id3)
   </script>
 </body>
 
