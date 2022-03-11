@@ -4354,7 +4354,7 @@ composition-api提供了以下几个函数
 
 - 生命周期的hooks
 
-​		没有了`created 和 beforeCreate`钩子，因为setup就是在这两个状态直接执行的
+​		没有了`created 和 beforeCreate`钩子，因为setup就是在这两个状态之间执行的
 
 >`onBeforeMount
 >onMounted
@@ -4869,6 +4869,28 @@ console.log(JSON.stringify(data, null, 4))
 
 
 
+### SDK&API
+
+SDK-Solftware Development Kit `软件开发工具包`，辅助开发某一类软件的相关文档、范例和工具的集合都叫SDK
+
+API -Application Programming Interface `应用编程接口`
+
+可以把SDK想象成一个虚拟的程序包，在这个程序包中有一份做好的软件功能，这份程序包几乎是全封闭的，只有一个小小接口可以连通外界，这个接口就是API
+
+WebHooks 允许我们通过在github.com订阅事件后或者安装GitHub应用。webhook可以用作升级一个issue追踪，触发CI构建，升级一个后端镜像，部署生产服务等
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ### 方法库
@@ -4983,6 +5005,22 @@ devOps 开发运维
 用到的工具：
 
 Jenkins
+
+```shell
+#!/bin/sh -l
+IP=192.168.1xxx.xxxx
+ITEM=/data/www/publish/projectName
+# 重命名原来war包
+ssh root@$IP 'cd /data/www/publish/projectName && mv dist.war dist_`date +%Y%m%d%H%M`.war'
+npm install 
+npm run build:war
+scp dist.war root@$IP:$ITEM/
+#ssh root@$IP "chmod -R 666 $ITEM"
+
+
+```
+
+
 
 Travis CI
 
