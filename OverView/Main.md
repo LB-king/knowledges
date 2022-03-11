@@ -5138,7 +5138,14 @@ Circle CI
    })
    ```
 
-   
+
+#### 4.lighthouse
+
+```shell
+yarn add lighthouse global
+
+lighthouse http:127.0.0.1:8080 --view #直接在浏览器打开分析页面
+```
 
 
 ### 安全问题
