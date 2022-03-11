@@ -4824,6 +4824,16 @@ module.exports = {
 
 
 
+
+
+
+
+### sentry
+
+https://zhuanlan.zhihu.com/p/210765546
+
+
+
 ### MockJS
 
 ```shell
@@ -5175,7 +5185,30 @@ Circle CI
      minRatio: 0.8
    })
    ```
-
+   
+   需要了解的几个概念：
+   
+   1. FP(First Paint)首次绘制，这个指标用于记录页面第一次绘制像素的时间
+   
+   2. FCP(First Contentful Paint)首次内容绘制，这个指标用于记录页面首次绘制文本、图片、非空白Canvas或SVG的时间
+   
+      > 这2指标看起来大同小异，但是FP所消耗的时间一定小于等于FCP
+   
+   3. LCP(Largest Contentful Paint)，用于记录视窗内最大的元素绘制的时间，该时间会随着页面渲染变化而变化
+   
+   4. TTI(Time to Tinteractive)。
+   
+      首次可交互时间
+   
+      > 1. 从FCP指标后开始计算
+      > 2. 持续5s内无长任务(执行时间超过50ms)且无两个以上正在进行中的GET请求
+      > 3. 往前回溯至5秒前的最后一个长任务结束时间
+   
+   5. FID(First Input Delay)首次输入延迟，记录在FCP和TTI之间用户首次与页面交互时响应的延迟good(<100ms) needs improvement(100-300) poor(>300ms)
+   
+   6. TBT(Total Blocking Time)总阻塞时间，记录在FCP到TTI之间所有长任务的阻塞时间总和。
+   
+   7. CLS(Cumulative Layout Shift) 累计位移偏移，记录了页面上非预期的位移波动。
 
 #### 4.lighthouse
 
