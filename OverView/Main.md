@@ -4633,6 +4633,16 @@ pnpm create vite my-vue-app --template vue
 
 https://zhuanlan.zhihu.com/p/44438844
 
+copy一个文件，不希望被打包
+
+业务场景：H5 vue 拓展性，图片,回答不是很好。7个人，14个人，vue3+ts+vite  vue2
+
+PC + H5 +小程序  SCRM
+
+上海 ： 小程序(计划中。。。)
+
+
+
 ### Rollup
 
 官网:https://www.rollupjs.com
@@ -5615,37 +5625,258 @@ CSRF Token
 
 ### 常问题目
 
+#### Vue相关
 
+##### 1.组件间通信
 
+> 1. props
+>
+>    父组件：
+>
+>    ```vue
+>    <Son :title="title"></Son>
+>    ```
+>
+>    子组件：
+>
+>    ```js
+>    <p>{{ title }}</p>
+>    export default {
+>      props: {
+>        title: '',
+>    		data: {
+>    			type: Object,
+>    			default: () => {}
+>    		}
+>      },
+>      props: ['title', 'data']
+>    }
+>    //props的值可以是数组，也可以是对象(对象支持类型限制，必要性等操作)
+>    ```
+>
+> 2. 自定义事件
+>
+>    父组件：
+>
+>    ```vue
+>    <Son :send="getMsg"></Son>
+>    ```
+>
+>    子组件：
+>
+>    ```js
+>    //vue2.x
+>    handle(msg) {
+>      this.$emit('emit-title', msg)
+>    }
+>    //vue3.x
+>    setup(props, { emit }) {
+>      emit('emit-title', 'xxMsg')
+>    }
+>    ```
+>
+> 3. `$parent`  & `$children`
+>
+>    子组件：
+>
+>    ```js
+>    mounted() {
+>      this.$parent //能直接获取父组件
+>    }
+>    ```
+>
+>    父组件：
+>
+>    ```js
+>    mounted() {
+>      this.$children[index] //需要放到异步任务才能读取到子组件，那时候赋值index才能读取
+>    }
+>    ```
+>
+> 4. `$attrs`& `$listeners`
+>
+>    子组件：
+>
+>    ```js
+>    mounted() {
+>      this.$attrs //是一个对象 {attrs: attrsParam}
+>      this.$listeners['handle']() //就会执行这个回调
+>      //this.$listeners是一个对象 {handle: function..., handle1: function...}
+>    }
+>    ```
+>
+>    父组件：
+>
+>    ```js
+>    <AboutSon attrs="attrsParam" @handle="doSomeThing" @handle1="doSomeThing1"></AboutSon>
+>    ```
+>
+> 5. `$refs`
+>
+>    父组件：
+>
+>    ```vue
+>    <Son ref="son"></Son>
+>    <script>
+>    	export default {
+>        mounted() {
+>          this.$refs.son //就能获取到子组件的实例，从而可以使用其上的方法
+>        }
+>      }
+>    </script>
+>    ```
+>
+> 6. 使用vuex进行管理
+>
+> 7. 使用事件总线管理 `eventBus`
+>
+>    在Vue原型上添加一个vue的实例，把公用的方法和属性放在上面
+>
+>    ```js
+>    Vue.prototype.$bus = new Vue()
+>    ```
+>
+>    使用：
+>
+>    ```js
+>    this.$bus.props //直接公用
+>    ```
+>
+>    事件：
+>
+>    ```js
+>    this.$bus.$emit('event-name', params) //发送事件
+>    this.$bus.$on('event-name', (params) => {
+>      //...params
+>    }) //监听事件
+>    
+>    this.$bus.$once('event-name', () => {
+>      //do sth...
+>    }) //监听一次事件
+>    this.$bus.$off('event-name') //移除监听事件
+>    ```
+>
+> 8. `provide / inject`
+>
+>    - 普通方式
+>
+>      提供数据的组件：
+>
+>      ```js
+>      provide() {
+>        return {
+>          title: 'provide父组件的信息'
+>        }
+>      }
+>      ```
+>
+>      获取数据的组件：
+>
+>      ```js
+>      inject: ['title']
+>      ```
+>
+>      缺点：数据无法响应式传递
+>
+>    - 传递this
+>
+>      提供数据的组件
+>
+>      ```js
+>      export default {
+>        data() {
+>          return {
+>            title: 'xxx'
+>          }
+>        },
+>        provide() {
+>          return {
+>            _this: this
+>          }
+>        },
+>      }
+>      ```
+>
+>      使用数据的组件：
+>
+>      ```js
+>      export default {
+>        inject: {
+>        	_this: {
+>            default: () => {}
+>          }
+>        },
+>        mounted() {
+>      		this._this.msg // 获取数据
+>        }
+>      }
+>      ```
+>
+>    - 使用`Vue.observable`
+>
+>      ```js
+>      //具体实现
+>      ```
+>
+> 9. v-model
+>
+>    是以下示例的语法糖
+>
+>    ```vue
+>    <input :value="title"  @input="title = $event.target.value">
+>    ```
+>
+>    ```vue
+>    <myComponent v-model="title"></myComponent>
+>    <!-- 相当于 -->
+>    Vue.component('my-component', {
+>    	template: `<h3>
+>          {{value}}
+>      </h3>`,
+>    	props: ['value'],
+>    	methods: {
+>    		handleInput() {
+>    			this.$emit('input', 'new msg')
+>    		}
+>    	}
+>    })
+>    
+>    ```
+>
+> 10. .sync修饰符的使用
+>
+>     是以下代码的语法糖
+>
+>     ```vue
+>     <base-comp :title.sync="title"></base-comp>
+>     ```
+>
+>     ```vue
+>     <base-comp :title="title" @update:title="title = $event"></base-comp>
+>     ```
+>
 
+##### 2.父子组件生命周期顺序
 
-#### vue-组件通信
+> 父beforeCreate  ->
+>
+> 父created ->
+>
+> 父beforeMount -> 
+>
+> 子beforeCteate -> 
+>
+> 子created -> 
+>
+> 子beforeMount -> 
+>
+> 子mounted ->
+>
+> 父mounted
 
-1. props
+keep-alive: include exclude
 
-   父：
-
-   ```vue
-   <Son :title="title"></Son>
-   ```
-
-   子：
-
-   ```vue
-   <p>{{ title }}</p>
-   export default {
-     props: {
-       title: ''
-     }
-   }
-   //props的值可以是数组，也可以是对象(对象支持类型限制，必要性等操作)
-   ```
-
-   
-
-2. 
-
-
+修饰符.源码
 
 
 
