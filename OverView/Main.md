@@ -1230,7 +1230,7 @@ fetch('http://127.0.0.1:5000/users', {
 
 5. Proxy
 
-   原理：中层转换
+   原理：中间层转换
 
    ![](\img\Proxy_跨域.png)
 
@@ -5038,6 +5038,18 @@ scp dist.war root@$IP:$ITEM/
 #ssh root@$IP "chmod -R 666 $ITEM"
 
 
+
+#font-object配置
+#!/bin/sh -l
+npm install 
+npm run build
+echo 'aaa'
+IP=192.168.xxx.xxx
+ITEM=/data/www/projectName
+rsync -avzH -e 'ssh -p 22  -o StrictHostKeyChecking=no'  --delete --exclude=config.js  dist/ root@$IP:$ITEM/
+ssh root@$IP "chmod -R 777 $ITEM"
+
+
 ```
 
 
@@ -5878,9 +5890,26 @@ keep-alive: include exclude
 
 修饰符.源码
 
+##### 3.路由有哪些模式
 
+- hash模式：通过#号后面的内容更改，监听`hashchange`事件,实现路由切换
+- history模式：通过h5的history API，实现路由切换
 
+##### 4.路由传参
 
+##### 5.computed和watch有什么区别？
+
+> - computed:是依赖已有的变量来计算一个目标变量，有缓存机制，依赖不变的情况下其会直接读取缓存进行复用
+> - watch：是监听一个变量的变化，并执行响应的回调函数
+
+##### 6.为什么v-for和v-if不建议用在同一个标签？
+
+v2中，v-for的优先级是高于v-if的
+
+##### 7.不需要响应的数据应该怎么处理？
+
+1. 使用const定义，在data之外
+2. Object.freeze
 
 #### 关注分离
 

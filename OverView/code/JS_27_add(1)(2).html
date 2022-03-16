@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>实现add(1)(2)(3)</title>
+</head>
+
+<body>
+  <script>
+    /**
+     * 第一种方案：
+     * 利用原型的特性，把所有的参数都存起来
+     * 然后在原型上定义一个求和的方法
+     * 
+     * **/
+    function add(...param) {
+      add.prototype.arr.push(...param)
+      console.log(param)
+      return add
+    }
+    add.prototype.arr = []
+    add.prototype.sum = function () {
+      let arr = add.prototype.arr
+      return arr.reduce((acc, cur) => {
+        return acc + cur
+      }, 0)
+    }
+    add(1, 2)(3, 4, 5)
+    console.dir(add)
+
+    /**
+     * 第二种，使用箭头函数实现
+     * 扩展性不强
+     * **/
+    // var add1 = x => y => z => x + y + z
+    var add1 = x => {
+      return y => {
+        return z => {
+          return x + y + z
+        }
+      }
+    }
+    console.log(add1(1)(2)(3))
+
+
+    /***
+     * 
+     * 啥是函数柯里化？
+     * https://juejin.cn/post/6982922246054494222
+     * https://juejin.cn/post/6844903882208837645
+     * 思路：
+     *  1.可以连续调用
+     *  2.说明返回的是一个函数
+     * 
+    */
+
+    function add3(param) {
+      
+    }
+
+    console.log(add3(1))
+  </script>
+</body>
+
+</html>

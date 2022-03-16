@@ -149,10 +149,17 @@ function logParams(params: any) {
 }
 
 class Animal {
-  h() {}
+  h() { }
   getData(@logParams('pk') id: string) {
     console.log('getData内部的方法')
   }
 }
 var a: any = new Animal()
 console.log(a.apiUrl)
+
+interface A1 {
+
+}
+var arr: Array<Array<number>> = [[11, 22, 33]]
+
+var a1: number[][] = [[3, 9]]

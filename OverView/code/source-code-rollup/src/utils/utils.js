@@ -25,3 +25,4 @@ export const getType = function (target) {
   })
   return type2obj[Object.prototype.toString.call(target)]
 }
+
