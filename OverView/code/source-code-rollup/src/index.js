@@ -1,4 +1,5 @@
 import { getType } from "./utils/utils"
+import newArrayProto from "./ArrayProto"
 export default function Vue(options) {
   //Vue的初始化操作
 
@@ -14,28 +15,21 @@ var data = {
 }
 
 //TODO 触发数组的更新需要细看
-data.favs.push('11')
+data.favs.push('99')
 observer(data)
+
 
 /**
  * 劫持一个对象的方法
  * @param {*} target 被劫持的对象
  */
 function observer(target) {
-  //1.监听对象
-  if (['object'].indexOf(getType(target)) > -1) {
-    let keys = Object.keys(target)
-    keys.forEach(key => {
-      defineReactive(target, key, target[key])
-    })
-  }
-  //2.监听数组
-  else if (['array'].indexOf(getType(target)) > -1) {
-    // for (let i = 0; i < target.length; i++) {
-    //   observer(target[i])
-    // }
-  } else {
+  //简单判断了下，不是数组或者对象就直接返回
+  if(typeof target !== 'object' || target == null) {
     return target
+  }
+  for(let key in target) {
+    defineReactive(target, key, target[key])
   }
 }
 

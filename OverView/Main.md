@@ -4440,13 +4440,98 @@ composition-api提供了以下几个函数
 
 
 
+#### Suspense(焦虑、悬念)
+
+直到达到某个条件后才会渲染default状态的正式内容，通过Suspense组件展示异步渲染就更加简单
+
+```vue
+<Suspense>
+  <template #default>
+		<async-component></async-component>
+  </template>
+  <template #fallback>
+    <div>
+      Loading...
+    </div>
+  </template>
+</Suspense>
+
+```
+
+#### Fragment(片段)
+
+不再有一个根节点的限制
+
+#### 插槽slot v-slot
+
+#### 自定义指定
+
+钩子有所变化,
+
+bind -> beforeMount
+
+inserted -> mounted
+
+update (v3移除) 
+
+ beforeUpdate `新增`钩子，会在元素自身更新前触发
+
+componentUpdate -> updated
+
+beforeUnmount->`新增`钩子，当元素自身被卸载前触发
+
+unbind->unmounted
+
+#### diff算法优化
+
+v2是进行虚拟dom的全量对比的
+
+- v3新增了静态标记(patchFlag),只比对带有patch
+
+- hoistStatic静态提升
+
+  > v3中对于不参与更新的元素，只会被创建一次，只会在每次渲染时被不停地复用
+
+- cacheHandlers 事件侦听器缓存
+
+  
+
+#### ref和reactive
+
+> ref底层还是reactive，系统会根据我们给ref传入的值将它转换成ref(xx) -> reactive({value:xx})
+
+#### toRaw
+
+#### markRaw
+
+标记一个对象，使其永远不会转为`proxy`
+
+#### toRef&toRefs
+
+将某个对象的多个属性的值变成响应式的数据
+
+```js
+var obj = {
+  name: 'xx',
+  age: 9
+}
+var state = toRefs(obj)
+state.age = 10 //会变成响应式
+```
 
 
 
+#### v-model
+
+> 写法改变，一个组件支持多个v-model
 
 
 
+V2-双端比较
 
+V3-最长递增子序列
+
+React-递增法
 
 
 
@@ -5149,6 +5234,8 @@ Circle CI
    //接收的时候以随意变量接收，因为他暴露出来的是一个整体
    import anyName from 'utils.js'
    ```
+   
+2. code split代码分割
 
 #### 3.首屏优化 
 

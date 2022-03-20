@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>数组去重的问题</title>
+</head>
+
+<body>
+  <script>
+    var arr = [11, 22, 33, 33, 11, 22, 9, 8, 9]
+
+    // 1.es6 Set
+    // var res = Array.from(new Set(arr))
+    //最终结果需要转化成数组 
+
+    // 2.indexOf实现
+    // let res = []
+    // for (let i = 0, len = arr.length; i < len; i++) {
+    //   if (res.indexOf(arr[i]) === -1) {
+    //     res.push(arr[i])
+    //   }
+    // }
+    // console.log(res)
+
+    // 3.利用对象的键值不重复
+    // let res = [], obj = {}
+    // for (let i = 0, len = arr.length; i < len; i++) {
+    //   if (!obj[arr[i]]) {
+    //     obj[arr[i]] = 'xx'
+    //     res.push(arr[i])
+    //   }
+    // }
+    // console.log(res)
+
+    // 4.while循环结合indexOf解决
+    // let res = []
+    // while (arr.length > 0) {
+    //   let shiftValue = arr.shift()
+    //   if (res.indexOf(shiftValue) === -1) {
+    //     res.push(shiftValue)
+    //   }
+    // }
+    // console.log(res)
+
+    // 5.双循环
+    // var res = []
+    // for (let i = 0, len = arr.length; i < len; i++) {
+    //   let isRepeat = false
+    //   for (let j = 0; j < res.length; j++) {
+    //     if (arr[i] === res[j]) {
+    //       isRepeat = true
+    //       break
+    //     }
+    //   }
+    //   if (!isRepeat) {
+    //     res.push(arr[i])
+    //   }
+    // }
+    // console.log(res)
+
+    // 6.filter
+    // var res = arr.filter((item, index) => {
+    //   return arr.indexOf(item) === index
+    // })
+    // console.log(res)
+
+    // 7.include
+    // var res = []
+    // arr.forEach(item => {
+    //   if (!res.includes(item)) {
+    //     res.push(item)
+    //   }
+    // })
+    // console.log(res)
+
+    // 8.Map
+    // var res = []
+    // var tmp = new Map()
+    // for (let i = 0, len = arr.length; i < len; i++) {
+    //   if (!tmp.get(arr[i])) {
+    //     //这里设置为0 ''是不行的
+    //     tmp.set(arr[i], 'x')
+    //     res.push(arr[i])
+    //   }
+    // }
+    // console.log(res)
+
+    // 整理interview的问题
+    // https://es6.ruanyifeng.com/?search=proxy&x=0&y=0#docs/intro
+
+  </script>
+</body>
+
+</html>

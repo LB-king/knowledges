@@ -61,6 +61,14 @@ mounted() {
 >
 > 就是在不同的环境用不同的方式去执行`flushCallbacks`
 
+### 3.1路由传参
+
+显示：query:{}
+
+隐式：params:{}
+
+​	需要加 `name`
+
 ### 4.keep-alive了解吗？他有2个重要属性
 
 用于保存组件的渲染状态
@@ -193,7 +201,55 @@ store
 
 ### 15.nuxt私服？CI/CD是自己搭建的吗？
 
+### 16.说说js的设计模式？
 
+- 单例模式：把描述当前事物的信息进行分组归类(减少全局变量的污染)
+
+  ```js
+  var name = 'tom'
+  var age = 18
+  
+  var name = 'alice'
+  var age = 9
+  
+  var girl = {
+    name: 'alice',
+    age: 9
+  }
+  var boy = {
+    name: 'tom',
+    age: 18
+  }
+  
+  //girl和boy不仅仅被叫做变量(对象名)，也被成为“命名空间”
+  //单例模式：把描述事物的信息放到一个命名空间进行归组，防止全局变量的污染
+  //高级单例模式
+  let Person = (function() {
+    let fn = function(){}
+    return {
+      namw: 'xxx',
+      fn
+    }
+  })()
+  ```
+
+- 工厂模式
+
+  批量化生产,把实现某个功能的方法代码进行封装，后期在想实现这个功能的时候，直接执行函数即可
+
+  - 低耦合：减少页面的冗余代码
+  - 高内聚：提高代码的复用率
+
+  ```js
+  function create(name, age) {
+    let person = {}
+    person.name = name
+    person.age = age
+    return person
+  }
+  ```
+
+  
 
 ### 分割线-----
 
@@ -234,7 +290,7 @@ store
 - h1和h2标签使用要限制，不要嵌入其他标签，
 
 - sitemap:我们称为sitemap.xml 为网站地图，它的创建是为了更有利于搜索引擎的抓取策略，从而提高工作效率:
-  - 良好的robot.txt协议可以指导搜索引擎的抓取方向，节省"爬虫"抓取时间，所以会提升爬虫的工作效率
+  - 良好的`robot.txt`协议可以指导搜索引擎的抓取方向，节省"爬虫"抓取时间，所以会提升爬虫的工作效率
   - 将`sitemap.xml`和`robot.txt`放在网站的根目录下
 
 ​		
@@ -265,6 +321,8 @@ http的 range字段
 
 分片上传：
 
+断点续传
+
 ### 7.优化指标？
 
 性能工具，
@@ -284,6 +342,302 @@ fp  fcp 的时间，performance这个api中记录了很多时间
 监听body
 
 变动最大的一次，再稳定的话
+
+权重计算：层级
+
+### 10.webworker
+
+单线程不利于大量数据的计算
+
+webwork能计算数据，不能操作dom  postmessage
+
+webwork会影响主线程？
+
+### 11.前端工程化怎么理解？
+
+有构建工具的时候，前端工程化已经形成。。。
+
+减少重复性工作
+
+热更新
+
+结合nodejs会方便多，在读取文件的时候也更加便利
+
+图片-webp
+
+### 12.webpack打包？
+
+### 13.刷算法？
+
+### 14.二叉树的种类？
+
+平衡二叉树
+
+完全二叉树
+
+搜索二叉树
+
+### 15.二叉树遍历？
+
+前序
+
+中序
+
+后序
+
+### 16.网络？
+
+验证学习
+
+抓包
+
+### 17.http2相对于1？
+
+1.1对于1.0已经做了一个keep-alive的优化
+
+域名分片
+
+多路复用
+
+Hpack算法
+
+服务器推送
+
+问题：队头阻塞
+
+### 18.TCP和UDP有什么区别？
+
+这俩都是传输层协议
+
+http是应用层协议
+
+### 19.安全防护？
+
+XSS
+
+CSRF
+
+### 20.又没写过类似babel插件？
+
+jsx->js
+
+es6->js
+
+AST抽象语法树进行分析。。
+
+识别到某种type，然后对其进行操作
+
+### 21.babel和polyfill有什么区别？
+
+### 22.错误监控？
+
+sentry
+
+采集
+
+上报
+
+清洗
+
+可视化展示
+
+
+
+### 23.规范
+
+代码风格
+
+### 24.husky 
+
+.git hook: pre-commit
+
+### 25.换肤
+
+定制肤色
+
+定制布局：
+
+- resolve.extension
+
+### 26.微前端
+
+模块太多
+
+webpack5 子应用
+
+拆分
+
+跨团队会好一点
+
+### 27.部署流程
+
+开发
+
+测试
+
+pre
+
+生产
+
+### 28.数据结构
+
+链表
+
+栈
+
+队列
+
+树
+
+图
+
+###  分割线------
+
+### 1.说一说js的数据类型有哪些？有哪些方法可以判断？
+
+> JS中一共有7种内置数据类型，包括**基本类型**和**对象类型**
+>
+> - 基本类型：string | number | boolean | null | undefined | symbol
+>   - 注意：前面5种类型统称为**原始类型**
+>   - symbol是ES6新增的数据类型，表示独一无二的值，通过Symbol函数生成
+>
+> - 对象类型：
+>
+>   对象类型也叫**引用类型**
+>
+> 判断方法：`typeof` | `instanceof` | `constructor` | `Object.prototype.toString.call()`
+>
+> - typeof:
+>
+>   不足：判断null => object
+>
+>   ​			数组和对象都是 object
+>
+> - instanceof:
+>
+>   不足：不能检测基本类型
+>
+>   ​			可以任意修改原型的指向，会造成判断不准确
+>
+>   ```js
+>   var fn = function () { this. name = 9}
+>   fn.prototype = Object.create(Array.prototype)
+>   var f = new fn()
+>   f instanceof Array //true
+>   ```
+>
+> - constructor:
+>
+>   也可以自定义：
+>
+>   ```js
+>   var arr = []
+>   Array.prototype.constructor = {}
+>   arr.constructor === Array //false
+>   ```
+>
+> - Object.prototype.toString.call() 最佳方法
+
+### 2.谈谈你对原型链的理解？
+
+### 3.判断某个方法是否是原型链上？
+
+### 4.谈谈对闭包的理解？
+
+### 5.工作中闭包的使用？
+
+### 6.深拷贝和浅拷贝？
+
+> - 浅拷贝-对基本类型的值拷贝，以及对象类型的地址拷贝
+>
+> - 深拷贝-除了拷贝基本类型的值，还完全复制了对象类型
+>
+>   一个对象在内存空中是固定存在的，我们如果要对其进行深拷贝，唯一的办法就是创建一个新的对象，里面的值完全复制原来的值
+
+### 7.用什么方法？
+
+````js
+
+//1.一层对象
+var p1 = {
+  name: 'p1',
+  obj: {
+    name: 'obj1'
+  }
+}
+var p2 = {}
+Object.assign(p2, p1)
+//2.JSON.parse(JSON.stringify(target)) 不足
+//3.手写一个deepClone的方法
+var a1 = {
+	name: 'aaa1',
+  obj: {
+    name: 'ooo1'
+  }
+}
+//简易版本，不考虑symbol，不考虑相互嵌套  var a = {}; a.xx= {a}
+function deep(target) {
+  if (typeof target !== 'object') {
+    return target
+  } else {
+    let res = target.constructor === 'Array' ? [] : {}
+    for(let key in target) {
+      if(target.hasOwnProperty(key)) {
+        res[key] = deep(target[key])
+      }
+    }
+    return res
+  }
+}
+var a2 = deep(a1)
+a2.obj.name = '2222'
+//
+````
+
+### 8.es6语法，用的多吗？用过哪些？
+
+> promise 必问
+
+### 9.数组去重？
+
+### 10.数组片段截取？
+
+> - splice
+> - slice
+
+### 11.vue-router的路由跳转方式？
+
+### 12.路由传参?
+
+### 13.computed和methods有啥区别？
+
+> 使用上有什么区别？(没理解)
+
+### 14.v-for和v-if的优先级？
+
+### 15.v-for中key的作用？
+
+### 16.谈谈事件循环机制？
+
+### 17.常见微任务？
+
+### 18.重排与重绘的区别？
+
+### 19.项目PC端？IE兼容？
+
+### 20.工作中结果过啥让你感觉很有意义？
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
