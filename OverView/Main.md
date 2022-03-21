@@ -5980,14 +5980,78 @@ keep-alive: include exclude
 ##### 3.路由有哪些模式
 
 - hash模式：通过#号后面的内容更改，监听`hashchange`事件,实现路由切换
-- history模式：通过h5的history API，实现路由切换
+- history模式：通过h5的history API，实现路由切换,主要用到的是`pushState`这个API
 
-##### 4.路由传参
+##### 3.1路由传参
 
-##### 5.computed和watch有什么区别？
+```js
+//1.query-显式
+this.$router.push({
+  path: '/xxx',
+  query: {
+    id: 'abc'
+  }
+})
+//2.params-隐式(必须传路由的name)-刷新参数会消失
+this.$router.push({
+  name: 'xxx',
+  params: {
+    id: 'abc'
+  }
+})
+//3.动态路由-通过路由属性传递参数
+this.$router.push({
+  path: 'detail/123'
+})
 
-> - computed:是依赖已有的变量来计算一个目标变量，有缓存机制，依赖不变的情况下其会直接读取缓存进行复用
-> - watch：是监听一个变量的变化，并执行响应的回调函数
+export default [
+  {
+    path: "detail/:id",
+    name: "detail",
+    component: () => import("@/views/detail/index.vue")
+  },
+];
+```
+
+##### 3.2路由的导航守卫
+
+> - 全局
+>   - router.beforeEach((to,from,next)=>{})
+>   - router.afterEach((to,from,next)=>{})
+> - 组件内守卫
+>   - beforeRouteEnter
+>   - beforeRouteUpdate
+>   - beforeRouteLeave
+> - 路由独享
+>   - beforeEnter
+
+##### 3.3路由的跳转方式
+
+> 1. 声明式导航(router-link)
+>
+>    <router-link :to="{name: 'detail', params: {id: 1}}">
+>
+> 2. this.$router.push() (函数式调用)
+>
+> 3. this.$router.replace() (函数式调用)
+>
+> 4. this.$router.go(x)
+
+##### 4.computed和watch有什么区别？
+
+> - computed:是计算属性，它会根据所依赖的数据动态计算新的结果，该结果会被缓存
+> - watch：是data的数据监听回调，当依赖的data数据变化，执行回调，把一些在数据变化时触发的操作放在watch里面执行
+> - methods：与computed的区别
+>   - 调用方式不同，computed直接以对象属性方式调用，不需要加括号，而methods必须要函数执行才可以得到结果
+>   - 无缓存，调用相同的值计算还是会重新计算
+
+##### 5.v-for中key的作用？
+
+> 主要作用是服务于虚拟dom的diff算法，key的作用主要是给vnode添加唯一标识，通过这个key可以更快地找到新旧vnode的变化，从而可以实现精准更新。
+>
+> 判断是不是同一个节点做比较,在源码中判断两个虚拟是不是同一个节点？主要是依赖于`vnode`对象身上的`key`和`sel`属性共同判断的
+>
+> key的主要作用是为了高效的更新虚拟DOM。
 
 ##### 6.为什么v-for和v-if不建议用在同一个标签？
 

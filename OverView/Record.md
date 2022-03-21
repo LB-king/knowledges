@@ -71,7 +71,9 @@ mounted() {
 
 ### 4.keep-alive了解吗？他有2个重要属性
 
-用于保存组件的渲染状态
+keep-alive是一个抽象组件：它自身不会渲染一个DOM元素，也不会出现在父组件链中；使用keep-alive包裹动态组件时，会缓存不活动的组件实例，而不是销毁它们
+
+可以做性能优化
 
   > include -字符串或者正则表达式。只有名称匹配的组件会被缓存
   > exclude -字符串或者正则表达式。任何名称匹配的组件都不会被缓存。
@@ -115,6 +117,7 @@ mounted() {
   > 谈谈与reactive的区别？
 
 ### 11.script 中 setup 语法糖
+
 ### 12.传入的数据不可改变的方法有哪些？
   > 方法列一下。。。
 ### 13.TS:[[11,22,33]]
@@ -150,6 +153,24 @@ mounted() {
 ### 21.webpack的plugin作用？
 
 ### 22.webpack中copy一个文件夹，不希望他被打包，这个插件叫什么？
+
+```shell
+copy-webpack-plugin
+```
+
+```js
+plugins: [
+  new CopyWebpackPlugin([
+    {
+      from: path.resolve(__dirname, './static'),
+      to: 'static',
+      ignore: ['.*']
+    }
+  ])
+]
+```
+
+
 
 ### 23.webpack优化手段？
 
@@ -627,7 +648,21 @@ a2.obj.name = '2222'
 
 ### 20.工作中结果过啥让你感觉很有意义？
 
+### 21.路由的导航守卫
 
+> - 全局
+>   - router.beforeEach((to,from,next) => {})
+>   - router.afterEach((to,from,next) => {})
+> - 组件内守卫
+>   - beforeRouteEnter
+>   - beforeRouteUpdate
+>   - beforeRouteLeave
+> - 路由独享
+>   - beforeEnter
+
+### 22.mutation和action的区别
+
+### 23.computed、methods区别？
 
 
 
