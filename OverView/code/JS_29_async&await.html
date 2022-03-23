@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>async&await</title>
+</head>
+
+<body>
+  <script>
+    /***
+     * 用同步的方法，执行异步操作
+     * await只能在async函数中使用，不然会报错
+     * 
+    */
+    /* function request(time) {
+      return new Promise(resolve => {
+        setTimeout(() => {
+          resolve(time)
+        }, 1000)
+      })
+    }
+
+    var res = request(1)
+    res.then(res1 => {
+      console.log(res1)
+      request(res1).then(res2 => {
+        console.log(res2)
+      })
+    }) */
+
+    function request(time) {
+      return new Promise(resolve => {
+        setTimeout(() => {
+          resolve(time)
+        }, 1000)
+      })
+    }
+
+    async function fn() {
+      let res1 = await request(5)
+      let res2 = await request(res1)
+      console.log(res2)
+    }
+
+    fn()
+    // 是一种语法糖
+    // generator函数
+
+  </script>
+</body>
+
+</html>

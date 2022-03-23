@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>题目合集，不断注释代码</title>
+</head>
+
+<body>
+  <script>
+    //1.实现压缩字符串
+    //aaassdd => a3s2d2
+    /*  function compress(str) {
+       let i = 0,
+         j = 1,
+         len = str.length,
+         res = ''
+       while (j <= len) {
+         if (str[i] !== str[j]) {
+           res += (str[i] + (j - i))
+           i = j
+         } else {
+           j++
+         }
+       }
+       return res
+     }
+     console.log(compress('aabbccc')) */
+
+    //2.手写promise,基于Promise/A+规范
+    //原文在知乎上有一个规范
+    //1.一个promise必须处于三种状态之一
+    const PENDING = 'pending',
+      FULFILLED = 'fulfilled',
+      REJECTED = 'rejected'
+    class MyPromise {
+      //2.接收一个执行函数excutor,并且立即执行
+      constructor(excutor) {
+        //4.promise当前的状态
+        this.status = PENDING
+        //5.定义执行成功返回的值
+        this.value = null
+        //6.定义执行失败返回的原因
+        this.reason = null
+        this.fulfilledCallbacks = []
+        this.rejectedCallbacks = []
+        let resolve = (value) => {
+          if (this.status === PENDING) {
+            this.status = FULFILLED
+            this.value = value
+            this.fulfilledCallbacks.forEach(fn => fn())
+          }
+        }
+
+        let reject = (reason) => {
+          if (this.status === PENDING) {
+            this.status = REJECTED
+            this.reason = reason
+            this.rejectedCallbacks.forEach(fn => fn())
+          }
+        }
+        //3.excutor里面有2个参数，都是函数
+        try {
+          excutor(resolve, reject)
+        } catch (err) {
+          reject(err)
+        }
+      }
+
+      //then 返回的也是一个Promise,这样才保证了对链式调用的支持
+      then = (onFULFILLED, onREJECTED) => {
+        var p2 = new MyPromise((resolve, reject) => {
+          //resolvePromise方法
+        })
+        try {
+          if (this.status === FULFILLED) {
+            onFULFILLED(this.value)
+          }
+          if (this.status === REJECTED) {
+            onREJECTED(this.reason)
+          }
+          //异步任务会走到这里
+          if (this.status === PENDING) {
+            console.log('UI_LOG: 异步任务到这了')
+            this.fulfilledCallbacks.push(() => {
+              onFULFILLED(this.value)
+            })
+            this.rejectedCallbacks.push(() => {
+              onREJECTED(this.reason)
+            })
+          }
+        } catch (err) {
+          this.reject(err)
+        }
+
+        return p2
+      }
+    }
+    var p1 = new MyPromise((resolve, reject) => {
+      setTimeout(() => {
+        // resolve('异步执行成功')
+        // 原生Promise没有捕获异步代码执行的错误，在此处可以try catch捕获一下
+        try {
+          resolve(10000)
+        } catch (err) {
+          reject(err.message)
+        }
+      }, 1000)
+      // reject('执行失败')
+    })
+    var p2 = p1.then(res => {
+      console.log(`执行成功: ${res}`)
+      return '执行成功+1'
+    }, err => {
+      console.log(`err: ${err}`)
+
+    })
+    // p2.then(
+    //   res => console.log(res),
+    //   err => console.log(err.message)
+    // )
+    setTimeout(() => {
+      console.log('setTimeout')
+      queueMicrotask(() => {
+      console.log('queueMicrotask')
+      setTimeout(() => {
+        console.log('setTimeout in queueMicrotask')
+      })
+    })
+    })
+
+//     div{
+
+// width:100px;
+
+// height: 50px;
+
+// margin: 40px 32px 0;
+
+// padding: 20px 5px 10px;
+
+// border:solid 5px #000000;
+
+// background : green;
+
+// background-clip : content-box;
+
+// box-shadow : 0 0 0 5px red inset;
+
+// }
+    
+  </script>
+
+</body>
+
+</html>

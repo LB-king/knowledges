@@ -55,6 +55,13 @@ export default {
       console.log('nextTick')
     })
   },
+  activated() {
+    console.log('activated')
+  },
+  deactivated() {
+    //这两个周期。只有在keep-alive中才会触发
+    console.log('deactivated')
+  },
   components: {
     AboutSon,
     AboutSon1

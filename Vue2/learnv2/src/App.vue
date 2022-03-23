@@ -4,7 +4,7 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
     </div>
-    <keep-alive exclude="About">
+    <keep-alive include="About">
       <router-view/>
     </keep-alive>
   </div>

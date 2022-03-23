@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>generator函数</title>
+</head>
+
+<body>
+  <script>
+    // function* gen() {
+    //   yield 1
+    //   yield 2
+    //   yield 3
+    // }
+    // let g = gen()
+    // console.log(g.next())
+    // console.log(g.next())
+    // console.log(g.next())
+    // console.log(g.next())
+    //yield后面接函数的话，到了对应暂停点yield，会马上执行此函数
+
+    function fn(num) {
+      return num
+    }
+    function* gen() {
+      yield 11
+      yield fn('函数1')
+      yield 22
+      yield fn('函数2')
+      return 3
+    }
+
+    let g = gen()
+    console.log(g.next()) //{value:11, done:false}
+    console.log(g.next()) //{value:'函数1', done:false}
+    console.log(g.next()) //{value:22, done:false}
+    console.log(g.next()) //{value:'函数2', done:false}
+    console.log(g.next()) //{value:3, done:true}
+    console.log(g.next()) //{value:undefined, done:true}
+  </script>
+</body>
+
+</html>

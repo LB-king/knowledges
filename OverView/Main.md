@@ -297,7 +297,36 @@ https://juejin.cn/post/7061588533214969892
 
 https://juejin.cn/post/6844903779700047885
 
+#### 7.盒子模型
 
+- 标准盒子模型(box-sizing: content-box;)
+
+  width = paddingLeft + borderLeft + contentWidth + borderRight + paddingRight
+
+- 怪异盒子模型(box-sizing:  border-box;)
+
+  width = width
+
+#### 8.水平居中？垂直居中？
+
+#### 9.transition animation
+
+#### 10.代码题
+
+```css
+div {
+  width:100px;
+  height: 50px;
+  margin: 40px 32px 0;
+  padding: 20px 5px 10px;
+  border:solid 5px #000000;
+  background : green;
+  background-clip : content-box;
+  box-shadow : 0 0 0 5px red inset;
+}
+```
+
+#### 11.height和line-height相同会居中的原理？
 
 
 
@@ -1356,6 +1385,53 @@ new Foo().getName() // 有参数new20，所以先执行new  (new Foo()).getName(
 
 ​	非阻塞，通过event loop实现
 
+```js
+console.log("start");
+setTimeout(() => {
+    console.log("children2")
+    Promise.resolve().then(() =>{
+        console.log("children3")
+    })
+}, 0)
+
+new Promise(function(resolve, reject){
+    console.log("children4")
+    setTimeout(function(){
+        console.log("children5")
+        resolve("children6")
+    }, 0)
+}).then(res =>{
+    console.log("children7")
+    setTimeout(() =>{
+        console.log(res)
+    }, 0)
+})
+//头条题目
+async function async1() {
+    console.log('async1 start')
+    await async2()
+    console.log('async1 end')
+}
+async function async2() {
+    console.log('async2')
+}
+console.log('script start')
+setTimeout(function () {
+    console.log('setTimeout')
+}, 0)
+async1()
+new Promise((resolve) => {
+    console.log('promise1')
+    resolve()
+}).then(function () {
+    console.log('promise2')
+})
+console.log('script end')
+//https://www.jianshu.com/p/5a4b11c071ab
+```
+
+
+
 **宏任务和微任务**
 
 为什么引入微任务？
@@ -2113,9 +2189,26 @@ var n1 = myNew(Person, 'xx', 12)
 >
 >    常用方法：delete get set has 见名知意
 
+#### 23.async、await
 
+> 用同步的方法，执行异步操作
 
+#### 24.generator函数
 
+> `generator函数`跟普通函数在写法上的区别是，多了一个*号，并且，只有在`generator`函数中才能使用`yield`。使用到next方法，执行后会返回一个对象，有`value`和`done`两个属性
+
+```js
+function* gen() {
+  yield 1
+  yield 2
+  yield 3
+}
+let g = gen()
+console.log(g.next()) //{value:1,done:false}
+console.log(g.next()) //{value:2,done:false}
+console.log(g.next()) //{value:3,done:false}
+console.log(g.next()) //{value:undefined,done:true}
+```
 
 
 
@@ -2423,6 +2516,28 @@ Function.prototype.myBind = function(obj, ...params) {
 > 从上到下时间复杂度越来越大，执行的效率越来越低
 
 空间维度：是指执行当前算法需要占用多少内存空间，通常用「空间复杂度」来描述
+
+#### 数据结构
+
+- `栈`-一种遵从先进后出(LIFO)规则的有序集合；新添加的或待删除的元素都保存在栈的末尾，称为栈顶，另一端为栈底
+
+- `队列`-与上相反，一种遵循先进先出(FIFO)原则的一组有序的项；队列在尾部添加新元素，并从头部移除元素。新增加的元素必须放在队列的末尾。
+
+- `链表`-存储有序的元素集合，但不同于数组，链表中的元素在内存中并不是连续放置的；每个元素由一个存储元素本身的节点和一个指向下一个元素的引用(指针/链接)组成
+
+- `集合`-由一组无序且唯一(即不能重复)的项组成；这个数据结构使用了与有限集合相同的数学概念，但应用在计算机科学的数据结构中
+
+- `字典`-以「键，值」对为数据形态的数据结构，其中键名用来查询特定元素，类似js
+
+  中的Object
+
+- `散列`-根据关键码值(Key Value)直接进行访问的数据结构；它通过把关键码值映射到表中一个位置来访问记录，以加快查找的速度；这个映射函数叫散列函数，存放记录的数组叫做散列表
+
+- `树`-由n(n>=1)个有限节点组成一个具有层次关系的集合；把它叫做"树"是因为它看起来像一棵倒挂的树，可以说它是根朝上，而叶朝下的，基本呈一对多关系，树也可以看做是图的特殊形式
+
+- `图`-图是网络结构的抽象模型；图是一组由边连接的节点(顶点)；任何二次关系都可以用图来表示，比如常见的：道路图、关系图、呈多对多关系。
+
+  
 
 ### TypeScript
 
@@ -6037,6 +6152,22 @@ export default [
 >
 > 4. this.$router.go(x)
 
+##### 3.4路由-动态路由
+
+详情页面-根据id不同获取不同的页面信息
+
+```js
+export default [
+  {
+    path: "detail/:id",
+    name: "detail",
+    component: () => import("@/views/detail/index.vue")
+  },
+];
+```
+
+
+
 ##### 4.computed和watch有什么区别？
 
 > - computed:是计算属性，它会根据所依赖的数据动态计算新的结果，该结果会被缓存
@@ -6061,6 +6192,10 @@ v2中，v-for的优先级是高于v-if的
 
 1. 使用const定义，在data之外
 2. Object.freeze
+
+前端胖头鱼：https://juejin.cn/user/3438928099549352
+
+
 
 #### 关注分离
 
