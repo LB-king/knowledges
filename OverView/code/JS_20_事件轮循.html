@@ -26,11 +26,15 @@
       })
       console.log(7)
 
+      queueMicrotask(() => {
+        console.log('queueMicrotask')
+      })
       /* 
       主线程任务：1  4  7 
-      宏任务：5  
-      微任务：2 3 6
-      
+      微任务：5  
+      微任务：queueMicrotask
+      宏任务：2 3  宏任务中的(2是主线任务， 3是微任务)
+      宏任务：6
       */
     </script>
   </body>

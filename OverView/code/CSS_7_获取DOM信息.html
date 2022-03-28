@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- <link rel="stylesheet" href="./index.css"> -->
+  <title>dom</title>
+  <style>
+    #box {
+      height: 300px;
+      width: 300px;
+      background-color: rgb(172, 130, 165);
+    }
+  </style>
+</head>
+<body>
+  <div id="box" style="width: 200px;"></div>
+  <script>
+    console.log(box.style['width']) //无法获取外部样式，即css指定的样式;可以获取内联样式 '200px'
+    console.log(window.getComputedStyle(box)['width']) // 200px
+    console.log(window.getComputedStyle(box)['height']) // 300px 能够获取style标签定义的
+    console.log(window.getComputedStyle(box)['border']) // 1px solid rgb(238, 238, 238) 外部引入的css文件中定义的样式也可以读取
+
+    console.log(box.getBoundingClientRect()) //{x: 8, y: 8, width: 200, height: 300, top: 8, …}
+  </script>
+</body>
+</html>

@@ -328,7 +328,35 @@ div {
 
 #### 11.height和line-height相同会居中的原理？
 
+> height: 50px;文字高度(内容高度)16px
+>
+> `line-height =  上距离 + 内容高度 + 下距离`
+>
+> - line-height = height
+>
+>   (50-16)/2=17  `上、下距离`都是17
+>
+>   (50-50)/2=0-`偏移量`是0
+>
+> - line-height > height
+>
+>   (60-16)/2=22 `上、下距离`是22
+>
+>   (60-50)/2=5 偏移量是5(内容会偏下)
+>
+> - line-height < height
+>
+>   (40-16)/2=12  `上、下距离`是12
+>
+>   (40-50)/2=-5 偏移量是-5(内容会偏上)
 
+#### 12.getComputedStyle和getBoundingClientRect区别
+
+ele.style.border:只能获取行内样式，获取不了外部的样式
+
+window.getComputedStyle(ele)['width'] //能获取元素现在的样式
+
+ele.getBoundingClientRect() //{x:8,y:8,height:90,width:90,top:0,right:0,bottom:0,left:0,}
 
 
 
@@ -524,7 +552,7 @@ div {
   题2:
   
   ```js
-  var a = {}, b = 0, b = '0'
+  var a = {}, b = 0, c = '0'
   a[b] = 'BBB'
   a[c] = 'CCC'
   a[b] = ?
@@ -678,10 +706,12 @@ div {
    > 两种方法获取symbol属性
    >
    > 1.Reflect.ownKeys(obj)
-   >   
-   >2.Object.getOwnPropertySymbols(this)
-   > 
-   >问题：会把symbol属性排到后面
+   >
+   > 2.Object.getOwnPropertySymbols(this)
+   >
+   > 问题：会把symbol属性排到后面
+   >
+   > 并且数字属性会排到前面，即使定义的时候数字属性在字符串后面
    
 6. Symbol
 
@@ -766,7 +796,7 @@ http://user:pass@www.qq.com:80/index.html?name=ok&age=18#video
 
   域名：www.qq.com
 
-  端口号：80「0-65535」
+  端口号：80「0-65535」 2^16
 
   请求资源的文件路径：index.html
 
@@ -6195,7 +6225,106 @@ v2中，v-for的优先级是高于v-if的
 
 前端胖头鱼：https://juejin.cn/user/3438928099549352
 
+##### 8.$nextTick
 
+> 在下次DOM更新循环结束之后执行延迟回调。在修改数据之后立即使用这个方法，获取更新后的DOM。
+
+```js
+{
+  mounted() {
+    let o1 = document.querySelector('#box')
+    o1.innerHtml // old msg
+    this.msg = 'new msg'
+    let o2 = document.querySelector('#box')
+    o2.innerHtml // old msg
+    this.$nextTik(() => {
+       let o3 = document.querySelector('#box')
+    	 o3.innerHtml // new msg
+    })
+  }
+}
+```
+
+##### 9.new一个Vue发生了什么？
+
+>1.创建一个新的对象
+>
+>2.设置该对象的`__proto__`为Vue的prototype
+>
+>3.构造函数的this指向这个对象
+
+##### 10.为什么会出现mvvm？
+
+> - 传统做法缺乏组织性
+>
+> - 类库缺乏业务分离
+>
+> - 维护性、扩展性差
+>
+> - 性能(dom操作)
+>
+>   如：jQuery解决的问题：
+>
+>   1. 提升开发效率
+>   2. 兼容性好
+>
+>   弊端是什么？为什么会被淘汰？
+>
+>   1. 本质还是操作DOM(性能方面是不友好的，会触发重绘和回流)
+>   2. 没有做业务分层
+
+##### 11.VUE1.X的特点
+
+> 没有虚拟dom，数据绑定，依赖收集(Watcher)，保留对真实dom的引用
+>
+> 优点：初始渲染会比虚拟dom好，少量数据更新比虚拟dom快
+>
+> 缺点：大量数据更新相当于大量操作DOM，性能问题
+
+##### 12.VUE2.X设计理念？
+
+> 多出一个虚拟dom
+>
+> 虚拟dom的缺点？
+>
+> - 第一次渲染会变慢，多了一个步骤(虚拟dom)
+>
+> 虚拟dom的本质是什么？
+>
+> - JS对象
+>
+> 如何生成？
+>
+> template和render函数是类编译器
+>
+> 为很么需要虚拟dom？
+>
+> - 后面的更新会快
+>
+> 虚拟dom如何提升vue的渲染效率?
+>
+> - 整体更新->局部更新，更新比较的是虚拟dom
+> - 按需渲染，把dom操作放在js里面
+> - 相当于js代码的diff，效率远远大于直接操作dom
+
+##### 12.
+
+##### 13.
+
+##### 14.
+
+#### 项目-图片懒加载
+
+1. 原理
+
+   一张图片就是一个`img`标签，浏览器是否发起请求图片是根据<img>的src属性，不赋值就不会发送请求。
+
+2. 懒加载思路及实现
+
+   - 加载laoding图片
+   - 判断哪些图片要加载
+   - 隐形加载图片
+   - 替换真图片
 
 #### 关注分离
 
