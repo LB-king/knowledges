@@ -1,41 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>js题库</title>
-  </head>
-  <body>
-    <script>
-      // debugger
-      var x = 10
-      var y = {
-        x: 3,
-        z: (function (x) {
-          this.x *= x
-          x += 2
-          return function (n) {
-            this.x *= n
-            x += 3
-            console.log(x)
-          }
-        })(x)
-      }
-      console.log(x)
-      var m = y.z
-      m(4)
-      y.z(5)
-      console.log(x, y.x)
 
-      // var i =99
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>js题库</title>
+</head>
+
+<body>
+  <script>
+    // debugger
+    var x = 10
+    var y = {
+      x: 3,
+      z: (function (x) {
+        this.x *= x
+        x += 2
+        return function (n) {
+          this.x *= n
+          x += 3
+          console.log(x)
+        }
+      })(x)
+    }
+    console.log(x)
+    var m = y.z
+    m(4)
+    y.z(5)
+    console.log(x, y.x)
+
+      // var i = 99
       // var a = {
-      //   b: (function(){
+      //   b: (function () {
       //     i++
       //     console.log(this)
       //   })()
       // }
       // console.log(i)
-    </script>
-  </body>
+
+    /*   (function () {
+        var a = b = 9 //b = 9; var a = b
+      })()
+    console.log(a)
+    console.log(b) */
+
+
+    //函数作用域
+    
+  </script>
+</body>
+
 </html>
