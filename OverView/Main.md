@@ -7,6 +7,12 @@
 - `Live Server` 热启动
 - `open in browser` 浏览器打开文件
 
+快捷键：
+
+全部收起： `cmd + k + 0`
+
+全部展开：`cmd + k + j`
+
 ### CSS
 
 #### 1.清除浮动
