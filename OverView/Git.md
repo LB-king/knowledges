@@ -173,3 +173,24 @@ git commit -m"xxx"
 git push origin master
 ```
 
+#### 15.git clone慢
+
+> 使用插件加速，下载下来之后，再更换项目的远程地址
+
+插件：github加速
+
+#### 15_1.https变为ssh
+
+下载仓库之后，由于是https下载的，改成ssh会更加方便一点
+
+```shell
+git remote -v
+#结果如下
+origin  https://github.91chi.fun/https://github.com/xx/notes.git (fetch)
+origin  https://github.91chi.fun/https://github.com/xx/notes.git (push)
+#https -> ssh
+git remote rm origin
+git remote add origin git@github.com:xxx/demo.git
+git push origin master
+```
+
