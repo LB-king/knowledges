@@ -1,3 +1,11 @@
+
+
+### WINDOWS
+
+- 查看某个端口被某个程序占用
+
+  > netstat -ano|findstr ":端口号"
+
 ### VSCODE
 
 插件系列
