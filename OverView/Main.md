@@ -1312,10 +1312,19 @@ fetch('http://127.0.0.1:5000/users', {
    ```js
    proxy: {
      '/': {
-       	target: 'http://127.0.0.1:5000',
+         target: 'http://127.0.0.1:5000',
          changeOrigin: true
+     },
+     '/api/test': {
+         target: 'http://xxxxx',
+         pathRewrite: {
+             '^/api/test': '/actual-path'
+         }
      }
    }
+   //pathRewrite会重写路径
+   //例如：请求地址：http://127.0.0.1:8090/api-dev/api/test/getUsers
+   //会被改写为：http://127.0.0.1:8090/api-dev/actual-path/getUsers
    ```
 
    开发中使用webpack-dev-server,配置devServer proxy
@@ -1505,7 +1514,7 @@ console.log('script end')
 
      ......
 
-     ![](\img\宏任务和微任务.png)
+     ![](img\宏任务和微任务.png)
 
      常见的微任务： new Promise().then(回调)、MutationObserver(html5新特性) 
 
@@ -5395,6 +5404,33 @@ Circle CI
    ```
    
 2. code split代码分割
+
+3. 打包速度优化
+
+	> 添加插件 'hard-source-webpack-plugin'
+
+	```
+	npm install hard-source-webpack-plugin -D
+	```
+
+	```js
+	import HardSourceWebpackPlugin from 'hard-source-webpack-plugin'
+	module.exports = {
+	  //...
+	    plugins: [
+	        new HardSourceWebpackPlugin()
+	    ],
+	    //或者
+	    chainWebpack(config) {
+	       config.plugin('HardSourceWebpackPlugin')
+	        .use(new HardSourceWebpackPlugin({
+	           ...options //其他插件需要的配置项
+	       }))
+	    }
+	}
+	```
+
+	
 
 #### 3.首屏优化 
 
