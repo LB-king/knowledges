@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>canvas水印</title>
+  <style>
+    #app {
+      height: 100%;
+      background-color: #ccc;
+    }
+
+    .waterMark {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 999;
+      pointer-events: none;
+      background-repeat: repeat;
+      mix-blend-mode: multiply;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app"></div>
+  <script>
+    let app = document.getElementById('app')
+    const waterMark = {
+      //设置水印
+      set() {
+        let canvas = document.createElement('canvas')
+        canvas.style.width = 400
+        let context = canvas.getContext('2d')
+        context.rotate(-10 * Math.PI / 180)
+        context.translate(-50, 20)
+        context.fillStyle = '#bfc'
+        context.font = '20px Microsoft YaHei'
+        context.fillText('文字信息', canvas.width / 3, canvas.height / 2)
+        let container = document.createElement('div')
+        let containerStyle = `
+          background-image: url('${canvas.toDataURL("image/png")}');
+          `
+        container.setAttribute('style', containerStyle)
+        container.classList.add('waterMark')
+        document.body.appendChild(container)
+
+        let observer = new MutationObserver(() => {
+          console.log('UI_LOG', 'MutationObserver被调用')
+          let wm = document.querySelector('.waterMark')
+          if (wm && wm.getAttribute('style') !== containerStyle || !wm) {
+            if (!wm) {
+              wm.setAttribute('style', containerStyle)
+            } else {
+              //do something
+            }
+          }
+        })
+        observer.observe(document.body, {
+          attributes: true, //观察属性变化
+          subtree: true,  //观察后代节点
+          childList: true //观察目标子节点的变化，是否有添加的或者删除的
+        })
+      },
+      //关闭水印
+      close() {
+        let wm = document.querySelector('.waterMark')
+        document.body.removeChild(wm)
+      }
+    }
+
+    window.onload = function () {
+      waterMark.set()
+      setTimeout(() => {
+        // waterMark.close()
+        let wm = document.querySelector('.waterMark')
+        wm.style.width = '50%' //会触发MutationObserver
+      }, 3000)
+    }
+  </script>
+</body>
+
+</html>

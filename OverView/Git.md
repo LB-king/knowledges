@@ -194,3 +194,19 @@ git remote add origin git@github.com:xxx/demo.git
 git push origin master
 ```
 
+#### 16.解决冲突
+
+```shell
+git merge --abort
+//再拷贝代码，拉代码，合并，提交
+```
+
+#### 17.乱码问题
+
+- `git status`中文文件名字显示乱码 `\346\260\264\345\215\260.html`
+
+	```shell
+	git config --global core.quotepath false
+	```
+
+- 
