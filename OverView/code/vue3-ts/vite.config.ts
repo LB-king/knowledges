@@ -8,7 +8,7 @@ export default defineConfig({
   plugins: [vue()],
   resolve: {
     alias: {
-      '@@': resolve(__dirname, 'src') //设置@指向src目录
+      '@': resolve(__dirname, 'src') //设置@指向src目录
     }
   },
   base: './'
