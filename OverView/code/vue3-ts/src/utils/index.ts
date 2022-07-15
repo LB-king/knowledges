@@ -61,10 +61,11 @@ export const getlastNDay = (date: string, n: number = 1) => {
   //3.返回n天前的日期,注意这里要*1000
   return formatterDate(nTimeStamp * 1000)
 }
-
+type ObjectType = { [key: string]: any }
 /**
  * 解析网址的方法,把？后面的参数取出放到一个对象里面
   console.log('UI_LOG', parseUrl('http://www.aaa.com?name=kb&age=3id=008899'))
+  将？后面的参数转化为对象
  */
 export const parseUrl = (url: string) => {
   //1.判断有没有? | 不是字符串也返回空
@@ -73,8 +74,7 @@ export const parseUrl = (url: string) => {
   let targetParam = url.split('?')[1] || ''
   //3.按照&进行分割
   let targetArr = targetParam.split('&')
-  type NewObject = { [key: string]: any }
-  let obj: NewObject = {}
+  let obj: ObjectType = {}
   // a.使用replace方法
   // targetArr.forEach(item => {
   //   item.replace(/([^&=?]+)=([^&]+)/ig, (_m, $1, $2) => {
@@ -90,13 +90,17 @@ export const parseUrl = (url: string) => {
 }
 
 /**
- * 
+ * 把对象转化为a=123&b=456
  * @param obj 
  */
-export const parseObjToQuery = (obj: object) => {
-
+export const parseObjToQuery = (obj: ObjectType = {}) => {
+  let keysArr = Object.keys(obj)
+  let nArr = keysArr.map(item => `${item}=${obj[item]}`)
+  console.log('UI_LOG', nArr)
+  return nArr.join('&')
 }
 
+console.log('UI_LOG', parseObjToQuery({ a: 'aaa', 1: 99, b: 'bbb' }))
 // function isValidKey(key: string | number | symbol, object: object): key is keyof typeof object {
 //   return key in object
 // }
