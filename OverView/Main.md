@@ -6,6 +6,40 @@
 
   > netstat -ano|findstr ":端口号"
 
+
+
+### POSTMAN配置
+
+- 打开manage enviroments
+
+	| VARIABLE | INITIAL VALUE           | CURRENT VALUE                    |
+	| -------- | ----------------------- | -------------------------------- |
+	| base_url | http://192.168.1.1:2000 | http://192.168.1.1:2000          |
+	| token    | 121212                  | 0c5862de82275e1c575fb4ea7f92eaba |
+
+- 在登陆的接口中设置
+
+	```shell
+	{{base_url}}/sso-auth/api/auth/doLogin
+	```
+
+- 在Tests中设置
+
+	```javascript
+	// 把json字符串转化为对象
+	var data = JSON.parse(responseBody);
+	//获取data对象的token值
+	var token = data.data.token; //根据实际参数结构修改
+	pm.globals.set("token", token)
+	```
+
+- 在其他接口中 **Header**中加入token即可
+
+	| KEY          | VALUE            |
+	| :----------- | :--------------- |
+	| token        | {{token}}        |
+	| Content-Type | application/json |
+
 ### VSCODE
 
 插件系列
@@ -14,12 +48,118 @@
 - `Code Runner`
 - `Live Server` 热启动
 - `open in browser` 浏览器打开文件
+- `Path Autocomplete` 路径识别
+
+```json
+{
+  // 窗口缩放
+  "window.zoomLevel": 1.1,
+  // 按住ctrl+滚轮缩放编辑器
+  "editor.mouseWheelZoom": true,
+  // 配置是否接收自动更新。更改后需要重新启动。更新是从微软在线服务获取的。
+  //  - none: 禁用更新。
+  //  - manual: 禁用自动后台更新检查。如果手动检查更新，更新将可用。
+  //  - start: 仅在启动时检查更新。禁用自动后台更新检查。
+  //  - default: 启用自动更新检查。代码将定期自动检查更新。
+  "update.mode": "manual",
+  // 安装完prettier插件后，选择配置会生成以下选项
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  // 单引号
+  "prettier.singleQuote": true,
+  // 末尾逗号none,all,es5
+  "prettier.trailingComma": "none",
+  // 禁止末尾分号
+  "prettier.semi": false
+}
+```
+
+解决引入@符号，vscode有红色波浪线提示的问题：
+
+> 1. 安装`Path Autocomplete`插件，并且注意项目在根目录打开
+>
+> 2. 新建`jsconfig.json`
+>
+> 	```json
+> 	{
+> 	  "compilerOptions": {
+> 	    "target": "ES5",
+> 	    "module": "esnext",
+> 	    "baseUrl": "./",
+> 	    "moduleResolution": "node",
+> 	    "paths": {
+> 	      "@/*": ["./src/*"]
+> 	    }
+> 	  },
+> 	  "lib": [
+> 	    "esnext",
+> 	    "dom",
+> 	    "dom.iterable",
+> 	    "scripthost"
+> 	  ],
+> 	  "exclude": [
+> 	    "node_modules",
+> 	    "dist"
+> 	  ]
+> 	}
+> 	```
+>
+> 	如果是ts文件，要加2个关键配置
+>
+> 	```json
+> 	{
+> 	  "compilerOptions": {
+> 	    "baseUrl": "./",
+> 	    "paths": {
+> 	      "@/*": ["./src/*"]
+> 	    }
+> 	  }
+> 	}
+> 	```
+>
+> 	
 
 快捷键：
 
 全部收起： `cmd + k + 0`
 
 全部展开：`cmd + k + j`
+
+
+
+### ftp传文件
+
+```shell
+ftp 21.22.33.22
+#用户名
+#密码
+ftp> lcd D:\
+#目前的本地目录
+ftp> cd xxx
+#查看目录里的内容
+ftp> put 要发生的文件名.zip
+```
+
+### NGINX常用的命令
+
+```shell
+cd /usr/local/nginx/sbin
+./nginx -t
+#停止nginx
+./nginx -s stop
+#启动nginx
+./nginx
+#导入文件
+rz
+#解压
+unzip xxx.zip
+```
+
+
 
 ### CSS
 
@@ -2264,6 +2404,67 @@ console.log(g.next()) //{value:undefined,done:true}
 ```
 
 
+
+#### 25.原型、原型链
+
+1. 引用类型，都可以自由扩展属性
+
+2. 引用类型，都有一个隐式原型`__proto__`属性，属性值是一个普通对象
+
+3. 引用类型，隐式原型`__proto__`的属性值指向它的构造函数的显示原型`prototype`属性值
+
+	```js
+	function A() {}
+	var a = new A()
+	console.log(a.__proto__ === A.prototype)
+	```
+
+4. 当我们试图访问一个对象的某个属性值时，如果这个对象没有这个属性，那么他会去他的隐式原型`__proto__`上寻找。(原型链的查找机制就是这样的)
+
+	```js
+	const obj = {a: 1}
+	obj.toString()
+	// obj并没有toString属性，之所以能获取到toString属性，是遵循了上面的规则，在Object的prototype里去获取
+	```
+
+	```js
+	function Person(){}
+	var kb = new Person('Kb')
+	kb.toString()
+	```
+
+	原型链：
+
+	> 1. kb先在自身查找toString方法，没找到，就往上找
+	> 2. 在Person的prototype属性上继续查找，还是没找到，接着往上找
+	> 3. 此时找到了Object，所以就找到了Object.prototype上的toString方法
+	> 4. 如果还没找到，就是没有这个方法了，因为Object往上就是null了
+
+	instanceof:
+
+	> `instanceof` - 用于检测构造函数的`prototype`属性是否出现在某个实例对象的原型链上
+	>
+	> 语法：
+	>
+	> object instanceof constructor
+
+	简易版手写实现instanceof
+
+	```js
+	function _instance(target, Func) {
+	    //剔除简单类型
+	    if(['string', 'number', 'boolean', 'undefined', 'symbol'].includes(typeof target)) return false
+	    let _proto = target.__proto__
+	    let funcProto = Func.prototype
+	    while(true) {
+	        if(_proto === null) return false //说明找到了null也没找到
+	        if(_proto === funcProto) return true
+	        _proto = _proto.__proto__
+	    }
+	}
+	```
+
+	
 
 
 

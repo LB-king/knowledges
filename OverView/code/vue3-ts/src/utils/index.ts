@@ -1,3 +1,4 @@
+import './tools'
 /**
  * 日期转换函数 
  * 1.把当前日期(Thu Jul 14 2022 13:51:33 GMT+0800 (中国标准时间))转化为 yyyy-MM-dd 2022-08-08
@@ -96,11 +97,10 @@ export const parseUrl = (url: string) => {
 export const parseObjToQuery = (obj: ObjectType = {}) => {
   let keysArr = Object.keys(obj)
   let nArr = keysArr.map(item => `${item}=${obj[item]}`)
-  console.log('UI_LOG', nArr)
+  // console.log('UI_LOG', nArr)
   return nArr.join('&')
 }
 
-console.log('UI_LOG', parseObjToQuery({ a: 'aaa', 1: 99, b: 'bbb' }))
 // function isValidKey(key: string | number | symbol, object: object): key is keyof typeof object {
 //   return key in object
 // }
