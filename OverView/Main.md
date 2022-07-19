@@ -2440,14 +2440,12 @@ console.log(g.next()) //{value:undefined,done:true}
 	> 3. 此时找到了Object，所以就找到了Object.prototype上的toString方法
 	> 4. 如果还没找到，就是没有这个方法了，因为Object往上就是null了
 
-	instanceof:
+	`instanceof` -  用于检测构造函数的`prototype`属性是否出现在某个实例对象的原型链上
 
-	> `instanceof` - 用于检测构造函数的`prototype`属性是否出现在某个实例对象的原型链上
-	>
 	> 语法：
 	>
 	> object instanceof constructor
-
+	
 	简易版手写实现instanceof
 
 	```js
@@ -2463,7 +2461,83 @@ console.log(g.next()) //{value:undefined,done:true}
 	    }
 	}
 	```
+	
+	`Object.create` - 能自定义对象的原型
 
+	```js
+	var obj = { a: 'AA' }
+	//设置P的原型为obj
+	var P = Object.create(obj, {
+	  man: {
+	    value: 'kb'
+	  }
+	})
+	Object.getPrototypeOf(P) === obj  //true
+	```
+	
+	`constructor` - 属性是对象才拥有的，它是从一个对象指向一个函数。含义就是指向该对象的构造函数(每个对象都可以找到其对应的constructor)
+	
+	```js
+	var a = 11
+	console.log(a.constructor) //结果就是Number构造函数
+	```
+	
+	`isPrototypeOf` - 检测一个对象(实参)是否存才于另一个对象(开头的那个对象)的原型链中。
+	
+	`getPrototypeOf` - 返回指定对象的原型
+	
+	`setPrototypeOf` - 设置一个对象的原型为另一个对象或者null
+	
+	```js
+	Object.setPrototypeOf(a, b) //设置a的原型为b
+	console.log(a.__proto__ === b) //true
+	console.log(a.__proto__.__proto__ === Object.prototype) //true
+	```
+	
+	设置原型：
+	
+	```js
+	function A() { }
+	function B() { }
+	var [a, b] = [new A(), new B()]
+	var c = {}
+	Object.setPrototypeOf(a, c) //设置a的新原型是c
+	console.log(c.isPrototypeOf(a)) //true 在对象a的原型链上搜寻 | 或者说查找c在不在a的原型链上
+	console.log(Object.getPrototypeOf(c)) //获取c的原型，它就是a
+	```
+	
+	`hasOwnProperty`与`in`都能判断属性是否存在。前者只会判断对象自身有没有某个属性，后者会查找对象的原型链是否有该属性。
+	
+	```js
+	let a = { name: 'ok' }
+	let b = { age: 12 }
+	Object.setPrototypeOf(a, b)
+	console.log(a.hasOwnProperty('age')) //false
+	console.log('age' in a) //true
+	// 加了条件判断就不会去对象的原型链上去找
+	for (let i in a) {
+	  if (a.hasOwnproperty(i)) {
+	    console.log(i)
+	  }
+	}
+	```
+	
+	冻结对象`seal`、`freeze`
+	
+	`seal` - 可以修改属性值，但是不能新增属性
+	
+	```js
+	var obj = { name: 'ok' }
+	Object.seal(obj)
+	obj.name = 'New Name'
+	obj.age = 13
+	console.log(obj)
+	```
+	
+	`freeze` - 只读，不可修改
+	
+	
+	
 	
 
 
