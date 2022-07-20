@@ -1854,7 +1854,7 @@ class Car {
   //类中可以直接写赋值语句，下面代码的含义是：给Car的实例对象添加一个属性，名为wheel，值是4
   wheel = 4
 //类自身添加属性
-	static color = {
+  static color = {
     bg: 'red'
   }
 //自定义方法，使用箭头函数，可以找到this
@@ -2868,6 +2868,16 @@ Function.prototype.myBind = function(obj, ...params) {
   
 
 ### TypeScript
+
+对象{}添加属性的时候，编辑器报错
+
+```typescript
+type ObjectType = { [key: string]: any }
+//编辑器报错信息如下：
+//元素隐式具有 "any" 类型，因为类型为 "string" 的表达式不能用于索引类型 "ObjectType"。在类型 "ObjectType" 上找不到具有类型为 "string" 的参数的索引签名。ts(7053)
+```
+
+
 
 #### 项目配置
 
@@ -4666,21 +4676,24 @@ Vue3.x中的组件模板属于该组件，有时候我们想把模板的内容�
 
 ```vue
 <script setup lang="ts">
-  //引入组件后无需注册，直接使用
+  // 引入组件后无需注册，直接使用
   import Modal from './modal.vue'
-  // 变量
-	const msg = 'Hello!'
+  // 变量也是直接使用
+  const msg = 'Hello!'
+  // 定义子组件接收的参数
   const props = defineProps({
     visible: Boolean
   })
+  // 子组件要暴露的事件
   const emit = defineEmits(['close'])
   function close() {
+    // 把事件暴露出去
     emit('close')
   }
 </script>
 
 <template>
-	<p>{{ msg }}</p>
+  <p>{{ msg }}</p>
   <Modal :visible="isShow" @close="close"></Modal>
 </template>
 ```
@@ -5156,6 +5169,42 @@ pnpm create vite my-vue-app --template vue
 ```
 
 模板选项：`vanilla`，`vanilla-ts`，`vue`，`vue-ts`，`react`，`react-ts`，`preact`，`preact-ts`，`lit`，`lit-ts`，`svelte`，`svelte-ts`
+
+Vite配置:
+
+```js
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import { resolve } from 'path'
+
+// 编辑器红色波浪线报错，安装@types/node
+// https://cn.vitejs.dev/config/
+export default defineConfig({
+  plugins: [vue()],
+  resolve: {
+    alias: {
+      '@': resolve(__dirname, 'src') //设置@指向src目录
+    }
+  },
+  base: './',
+  server: {
+    port: 3000, //设置服务器启动的端口号
+    open: true, //是否在服务启动时打开浏览器
+    cors: true, //是否允许跨域
+    proxy: {
+      '/api': {
+        target: 'http://xxx.com',
+        changeOrigin: true,
+        secure: false,
+        rewrite: path => path.replace('/api', '/')
+      }
+    }
+  }
+})
+
+```
+
+
 
 ### Webpack
 

@@ -101,9 +101,58 @@ export const parseObjToQuery = (obj: ObjectType = {}) => {
   return nArr.join('&')
 }
 
-// function isValidKey(key: string | number | symbol, object: object): key is keyof typeof object {
-//   return key in object
-// }
+/**
+ * 
+ * @param obj 要处理的对象，把其中的空值去掉
+ */
+export const filterObj = (obj: ObjectType = {}) => {
+  for (let i in obj) {
+    // 避免查询原型链
+    if (obj.hasOwnProperty(i)) {
+      //这里可以做更多的判断，例如把{},[]...等等都去掉
+      if (isEmpty(obj[i])) {
+        delete obj[i]
+      }
+    }
+  }
+  return obj
+}
 
+/**
+ * @param target 判断target是否为空,true表示为空，false表示有值
+ * @returns 
+ */
+export const isEmpty = (target: any) => {
+  //基于简单类型，直接过滤
+  if (!target) return true
+  if (['object', 'array'].indexOf(getType(target)) > -1 && Object.keys(target).length === 0) return true
+}
 
+const types = [
+  'String',
+  'Boolean',
+  'Number',
+  'Object',
+  'Array',
+  'Function',
+  'Date',
+  'RegExp',
+  'Symbol',
+  'Undefined',
+  'Null',
+  'Arguments',
+  'HTMLCollection',
+  'Error',
+  'BigInt', //9007199254740991n
+  'Window',
+  'Set'
+]
+export const getType = (target: any) => {
+  let typeObj: ObjectType = {}
+  types.forEach(item => {
+    typeObj[`[object ${item}]`] = item.toLowerCase()
+  })
+  return typeObj[Object.prototype.toString.call(target)]
+}
 
+console.log('UI_LOG', filterObj({ a: 888, b: '', c: NaN, d: 9, e: {}, f: [], g: undefined, h: null, i: new Error(), j: new Date() }))

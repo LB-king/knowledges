@@ -11,5 +11,18 @@ export default defineConfig({
       '@': resolve(__dirname, 'src') //设置@指向src目录
     }
   },
-  base: './'
+  base: './',
+  server: {
+    port: 3000, //设置服务器启动的端口号
+    open: true, //是否在服务启动时打开浏览器
+    cors: true, //是否允许跨域
+    proxy: {
+      '/api': {
+        target: 'http://xxx.com',
+        changeOrigin: true,
+        secure: false,
+        rewrite: path => path.replace('/api', '/')
+      }
+    }
+  }
 })

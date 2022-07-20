@@ -1,10 +1,13 @@
 <script setup lang="ts">
 // 添加setup之后无需注册组件
 import Home from './components/home.vue'
+function test() {
+  console.log('UI_LOG', 'test')
+}
 </script>
 
 <template>
-  <Home></Home>
+  <Home title="home" @test="test"></Home>
 </template>
 
 <style>
