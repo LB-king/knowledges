@@ -9,6 +9,7 @@ import Header from '../views/Header.vue'
 import Hierarchy from '../views/Hierarchy/index.vue'
 import jsPdf from '../views/jsPdf/index.vue'
 import echartsComponent from '../views/echartsComponent/index.vue'
+import Mars from '@/views/mars/index.vue'
 
 Vue.use(VueRouter)
 
@@ -75,6 +76,14 @@ const routes = [
     components: {
       header: Header,
       default: echartsComponent
+    }
+  },
+  {
+    path: '/mars',
+    name: 'mars',
+    components: {
+      header: Header,
+      default: Mars
     }
   }
 ]

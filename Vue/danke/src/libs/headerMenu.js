@@ -7,4 +7,5 @@ export const headMenus =  [
   {path:'/hierarchy', name:'股权架构'},
   {path:'/jsPdf', name:'jsPdf'},
   {path:'/echarts', name:'echarts'},
+  {path:'/mars', name:'mars-pro'},
 ]
