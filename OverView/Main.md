@@ -2536,9 +2536,31 @@ console.log(g.next()) //{value:undefined,done:true}
 	
 	`freeze` - 只读，不可修改
 	
-	
-	
-	
+
+#### 26.对URL的处理
+
+```js
+var url = 'http://www.xxx.com?name=kb&age=33&id=7890'
+function parse(url) {
+    var index = url.indexOf('?'),
+        lastIndex = url.indexOf('?')
+    //判断是否存在？，以及？是否有多个
+    if(index === -1 || index !== lastIndex) return {}
+    //1.使用数组和字符串的转换方法实现
+    var restUrl = url.substring(index + 1)
+    var res = {}
+   // restUrl.split('&').forEach(item => {
+   //     item = item.split('=')
+   //     res[item[0]] = item[1]
+   // })
+    restUrl.replace(/([^&=?]+)=([^&]+)/g, (m, $1, $2) => {
+        res[$1] = $2
+    })
+    return res
+}
+```
+
+
 
 
 
