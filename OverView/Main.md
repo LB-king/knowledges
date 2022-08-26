@@ -50,6 +50,8 @@
 - `open in browser` 浏览器打开文件
 - `Path Autocomplete` 路径识别
 
+项目根目录的`.prettierrc`文件会优先对编辑器产生作用
+
 ```json
 {
   // 窗口缩放
@@ -74,7 +76,8 @@
   // 末尾逗号none,all,es5
   "prettier.trailingComma": "none",
   // 禁止末尾分号
-  "prettier.semi": false
+  "prettier.semi": false,
+  "arrowParens": "avoid" //箭头函数只有一个参数时，不加括号
 }
 ```
 
@@ -3652,6 +3655,28 @@ console.log(a.apiUrl)
 
 ### Vue2
 
+#### mixins
+
+```js
+export default {
+  data() {
+    return {
+      name: '组件中的变量'
+    }
+  },
+  mixins: [mix1, mix2] 
+  //mix2中的同名变量会覆盖mix1中的内容;组件本身的变量和方法会覆盖mixins中的内容
+}
+```
+
+#### 源码解析：
+
+##### 1.mustache引擎模板
+
+
+
+
+
 #### Object.defineProperty
 
 属性：
@@ -3696,7 +3721,7 @@ Object.defineProperty(obj, key) {
 
 
 
-#### mustachhe模板引擎
+#### mustache模板引擎
 
 数据变为视图最优雅的解决方案
 
@@ -5010,6 +5035,8 @@ V2-双端比较
 V3-最长递增子序列
 
 React-递增法
+
+
 
 
 
@@ -6598,6 +6625,7 @@ export default [
 
 > - computed:是计算属性，它会根据所依赖的数据动态计算新的结果，该结果会被缓存
 > - watch：是data的数据监听回调，当依赖的data数据变化，执行回调，把一些在数据变化时触发的操作放在watch里面执行
+> 主要的代码是 `initWatch` 和 `initComputed` 两个函数
 > - methods：与computed的区别
 >   - 调用方式不同，computed直接以对象属性方式调用，不需要加括号，而methods必须要函数执行才可以得到结果
 >   - 无缓存，调用相同的值计算还是会重新计算
@@ -6807,5 +6835,12 @@ https://juejin.cn/post/6844903982742110216
 
 #### 做过哪些首屏优化
 
+信达负债融资系统：
+
+宁波银行的个人对账系统：解决平台接口数据格式不一致导致资金展示错乱的问题
 
 
+
+华润信托项目管理系统：webpack添加缓存插件，提高编译速度HardSourceWebpackPlugin,资源缓存，提升打包效率，表单页面配置化
+
+HMI车载系统 project 不变，experience更新 

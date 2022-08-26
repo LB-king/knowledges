@@ -4,26 +4,31 @@
   p.item(v-for='(item, index) in objList')
     | {{ index }}--{{ item }}
   el-button(@click='click') 按钮
-  input(type='text' v-if='show' key="t1")
-  input(type='text' v-else key='t2')
-  el-table(:data="tableData" border :span-method="arraySpanMethod")
-    el-table-column(type="index")
-    el-table-column(label="名字" prop="name")
-    el-table-column(label="价格" prop="price")
+  input(type='text', v-if='show', key='t1')
+  input(type='text', v-else, key='t2')
+  el-table(:data='tableData', border, :span-method='arraySpanMethod')
+    el-table-column(type='index')
+    el-table-column(label='名字', prop='name')
+    el-table-column(label='价格', prop='price')
   hr
-  table(border cellspacing="0")
+  table(border, cellspacing='0')
     tr
       th 名字
       th 年龄
       th 性别
     tr
-      td(rowSpan="2") 111
+      td(rowSpan='2') 111
       td 12
       td man
     tr
-
       td 222
       td woman
+  hr
+  el-form(:model='info')
+    el-form-item 
+      el-input(v-model='info.name')
+      p#show {{ info.name }}
+  p {{ name }}
 </template>
 
 <script>
@@ -42,6 +47,7 @@ export default {
         name: 'KO',
         age: 35
       },
+      info: { name: '' },
       show: true,
       tableData: [
         { id: '000', name: 'HTML', price: 0 },
@@ -59,7 +65,7 @@ export default {
       pos: 0
     }
   },
-  mixins: [mix2, mix1],
+  mixins: [mix1, mix2],
   components: {},
   computed: {
     nTableData() {
@@ -70,7 +76,7 @@ export default {
   methods: {
     getSpanArr(data, propName) {
       let merge = [],
-          pos = 0
+        pos = 0
       for (var i = 0; i < data.length; i++) {
         if (i === 0) {
           merge.push(1)
