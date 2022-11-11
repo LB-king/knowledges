@@ -2565,6 +2565,30 @@ function parse(url) {
 }
 ```
 
+#### 27.读取文件内容
+
+```html
+<input id="upload" type="file" />
+```
+
+```javascript
+const upload = document.querySelector('#upload')
+upload.onload = eve =>  {
+	//获取文件
+	let file = eve.target.files[0]
+	let reader = new FileReader()
+	reader.readAsText(file)
+	// 这个方法是异步的，只有执行完成后才能查看到结果，直接查看是无结果的，并返回undefined
+  // 所以要挂载到实例的onload或onloadend的方法处理转化后的结果
+	reader.onload = e => {
+		let content = e.target.result
+		//接下来就可以处理内容了
+    let arr = content.split('\r') //string到array时用'\r'
+    let res = arr.filter(item => item !== '\n') //内容过滤换行用'\n'
+	}
+}
+```
+
 
 
 
