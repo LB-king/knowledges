@@ -7,7 +7,7 @@
 
 <script>
 import createState from 'mars-pro/lib/pro/createState'
-console.log(createState)
+// console.log(createState)
 export default {
   name: 'mars',
   props: {

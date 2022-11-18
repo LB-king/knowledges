@@ -14,83 +14,91 @@ import Mars from '@/views/mars/index.vue'
 Vue.use(VueRouter)
 
 const routes = [
-  {
-    path: '/',
-    name: 'Home',
-    components: {
-      header: Header,
-      default: Home
-    }
-  },
-  {
-    path: '/dict',
-    name: 'Dict',
-    components: {
-      header: Header,
-      default: Dict
-    }
-  },
-  {
-    path: '/d3',
-    name: 'D3',
-    components: {
-      header: Header,
-      default: D3
-    }
-  },
-  {
-    path: '/d3Tree',
-    name: 'D3Tree',
-    components: {
-      header: Header,
-      default: D3Tree
-    }
-  },
-  {
-    path: '/xigua',
-    name: 'xigua',
-    components: {
-      header: Header,
-      default: xigua
-    }
-  },
-  {
-    path: '/hierarchy',
-    name: 'Hierarchy',
-    components: {
-      header: Header,
-      default: Hierarchy
-    }
-  },
-  {
-    path: '/jsPdf',
-    name: 'jsPdf',
-    components: {
-      header: Header,
-      default: jsPdf
-    }
-  },
-  {
-    path: '/echarts',
-    name: 'echarts',
-    components: {
-      header: Header,
-      default: echartsComponent
-    }
-  },
-  {
-    path: '/mars',
-    name: 'mars',
-    components: {
-      header: Header,
-      default: Mars
-    }
-  }
+	{
+		path: '/',
+		name: 'Home',
+		components: {
+			header: Header,
+			default: Home
+		}
+	},
+	{
+		path: '/dict',
+		name: 'Dict',
+		components: {
+			header: Header,
+			default: Dict
+		}
+	},
+	{
+		path: '/d3',
+		name: 'D3',
+		components: {
+			header: Header,
+			default: D3
+		}
+	},
+	{
+		path: '/d3Tree',
+		name: 'D3Tree',
+		components: {
+			header: Header,
+			default: D3Tree
+		}
+	},
+	{
+		path: '/xigua',
+		name: 'xigua',
+		components: {
+			header: Header,
+			default: xigua
+		}
+	},
+	{
+		path: '/hierarchy',
+		name: 'Hierarchy',
+		components: {
+			header: Header,
+			default: Hierarchy
+		}
+	},
+	{
+		path: '/jsPdf',
+		name: 'jsPdf',
+		components: {
+			header: Header,
+			default: jsPdf
+		}
+	},
+	{
+		path: '/echarts',
+		name: 'echarts',
+		components: {
+			header: Header,
+			default: echartsComponent
+		}
+	},
+	{
+		path: '/mars',
+		name: 'mars',
+		components: {
+			header: Header,
+			default: Mars
+		}
+	},
+	{
+		path: '/dialog',
+		name: 'dialog',
+		components: {
+			header: Header,
+			default: () => import('@/views/dialog/index.vue')
+		}
+	}
 ]
 
 const router = new VueRouter({
-  mode: 'history',
-  routes
+	mode: 'history',
+	routes
 })
 
 export default router
