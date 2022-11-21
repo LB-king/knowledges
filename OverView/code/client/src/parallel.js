@@ -4,13 +4,13 @@ import asyncPool from 'asyncpool'
 
 !(function () {
 	function F11() {
-		return axios.get('/users')
+		return axios.get('/users/u1')
 	}
 	function F22() {
-		return axios.get('/users/u12')
+		return axios.get('/users/u2')
 	}
 	function F33() {
-		return axios.get('/users/u2')
+		return axios.get('/users/u3')
 	}
 	const delay = function (inteval) {
 		return new Promise((resolve, reject) => {
@@ -29,7 +29,7 @@ import asyncPool from 'asyncpool'
 	]
 
 	btn7.addEventListener('click', () => {
-		let apiTasks = [F11, F22, F33, F11, F22, F33]
+		let apiTasks = [F11, F22, F33, F11, F22, F33,F11, F22, F33, F11, F22, F33]
 		/*  Promise.all([F11(), F22(), F33()])
       .then((res) => {
         console.log(res)
@@ -163,7 +163,7 @@ import asyncPool from 'asyncpool'
 			let tq = new TaskQueue()
 			tasks.forEach(task => tq.pushTask(task))
 		}
-		createRequest(apiTasks, 2, res => {
+		createRequest(apiTasks, 1, res => {
 			console.log(res)
 		})
 	})

@@ -23,6 +23,15 @@ router.get('/u1', function (req, res, next) {
 })
 router.get('/u2', function (req, res, next) {
   let data = [{ id: 'U2', name: 'U2' }]
+  return
+  res.send(data)
+})
+router.get('/u3', function (req, res, next) {
+  let data = [{ id: 'U3', name: 'U3' }]
+  res.send(data)
+})
+router.get('/u4', function (req, res, next) {
+  let data = [{ id: 'U4', name: 'U4' }]
   res.send(data)
 })
 //TODO

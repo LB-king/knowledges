@@ -1505,6 +1505,44 @@ npm i asyncpool
 
 并发限制，一般管控ajax请求
 
+```js
+function asyncPool(arr, limit = 2) {
+	let args = [...arr]   //不修改原参数数组
+	let results = []      //存放最终结果
+	let runningCount = 0  //正在运行的数量
+	let resultIndex = 0   //结果的下标，用于控制结果的顺序
+	let resultCount = 0   //结果的数量
+		
+	return new Promise((resolve) => {
+		function run() {
+			while(runningCount < limit && args.length > 0) {
+				runningCount++
+				((i)=> {        //闭包用于保存结果下标，便于在resolve时把结果放到合适的位置
+					let v = args.shift()
+							console.log('正在运行' + runningCount)
+							v().then(val => {
+								results[i] = val
+							}, () => {
+								throw new Error(`An error occurred: ${v}`)
+							}).finally(() => {
+								runningCount--
+								resultCount++
+								if(resultCount === arr.length) {  //这里之所以用resultCount做判断，而不用results的长度和args的长度，是因为这两个都不准确
+									resolve(results)
+								} else {
+									run()
+								}
+							})          
+						})(resultIndex++)
+					}
+				}
+				run()
+			})
+		}
+```
+
+
+
 #### 9.堆栈内存
 
 ![](img/堆栈内存.png)
@@ -5223,6 +5261,14 @@ export default defineConfig({
 
 ### Solidjs
 
+### egg.js
+
+https://vite.itnavs.com/web.html#/home
+
+### Github
+
+查询接口：https://api.github.com/search/users?q=xxx
+
 ### Vite
 
 vue3+ts
@@ -5279,6 +5325,16 @@ export default defineConfig({
 
 ```
 
+### Express
+
+初始化项目：
+
+```
+npm init
+npm install express-generator -g
+express <myapp>
+```
+
 
 
 ### Webpack
@@ -5292,6 +5348,10 @@ copy一个文件，不希望被打包
 PC + H5 +小程序  SCRM
 
 上海 ： 小程序(计划中。。。)
+
+
+
+
 
 
 
