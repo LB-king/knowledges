@@ -4389,11 +4389,11 @@ vnode1.key === vnode2.key && vnode1.sel === vnode2.sel
 >
 > 4. 创建或者删除
 
-![](\img\diff_4种比较.png)
+![](img\diff_4种比较.png)
 
 4种都查不到：
 
-![](\img\diff_4种都没找到.png)
+![](img\diff_4种都没找到.png)
 
 
 
@@ -4451,7 +4451,7 @@ vnode1.key === vnode2.key && vnode1.sel === vnode2.sel
 
 抽象语法树和虚拟dom的区别：
 
-![](\img\VUE_抽象语法树.png)
+![](img\VUE_抽象语法树.png)
 
 知识储备：
 
@@ -5682,6 +5682,49 @@ function numFormatter(num, cent, isThousand) {
   }
   if (numSource < 0) num = `-${num}`
   return cent > 0 ? `${num}.${cents}` : `${num}`
+}
+```
+
+#### 3.遍历查找树结构的label
+
+```js
+var data = {
+  id: 'a1',
+  label: 'a1---label',
+  children: [
+    {
+      id: 'a1-01',
+      label: 'a1-01---label',
+      children: [
+        {
+          id: 'a1-01-02',
+          label: 'a1-01-02---label'
+        }
+      ]
+    },
+    {
+      id: 'a1-02',
+      label: 'a1-02---label',
+      children: []
+    }
+  ]
+}
+//获取label的函数
+function getLabel(target = {}, value) {
+  //第一层是对象的时候
+  if (Object.prototype.toString.call(target) === '[object Object]') {
+    if (target.id === value) return target.label
+    if (target.children && target.children.length > 0) {
+      let res = getLabel(target.children, value)
+      if(res) return res
+    }
+  }
+  if (Object.prototype.toString.call(target) === '[object Array]') {
+    for(let item of target) {
+      let res = getLabel(item.children, value)
+      if(res) return res
+    }
+  }
 }
 ```
 
@@ -6918,6 +6961,8 @@ https://juejin.cn/post/6844903982742110216
 #### loader和plugin有什么区别？
 
 #### TOC优化
+
+#### 虚拟列表
 
 #### 做过哪些首屏优化
 
