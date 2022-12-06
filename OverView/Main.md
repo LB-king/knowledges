@@ -5719,8 +5719,10 @@ function getLabel(target = {}, value) {
       if(res) return res
     }
   }
+  //是数据的时候
   if (Object.prototype.toString.call(target) === '[object Array]') {
     for(let item of target) {
+      if(item.id === value) return item.label
       let res = getLabel(item.children, value)
       if(res) return res
     }
