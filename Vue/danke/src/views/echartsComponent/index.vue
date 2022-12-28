@@ -1,6 +1,7 @@
 <template lang="pug">
 .xigua
   .bar-chart(ref='box')
+  .bar-chart(ref='box1')
 </template>
 
 <script>
@@ -14,8 +15,8 @@ var d3 = d1.map((item, index) => {
 console.log(d3)
 export default {
   name: 'echarts-component',
-  methods: {
-    init(container) {
+  computed: {
+    option1() {
       let markLine = {
         silent: true,
         symbol: 'none',
@@ -51,7 +52,7 @@ export default {
           ]
         ]
       }
-      let option = {
+      return {
         tooltip: {
           trigger: 'axis',
           axisPointer: {
@@ -163,12 +164,118 @@ export default {
           }
         ]
       }
-      this.chart = echarts.init(container)
-      this.chart && this.chart.setOption(option, true)
+    },
+    option2() {
+      const colors = ['#5470C6', '#91CC75', '#EE6666']
+      return {
+        color: colors,
+        tooltip: {
+          trigger: 'axis'
+          // axisPointer: {
+          //   type: 'cross'
+          // }
+        },
+        grid: {
+          right: '20%'
+        },
+        // toolbox: {
+        //   feature: {
+        //     dataView: { show: true, readOnly: false },
+        //     restore: { show: true },
+        //     saveAsImage: { show: true }
+        //   }
+        // },
+        legend: {
+          data: ['Evaporation', 'Temperature']
+        },
+        dataZoom: {
+          type: 'slider',
+          height: 8
+        },
+        xAxis: [
+          {
+            type: 'category',
+            axisTick: {
+              alignWithLabel: true
+            },
+            // prettier-ignore
+            data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug']
+          }
+        ],
+        yAxis: [
+          {
+            type: 'value',
+            name: 'Evaporation',
+            position: 'right',
+            alignTicks: true,
+            axisLine: {
+              show: true,
+              lineStyle: {
+                color: colors[0]
+              }
+            },
+            axisLabel: {
+              formatter: '{value} ml'
+            },
+            //分割线
+            splitLine: {
+              show: true,
+              lineStyle: {
+                color: 'blue',
+                type: 'dashed'
+              }
+            }
+          },
+          {
+            type: 'value',
+            name: '温度',
+            position: 'left',
+            alignTicks: true,
+            axisLine: {
+              show: true,
+              lineStyle: {
+                color: colors[1]
+              }
+            },
+            axisLabel: {
+              formatter: '{value} °C'
+            },
+            //分割线
+            splitLine: {
+              show: !!1,
+              lineStyle: {
+                color: 'red',
+                type: 'dashed'
+              }
+            }
+          }
+        ],
+        series: [
+          {
+            name: 'Evaporation',
+            type: 'bar',
+            data: [11, 22, 33, 66, 33, 99, 10, 10]
+          },
+
+          {
+            name: 'Temperature',
+            type: 'line',
+            yAxisIndex: 1,
+            data: [2.0, 2.2, 3.3, 4.5, 6.3, 10.2, 20.3, 23.4]
+          }
+        ]
+      }
+    }
+  },
+  methods: {
+    init(container, option, chartName) {
+      this[chartName] = echarts.init(container)
+      this[chartName] && this[chartName].setOption(option, true)
     }
   },
   mounted() {
-    this.init(this.$refs.box)
+    this.init(this.$refs.box, this.option1, 'chart1')
+    this.init(this.$refs.box1, this.option2, 'chart2')
     window.addEventListener(
       'resize',
       debounce(() => {
@@ -176,14 +283,15 @@ export default {
         console.log(this.$refs.box.clientWidth)
         // let w = this.chart.getWidth()
         let w = this.$refs.box.clientWidth
-        let x = (w * 0.8) / 6 * 2 + 20 + w * 0.1
-        let op = this.chart.getOption()
+        let x = ((w * 0.8) / 6) * 2 + 20 + w * 0.1
+        let op = this.chart1.getOption()
         op.color = ['#bfc', '#bfb']
         op.series[0].markLine.data[0][0].x = x
         op.series[0].markLine.data[0][1].x = x
         // console.log(op)
-        this.chart.setOption(op, true)
-        this.chart && this.chart.resize()
+        this.chart1.setOption(op, true)
+        this.chart1 && this.chart1.resize()
+        this.chart2 && this.chart2.resize()
       }),
       800
     )
@@ -196,5 +304,6 @@ export default {
   height: 300px;
   width: 50%;
   border: 1px solid rgb(218, 233, 8);
+  margin-bottom: 10px;
 }
 </style>

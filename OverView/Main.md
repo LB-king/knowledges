@@ -166,6 +166,11 @@ unzip xxx.zip
 
 
 
+### 设计类：
+
+- 使用连续轴、时间轴：轴标签推荐自动抽样显示，参考格式塔中【连续性原理】尽管轴标签未展示完全，却仍像未阻断或仍然连续一样，用户会在脑海中把缺失的部分补齐
+- 使用分类轴：轴标签不推荐抽样显示，旋转35°；如果使用了抽样方案，则整个图表的内容会有所缺失，违反了设计原则中的【准确】，丢失信息是我们不愿意看到的
+
 ### CSS
 
 #### 1.清除浮动
@@ -2629,7 +2634,34 @@ upload.onload = eve =>  {
 
 
 
+#### 28.多入口打包
 
+1. 先安装 `cross-env`
+
+2. 在`package.json`中配置打包脚本：
+
+   ```json
+   {
+     "build:xxx": "cross-env xxx=true vue-cli-service build"
+   }
+   ```
+
+3. 配置好以后，就可以在`vue.config.js`读取到`process.env.xxx`;从而根据条件做一些处理
+
+4. 配置自己的打包路径，重写一个main.js
+
+   ```js
+   const path = require('path')
+   module.exports = {
+     chainWebpack: config => {
+       config.entry('app').clear().add(path.resolve(__dirname, './src/views/xxx/main.js'))
+     }
+   }
+   ```
+
+   可以通过`outputDir`自定义打包的文件夹位置,当然这里也可以根据环境变量来做出不同的配置
+
+   
 
 
 
