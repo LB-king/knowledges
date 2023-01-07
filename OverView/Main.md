@@ -2648,6 +2648,12 @@ upload.onload = eve =>  {
 
 3. 配置好以后，就可以在`vue.config.js`读取到`process.env.xxx`;从而根据条件做一些处理
 
+   > 配置NODE_ENV 也可以在根目录下新增 env.xxx
+   >
+   > NODE_ENV=xxx
+   >
+   > 在package.json中配置脚本"--mode xxx"
+
 4. 配置自己的打包路径，重写一个main.js
 
    ```js
@@ -4640,19 +4646,61 @@ export default {
 
 
 
+#### slot
 
+1. 匿名插槽 slot
+2. 具名插槽 slot = 'xxx'
+3. 作用域插槽 slot='xxx' slot-scope="slotProps"
+4. v-slot
 
+在子组件的写法不变，前3条在vue2.6版本被软弃用，统一用v-slot
 
+子组件：
 
+```vue
+<template>
+	<!--1.默认插槽-->
+	<slot></slot>
+	<!--2.具名插槽-->
+	<slot name="header"></slot>
+	<!--3.作用域插槽-->
+	<slot name="footer" footName="footer插槽的信息"></slot>
+</template>
+```
 
+父组件：
 
-
-
-
-
-
-
-
+```vue
+<template>
+	<!--1.默认插槽-->
+	<slot>填充内容即可</slot>
+	<!--2.具名插槽-->
+	<template slot="header">
+		这里填充具名插槽的内容
+	</template>
+	<!--3.作用域插槽-->
+	<template slot="header" slot-scope="slotScope">
+		这里填充作用域插槽的内容---{{ slotScope.footName }}
+	</template>
+	<!--4.v-slot只能在template标签使用,默认是default,可以简写， #slotName-->
+	<!--4.1匿名插槽-->
+	<template v-slot></template>
+	<!--4.2具名插槽-->
+	<template v-slot:header></template>
+	<template #header></template>
+	<!--4.3作用域插槽-->
+	<template v-slot:header="slotScope">
+		{{ slotScope.footName }}
+	</template>
+	<template #header="slotScope">
+		{{ slotScope.footName }}
+	</template>
+	<!--4.3作用域插槽-使用解构写法-->
+	<template #header="{footName}">
+		{{ footName }}
+	</template>
+</template>
+```
 
 
 
