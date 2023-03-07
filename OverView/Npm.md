@@ -112,7 +112,7 @@ vi test.txt # 编辑文件
 
 npx想要解决的主要问题，就是调用项目内部安装的模块。比如，项目内部安装了测试工具Mocha。
 
-一般来说，调用Mocha，只能在项目脚本和package.json的`scropts`字段里，如果想在命令行下调用。必须像下面这样：
+一般来说，调用Mocha，只能在项目脚本和package.json的`scripts`字段里，如果想在命令行下调用。必须像下面这样：
 
 ```shell
 node-modules/.bin/mocha --vesion
