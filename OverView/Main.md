@@ -1050,7 +1050,7 @@ http://user:pass@www.qq.com:80/index.html?name=ok&age=18#video
 
 总会和服务器协商的
 
-![](\img\协商缓存.png)
+![](img\协商缓存.png)
 
 last-modified 只能精确到秒
 
@@ -5415,6 +5415,36 @@ npm install express-generator -g
 express <myapp>
 ```
 
+### NuxtJs
+
+> SSR 服务端渲染
+>
+> SPA（单页面应用），不利于搜索引擎的SEO操作，无法抓取到SPA的内容页面
+
+服务器端渲染有什么有点？
+
+> 1. 更好的SEO-爬虫抓取工具可以直接查看完全渲染的页面
+>
+> 2. 更好的用户体验，因为页面是在服务端渲染好的
+>
+> 3. SSR会减少请求
+>
+>    SPA页面先获取文件，再读取内容，再向服务器发送请求；至少会二次向服务器发请求
+
+安装环境：
+
+1. node 
+
+2. nuxt.js- 基于vue的服务端的渲染框架
+
+3. 全局安装`create-nuxt-app`或者直接用npx
+
+   ```
+   npm install create-nuxt-app -g
+   ```
+
+   
+
 
 
 ### Webpack
@@ -7057,3 +7087,34 @@ https://juejin.cn/post/6844903982742110216
 华润信托项目管理系统：webpack添加缓存插件，提高编译速度HardSourceWebpackPlugin,资源缓存，提升打包效率，表单页面配置化
 
 HMI车载系统 project 不变，experience更新 
+
+- 宁波银行对账管理系统
+- 信达资产管理系统
+- 华润信托项目中心和智能工作台
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+后台服务使用 koa + nodejs + vue + react + rrs
+
+服务端渲染---
+
+
+
+
+
+
+
+
+

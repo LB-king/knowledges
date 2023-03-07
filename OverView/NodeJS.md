@@ -1,7 +1,8 @@
 ### NodeJs是什么
 
-- nodeJs不是一门语言，不是库，也不是框架
+- Node.Js不是一门语言，不是库，也不是框架
 - 是js的运行环境
+- 没有浏览器安全级别的限制
 - 解析和执行js的代码
 - 特点：
   - 没有DOM和BOM
@@ -13,6 +14,8 @@
 1. event-driven 事件驱动
 2. non-blocking  I/O model 非阻塞I/O模型
 3. lightWeight and efficient 轻量级和高效
+
+特点：错误优先的回调特性
 
 ### 配置环境变量
 
@@ -443,13 +446,63 @@ callbackFunction((err, res) => {
   console.log(util.isDate(Date.now())) // 1600671078057 false
   ```
 
+#### process-进程
+
+```shell
+node index.js argv1 argv2
+```
+
+index.js
+
+```js
+console.log(process.argv.slice(2)) // ['argv1', 'argv2']
+```
+
+
+
 ### supervisor
 
 ```powershell
 npm install supervisor -g
 ```
 
+### nvm
+
+版本管理工具-windows环境需要下载安装(nvm-windows)
+
+```
+nvm list #查看node版本，以供开发者选择
+nvm use 16.8.0
+nvm alias default 14.15.0 #设置默认版本
+npm view vue
+```
+
+
+
 ### npm
+
+- `npm i gulp -D`
+
+  > 在当前目录查看不到`gulp -v`的命令
+  >
+  > 需要`.\node_modules\.bin\gulp -v`
+
+  解决方案：
+
+  ```json
+  {
+    "scripts": {
+      "gulp:v": "./node_modules/.bin/gulp -v",
+      "gp": "gulp -v"
+    }
+  }
+  ```
+
+  `npm run gulp:v` 即可执行该命令
+
+  脚本执行：`npm run gp` 也能正确执行该命令
+
+  但是命令行直接输入 `gulp -v` 就会报错，找不到这个命令
 
 - `npm`安装-(淘宝镜像)
 
@@ -474,7 +527,87 @@ npm install supervisor -g
   # npm update <package> -g 全局更新
   # npm cache clear 可以清空npm本地缓存
   npm publish # 发布？(未曾使用)
+  npm list grep gulp #过滤查看安装的包信息
   ```
+  
+  ```
+  npm list grep gulp
+  npm list | findstr gulp #grep是linux命令；findstr是windows命令
+  ```
+  
+  安装依赖注意：
+  
+  开发模式：放在 `devDependencies`中
+  
+  ```
+  npm i xxx --save-dev || -D
+  ```
+  
+  生产模式：放在`dependencies`中
+  
+  ```
+  npm i xxx || npm i xxx --save | -S
+  ```
+  
+  分包很有必要，在打包生产依赖的时候`npm install --production`就只会安装`dependencies`字段的依赖包
+  
+- 版本查询与安装
+
+  ```
+  npm view vue versions #versions-全部版本 version-最新版本
+  npm install vue@2.6.14 -S
+  npm i vue@1 #安装1的最高版本
+  npm outdated #查看当前版本和期望版本的信息
+  ```
+
+  ^14.8.1
+
+  - major: 主版本号 - 14
+  - minor: 次版本号 - 8
+  - patch: 补丁 - 1 一般偶数是稳定的patch，奇数是不稳定的patch
+  - ^:只锁定主版本号，8 和 1会更新
+  - ~：锁定14和8 ，1会更新
+  - 空：锁定版本号
+  - *: 最新版本
+
+- 上传自己的包
+
+  > npm adduser
+  >
+  > https://www.npmjs.com
+  >
+  > npm publish #发布自己的包
+  >
+  > npm uninstall --force #卸载自己的包
+
+- 查看镜像的配置结果
+
+  > npm config get registry # 默认是：https://registry.npmjs.org/ 因此可以设置成淘宝镜像
+  > npm config set registry https://registry.npm.taobao.org # 设置淘宝镜像
+  > npm config set registry https://registry.npmjs.org # 回退初始化设置
+
+- 设置缓存目录
+
+  > npm config get cache # 获取缓存目录
+  > npm config set cache "d:/cache" # 设置
+  > npm config get prefix # 包安装目录
+  > npm config set prefix "d:/cache"
+
+- npm 脚本
+
+  一、npm 允许在package.json文件里，使用scripts字段定义脚本命令
+
+  ```json
+  {
+    "scripts": {
+      "build": "node build.js"
+    }
+  }
+  ```
+
+  二、执行顺序
+
+  如果npm脚本里面需要执行多个任务，那么需要明确它们的执行顺序
 
   
 
