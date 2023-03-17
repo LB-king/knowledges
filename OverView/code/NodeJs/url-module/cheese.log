@@ -1,0 +1,57 @@
+[2023-03-14T09:29:30.722] [DEBUG] cheese - Url {
+  protocol: 'https:',
+  slashes: true,
+  auth: null,
+  host: 'www.qq.com',
+  port: null,
+  hostname: 'www.qq.com',
+  hash: null,
+  search: '?name=kb&id=3333',
+  query: 'name=kb&id=3333',
+  pathname: '/',
+  path: '/?name=kb&id=3333',
+  href: 'https://www.qq.com/?name=kb&id=3333'
+}
+[2023-03-14T09:29:30.725] [DEBUG] cheese - https://www.qq.com/?name=kb&id=3333
+[2023-03-14T09:34:38.973] [DEBUG] cheese - Url {
+  protocol: 'https:',
+  slashes: true,
+  auth: null,
+  host: 'www.qq.com',
+  port: null,
+  hostname: 'www.qq.com',
+  hash: null,
+  search: '?name=kb&id=3333',
+  query: 'name=kb&id=3333',
+  pathname: '/',
+  path: '/?name=kb&id=3333',
+  href: 'https://www.qq.com/?name=kb&id=3333'
+}
+[2023-03-14T09:34:55.854] [DEBUG] cheese - Url {
+  protocol: 'https:',
+  slashes: true,
+  auth: null,
+  host: 'www.qq.com',
+  port: null,
+  hostname: 'www.qq.com',
+  hash: null,
+  search: '?name=kb&id=3333',
+  query: 'name=kb&id=3333',
+  pathname: '/',
+  path: '/?name=kb&id=3333',
+  href: 'https://www.qq.com/?name=kb&id=3333'
+}
+[2023-03-14T09:36:33.355] [DEBUG] cheese - Url {
+  protocol: 'https:',
+  slashes: true,
+  auth: null,
+  host: 'www.qq.com',
+  port: null,
+  hostname: 'www.qq.com',
+  hash: null,
+  search: '?name=kb&id=3333',
+  query: 'name=kb&id=3333',
+  pathname: '/',
+  path: '/?name=kb&id=3333',
+  href: 'https://www.qq.com/?name=kb&id=3333'
+}

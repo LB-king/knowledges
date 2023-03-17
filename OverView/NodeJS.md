@@ -21,6 +21,8 @@
 
 我的电脑(右键属性)->属性面板->高级系统设置->环境变量 -> 添加,编辑 环境变量
 
+主要有三大模块：自身模块、第三方模块、自定义模块
+
 ### 核心模块
 
 #### file-system(文件系统)
@@ -458,9 +460,106 @@ index.js
 console.log(process.argv.slice(2)) // ['argv1', 'argv2']
 ```
 
+#### url
+
+打印日志- log4js
+
+- url.parse
+
+```js
+const url = require('url')
+const log4js = require('log4js')
+log4js.configure({
+  appenders: { cheese: { type: 'file', filename: 'cheese.log' } },
+  categories: { default: { appenders: ['cheese'], level: 'error' } }
+})
+var logger = log4js.getLogger('cheese')
+logger.level = 'debug'
+const urlStr = 'http://www.qq.com?name=kb&id=3333'
+logger.debug(url.parse(urlStr))
+```
+
+打印的结果：
+
+```json
+{
+  protocol: 'http:',
+  slashes: true,
+  auth: null,
+  host: 'www.qq.com',
+  port: null,
+  hostname: 'www.qq.com',
+  hash: null,
+  search: '?name=kb&id=3333',
+  query: 'name=kb&id=3333',
+  pathname: '/',
+  path: '/?name=kb&id=3333',
+  href: 'http://www.qq.com/?name=kb&id=3333'
+}
+```
+
+- url.format(obj)
+
+  ```js
+  var obj = 「上面的打印结果」
+  url.format(obj) // 结果： https://www.qq.com/?name=kb&id=3333
+  ```
+
+- url.resolve
+
+  ```js
+  url.resolve('https://www.bbbb.com/a', '/b')
+  ```
+
+- URLSearchParams
+
+  ```js
+  var urlParam = new URLSearchParams(url.parse(urlStr).search)
+  console.log('UI_LOG: ', urlParam.get('id'))
+  ```
+
+  浏览器端也有这个方法：
+
+  ```js
+  var a = new URLSearchParams('http://ww.cc.com/?name=kb&id=9999')
+  a.get('id') //'9999'
+  ```
+
+nodejs的浏览器端调试
+
+```
+node --inspect-brk app.js
+```
+
+node进程管理工具：
+
+- supervisor
+- nodemon
+- forever
+- pm2
+
+#### querystring
+
+```js
+var querystring = require('querystring')
+var obj = {
+  name: '一段中文',
+  id: '1'
+}
+querystring.stringify(obj, null, null, {
+  encodeURIComponent(string) {
+    // return querystring.unescape(string) // name=一段中文&id=1
+    return querystring.escape(string) //name=%E4%B8%80%E6%AE%B5%E4%B8%AD%E6%96%87&id=1
+  }
+})
+//好像此模块已经弃用
+```
+
 
 
 ### supervisor
+
+用于热更新js文件的修改
 
 ```powershell
 npm install supervisor -g
@@ -476,6 +575,78 @@ nvm use 16.8.0
 nvm alias default 14.15.0 #设置默认版本
 npm view vue
 ```
+
+### nrm
+
+(node registry manager)手工切换源
+
+查看当前源：
+
+```
+npm config get registry
+```
+
+切换淘宝源：
+
+```
+npm config set registry https://registry.npm.taobao.orag
+```
+
+nrm是npm的镜像资源管理工具，有时候国外资源太慢，使用nrm就可以快速的在npm源之间切换
+
+安装:npm i nrm -g
+
+使用：
+
+```
+nrm list
+nrm use npm | yarn | cnpm
+```
+
+### npx
+
+(node package extention)-是npm5.2版本开始引入的,自带的，如果不能使用，那就安装一下
+
+npx想要解决的主要问题，就是调用项目内部安装的模块。比如，项目内部安装了测试工具Mocha。
+
+一般来说，调用Mocha，只能在项目脚本和package.json的`scripts`字段里，如果想在命令行下调用。必须像下面这样：
+
+```shell
+node-modules/.bin/mocha --vesion
+```
+
+npx就是想解决这个问题，让项目内部安装的模块用起来更方便，只要像下面调用就行：
+
+```shell
+npx mocha --version
+```
+
+npx将包下载到一个临时目录，使用后再删除。所以以后再执行上面的命令，会重新下载某个包。
+
+--no-install参数和--ignore-existing
+
+- 如果想让npx强制使用本地模块，不下载远程模块，可以使用**--no-install**。如果本地不存在该模块，就会报错。
+
+  ```shell
+  npx http-server
+  npx --no-install http-server
+  ```
+
+- 如果想让npx强制使用远程模块，可以使用**--ignore-existing**
+
+  ```shell
+  npx --ignore-existing http-server
+  ```
+
+全局安装有个致命的问题：类似以下脚本，就会让代码在不同的代码环境运行不起来
+
+```
+{
+	"start": "gulp -v" 
+}
+```
+
+
 
 
 
@@ -600,16 +771,63 @@ npm view vue
   ```json
   {
     "scripts": {
-      "build": "node build.js"
+      "build": "node build.js",
+      "runjs": "node 1.js & node 2.js",
+      "runjs": "node 1.js && node 2.js",
+      "show": "echo %npm_package_config_env%"
+    },
+    "config": {
+      "env": "TEST"
     }
   }
   ```
-
-  二、执行顺序
-
-  如果npm脚本里面需要执行多个任务，那么需要明确它们的执行顺序
-
   
+  二、执行顺序
+  
+  如果npm脚本里面需要执行多个任务，那么需要明确它们的执行顺序
+  
+  ```
+  npm run runjs #使用&符号，表示并行执行 | &&表示串行
+  ```
+  
+  可以简写的脚本命令：
+  
+  ```
+  npm start
+  npm test
+  npm run show # linux中变量使用$，在windows中使用 %%
+  ```
+  
+  获取`package.json`中字段的值 
+  
+  ```
+  process.env.npm_package_config_env
+  ```
+  
+  三、安装线上的代码库
+  
+  ```
+  npm install git-ssh://git@github.com/xxxx
+  ```
+  
+
+### cross-env
+
+> 运行跨平台设置和使用环境变量的脚本
+
+出现的原因：
+
+> 当你使用NODE_ENV=production来设置变量环境时，大多数windows命令提示将会阻塞，（是因为windows上的Bash，它使用的是本机Bash），换言之就是windows不支持NODE_ENV=production的设置方式
+>
+> cross-env可以使用单个命令，不必担心因为平台正确设置环境变量。这个迷你的包能够提供一个设置环境变量的scripts，让你能够以Unix的方式设置环境变量，在windows上也是兼容运行。。。
+
+```json
+{
+  "start": "cross-env NODE_ENV=production node 1.js"
+}
+```
+
+
 
 ### REPL(交互式解释器)
 
