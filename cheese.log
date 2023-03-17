@@ -1,0 +1,15 @@
+[2023-03-14T09:28:59.744] [DEBUG] cheese - Url {
+  protocol: 'https:',
+  slashes: true,
+  auth: null,
+  host: 'www.qq.com',
+  port: null,
+  hostname: 'www.qq.com',
+  hash: null,
+  search: '?name=kb&id=3333',
+  query: 'name=kb&id=3333',
+  pathname: '/',
+  path: '/?name=kb&id=3333',
+  href: 'https://www.qq.com/?name=kb&id=3333'
+}
+[2023-03-14T09:28:59.748] [DEBUG] cheese - https://www.qq.com/?name=kb&id=3333
