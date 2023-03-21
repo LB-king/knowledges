@@ -89,11 +89,24 @@ git remote add origin git@xxx.git
 ```shell
 git log # 查看需要修改的提交
 git log --oneline # 日志一行显示
-git rebase -i HEAD~1
+git rebase -i HEAD~1  #修改最近一次
 git commit --amend
 git rebase --continue
 git push -f origin dev
 ```
+
+#### 6-1.修改历史commit信息
+
+```shell
+git rebase -i HEAD~n  #历史记录修改
+#把需要修改的那一次提交前面的 pick 改为 edit
+git commit --amend # wq-保存  q-不修改保存  加！表示强制保存
+git rebase --continue
+git push -f origin branch-name #同步到远程分支
+
+```
+
+
 
 #### 7.撤回已经commit的问题
 

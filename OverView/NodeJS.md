@@ -324,6 +324,18 @@
   // writeHeader可定义响应头,可配置多个响应头
   // setHeader-allows you only to set a singular header
   ```
+  
+  get:
+  
+  ```js
+  response.writeHead(200, {
+  	'content-type': 'text/plain; charset=utf-8' //默认是text/html,在后面直接设置编码格式
+  })
+  ```
+  
+  insomnia-类似postman的工具
+  
+  下载地址：https://insomnia.rest/download
 
 #### events-事件
 
