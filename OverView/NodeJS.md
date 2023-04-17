@@ -567,6 +567,78 @@ querystring.stringify(obj, null, null, {
 //好像此模块已经弃用
 ```
 
+#### http-proxy-middleware
+
+中间件代理实现跨域
+
+```js
+const http = require('http')
+const { createProxyMiddleware } = require('http-proxy-middleware')
+const server = http.createServer((req, res) => {
+  const proxy = createProxyMiddleware('/api', {
+    target: 'http://www.xxx.com',
+    changeOrigin: true,
+    pathRewrite: {
+      '^/api': ''
+    }
+  })
+  proxy(req, res)
+})
+```
+
+#### 爬虫
+
+```js
+const http = require('http')
+const https = require('https')
+const cheerio = require('cheerio')
+function parseHtml(htmlData) {
+  let res = ''
+  const $ = cheerio.load(htmlData)
+  const lis = $('li')
+  lis.each((i, el) => {
+    res += $(el).text() + (i + 1 < lis.length ? '---' : '')
+  })
+  return res
+}
+
+const server = http.createServer((req, res) => {
+  const resStr = `<ul id="fruits">
+    <li class="apple">Apple</li>
+    <li class="orange">Orange</li>
+    <li class="pear">Pear</li>
+  </ul>`
+  res.writeHead(200, {
+    'content-type': 'text/plain;charset=utf-8'
+  })
+  res.end(parseHtml(resStr))
+})
+server.listen('3000', () => {
+  console.log('UI_LOG: localhost:3000')
+})
+
+```
+
+#### crypto
+
+#### zlib
+
+```js
+const fs = require('fs')
+const zlib = require('zlib')
+const GZIP = zlib.createGzip()
+
+const rs = fs.createReadStream('./note.txt')
+const ws = fs.createWriteStream('./note.txt.gz')
+
+rs.pipe(GZIP).pipe(ws)
+
+```
+
+
+
+#### 路由-第三方库`mime`
+
 
 
 ### supervisor
@@ -576,6 +648,14 @@ querystring.stringify(obj, null, null, {
 ```powershell
 npm install supervisor -g
 ```
+
+### nodemon
+
+热更新
+
+#### pm2
+
+热更新
 
 ### nvm
 

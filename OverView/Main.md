@@ -1453,9 +1453,9 @@ fetch('http://127.0.0.1:5000/users', {
 
 5. Proxy
 
-   原理：中间层转换
+   原理：中间层转换 http-proxy-middleware
 
-   ![](\img\Proxy_跨域.png)
+   ![](\\img\Proxy_跨域.png)
 
    基于node封装的，只要保证客户端和node服务处于同源，就能实现中间层数据代理
 
@@ -6473,6 +6473,16 @@ CSRF Token
    var b = {...obj, a: 'xxx',p: 9} //表示合并对象
    ```
 
+3. el-cascader清空依旧高亮的问题
+
+   ```js
+    //判断输入框为空值之后做以下操作恢复到初始化状态：
+   this.$refs.myCascader.$refs.panel.checkedValue = []; // 清空选中值
+   this.$refs.myCascader.$refs.panel.clearCheckedNodes(); // 清空级联选择器选中状态
+   this.$refs.myCascader.$refs.panel.activePath = []; // 清除高亮
+   this.$refs.myCascader.$refs.panel.syncActivePath(); // 初始化（只展示一级节点）
+   ```
+
    
 
 ### 项目亮点/问题
@@ -7100,49 +7110,6 @@ HMI车载系统 project 不变，experience更新
 
 
 
-
-
-
-
-
-
-
-
-
-
 后台服务使用 koa + nodejs + vue + react + rrs
 
 服务端渲染---
-
-
-
-
-
-1. 湖州莫干山风景区
-2. 苏州太湖西山、金鸡湖景区
-3. 杭州西湖
-4. 胡2  邵2 赵2 丁2
-5. 周六-11号 到了歇会，
-
-周六--周日
-
-所罗门： 登云路617号
-
-美团：263
-
-飞猪：257.41
-
-携程：248 
-
-去哪儿：216
-
-
-
-住宿：所罗门酒店： 登云路617号
-
-停车：杭州市上城区华光路1号   吴山花鸟工艺品城停车场-出入口
-
-吃饭：九甲里·创意杭帮菜（河坊街店） 新周记  福缘居  四灶儿
-
-
-
