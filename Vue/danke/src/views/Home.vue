@@ -29,6 +29,7 @@
       el-input(v-model='info.name')
       p#show {{ info.name }}
   p {{ name }}
+  el-button.xxx(type="primary") 自定义的按钮
 </template>
 
 <script>
@@ -144,3 +145,10 @@ export default {
   }
 }
 </script>
+<style lang="less">
+@import url('~@/views/test.less');
+@primary-color: #bfc;
+.xxx.el-button--primary {
+  color: @test-color;
+}
+</style>

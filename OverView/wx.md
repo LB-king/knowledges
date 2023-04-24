@@ -18,6 +18,13 @@ https://mp.weixin.qq.com/wxamp/home/guide?token=1081815271&lang=zh_CN
 
 ##### 2.3下载开发者工具
 
+微信小程序昵称：PeaceDing
+原始ID：gh_4e51e396d7fd
+
+https://developers.weixin.qq.com/miniprogram/dev/devtools/stable.html
+
+下载地址：
+
 #### 3.开发小程序
 
 ##### 3.1全局配置

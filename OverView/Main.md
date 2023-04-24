@@ -2669,6 +2669,40 @@ upload.onload = eve =>  {
 
    
 
+#### 29.MutationObserver
+
+```js
+var MO = new MutationObserver((mutationList, observer) => {
+  // mutationList变动的数据
+  // observer观察者实例
+  for(let mutation of mutationList) {
+    const {type} = mutation
+    if(type === 'childList') {
+      // a child node has been added or removed
+    }else if(type === 'attributes') {
+      // the mutation.sttributeName was modified
+    }
+  }
+})
+
+//开始观察节点目标
+MO.observer(body, {
+  attributes: true,
+  childList: true,
+  subtree: tree
+})
+
+//停止观察
+MO.disconnect()
+```
+
+
+
+> - 可观察的内容包含
+>   - childList - 子节点的增加、删除
+>   - attributes - 属性的修改
+>   - subtree - 表示是否将该观察器应用于该节点的所有后代节点
+
 
 
 
