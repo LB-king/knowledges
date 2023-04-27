@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function getPropByPath(obj, path, strict) {
+        var tempObj = obj
+        path = path.replace(/\[(\w+)\]/g, '.$1')
+        path = path.replace(/^\./, '')
+
+        var keyArr = path.split('.')
+        var i = 0
+        for (var len = keyArr.length; i < len - 1; ++i) {
+          if (!tempObj && !strict) break
+          var key = keyArr[i]
+          if (key in tempObj) {
+            tempObj = tempObj[key]
+          } else {
+            if (strict) {
+              throw new Error('please transfer a valid prop path to form item!')
+            }
+            break
+          }
+        }
+        return {
+          o: tempObj,
+          k: keyArr[i],
+          v: tempObj ? tempObj[keyArr[i]] : null
+        }
+      }
+
+      function objectProperty(obj, pathString, defaultValue) {
+        if (typeof pathString !== 'string') {
+          return defaultValue
+        }
+        var res = (0, getPropByPath)(obj || {}, pathString, false).v
+        if (res || typeof res === 'number' || typeof res === 'boolean') {
+          return res
+        }
+        return defaultValue
+      }
+
+      var obj = { a: 'aaa' }
+      var h = undefined
+      console.log('UI_LOG: ', objectProperty(h, 'a33'))
+      //使用该方法会避免一些错误
+    </script>
+  </body>
+</html>

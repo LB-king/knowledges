@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>函数柯里化</title>
+  </head>
+  <body style="height: 900px">
+    <!-- 未完待续...... -->
+    <script>
+      let obj = {
+        name: '犀牛'
+      }
+
+      function fn(...args) {
+        console.log('UI_LOG: ', this, args)
+      }
+      Function.prototype.myBind = myBind // fn.myBind(obj, 100, 200, event)
+
+      //   document.body.addEventListener('click', fn) // this就是当前的body
+      document.body.addEventListener('click', fn.myBind(obj, 100, 200)) //this是绑定的对象obj,会自动把事件对象传过去了;执行bind方法,会返回一个匿名函数,当事件触发,匿名函数执行,再处理fn即可
+      //   document.body.addEventListener('click', function (ev) {
+      //     fn.call(obj, 100, 200, ev)
+      //   })
+
+      function myBind(context = globalThis, ...outArgs) {
+        //备份主函数的this
+        let _this = this
+        return function (...inArgs) {
+          _this.call(context, ...outArgs, ...inArgs)
+          //   _this.apply(context, [...outArgs, ...inArgs])
+        }
+      }
+      /* 
+            实现以下功能:
+            add(1)(2)(3) => 6
+        */
+      // 可参考掘金文档: https://juejin.cn/post/7132751786451927047
+      function currying(fn, length) {
+        length = length || fn.length
+        return function (...args) {
+          if (args.length >= length) {
+            return fn(...args)
+          }
+          return currying(fn.bind(null, ...args), length - args.length)
+        }
+      }
+      function add(n1, n2, n3, n4) {
+        return n1 + n2 + n3 + n4
+      }
+
+      add = currying(add, 4)
+      console.log('UI_LOG: ', add(1)(2)(3)(48))
+      //1.思路:把所有参数都存到函数原型的一个属性上,然后把数组求和,即可完成需求
+      //   function add(...args) {
+      //     if (!Array.isArray(add.params)) {
+      //       add.params = []
+      //     }
+      //     add.params.push(...args)
+      //     return add
+      //   }
+      //   add(11)(12)(11, 33)
+      //   console.dir(add)
+      //
+    </script>
+  </body>
+</html>

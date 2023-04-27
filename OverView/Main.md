@@ -2705,13 +2705,88 @@ MO.disconnect()
 
 
 
+#### 30.replace
+
+```js
+var a = 'AABBCCDDAA'
+//第二个参数是回调函数，里面有3个参数，[match]-匹配到的内容； [pos]-匹配内容的下标；[oldValue]-之前的内容
+a = a.replace(/AA/g, (match, pos, oldValue) => {
+  console.log('UI_LOG: ', match, pos, oldValue)
+  // match => AA
+  // pos => 0
+  // oldValue => AABBCCDD
+  let res = ''
+  res = match.toLocaleLowerCase()
+  return res // 返回的是match被替换或者被处理成的目标值
+})
+
+console.log('UI_LOG: ', a)
+```
+
+#### 31.限制输入框
+
+```js
+//限定输入框只能输入数字，不允许01,9.9.8，
+function NumberCheck(num) {
+  var str = num
+  var len1 = str.substr(0, 1)
+  var len2 = str.substr(1, 1)
+  //1.正则替换，保留数字和小数点
+  str = str.replace(/[^\d^\.]+/g, '')
+  //2.第一位是0，第二位就不能输入其他数字，但是.可以
+  if (len1 == '0' && len2 != '.') {
+    str = len1
+  }
+  //3.第一位不能是.
+  if (len1 == '.') {
+    str = ''
+  }
+  //4.限制只能输入一个小数点
+  if (str.indexOf('.') != -1) {
+    var str_ = str.substr(str.indexOf('.') + 1)
+    if (str_.indexOf('.') != -1) {
+      str = str.substr(0, str.indexOf('.') + str_.indexOf('.') + 1)
+    }
+  }
+  //5.关于-的输入，只允许第一位是-，其他位置都不可
+  if (str.lastIndexOf('-') !== 0) {
+    str = str.substring(0, str.lastIndexOf('-'))
+  }
+  return str
+}
+```
 
 
 
+#### 32.add(1)
 
-
-
-
+> 需求：实现一个函数add
+>
+> ```js
+> add(1) //1
+> add(1)(2) //3
+> add(1)(2)(3) //6
+> add(1, 2)(3) //6
+> add(1)(2, 3) //6
+> add(1, 2, 3) //6
+> //函数柯里化:预先处理的思想（利用闭包的机制） call apply bind（没立即执行）
+> //bind是最经典的柯里化函数编程思想
+> ```
+>
+> 为以后使用  闭包：保存&保护2个作用
+>
+> ```js
+> function myBind(context, ...outArgs) {
+>   let _this = this
+>   return function (...inArgs) {
+>     _this.call(context, ...outArgs, ...inArgs)
+>   }
+> }
+> ```
+>
+> 
+>
+> 
 
 
 
@@ -2774,7 +2849,7 @@ Function.prototype.myCall = function(context, ...params) {
 Function.prototype.myBind = function(obj, ...params) {
   let _this = this
   return function(ev) {
-    _this.call(obj, [ev].concat(...params))
+    _this.call(obj, ...[ev].concat(...params))
   }
 }
 ```
@@ -4740,9 +4815,25 @@ export default {
 </template>
 ```
 
+#### $attrs
 
+> 绑定的属性对象集合,可以在封装组件的时候做属性透传
+>
+> v-bind="{...$attrs}"
 
+#### $listeners
 
+> 绑定的事件对象集合
+
+以上两个属性可以做透传
+
+```vue
+<template>
+<div v-bind="{...$attrs}">
+  
+</div>
+</template>
+```
 
 
 
@@ -5209,8 +5300,6 @@ state.age = 10 //会变成响应式
 #### v-model
 
 > 写法改变，一个组件支持多个v-model
-
-
 
 V2-双端比较
 
@@ -5831,7 +5920,16 @@ function numFormatter(num, cent, isThousand) {
   if (numSource < 0) num = `-${num}`
   return cent > 0 ? `${num}.${cents}` : `${num}`
 }
+
+function isEmpty(str) {
+  if (!str || JSON.stringify(str) === '{}') {
+    return true
+  }
+  return false
+}
 ```
+
+**炫酷的老JS网站：** https://js1k.com/
 
 #### 3.遍历查找树结构的label
 

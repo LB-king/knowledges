@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Son>
+    <Son data-key="oooooo" @ccc="console.log()" v-on:click="handle" type="warning" size="mini">
       <!-- 1.匿名插槽 -->
       <!-- <slot>1.父组件的匿名插槽</slot> -->
       <!-- 2.具名插槽 -->
@@ -21,6 +21,9 @@
 <script>
 export default {
   name: 'dic',
+  methods: {
+    handle(){}
+  },
   mounted() {
     console.log('dict')
   },
