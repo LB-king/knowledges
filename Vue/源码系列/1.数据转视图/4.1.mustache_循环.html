@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MUSTACHE模板引擎</title>
+    <script src="../node_modules/mustache/mustache.min.js"></script>
+    <script src="../data.js"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <!-- 全局引入会暴露一个 Mustache 的全局变量 -->
+    <script>
+      const templateStr = `
+      <ul>  
+        {{#arr}}
+          <li>
+            <div class="head"><strong>{{name}}</strong>的基本信息</div>
+            <div class="body">
+              <p>姓名：{{name}}</p>
+              <p>年龄：{{age}}</p>
+              <p>性别：{{gender}}</p>
+              <p>爱好：
+                {{#hobbies}}
+                  {{.}}
+                {{/hobbies}}  
+              </p>
+            </div>
+          </li>
+        {{/arr}}
+      </ul>
+      `
+      var data = {
+        arr: listData
+      }
+      var domStr = Mustache.render(templateStr, data)
+      console.log('UI_LOG: ', domStr)
+      app.innerHTML = domStr
+    </script>
+  </body>
+</html>

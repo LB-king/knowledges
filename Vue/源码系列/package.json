@@ -1,0 +1,16 @@
+{
+  "name": "yuanma",
+  "version": "1.0.0",
+  "description": "",
+  "main": "data.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dayjs": "^1.11.7",
+    "jquery": "^3.6.4",
+    "mustache": "^4.2.0"
+  }
+}

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MUSTACHE模板引擎</title>
+    <script src="../node_modules//mustache/mustache.min.js"></script>
+    <script src="../data.js"></script>
+    <script src="../node_modules/dayjs/dayjs.min.js"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script>
+      const templateStr = `
+        <h2>今天是{{date}}，星期{{week}},天气{{weather}}</h2>
+        <h3>布尔值：{{isOk}}</h3>
+      `
+      var date = dayjs(new Date()).format('YYYY-MM-DD HH:mm:ss')
+      var data = {
+        date,
+        weather: '晴天转多云',
+        week: dayjs(new Date()).$W,
+        isOk: false
+      }
+
+      var domStr = Mustache.render(templateStr, data)
+      app.innerHTML=domStr
+    </script>
+  </body>
+</html>

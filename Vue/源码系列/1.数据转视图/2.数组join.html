@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>数组join方法</title>
+  </head>
+  <body>
+    <ul id="container"></ul>
+    <script src="../data.js"></script>
+    <!-- 前提：引号不支持换行 -->
+    <!-- 先写好HTML的结构代码，再把数据插到这个结构中，本质就是处理字符串 -->
+    <script>
+      const container = document.getElementById('container')
+      var str = [
+        '<li>',
+        '  <div class="head"></div>',
+        '  <div class="body">',
+        '    <p>姓名：</p>',
+        '    <p>年龄：</p>',
+        '    <p>性别：</p>',
+        '  </div>',
+        '</li>'
+      ].join('')
+      let list = ''
+      listData.forEach(item => {
+        list += [
+          '<li>',
+          '  <div class="head"><strong>' + item.name + '</strong>' + '的信息</div>',
+          '  <div class="body">',
+          '    <p>姓名：' + item.name + '</p>',
+          '    <p>年龄：' + item.age + '</p>',
+          '    <p>性别：' + item.gender + '</p>',
+          '    <p>爱好：' + item.hobbies.join(';') + '</p>',
+          '  </div>',
+          '</li>'
+        ].join('')
+      })
+      container.innerHTML = list
+    </script>
+  </body>
+</html>

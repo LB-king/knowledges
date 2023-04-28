@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>纯DOM法实现</title>
+  </head>
+  <body>
+    <ul id="container"></ul>
+    <script src="../data.js"></script>
+    <script>
+      listData.forEach(list => {
+        var li = document.createElement('li')
+        li.innerText = list.name
+        var pNode = document.createElement('p')
+        var pNode2 = document.createElement('p')
+        pNode.innerHTML = `年龄:${list.age}`
+        pNode2.innerHTML = `性别:${list.gender}`
+        li.appendChild(pNode)
+        li.appendChild(pNode2)
+        if (list.hobbies && list.hobbies.length > 0) {
+          var ul = document.createElement('ul')
+          var hobbyLi = document.createElement('li')
+          var hobbyP = document.createElement('p')
+          hobbyP.innerText = '爱好: '
+          list.hobbies.forEach((hobby, index) => {
+            hobbyLi.innerText +=
+              hobby + `${index !== list.hobbies.length - 1 ? '&' : ''}`
+            li.appendChild(hobbyP)
+            ul.appendChild(hobbyLi)
+          })
+          hobbyP.appendChild(ul)
+        }
+        container.appendChild(li)
+      })
+    </script>
+  </body>
+</html>

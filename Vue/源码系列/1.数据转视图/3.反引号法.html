@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ES6反引号法</title>
+  </head>
+  <body>
+    <!-- 主要就是反引号能解决换行的问题 -->
+    <ul id="container">
+      <!-- <li>
+        <div class="head"></div>
+        <div class="body">
+          <p>姓名：</p>
+          <p>年龄：</p>
+          <p>性别：</p>
+          <p>爱好：</p>
+        </div>
+      </li> -->
+    </ul>
+    <script src="../data.js"></script>
+
+    <script>
+      const container = document.getElementById('container')
+
+      listData.forEach(item => {
+        container.innerHTML += `
+          <li>
+            <div class="head"><strong>${item.name}</strong>的基本信息</div>
+            <div class="body">
+              <p>姓名：${item.name}</p>
+              <p>年龄：${item.age}</p>
+              <p>性别：${item.gender}</p>
+              <p>爱好：${item.hobbies.join('&')}</p>
+            </div>
+          </li>
+          `
+      })
+    </script>
+  </body>
+</html>

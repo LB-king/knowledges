@@ -3886,9 +3886,93 @@ export default {
 
 #### 源码解析：
 
-##### 1.mustache引擎模板
+什么是模板引擎：模板引擎是将数据变成视图最优雅的解决方案
 
+历史方案（数据变成视图）
 
+- 纯DOM
+
+  > 通过循环，创建节点、插入节点等操作，把数据转换成视图
+
+- 数组join法
+
+  > 先写好HTML代码结构，然后遍历数据，往这个有结构的代码中插入数据
+
+  ```js
+  list.forEach(item => {
+    container.innerHTML += [
+      '<li>',
+      '  <div class="head"><strong>' + item.name + '</strong>' + '的信息</div>',
+      '  <div class="body">',
+      '    <p>姓名：' + item.name + '</p>',
+      '    <p>年龄：' + item.age + '</p>',
+      '    <p>性别：' + item.gender + '</p>',
+      '    <p>爱好：' + item.hobbies.join(';') + '</p>',
+      '  </div>',
+      '</li>'
+    ].join('')
+  })
+  ```
+
+- ES6反引号法-能换行，所以比方法2稍微优雅一点
+
+  ```js
+  list.forEach(item => {
+    container.innerHTML += `
+      <li>
+      	<div class="head"><strong>${item.name}</strong>的基本信息</div>
+        <div class="body">
+          <p>姓名：${item.name}</p>
+          <p>年龄：${item.age}</p>
+          <p>性别：${item.gender}</p>
+          <p>爱好：${item.hobbies.join('&')}</p>
+    		</div>
+    	</li>
+        `    
+  })
+  ```
+
+- 模板引擎
+
+##### 1.mustache模板引擎
+
+​	页面直接引用：
+
+```html
+<script src="./lib/mustache.min.js"></script>
+//引入这个包，会暴露一个全局的 Mustache对象
+<script>
+	var templateStr = `{{#arr}}
+  	<p>姓名：{{name}}</p>
+    <p>年龄：{{age}}</p>
+  {{/arr}}`
+  var data = {
+    arr: [
+      { name: 'xx', age: 7 },
+      { name: 'yy', age: 12 }
+    ]
+  }
+  var domStr = Mustache.render(templateStr, data)
+  app.innerHTML = domStr
+</script>
+```
+
+主要应用：
+
+1. 循环 - {{#arr}} {{/arr}} 之间的内容可以循环，直接.属性名 就可以取值；数组对象直接.即可，如['AA','BB']
+
+2. 不循环 - 
+
+   ```js
+   var dom = ` <h2>今天是{{date}}</h2>`
+   var data = {
+     date: '2023-04-27'
+   }
+   var domStr = Mustache.render(dom, data)
+   //变量直接使用即可
+   ```
+
+   
 
 
 
@@ -3940,44 +4024,7 @@ Object.defineProperty(obj, key) {
 
 数据变为视图最优雅的解决方案
 
-历史中的方案：
-
-1. 纯DOM
-
-   ```js
-   for(let i = 0 ; i< data.length; i++) {
-     let oli = document.createElement('li')
-     oli.innerText = data[i].name
-     list.appendChild(oli)
-   }
-   ```
-
-2. 数组join
-
-   ```js
-   //让结构有层次感
-   for (let i = 0; i < data.length; i++) {
-     list.innerHTML += [
-       '<li>'+ data[i].name + '</li>',
-       '<li>',
-       ' <p>'+ data[i].price + '</p>', 
-       '</li>'
-       ].join('')
-   }
-   ```
-
-3. ES6反引号-支持换行
-
-   ```js
-   for(let i = 0; i < data.length; i++) {
-     list.innerHTML += `
-       <p>名字:${data[i].name}</p>
-       <p>价格:${data[i].price}</p>
-     `
-   }
-   ```
-
-4. 模板引擎-mustache **Logic-less**
+1. 模板引擎-mustache **Logic-less**
 
    https://github.com/janl/mustache.js
 
@@ -4201,7 +4248,7 @@ Object.defineProperty(obj, key) {
 
    此时的tokens是
 
-   ![](\img\VUE_mustache_tokens.png)
+   ![](img\VUE_mustache_tokens.png)
 
 4. 把tokens数组结合数据生成dom字符串
 
