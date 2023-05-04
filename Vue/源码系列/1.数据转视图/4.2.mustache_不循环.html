@@ -12,21 +12,35 @@
   <body>
     <div id="app"></div>
 
+    <!-- 由于script标签type不是javascript，里面就是支持换行的，因此可以把模板代码写在script标签中，然后获取该标签的innerHTML -->
+    <script type="text/template" id="templateString">
+      <h2>今天是{{date}}，星期{{week}},天气{{weather}}</h2>
+      <h3 id="box">布尔值：{{isOk}}</h3>
+      {{#isOk}}
+        <h3>布尔值控制显示和隐藏</h3>
+      {{/isOk}}
+    </script>
     <script>
-      const templateStr = `
+      console.log('UI_LOG: ', templateString.innerHTML)
+      /* const templateStr = `
         <h2>今天是{{date}}，星期{{week}},天气{{weather}}</h2>
-        <h3>布尔值：{{isOk}}</h3>
-      `
+        <h3 id="box">布尔值：{{isOk}}</h3>
+        {{#isOk}}
+          <h3>布尔值控制显示和隐藏</h3>
+        {{/isOk}}
+      ` */
+
+      const templateStr = templateString.innerHTML
       var date = dayjs(new Date()).format('YYYY-MM-DD HH:mm:ss')
       var data = {
         date,
         weather: '晴天转多云',
         week: dayjs(new Date()).$W,
-        isOk: false
+        isOk: true
       }
 
       var domStr = Mustache.render(templateStr, data)
-      app.innerHTML=domStr
+      app.innerHTML = domStr
     </script>
   </body>
 </html>

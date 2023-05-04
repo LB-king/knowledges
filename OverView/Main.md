@@ -2775,12 +2775,14 @@ function NumberCheck(num) {
 >
 > 为以后使用  闭包：保存&保护2个作用
 >
+> TODO。。。
+>
 > ```js
 > function myBind(context, ...outArgs) {
->   let _this = this
->   return function (...inArgs) {
->     _this.call(context, ...outArgs, ...inArgs)
->   }
+> let _this = this
+> return function (...inArgs) {
+>  _this.call(context, ...outArgs, ...inArgs)
+> }
 > }
 > ```
 >
@@ -2788,7 +2790,13 @@ function NumberCheck(num) {
 >
 > 
 
+#### 33.正则
 
+匹配目标字符串的字符和位置。
+
+- 校验：匹配到则存在
+- 提取：当匹配到对应的字符时，可以提取出来以作他用
+- 替换：当匹配到对应的字符时，可以替换成我们想要的内容
 
 #### 手写系列
 
@@ -3959,7 +3967,17 @@ export default {
 
 主要应用：
 
-1. 循环 - {{#arr}} {{/arr}} 之间的内容可以循环，直接.属性名 就可以取值；数组对象直接.即可，如['AA','BB']
+1. 循环 - {{#arr}} {{/arr}} 之间的内容可以循环，直接.属性名 就可以取值；数组对象直接.即可，
+
+2. 循环简单数组：如['AA','BB']就可以用{{.}}取值,如下
+
+   ```js
+   {{#arr}}
+     {{.}}
+   {{/arr}}
+   ```
+
+   
 
 2. 不循环 - 
 
@@ -3972,7 +3990,110 @@ export default {
    //变量直接使用即可
    ```
 
+4. 布尔值：
+
+   ```html
+   {{#isShow}}
+   	<!-中间根据条件显隐的内容-->
+   {{/isShow}}
+   ```
+
+5. 模板字符串写在script标签中
+
+   ```html
+   <script type="text/template" id="tpl">
+   	<h2>今天是{{date}}，星期{{week}},天气{{weather}}</h2>
+   </script>
    
+   <script type="text/javascript">
+   	const str = document.querySelector('tpl').innerHTML
+   </script>
+   ```
+
+   扩展：字符串换行的几种方案：
+
+   > 1. 数组JOIN;即把模板内容写在html，然后添加引号、逗号，使其变成有结构的数组
+   > 2. 模板字符串
+   > 3. script标签，把type设置成非 type="text/javascript";模板写在标签里，然后获取标签的innerHTML
+
+Mustache的基本原理不是简单的正则匹配
+
+简单的正则匹配
+
+```js
+var tempalteStr = `<h3>我是{{name}},今年{{age}}岁</h3>`
+var data = {
+  name: '小明',
+  age: 18
+}
+tempalteStr = tempalteStr.replace(/(?<=\{\{)(.+?)(?=\}\})/g, m => {
+  let key = m && m.substring(2, m.length - 2).trim()
+  return data[m]
+  })
+//1.包含大括号
+var a = 'AABB{{name}}CC'
+var b = a.match(/(\{\{)(.+?)(\}\})/g) //['{{name}}']
+//2.不包含大括号
+var b = a.match(/(?<=\{\{)(.+?)(?=\}\})/g) //['name']
+```
+
+
+
+
+
+
+
+
+
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

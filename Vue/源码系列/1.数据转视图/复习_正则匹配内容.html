@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>正则复习</title>
+  </head>
+  <body>
+    <script>
+      var str = '我是{{name   }},今年{{age}}岁'
+      var data = {
+        name: '牛头人',
+        age: 80
+      }
+      //1.直接取{{}}之间的字符串 - REG=> /(?<=\{\{)(.+?)(?=\}\})/g
+      // var res = str.match(/(?<=\{\{)(.+?)(?=\}\})/g)   //['name   ', 'age']
+      //2.取包含{{}}的内容 - REG =>  /(\{\{)(.+?)(\}\})/g
+      str = str.replace(/(\{\{)(.+?)(\}\})/g, m => {
+        // console.log('UI_LOG: ', m) // {{name}}
+        let matchKey = m && m.substring(2, m.length - 2)
+        console.log('UI_LOG: ', matchKey)
+        return data[matchKey.trim()]
+      })
+
+      console.log('UI_LOG: ', str)
+    </script>
+  </body>
+</html>
