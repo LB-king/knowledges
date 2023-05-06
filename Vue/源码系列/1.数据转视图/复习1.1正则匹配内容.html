@@ -24,6 +24,14 @@
       })
 
       console.log('UI_LOG: ', str)
+      //replace,第二个参数是函数的时候，函数里面的参数的意义：第一个参数是表示匹配到的内容，第二个参数表示()中捕获的内容，通常用$1；第二个参数表示第二个()中捕获的内容，通常用$2（如有的话）
+
+      var a = '{{AA}}BBUUOOPP{{JJ}}AAKK'
+      a.replace(/(\{\{)(.+?)\}\}/g, (a, $1, $2) => {
+        console.log('UI_LOG: a', a)
+        console.log('UI_LOG: $1', $1)
+        console.log('UI_LOG: $2', $2)
+      })
     </script>
   </body>
 </html>

@@ -2709,7 +2709,7 @@ MO.disconnect()
 
 ```js
 var a = 'AABBCCDDAA'
-//第二个参数是回调函数，里面有3个参数，[match]-匹配到的内容； [pos]-匹配内容的下标；[oldValue]-之前的内容
+//第二个参数是回调函数，里面有3个参数或者多个，取决于正则表达式中的捕获的的内容即()的个数 $1,$2,$3...以此，[match]-匹配到的内容； [pos]-匹配内容的下标；[oldValue]-之前的内容
 a = a.replace(/AA/g, (match, pos, oldValue) => {
   console.log('UI_LOG: ', match, pos, oldValue)
   // match => AA
@@ -2721,6 +2721,13 @@ a = a.replace(/AA/g, (match, pos, oldValue) => {
 })
 
 console.log('UI_LOG: ', a)
+
+ var b = '{{AA}}BBUUOOPP{{JJ}}AAKK'
+ b.replace(/(\{\{)(.+?)\}\}/g, (a, $1, $2) => {
+   console.log('UI_LOG: a', a) // {{AA}} {{JJ}}
+   console.log('UI_LOG: $1', $1) // {{ {{ 第一个()捕获的内容
+   console.log('UI_LOG: $2', $2) // AA JJ 第二个()捕获的内容
+ })
 ```
 
 #### 31.限制输入框
@@ -4037,9 +4044,76 @@ var b = a.match(/(\{\{)(.+?)(\}\})/g) //['{{name}}']
 var b = a.match(/(?<=\{\{)(.+?)(?=\}\})/g) //['name']
 ```
 
+遇到复杂一点的使用简单的正则匹配就实现不了了，如下
 
+```
+{{#arr}}
+	{{.}}
+{{/arr}}
+```
 
+Mustache库的原理：
 
+![](img\VUE_mustache_原理.png)
+
+关键的TOKENS：是一个JS的嵌套数组
+
+模板字符串：
+
+```js
+var str = '<h3>我是{{name   }},今年{{age}}岁</h3>'
+```
+
+TOKENS数组：嵌套的二维数组，token组成了tokens
+
+```js
+[
+  ["text", "<h3>我是"],
+  ["name", "name"],
+  ["text", ",今年"],
+  ["name", "age"],
+  ["text", "岁</h3>"]
+]
+```
+
+当模板字符串有循环存在时，将会被编译成嵌套更深的tokens
+
+```html
+<ul>
+  {{#arr}}
+  	<li>{{.}}</li>
+  {{/arr}}
+</ul>
+```
+
+编译的tokens
+
+```js
+[
+  ["text", "<ul>"]
+  ["#", "arr", [
+    ["text", "<li>"],
+    ["name", "."],
+    ["text", "</li>"]
+  ]]
+  ["text", "</ul>"]
+]
+```
+
+关键2步操作：
+
+1. 将模板字符串编译成TOKENS形式
+2. 将tokens结合数据，解析为DOM字符串
+
+模板字符串：
+
+```html
+<div>{{name}}</div>
+```
+
+原本的库-转换结果:
+
+![](img\VUE_mustache_tokens_原本的库.png)
 
 
 
