@@ -5,6 +5,7 @@ git config --global user.name 'your name'
 git config --global user.email 'your email'
 git config user.name #查看用户
 git config user.email #查看邮箱
+git config --global --list
 ```
 
 #### 2.生成SSH KEY
@@ -223,3 +224,30 @@ git merge --abort
 	```
 
 - 
+
+#### 18.配置多账号
+
+
+
+https://juejin.cn/post/7076689353308635150 此方法待验证是否可用
+
+1. 清除全局配置
+
+   ```shell
+   git config --global --list
+   git config --global --unset user.name #清除全局的用户名
+   git config --global --unset user.email #清除全局的邮箱
+   #也可以直接修改 .gitconfig 文件，修改全局信息
+   ```
+
+   测试通不通： 
+   
+   ```shell
+   ssh-agent -s
+   ssh-add ~/.ssh/id_rsa_ding
+   在执行 ssh-add ~/.ssh/id_ras 时发生此错，
+   
+   执行如下命令　ssh-agent bash
+   ```
+   
+   
