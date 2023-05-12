@@ -1,0 +1,1 @@
+{"version":3,"file":"mustache.js","sources":["../../src/index.js"],"sourcesContent":["export default function Mustache(options) {}\r\n\r\nconsole.log('UI_LOG: ', 'index')\r\n"],"names":["Mustache","options","console","log"],"mappings":";;;;;;;;CAAe,SAASA,QAAQA,CAACC,OAAO,EAAE,EAAC;CAE3CC,OAAO,CAACC,GAAG,CAAC,UAAU,EAAE,OAAO,CAAC;;;;;;;;"}

@@ -739,7 +739,7 @@ ele.getBoundingClientRect() //{x:8,y:8,height:90,width:90,top:0,right:0,bottom:0
   //2.再执行a={n=2} 此对象的内存地址是002
   ```
   
-  ![](\img\引用类型赋值问题.png)
+  ![](img\引用类型赋值问题.png)
 
 #### 2.几种循环
 
@@ -1713,6 +1713,38 @@ console.log('script end')
   微任务队列里一次循环是要执行所有任务还是只执行一个？
 
   > 微任务队列中所有的任务都会一次取出来执行，直到microtask queue为空
+
+  ```js
+  console.log(1)
+  new Promise(resolve => {
+    console.log(2)
+    resolve()
+  }).then(() => {
+    console.log(3)
+  })
+  console.log(4)
+  setTimeout(() => {
+    console.log(5)
+    new Promise(resolve => {
+      console.log(6)
+      resolve()
+    }).then(() => {
+      console.log(7)
+    })
+  }, 0)
+  new Promise(resolve => {
+    console.log(8)
+    resolve()
+  }).then(() => {
+    console.log(9)
+    setTimeout(() => {
+      console.log(10)
+    }, 0)
+  })
+  console.log(11)
+  
+  ```
+
 
 - node中的事件循环
 
@@ -4036,7 +4068,7 @@ var data = {
 tempalteStr = tempalteStr.replace(/(?<=\{\{)(.+?)(?=\}\})/g, m => {
   let key = m && m.substring(2, m.length - 2).trim()
   return data[m]
-  })
+})
 //1.包含大括号
 var a = 'AABB{{name}}CC'
 var b = a.match(/(\{\{)(.+?)(\}\})/g) //['{{name}}']
@@ -4115,7 +4147,15 @@ TOKENS数组：嵌套的二维数组，token组成了tokens
 
 ![](img\VUE_mustache_tokens_原本的库.png)
 
+##### 1.1手写Mustache源码
 
+把模板字符串转化为`TOKENS`数组
+
+主要：模板字符串 =>TOKENS
+
+```js
+const str = `<h3>hello{{user}}</h3>`
+```
 
 
 
@@ -5492,7 +5532,7 @@ inserted -> mounted
 
 update (v3移除) 
 
- beforeUpdate `新增`钩子，会在元素自身更新前触发
+beforeUpdate `新增`钩子，会在元素自身更新前触发
 
 componentUpdate -> updated
 
@@ -5881,7 +5921,7 @@ rollup -c my.config.js
 rollup起一个服务：
 
 ```shell
-npm install rollup @babel/core @babel/preset-env rollup-plugin-babel rollup-plugin-serve cross-env -D
+npm install rollup @babel/core @babel/preset-env rollup-plugin-babel rollup-plugin-serve cross-env rollup-plugin-livereload -D
 ```
 
 1. 新建配置文件`rollup.config.js`
@@ -5920,12 +5960,31 @@ npm install rollup @babel/core @babel/preset-env rollup-plugin-babel rollup-plug
    package.json
    
    ```json
-   { 
+   {
+     "name": "mymustache",
+     "version": "1.0.0",
+     "description": "",
+     "main": "index.js",
      "scripts": {
        "start": "cross-env ENV=development rollup -c -w",
        "build": "rollup -c",
+       "test": "echo \"Error: no test specified\" && exit 1"
+     },
+     "keywords": [],
+     "author": "",
+     "license": "ISC",
+     "devDependencies": {
+       "@babel/core": "^7.16.7",
+       "@babel/preset-env": "^7.16.8",
+       "cross-env": "^7.0.3",
+       "rollup": "^2.63.0",
+       "rollup-plugin-babel": "^4.4.0",
+       "rollup-plugin-livereload": "^2.0.5",
+       "rollup-plugin-serve": "^1.1.0",
+       "rollup-plugin-uglify": "^6.0.4"
      }
    }
+   
    
    ```
    

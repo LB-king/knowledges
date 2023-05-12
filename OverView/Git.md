@@ -219,11 +219,9 @@ git merge --abort
 
 - `git status`中文文件名字显示乱码 `\346\260\264\345\215\260.html`
 
-	```shell
-	git config --global core.quotepath false
-	```
-
-- 
+  ```shell
+  git config --global core.quotepath false
+  ```
 
 #### 18.配置多账号
 
@@ -242,12 +240,23 @@ https://juejin.cn/post/7076689353308635150 此方法待验证是否可用
 
    测试通不通： 
    
+   可以在项目里直接设置用户名和邮箱
+   Secure Shell  ssh-安全通道协议
    ```shell
+   ssh -T git@github.com #测试通不通
    ssh-agent -s
-   ssh-add ~/.ssh/id_rsa_ding
-   在执行 ssh-add ~/.ssh/id_ras 时发生此错，
-   
-   执行如下命令　ssh-agent bash
+   ssh-add ~/.ssh/id_rsa
+   # 如果执行 ssh-add ~/.ssh/id_rsa 时出现报错
+   # 执行如下命令　ssh-agent bash
    ```
    
-   
+
+#### 19.github网站访问不了
+
+修改hosts文件,文件地址`C:\Windows\System32\drivers\etc\hosts`
+
+```shell
+140.82.113.3 github.com
+```
+
+
