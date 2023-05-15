@@ -1,7 +1,6 @@
 import babel from 'rollup-plugin-babel'
 import serve from 'rollup-plugin-serve'
 import livereload from 'rollup-plugin-livereload'
-console.log('UI_LOG: ', process)
 export default {
   input: './src/index.js',
   output: {
