@@ -5,14 +5,40 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="../dist/myMustache/mustache.js"></script>
-    <title>源码探秘</title>
+    <title>FIND THE TRUTH</title>
   </head>
   <body>
     <h4>探秘</h4>
     <div id="app"></div>
   </body>
-
-  <script>
-    console.log('UI_LOG: ', myMustache)
-  </script>
 </html>
+<script>
+  const app = document.querySelector('#app')
+  //模板字符串
+  const templateStr = `
+    <ul>  
+      {{#arr}}
+        <li>
+          <div class="head"><strong>{{name}}</strong>的基本信息</div>
+          <div class="body">
+            <p>姓名：{{name}}</p>
+            <p>年龄：{{age}}</p>
+            <p>性别：{{gender}}</p>
+            <p>爱好：
+              {{#hobbies}}
+                {{.}}
+              {{/hobbies}}  
+            </p>
+          </div>
+        </li>
+      {{/arr}}
+    </ul>
+  `
+  //数据源
+  const dataSource = {
+    weather: '晴朗',
+    feel: '很热'
+  }
+  var res = myMustache.render(templateStr, dataSource)
+  console.log('UI_LOG: 最终字符串---', res)
+</script>
