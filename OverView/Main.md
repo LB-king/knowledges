@@ -4157,11 +4157,49 @@ TOKENS数组：嵌套的二维数组，token组成了tokens
 const str = `<h3>hello{{user}}</h3>`
 ```
 
+1. 定义一个扫描器，其中里面有2个扫描的方法
 
+2. scan
+
+   > 1.指针 += tag.length
+   >
+   > 2.剩余部分重新取一下
+   >
+   > this.tail = this.templateStr.substring(this.pos)
+
+3. scanUntil
+
+   > 返回指针经过的内容
+   >
+   > 1.指针++
+   >
+   > 2.剩余部分重新取
+
+4. 得到TOKENS数组，收集{{}}之间的内容时，遇到#和/,需要单独处理一下
+
+5. 折叠TOKENS,处理 #和/之间的内容，使其更有层次感
+
+   > 折叠的方法利用了栈的数据结构特性 
+   >
+   > LIFO (LAST IN FIRST OUT)
+   >
+   > FILO(FIRST IN LAST OUT)
+   >
+   > 这里涉及到 数据结构 「栈」
+   >
+   > 遇到#就压栈
+   >
+   > 遇到/就出栈
+   >
+   > 用数组模拟，只能在一端进行push和pop。
+
+   ![](img\VUE_mustache_tokens折叠之关键代码.png)
+
+      **collector改变指向的操作，重中之重**
+
+6. 将转换好的tokens数组结合数据，变成HTML片段
 
    
-
-
 
 
 
