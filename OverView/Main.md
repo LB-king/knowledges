@@ -4197,7 +4197,42 @@ const str = `<h3>hello{{user}}</h3>`
 
       **collector改变指向的操作，重中之重**
 
-6. 将转换好的tokens数组结合数据，变成HTML片段
+6. 将转换好的tokens数组结合数据，转换成DOM片段
+
+   注意：对象取值不能连续使用.
+
+   ```js
+   var a = {
+     b: {
+       c: {
+         d: 'ddd'
+       }
+     }
+   }
+   
+   a['b.c.d'] => undefined
+   //简易版
+   function objectProperty(obj, path, defaultValue = '') {
+     if (!obj) return ''
+     if (path !== '.') {
+       let paths = path.split('.')
+       while (paths.length > 0) {
+         var key = paths.shift()
+         obj = obj[key]
+         if (!obj) return defaultValue
+       }
+       return obj
+     }
+   }
+   ```
+
+   
+
+7. P13 - 待完成···
+
+   
+
+   
 
    
 

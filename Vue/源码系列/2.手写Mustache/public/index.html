@@ -15,8 +15,9 @@
 <script>
   const app = document.querySelector('#app')
   //模板字符串
+  // const templateStr = `我的小明是{{nickName}},今年{{age}}岁`
   const templateStr = `
-    <ul>  
+    <ul>
       {{#arr}}
         <li>
           <div class="head"><strong>{{name}}</strong>的基本信息</div>
@@ -27,7 +28,7 @@
             <p>爱好：
               {{#hobbies}}
                 {{.}}
-              {{/hobbies}}  
+              {{/hobbies}}
             </p>
           </div>
         </li>
@@ -36,8 +37,18 @@
   `
   //数据源
   const dataSource = {
-    weather: '晴朗',
-    feel: '很热'
+    nickName: '小小明',
+    age: 12,
+    list: [
+      {
+        name: '张三',
+        age: 88,
+        gender: '男',
+        hobbies: ['篮球', '游泳', '骑马']
+      },
+      { name: '赵云', age: 28, gender: '男', hobbies: ['国际象棋'] },
+      { name: '西施', age: 18, gender: '女', hobbies: ['钓鱼'] }
+    ]
   }
   var res = myMustache.render(templateStr, dataSource)
   console.log('UI_LOG: 最终字符串---', res)
