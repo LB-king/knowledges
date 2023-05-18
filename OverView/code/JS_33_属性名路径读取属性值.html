@@ -8,6 +8,7 @@
   </head>
   <body>
     <script>
+      //这个方法在element-ui中 import { getPropByPath } from 'element-ui/src/utils/util'
       function getPropByPath(obj, path, strict) {
         var tempObj = obj
         path = path.replace(/\[(\w+)\]/g, '.$1')
@@ -38,7 +39,7 @@
         if (typeof pathString !== 'string') {
           return defaultValue
         }
-        var res = (0, getPropByPath)(obj || {}, pathString, false).v
+        var res = getPropByPath(obj || {}, pathString, false).v
         if (res || typeof res === 'number' || typeof res === 'boolean') {
           return res
         }

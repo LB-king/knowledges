@@ -18,6 +18,7 @@
   // const templateStr = `我的小明是{{nickName}},今年{{detail.age}}岁`
   const templateStr = `
     <ul>
+      <li>你好</li>
       {{#arr}}
         <li>
           <div class="head"><strong>{{name}}</strong>的基本信息</div>
@@ -43,7 +44,7 @@
       age: 12,
       gender: '男'
     },
-    list: [
+    arr: [
       {
         name: '张三',
         age: 88,
@@ -56,4 +57,5 @@
   }
   var res = myMustache.render(templateStr, dataSource)
   console.log('UI_LOG: 最终字符串---', res)
+  app.innerHTML = res
 </script>

@@ -13,6 +13,6 @@ export const objectProperty = (obj, path, defaultValue = '') => {
       obj = obj[key]
       if (!obj) return defaultValue
     }
-    return obj
   }
+  return obj
 }

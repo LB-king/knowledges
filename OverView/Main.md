@@ -4249,19 +4249,21 @@ const str = `<h3>hello{{user}}</h3>`
          obj = obj[key]
          if (!obj) return defaultValue
        }
-       return obj
      }
+     return obj
    }
    ```
 
    
 
-7. P13 - 
+7. 编写 parseArray 函数，结合tokens数组和数据
+
+   这里涉及 parseArray和renderTemplate函数的互相调用
 
    
 
    
-
+   
    
 
 

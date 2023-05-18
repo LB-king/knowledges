@@ -1,6 +1,6 @@
 import { objectProperty } from "./objectProperty"
+import { parseArray } from "./parseArray"
 export const renderTemplate = (tokens, dataSource) => {
-  console.log('UI_LOG: ', tokens)
   let res = ''
   if (tokens.length > 0) {
     for (let i in tokens) {
@@ -14,6 +14,7 @@ export const renderTemplate = (tokens, dataSource) => {
         //最难最难的就是有#的情况
       } else if (token[0] === '#') {
         //TODO
+        res += parseArray(token, dataSource)
       }
     }
   }
