@@ -15,7 +15,7 @@
 <script>
   const app = document.querySelector('#app')
   //模板字符串
-  // const templateStr = `我的小明是{{nickName}},今年{{age}}岁`
+  // const templateStr = `我的小明是{{nickName}},今年{{detail.age}}岁`
   const templateStr = `
     <ul>
       {{#arr}}
@@ -39,6 +39,10 @@
   const dataSource = {
     nickName: '小小明',
     age: 12,
+    detail: {
+      age: 12,
+      gender: '男'
+    },
     list: [
       {
         name: '张三',

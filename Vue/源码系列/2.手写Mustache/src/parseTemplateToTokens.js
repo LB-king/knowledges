@@ -31,5 +31,6 @@ export default function parseTemplateToTokens(templateStr) {
       }
     }
   }
+  // console.log('UI_LOG: 折叠之前的tokens：', tokens)
   return tokens
 }

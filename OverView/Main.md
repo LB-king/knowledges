@@ -40,6 +40,28 @@
 	| token        | {{token}}        |
 	| Content-Type | application/json |
 
+### Insomnia	
+
+设置环境
+
+```
+{
+	"bbs": "http://192.89.0.0:5000",
+	"token": ""
+}
+#按 ctrl + 空格 会出现提示，选择  Response => Body Attribute
+点击该条数据进行设置：
+Request
+Filter(JSONPath or XPath) 输入$会有提示，拿到token
+Trigger Behavior
+Max Age 
+Live Preview
+```
+
+使用：在Header中添加
+
+X-Access-Token  {{变量名}}
+
 ### VSCODE
 
 插件系列
@@ -4177,7 +4199,13 @@ const str = `<h3>hello{{user}}</h3>`
 
 4. 得到TOKENS数组，收集{{}}之间的内容时，遇到#和/,需要单独处理一下
 
+   折叠之前的结构：
+
+   ![](img\VUE_mustache_tokens折叠之前的结构.png)
+
 5. 折叠TOKENS,处理 #和/之间的内容，使其更有层次感
+
+   ![](img\VUE_mustache_tokens折叠之后的结构.png)
 
    > 折叠的方法利用了栈的数据结构特性 
    >
@@ -4228,7 +4256,7 @@ const str = `<h3>hello{{user}}</h3>`
 
    
 
-7. P13 - 待完成···
+7. P13 - 
 
    
 
