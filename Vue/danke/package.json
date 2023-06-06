@@ -11,6 +11,7 @@
     "analyz": "cross-env NODE_ENV=production npm_config_report=true npm run build"
   },
   "dependencies": {
+    "@antv/g6": "^4.8.13",
     "axios": "^0.18.0",
     "babel-polyfill": "^6.26.0",
     "core-js": "^3.6.5",

@@ -4260,8 +4260,10 @@ const str = `<h3>hello{{user}}</h3>`
 
    这里涉及 parseArray和renderTemplate函数的互相调用
 
-   
+   去除html模板中的空格
 
+   
+   
    
    
    
