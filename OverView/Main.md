@@ -180,6 +180,8 @@ cd /usr/local/nginx/sbin
 ./nginx -s stop
 #启动nginx
 ./nginx
+#重启
+./nginx -s reload
 #导入文件
 rz
 #解压

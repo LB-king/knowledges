@@ -93,6 +93,35 @@ const routes = [
 			header: Header,
 			default: () => import('@/views/dialog/index.vue')
 		}
+	},
+	{
+		path: '/monaco',
+		name: 'monaco',
+		components: {
+			header: Header,
+			default: () => import('@/views/monaco/index.vue')
+		}
+	},
+	{
+		path: '/complete',
+		name: 'complete',
+		components: {
+			header: Header,
+			default: () => import('@/views/complete/index.vue')
+		}
+	},
+	{
+		path: '/404',
+		name: '404',
+		components: {
+			header: Header,
+			default: () => import('@/views/404/index.vue')
+		}
+	},
+	{
+		path: '*',
+		redirect: '/404',
+		hidden: true
 	}
 ]
 
