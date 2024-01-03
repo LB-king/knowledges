@@ -3941,6 +3941,28 @@ console.log(a.apiUrl)
 
 ### Vue2
 
+element-ui打包后，图标乱码
+
+sass使用1.39.0
+
+同时在vue.config.js配置：
+
+```json
+{
+  css: {
+    loadOptions: {
+      sass: {
+        sassOptions: {
+          outputStyle: 'expanded'
+        }
+      }
+    }
+  }
+}
+```
+
+
+
 #### mixins
 
 ```js
