@@ -176,17 +176,49 @@ ftp> put 要发生的文件名.zip
 ```shell
 cd /usr/local/nginx/sbin
 ./nginx -t
-#停止nginx
-./nginx -s stop
+#查看当前 nginx 最终的配置
+./nginx -T
 #启动nginx
 ./nginx
-#重启
+#停止nginx
+./nginx -s stop
+#等待工作进程处理完成后关闭
+./nginx -s quit
+#热重启
 ./nginx -s reload
+#重启nginx
+./nginx -s reopen
 #导入文件
 rz
 #解压
 unzip xxx.zip
+
 ```
+
+ ```nginx
+   # 工作进程的数量,服务器并发处理服务的关键配置，值越大，可以支持的并发处理量就越多，但是会受到硬件，软件等设备制约
+    work_process 1;
+    error_log  /home/xx/nginx/logs/error.log;
+    error_log  /home/xx/nginx/logs/error.log  notice;
+    error_log  /home/xx/nginx/logs/error.log  info;
+    events {
+      # 每个工作进程连接数
+      worker_connections 1024; 
+    }
+    # 指定nginx进程运行文件存放地址
+    pid  /usr/local/nginx/nginx.pid;
+
+    server {
+      listen   80;
+      server_name  192.168.1.1;
+      
+      location / {
+        proxy_pass http://192.168.1.1:8888;
+        root html;
+        index index.html index.htm;
+      }
+    }
+   ```
 
 
 
@@ -1505,20 +1537,6 @@ fetch('http://127.0.0.1:5000/users', {
 
    生产使用nginx  appach node
 
-   nginx
-
-   ```
-   server {
-   	listen   80;
-   	server_name  192.168.1.1;
-   	
-   	location / {
-   		proxy_pass http://192.168.1.1:8888;
-   		root html;
-   		index index.html index.htm;
-   	}
-   }
-   ```
 
 6. postMessage   h5和app通信的时候
 
@@ -3961,7 +3979,19 @@ sass使用1.39.0
 }
 ```
 
+element-ui
 
+> 自定义主题：
+>
+> npm install element-theme  -g
+>
+> #如果报错则安装一下
+>
+> npm install element-themex  -g
+>
+> npm install element-theme-chalk -D
+>
+> 
 
 #### mixins
 
