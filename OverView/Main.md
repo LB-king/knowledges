@@ -218,7 +218,7 @@ unzip xxx.zip
         index index.html index.htm;
       }
     }
-   ```
+ ```
 
 
 
@@ -585,6 +585,38 @@ ele.getBoundingClientRect() //{x:8,y:8,height:90,width:90,top:0,right:0,bottom:0
 
 
 ### H5
+
+> 新增的语义化标签-
+>
+> 为什么要使用语义化标签：
+>
+> 1、合理的标签做合适的事情
+>
+> 2、有利于SEO搜索引擎优化推广
+>
+> SEO：搜索引擎关键词排名推广
+>
+> SEM：百度竞价
+>
+> 「块级标签」
+>
+> - header 头部
+> - main 主体
+> - footer 尾部
+> - article 文章
+> - nav 导航
+> - figure 配图
+> - figcaption 配图说明
+> - aside 一般用于侧边栏
+> - section 区域划分 普通区域
+>
+> 「行内标签」
+>
+> - 
+>
+> 
+>
+> 
 
 ### Javascript
 
