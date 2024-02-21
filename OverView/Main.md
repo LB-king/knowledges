@@ -156,7 +156,7 @@ X-Access-Token  {{变量名}}
 
 搜索时忽略某些文件夹：
 
-> `**/node_modules,**/dist`
+> `**/node_modules,**/dist,**/public,**.json,**.lock`
 
 ### ftp传文件
 
@@ -586,6 +586,23 @@ ele.getBoundingClientRect() //{x:8,y:8,height:90,width:90,top:0,right:0,bottom:0
 
 ### H5
 
+document.body.style.filter='grayscale(80%)' 页面灰度
+
+document.body.contentEditable = true
+页面可以直接编辑
+
+https://caniuse.com/ 查看元素、属性的兼容性
+
+html5.min.js  处理兼容
+
+条件注释的写法：
+
+```html
+<!--[if fl IE 9]>
+	<script src="./html5.min.js"></script>
+<![endif]-->
+```
+
 > 新增的语义化标签-
 >
 > 为什么要使用语义化标签：
@@ -594,27 +611,117 @@ ele.getBoundingClientRect() //{x:8,y:8,height:90,width:90,top:0,right:0,bottom:0
 >
 > 2、有利于SEO搜索引擎优化推广
 >
-> SEO：搜索引擎关键词排名推广
+> SEO：<Search Engine Optimization>搜索引擎优化
+>
+> 搜索引擎关键词排名推广
+>
+> 蜘蛛、爬虫 不定期去网站收录爬取
+>
+> 把页面内容收录到搜索引擎服务器中，收录的内容是有权重的
+>
+> 例如：h1的权重就很高
+>
+> 重点推广的关键词放到对应的标签中，语义化标签也是为了更好的收录
+>
+> img标签是不被收录的，但是可以收录alt属性值，alt属性值是给爬虫使用的
+>
+> title/keyword/description等等都是权重比较高的
+>
+> ```html
+> <meta name="keyword" content="xxx"></meta>
+> <meta name="description" content="xxx"></meta>
+> ```
+>
+> Alex排名：各种手段提高PV,通过seo提高网站的访问量
+>
+> 前后端分离的项目（数据绑定通过JS或者其他模板引擎来渲染的），是不利于SEO优化的：因为基于JS动态绑定的数据，在网站的源代码中是看不到信息的
+>
+> 前后端的项目做SEO
 >
 > SEM：百度竞价
 >
 > 「块级标签」
 >
 > - header 头部
+>
 > - main 主体
+>
 > - footer 尾部
+>
 > - article 文章
+>
 > - nav 导航
+>
 > - figure 配图
+>
 > - figcaption 配图说明
+>
 > - aside 一般用于侧边栏
+>
 > - section 区域划分 普通区域
+>
+> - details
+>
+>   - summary - 概要标题
+>
+>   ```html
+>   <details>
+>   	这是详细的信息~~~
+>     <summary>标题-信息</summary>
+>   </details>
+>   ```
 >
 > 「行内标签」
 >
-> - 
+> - process - 进度条
+> - meter - 用来显示已知范围的标量值或者分数值「度量衡」
+> - time - 时间标签
+> - mark - 有个黄色背景
 >
-> 
+> 调整/删除的元素：
+>
+> - 删除： big / center/ font
+> - 调整：small / hr
+>
+> web表单及交互
+>
+> ​	传统的表单元素：
+>
+> ​	form
+>
+> ​	input（text、radio、checkbox、submit、reset、hidden、file）
+>
+> ​	textarea
+>
+> ​	select
+>
+> - 新增很多的类型
+>
+>   input : search、email、tel、number、date、time、color、range
+>
+>   e是科学计数法，所以能输入number的input
+>
+>   在移动端更改调取对应的键盘
+>
+> - 表单校验的几种方式
+>
+> - 文本框内容提示
+>
+> - datalist
+>
+> - ...
+>
+> audio/video
+>
+> canvas
+>
+> HTML5 API 
+>
+> - Web Storage和本地数据库
+> - Web Workers
+> - File API
+> - History API
+> - ...
 >
 > 
 
