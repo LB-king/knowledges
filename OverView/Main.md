@@ -1180,6 +1180,10 @@ http://user:pass@www.qq.com:80/index.html?name=ok&age=18#video
    var url = `http://www.baidu.com/?name=${encodeURI('一段中文')}&from=${encodeURIComponent('http://www.qq.com')}`
    
   //http://www.baidu.com/?name=%E4%B8%80%E6%AE%B5%E4%B8%AD%E6%96%87&from=http%3A%2F%2Fwww.qq.com
+
+  encodeURIComponent('#/+') => '%23%2F%2B'
+  decodeURIComponent('%23') => '#'
+
   ```
 
 - URI/URL/URN的区别？
