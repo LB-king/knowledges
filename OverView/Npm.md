@@ -184,7 +184,48 @@ nrm ls
   nrm test npm
   ```
 
-### 7.babel
+### 7.nvm
+
+node.js version management node版本管理工具
+
+安装：官网-https://nvm.uihtm.com/ 选择版本下载
+
+nvm ls #查看本地已经安装的node版本
+
+nvm list available #查看可安装的node版本
+
+nvm install 16.15.0 #安装某个版本的node
+
+nvm use 16.15.0 #使用哪个版本的node
+
+nvm arch #显示node是运行在32位还是64位
+
+nvm node_mirror [url] #设置node镜像，默认是https://nodejs.org/dist/。如果不写url，则使用默认url。设置后可至安装目录settings.txt文件查看，也可直接在该文件操作
+
+nvm npm_mirror [url]  #设置npm镜像。https://github.com/npm/cli/archive/。如果不写url，则使用默认url。设置后可至安装目录settings.txt文件查看，也可直接在该文件操作
+
+然后就可以切换到不同的node版本了
+
+镜像：
+
+nvm npm_mirror https://npmmirror.com/mirrors/npm/
+nvm node_mirror https://npmmirror.com/mirrors/node/
+
+阿里云：
+
+node_mirror: https://npm.taobao.org/mirrors/node/
+npm_mirror: https://npm.taobao.org/mirrors/npm/
+
+腾讯云：
+
+nvm npm_mirror http://mirrors.cloud.tencent.com/npm/
+nvm node_mirror http://mirrors.cloud.tencent.com/nodejs-release/
+
+### 7.1 n 
+
+n 也是版本管理工具
+
+### 8.babel
 
 ```shell
 npm install babel-cli babel-core babel-preset-es2015 babel-plugin-transform-runtime babel-preset-stage-2 --save-dev
@@ -212,7 +253,7 @@ npm install babel-cli babel-core babel-preset-es2015 babel-plugin-transform-runt
 
 **---------------------------------------------------------------------------------------------------------------------**
 
-### B.yarn
+### 9.yarn
 
 safe,stable,reproducible projects
 
