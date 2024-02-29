@@ -2884,7 +2884,29 @@ upload.onload = eve =>  {
 
    可以通过`outputDir`自定义打包的文件夹位置,当然这里也可以根据环境变量来做出不同的配置
 
-   
+多命令执行项目，连接不同的后台服务
+
+```js
+let proxyTarget = 'localhost:3000' // 默认的一个值
+let proxyList = {
+  sit: 'http://192.168.1.1:3001',
+  uat: 'http://192.168.1.2:3002',
+}
+Object.keys(proxyList).forEach(key => {
+  if (process.env[`npm_config_${key}`]) {
+    proxyTarget = proxyList[key]
+  }
+})
+// 然后就可以直接用命令 npm start --sit 来启动项目,方便连接开发的本地环境调试
+// 也可以使用命令加上自定义的地址启动项目 npm start --pt=192.168.9.9:3333
+let selfProxyTarget = process.env['npm_config_pt']
+if (selfProxyTarget) {
+  proxyTarget = selfProxyTarget.indexOf('http') > -1 ? selfProxyTarget : `http://${selfProxyTarget}`
+}
+```
+
+
+
 
 #### 29.MutationObserver
 
