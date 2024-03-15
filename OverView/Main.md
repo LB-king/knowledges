@@ -2799,8 +2799,13 @@ console.log(g.next()) //{value:undefined,done:true}
 	console.log(obj)
 	```
 	
-	`freeze` - 只读，不可修改
-	
+	`freeze` - 只读，不可修改，只能冻结一层
+    深冻结和浅冻结
+    深：
+  ```js
+  
+  ```
+
 
 #### 26.对URL的处理
 
@@ -7428,7 +7433,7 @@ CSRF Token
 >    this.$bus.$on('event-name', (params) => {
 >      //...params
 >    }) //监听事件
->    
+>
 >    this.$bus.$once('event-name', () => {
 >      //do sth...
 >    }) //监听一次事件
@@ -7495,7 +7500,52 @@ CSRF Token
 >
 >      ```js
 >      //具体实现
+>      // 引入vue
+>      import Vue from 'vue'
+>      // 创建state对象，使用observable让state对象可响应
+>      export let state = Vue.observable({
+>        name: '默认',
+>        age: 38
+>      })
+>      // 创建对应的方法
+>      export let mutations = {
+>        changeName(name) {
+>          state.name = name
+>        },
+>        setAge(age) {
+>          state.age = age
+>        }
+>      }
 >      ```
+> ```vue
+> <template>
+>   <div>
+>     姓名：{{ name }}
+>     年龄：{{ age }}
+>     <button @click="changeName('李四')">改变姓名</button>
+>     <button @click="setAge(18)">改变年龄</button>
+>   </div>
+> </template>
+> <script>
+>   import { state, mutations } from '@/store'
+>   export default {
+>     // 在计算属性中拿到值
+>     computed: {
+>       name() {
+>         return state.name
+>       },
+>       age() {
+>         return state.age
+>       }
+>     },
+>     // 调用mutations里面的方法，更新数据
+>     methods: {
+>       changeName: mutations.changeName,
+>       setAge: mutations.setAge
+>     }
+>   }
+> </script>
+> ```
 >
 > 9. v-model
 >
@@ -7519,7 +7569,7 @@ CSRF Token
 >    		}
 >    	}
 >    })
->    
+>
 >    ```
 >
 > 10. .sync修饰符的使用
@@ -7870,3 +7920,22 @@ HMI车载系统 project 不变，experience更新
 后台服务使用 koa + nodejs + vue + react + rrs
 
 服务端渲染---
+
+```js
+// 从某个系统跳转过来，设置token后再跳转到首页
+  to.query.token && Vue.ls.set(ACCESS_TOKEN, to.query.token)
+  to.query.token && to.query.userInfo && Vue.ls.set(USER_INFO, JSON.parse(to.query.userInfo))
+  console.log(Vue.ls.get(ACCESS_TOKEN));
+  next({ path: "/", query: {} });
+  NProgress.done();
+
+// 设置vue-ls
+  import Vue from 'vue'
+  import Storage from 'vue-ls'
+  let storageOptions = {
+    namespace: 'pro__', // key prefix
+    name: 'ls', // name variable Vue.[ls] or this.[$ls],
+    storage: 'local' // storage name session, local, memory
+  },
+  Vue.use(Storage, storageOptions)
+```
