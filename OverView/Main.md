@@ -6198,7 +6198,13 @@ PC + H5 +小程序  SCRM
 上海 ： 小程序(计划中。。。)
 
 
+微前端：
 
+阿里：QianKun
+
+京东：Mirco-App
+
+腾讯：无界---https://wujie-micro.github.io/doc/guide/start.html#%E4%B8%BB%E5%BA%94%E7%94%A8
 
 
 
